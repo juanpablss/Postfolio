@@ -1,0 +1,4 @@
+Baixar o yarn se não tiver: npm i -g yarn
+Navegar até a pasta ./src/backEnd e executar os seguintes comandos na raiz do back:
+1 - yarn install
+2 - yarn prisma init
