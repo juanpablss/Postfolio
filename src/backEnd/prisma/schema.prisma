@@ -12,3 +12,36 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id Int @id @default(autoincrement())
+  name String
+  email String @unique
+  passWord String
+  status String
+  portfolios Portfolio[]
+  ratings Rating[]
+}
+
+model Portfolio{
+  id Int @id @default(autoincrement())
+  name String
+  description String
+  pageLink String
+  authorId Int
+  author User @relation(fields: [authorId], references: [id])
+  ratings Rating[]
+}
+
+model Rating{
+  // id Int @id @default(autoincrement())
+  user User @relation(fields: [userId], references: [id])
+  userId Int
+  portfolio Portfolio @relation(fields: [portfolioId], references: [id])
+  portfolioId Int
+  score Float
+
+  @@id([userId, portfolioId])
+}
+
+

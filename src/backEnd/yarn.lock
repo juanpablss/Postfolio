@@ -193,6 +193,11 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
+"@prisma/client@^6.4.1":
+  version "6.4.1"
+  resolved "https://registry.yarnpkg.com/@prisma/client/-/client-6.4.1.tgz#2666796c862e71eb2a6f39e30b192236893e07d3"
+  integrity sha512-A7Mwx44+GVZVexT5e2GF/WcKkEkNNKbgr059xpr5mn+oUm2ZW1svhe+0TRNBwCdzhfIZ+q23jEgsNPvKD9u+6g==
+
 "@prisma/debug@6.4.1":
   version "6.4.1"
   resolved "https://registry.yarnpkg.com/@prisma/debug/-/debug-6.4.1.tgz#b3b4982e107a456f848ced3386469b3a35bc76f3"
@@ -329,7 +334,8 @@ avvio@^9.0.0:
 "backend@file:.":
   version "1.0.0"
   dependencies:
-    backend "file:../../../../../../../AppData/Local/Yarn/Cache/v6/npm-backend-1.0.0-d538d23d-c314-4f2b-b6b7-8d52bd1ee07d-1740849825580/node_modules/backend"
+    backend "file:../../../../../../../AppData/Local/Yarn/Cache/v6/npm-backend-1.0.0-6abef33a-9435-46a9-8fae-e9ce81fbe2b7-1740853145442/node_modules/backend"
+    package "^1.0.1"
 
 balanced-match@^1.0.0:
   version "1.0.2"
