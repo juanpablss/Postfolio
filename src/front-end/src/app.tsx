@@ -1,14 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Header from "./layouts/Header";
+import Login from "./pages/Login"
 
 export function App() {
   return (
-    <div className="min-h-screen bg-dark-gradient text-white">
+    <div className="bg-pattern bg-auto bg-top min-h-screen w-full text-light-white">
       <Router>
-        <Header />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />}></Route>
         </Routes>
       </Router>
     </div>

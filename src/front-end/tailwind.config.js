@@ -8,25 +8,18 @@ export default {
     extend: {
       colors: {
         dark: {
-          900: "#010030",
-          700: "#160078",
-          500: "#7226FF",
+          pink: "rgb(103, 23, 74)",
+          black: "rgb(28, 26, 31)",
+          blue: "rgb(30, 30, 116)",
         },
         light: {
-          900: "#F042FF",
-          500: "#FFE5F1",
-          300: "#87F5F5",
+          pink: "rgb(218, 2, 221)",
+          white: "rgb(240, 240, 240)",
+          blue: "rgb(18, 130, 184)",
         },
       },
-      // backgroundImage: {
-      
-      // },
       backgroundImage: {
-        // pattern: 'url(/public/bg.jpg)', consertar backround
-        "dark-gradient": "linear-gradient(to bottom, oklch(0.293 0.066 243.157), #160078)",
-        "light-gradient": "linear-gradient(to bottom, #FFE5F1, #87F5F5)",
-        // 'card-bg': "url('/bg.jpg')",
-        'card-bg': "url('/bg.jpg')",
+        pattern: 'url(/bg1.png)',
       },
       fontFamily: {
         sans: 'Inter',
