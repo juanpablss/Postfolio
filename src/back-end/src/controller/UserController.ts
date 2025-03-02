@@ -21,4 +21,16 @@ export const UserController = {
     const user = await UserModel.findByEmail(email);
     return user;
   },
+  login: async (req: FastifyRequest, res: FastifyReply) => {
+    const { email, passWord } = req.body as { email: string; passWord: string };
+
+    const user = await UserModel.findByEmail(email);
+
+    if (!user)
+      return res.status(400).send({ message: "Usuário não encontrado" });
+    if (passWord !== user.passWord)
+      return res.status(401).send({ message: "Senha incorreta" });
+
+    res.send({ message: "Login bem-sucedido!" });
+  },
 };
