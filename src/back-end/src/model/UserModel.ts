@@ -2,7 +2,7 @@ import { prisma } from "../config/prisma";
 import { User } from "@prisma/client";
 
 export const UserModel = {
-  create: async (
+  insert: async (
     name: string,
     email: string,
     passWord: string,

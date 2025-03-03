@@ -1,20 +1,33 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { UserModel } from "../model/UserModel";
+import { UserService } from "../service/UserService";
 
 export const UserController = {
-  create: async (req: FastifyRequest, res: FastifyReply) => {
+  register: async (req: FastifyRequest, reply: FastifyReply) => {
     const { name, email, passWord, status } = req.body as {
       name: string;
       email: string;
       passWord: string;
       status: string;
     };
-    const user = await UserModel.create(name, email, passWord, status);
-    return user;
+
+    try {
+      await UserService.validate(name, email, passWord, status);
+    } catch (error) {
+      const err = error as Error;
+      reply.status(400).send({ msg: err.message });
+    }
+
+    try {
+      await UserModel.insert(name, email, passWord, status);
+      reply.status(200).send({ msg: "Usuario criado com sucesso!" });
+    } catch (error) {
+      reply.status(500).send({ msg: "Erro ao registrar usuario!" });
+    }
   },
-  getAll: async (req: FastifyRequest, res: FastifyReply) => {
+  getAll: async (req: FastifyRequest, reply: FastifyReply) => {
     const allUsers = await UserModel.findMany();
-    res.send(allUsers);
+    reply.send(allUsers);
   },
   getByEmail: async (req: FastifyRequest, res: FastifyReply) => {
     const { email } = req.query as { email: string };
