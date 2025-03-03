@@ -1,6 +1,8 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { UserModel } from "../model/UserModel";
 import { UserService } from "../service/UserService";
+import jwt from "jsonwebtoken";
+import { User } from "@prisma/client";
 
 export const UserController = {
   register: async (req: FastifyRequest, reply: FastifyReply) => {
@@ -12,15 +14,16 @@ export const UserController = {
     };
 
     try {
-      await UserService.validate(name, email, passWord, status);
+      await UserService.validateRegister(name, email, passWord, status);
     } catch (error) {
       const err = error as Error;
       reply.status(400).send({ msg: err.message });
     }
 
     try {
-      await UserModel.insert(name, email, passWord, status);
-      reply.status(200).send({ msg: "Usuario criado com sucesso!" });
+      const hashPassWord = await UserService.hashPassWord(passWord);
+      await UserModel.insert(name, email, hashPassWord, status);
+      reply.send({ msg: "Usuario criado com sucesso!" });
     } catch (error) {
       reply.status(500).send({ msg: "Erro ao registrar usuario!" });
     }
@@ -34,16 +37,38 @@ export const UserController = {
     const user = await UserModel.findByEmail(email);
     return user;
   },
-  login: async (req: FastifyRequest, res: FastifyReply) => {
-    const { email, passWord } = req.body as { email: string; passWord: string };
+  login: async (req: FastifyRequest, resply: FastifyReply) => {
+    let email: string | null = null;
+    let passWord: string | null = null;
+    let user: User | null = null;
+    let token: string | null = null;
 
-    const user = await UserModel.findByEmail(email);
+    try {
+      ({ email, passWord } = req.body as { email: string; passWord: string });
+    } catch (error) {
+      return resply.status(400).send({ msg: "email e senha são necessarios!" });
+    }
 
-    if (!user)
-      return res.status(400).send({ message: "Usuário não encontrado" });
-    if (passWord !== user.passWord)
-      return res.status(401).send({ message: "Senha incorreta" });
+    try {
+      user = await UserService.validateLogin(email, passWord);
+    } catch (error) {
+      const err = error as Error;
+      return resply.status(400).send({ msg: err.message });
+    }
 
-    res.send({ message: "Login bem-sucedido!" });
+    try {
+      const secret = process.env.JWT_SECRET || "default_secret";
+
+      token = jwt.sign({ id: user.id, email: user.email }, secret, {
+        expiresIn: "1h",
+      });
+    } catch (error) {
+      return resply.status(500).send({ msg: "Não é possivel fazer login!" });
+    }
+
+    resply.send({ msg: "Login bem-sucedido!", token });
+  },
+  getProfile: async (req: FastifyRequest, resply: FastifyReply) => {
+    resply.send({ msg: "Perfil do usuário", user: req.UserReq });
   },
 };
