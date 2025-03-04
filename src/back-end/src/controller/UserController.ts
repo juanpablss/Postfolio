@@ -1,6 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { UserRepository } from "../repository/UserRepository";
 import { UserService } from "../service/UserService";
+import { HttpError } from "../util/error/HttpError";
 import "../@types/fastify";
 
 export const UserController = {

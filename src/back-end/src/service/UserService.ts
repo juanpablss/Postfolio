@@ -3,6 +3,7 @@ import { User } from "@prisma/client";
 import { IUserRepository } from "../repository/contracts/IUserRepository";
 import { Cryto } from "../util/Crypto";
 import jwt from "jsonwebtoken";
+import { HttpError } from "../util/error/HttpError";
 
 export const UserService = (userRepository: IUserRepository) => ({
   register: async (
