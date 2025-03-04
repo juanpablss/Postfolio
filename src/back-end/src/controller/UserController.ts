@@ -3,6 +3,7 @@ import { UserModel } from "../model/UserModel";
 import { UserService } from "../service/UserService";
 import jwt from "jsonwebtoken";
 import { User } from "@prisma/client";
+import "../@types/fastify";
 
 export const UserController = {
   register: async (req: FastifyRequest, reply: FastifyReply) => {
@@ -69,6 +70,6 @@ export const UserController = {
     resply.send({ msg: "Login bem-sucedido!", token });
   },
   getProfile: async (req: FastifyRequest, resply: FastifyReply) => {
-    resply.send({ msg: "Perfil do usuário", user: req.UserReq });
+    resply.send({ msg: "Perfil do usuário", user: req.user });
   },
 };

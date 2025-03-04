@@ -19,7 +19,7 @@ export const UserMiddle = {
         id: string;
         email: string;
       };
-      req.UserReq = decoded;
+      req.user = { id: decoded.id, email: decoded.email };
     } catch (error) {
       return resply.status(401).send({ msg: "Token inválido ou expirado" });
     }

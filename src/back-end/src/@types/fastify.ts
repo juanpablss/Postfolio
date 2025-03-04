@@ -2,7 +2,7 @@ import "fastify";
 
 declare module "fastify" {
   interface FastifyRequest {
-    UserReq?: {
+    user?: {
       id: string;
       email: string;
     };
