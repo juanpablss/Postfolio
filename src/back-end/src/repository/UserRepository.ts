@@ -1,7 +1,8 @@
 import { prisma } from "../config/prisma";
 import { User } from "@prisma/client";
+import { IUserRepository } from "./contracts/IUserRepository";
 
-export const UserModel = {
+export const UserRepository: IUserRepository = {
   insert: async (
     name: string,
     email: string,

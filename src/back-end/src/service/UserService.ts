@@ -1,54 +1,91 @@
 import { User } from "@prisma/client";
-import { UserModel } from "../model/UserModel";
-import bcrypt from "bcrypt";
+// import { UserRepository } from "../repository/UserRepository";
+import { IUserRepository } from "../repository/contracts/IUserRepository";
+import { Cryto } from "../util/Crypto";
+import jwt from "jsonwebtoken";
 
-export const UserService = {
-  validateRegister: async (
-    name: string,
-    email: string,
-    passWord: string,
-    status: string
+export const UserService = (userRepository: IUserRepository) => ({
+  register: async (
+    name: string | null,
+    email: string | null,
+    passWord: string | null,
+    status: string | null
   ) => {
     if (!name) {
-      throw new Error("O nome é obrigatório!");
+      throw new HttpError(400, "O nome é obrigatório!");
     }
 
+    if (!email) {
+      throw new HttpError(400, "O email é obrigatório!");
+    }
+
+    if (!passWord) {
+      throw new HttpError(400, "A senha é obrigatória!");
+    }
+
+    if (!status) {
+      throw new HttpError(400, "O status é obrigatório!");
+    }
+
+    const user = await userRepository.findByEmail(email);
+
+    if (user) {
+      throw new HttpError(400, "Por favor, use outro email!");
+    }
+
+    try {
+      const hashPassWord = await Cryto.hashPassWord(passWord);
+      await userRepository.insert(name, email, hashPassWord, status);
+    } catch (error) {
+      throw new HttpError(500, "Erro ao registrar usuario!");
+    }
+    // return null;
+  },
+  findMany: async (): Promise<User[]> => {
+    return userRepository.findMany();
+  },
+  findByEmail: async (email: string | null): Promise<User | null> => {
     if (!email) {
       throw new Error("O email é obrigatório!");
     }
 
-    if (!passWord) {
-      throw new Error("A senha é obrigatória!");
-    }
-
-    if (!status) {
-      throw new Error("O status é obrigatório!");
-    }
-
-    const user = await UserModel.findByEmail(email);
-
-    if (user) {
-      throw new Error("Por favor, use outro email!");
-    }
-  },
-  validateLogin: async (email: string, passWord: string): Promise<User> => {
-    const user = await UserModel.findByEmail(email);
-
-    if (!user) {
-      throw new Error("Usuário não encontrado!");
-    }
-
-    const checkPassWord = await bcrypt.compare(passWord, user.passWord);
-
-    if (!checkPassWord) {
-      throw new Error("Senha incorreta!");
-    }
+    const user = await userRepository.findByEmail(email);
     return user;
   },
-  hashPassWord: async (passWord: string): Promise<string> => {
-    const saltRounds = 12;
-    const hashPassWord = await bcrypt.hash(passWord, saltRounds);
+  login: async (
+    email: string | null,
+    passWord: string | null
+  ): Promise<string> => {
+    if (!email) {
+      throw new HttpError(400, "O email é obrigatório!");
+    }
 
-    return hashPassWord;
+    if (!passWord) {
+      throw new HttpError(400, "A senha é obrigatória!");
+    }
+
+    const user = await userRepository.findByEmail(email);
+
+    if (!user) {
+      throw new HttpError(404, "Usuário não encontrado!");
+    }
+
+    const checkPassWord = await Cryto.compare(passWord, user.passWord);
+
+    if (!checkPassWord) {
+      throw new HttpError(401, "Senha incorreta!");
+    }
+
+    try {
+      const secret = process.env.JWT_SECRET || "default_secret";
+
+      const token = jwt.sign({ id: user.id, email: user.email }, secret, {
+        expiresIn: "1h",
+      });
+      return token;
+    } catch (error) {
+      // return resply.status(500).send({ msg: "Não é possivel fazer login!" });
+      throw new HttpError(500, "Não é possivel fazer login!");
+    }
   },
-};
+});
