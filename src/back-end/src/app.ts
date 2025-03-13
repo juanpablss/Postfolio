@@ -1,9 +1,15 @@
-import Fastify, { FastifyRequest, FastifyReply } from "fastify";
-import { prisma } from "./config/prisma";
+import Fastify from "fastify";
 import { UserRoutes } from "./routes/UserRoute";
+import fastifyCors from "@fastify/cors";
 
 const app = Fastify();
 const PORT = 8080;
+
+app.register(fastifyCors, {
+  origin: "http://127.0.0.1:5500",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+});
 
 app.register(UserRoutes, { prefix: "api/user" });
 
