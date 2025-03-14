@@ -27,11 +27,17 @@ export const PortfolioRepository: IPortfolioRepository = {
   findMany: async (): Promise<Portfolio[]> => {
     return prisma.portfolio.findMany();
   },
-  findById: function (id: number): Promise<Portfolio | null> {
-    throw new Error("Function not implemented.");
+  findById: async (id: number): Promise<Portfolio | null> => {
+    return prisma.portfolio.findUnique({
+      where: {
+        id,
+      },
+    });
   },
-  findByAuthor: function (authorId: number): Promise<Portfolio[]> {
-    throw new Error("Function not implemented.");
+  findByAuthor: async (authorId: number): Promise<Portfolio[]> => {
+    return prisma.portfolio.findMany({
+      where: { authorId },
+    });
   },
   deleteById: function (id: number): Promise<Portfolio | null> {
     throw new Error("Function not implemented.");

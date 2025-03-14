@@ -29,4 +29,15 @@ export const PortfolioService = (
     const portfolios = await portfolioRepository.findMany();
     return portfolios;
   },
+
+  getById: async (id: number): Promise<Portfolio | null> => {
+    return await portfolioRepository.findById(id);
+  },
+
+  getByAuthorId: async (authorId: number): Promise<Portfolio[]> => {
+    if (!authorId || typeof authorId !== "number")
+      throw new HttpError(400, "Author é obrigatorio");
+    const portfolios = await portfolioRepository.findByAuthor(authorId);
+    return portfolios;
+  },
 });

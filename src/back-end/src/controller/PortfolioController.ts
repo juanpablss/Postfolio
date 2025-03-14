@@ -34,4 +34,20 @@ export const PorftolioController = {
     reply.send(portfolios);
     // const portfolios = portfolioService.
   },
+  getById: async (req: FastifyRequest, reply: FastifyReply) => {
+    const id = req.params as { id: string };
+
+    const portfolioService = PortfolioService(PortfolioRepository);
+    const portfolio = portfolioService.getById(Number(id));
+
+    reply.send(portfolio);
+  },
+  getByUser: async (req: FastifyRequest, reply: FastifyReply) => {
+    const authorId = Number(req.user?.id);
+
+    const portfolioService = PortfolioService(PortfolioRepository);
+    const portfolios = await portfolioService.getByAuthorId(authorId);
+
+    reply.send(portfolios);
+  },
 };
