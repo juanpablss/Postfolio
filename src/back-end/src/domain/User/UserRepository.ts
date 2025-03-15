@@ -1,12 +1,7 @@
-import { User } from "@prisma/client";
+import User from "./User";
 
-export interface IUserRepository {
-  insert: (
-    name: string,
-    email: string,
-    passWord: string,
-    status: string
-  ) => Promise<User | null>;
+export interface UserRepository {
+  insert: (user: User) => Promise<User | null>;
   findMany: () => Promise<User[]>;
   findById: (id: number) => Promise<User | null>;
   findByEmail: (email: string) => Promise<User | null>;

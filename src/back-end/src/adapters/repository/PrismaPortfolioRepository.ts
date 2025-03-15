@@ -1,9 +1,9 @@
 import { Portfolio } from "@prisma/client";
-import { prisma } from "../config/prisma";
+import { prisma } from "../../infrastructure/config/prisma";
 import { IPortfolioRepository } from "./contracts/IPortfolioRepository";
-import { HttpError } from "../error/HttpError";
+import { HttpError } from "../../infrastructure/error/HttpError";
 
-export const PortfolioRepository: IPortfolioRepository = {
+export const PrismaPortfolioRepository: IPortfolioRepository = {
   insert: async (
     name: string,
     description: string,

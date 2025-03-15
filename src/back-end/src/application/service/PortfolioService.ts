@@ -1,4 +1,4 @@
-import { IPortfolioRepository } from "../repository/contracts/IPortfolioRepository";
+import { IPortfolioRepository } from "../adapters/repository/contracts/IPortfolioRepository";
 import { HttpError } from "../error/HttpError";
 import { Portfolio } from "@prisma/client";
 

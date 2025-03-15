@@ -1,28 +1,22 @@
-import { User } from "@prisma/client";
+import User from "../../domain/User/User";
 // import { UserRepository } from "../repository/UserRepository";
-import { IUserRepository } from "../repository/contracts/IUserRepository";
-import { Cryto } from "../util/Crypto";
+import { UserRepository } from "../../domain/User/UserRepository";
+import { Crypt } from "../../util/Crypto";
 import jwt from "jsonwebtoken";
-import { HttpError } from "../error/HttpError";
+import { HttpError } from "../../infrastructure/error/HttpError";
+import UserUseCases from "../usecases/UserUseCases";
 
-export const UserService = (userRepository: IUserRepository) => ({
-  register: async (
-    name: string | null,
-    email: string | null,
-    passWord: string | null,
-    status: string | null
-  ) => {
-    if (!name) throw new HttpError(400, "O nome é obrigatório!");
-    if (!email) throw new HttpError(400, "O email é obrigatório!");
-    if (!passWord) throw new HttpError(400, "A senha é obrigatória!");
-    if (!status) throw new HttpError(400, "O status é obrigatório!");
+export const UserServiceImp = (
+  userRepository: UserRepository
+): UserUseCases => ({
+  register: async (user: User) => {
+    const existingUser = await userRepository.findByEmail(user.email);
 
-    const user = await userRepository.findByEmail(email);
+    if (existingUser) throw new HttpError(400, "Por favor, use outro email!");
 
-    if (user) throw new HttpError(400, "Por favor, use outro email!");
+    user.passWord = await Crypt.hashPassWord(user.passWord);
 
-    const hashPassWord = await Cryto.hashPassWord(passWord);
-    await userRepository.insert(name, email, hashPassWord, status);
+    await userRepository.insert(user);
   },
   findMany: async (): Promise<User[]> => {
     return userRepository.findMany();
@@ -44,7 +38,7 @@ export const UserService = (userRepository: IUserRepository) => ({
 
     if (!user) throw new HttpError(404, "Usuário não encontrado!");
 
-    const checkPassWord = await Cryto.compare(passWord, user.passWord);
+    const checkPassWord = await Crypt.compare(passWord, user.passWord);
 
     if (!checkPassWord) throw new HttpError(401, "Senha incorreta!");
 

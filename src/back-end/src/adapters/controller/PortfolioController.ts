@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { PortfolioRepository } from "../repository/PortfolioRepository";
+import { PrismaPortfolioRepository } from "../repository/PrismaPortfolioRepository";
 import { PortfolioService } from "../service/PortfolioService";
 
 export const PorftolioController = {
@@ -16,14 +16,14 @@ export const PorftolioController = {
       authorId: number;
     }>;
 
-    const portfolioService = PortfolioService(PortfolioRepository);
+    const portfolioService = PortfolioService(PrismaPortfolioRepository);
 
     await portfolioService.register(name, description, pageLink, authorId);
 
     reply.send({ msg: "Portfolio criado com sucesso!" });
   },
   getAll: async (req: FastifyRequest, reply: FastifyReply) => {
-    const portfolioService = PortfolioService(PortfolioRepository);
+    const portfolioService = PortfolioService(PrismaPortfolioRepository);
     const portfolios = await portfolioService.getAll();
     reply.send(portfolios);
     // const portfolios = portfolioService.
@@ -31,7 +31,7 @@ export const PorftolioController = {
   getById: async (req: FastifyRequest, reply: FastifyReply) => {
     const id = req.params as { id: string };
 
-    const portfolioService = PortfolioService(PortfolioRepository);
+    const portfolioService = PortfolioService(PrismaPortfolioRepository);
     const portfolio = portfolioService.getById(Number(id));
 
     reply.send(portfolio);
@@ -39,7 +39,7 @@ export const PorftolioController = {
   getByUser: async (req: FastifyRequest, reply: FastifyReply) => {
     const authorId = Number(req.user?.id);
 
-    const portfolioService = PortfolioService(PortfolioRepository);
+    const portfolioService = PortfolioService(PrismaPortfolioRepository);
     const portfolios = await portfolioService.getByAuthorId(authorId);
 
     reply.send(portfolios);

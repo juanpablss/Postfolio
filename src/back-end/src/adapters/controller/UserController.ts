@@ -1,7 +1,8 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { UserRepository } from "../repository/UserRepository";
-import { UserService } from "../service/UserService";
-import { HttpError } from "../error/HttpError";
+import { PrismaUserRepository } from "../repository/PrismaUserRepository";
+import { UserServiceImp } from "../../application/service/UserServiceImp";
+import { HttpError } from "../../infrastructure/error/HttpError";
+import User from "../../domain/User/User";
 import "../@types/fastify";
 
 export const UserController = {
@@ -18,13 +19,16 @@ export const UserController = {
       status: string;
     }>;
 
-    const userService = UserService(UserRepository);
-    await userService.register(name, email, passWord, status);
+    if (!name || !email || !passWord || !status)
+      throw new HttpError(400, "Todos os campos são obrigatórios!");
+
+    const userService = UserServiceImp(PrismaUserRepository);
+    await userService.register(new User(-1, name, email, passWord, status));
 
     return reply.send({ msg: "Usuario criado com sucesso!" });
   },
   getAll: async (req: FastifyRequest, reply: FastifyReply) => {
-    const userService = UserService(UserRepository);
+    const userService = UserServiceImp(PrismaUserRepository);
     const allUsers = await userService.findMany();
     reply.send(allUsers);
   },
@@ -47,7 +51,7 @@ export const UserController = {
       passWord: string;
     }>;
 
-    const userService = UserService(UserRepository);
+    const userService = UserServiceImp(PrismaUserRepository);
     const token = await userService.login(email, passWord);
     resply.send({ msg: "Login bem-sucedido!", token });
   },

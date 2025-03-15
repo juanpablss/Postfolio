@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
-import { HttpError } from "../error/HttpError";
+import { HttpError } from "../infrastructure/error/HttpError";
 
-export const Cryto = {
+export const Crypt = {
   hashPassWord: async (passWord: string): Promise<string> => {
     if (!passWord || typeof passWord !== "string")
       throw new HttpError(400, "Senha não é valido.");
