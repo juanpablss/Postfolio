@@ -1,22 +1,18 @@
-import { Portfolio } from "@prisma/client";
+import PrismaPortfolio from "../entities/PrismaPortfolio";
 import { prisma } from "../../infrastructure/config/prisma";
-import { IPortfolioRepository } from "./contracts/IPortfolioRepository";
 import { HttpError } from "../../infrastructure/error/HttpError";
 
-export const PrismaPortfolioRepository: IPortfolioRepository = {
+export const PrismaPortfolioRepository = {
   insert: async (
-    name: string,
-    description: string,
-    pageLink: string,
-    authorId: number
-  ): Promise<Portfolio> => {
+    prismaPortfolio: PrismaPortfolio
+  ): Promise<PrismaPortfolio> => {
     try {
       const portfolio = prisma.portfolio.create({
         data: {
-          name,
-          description,
-          pageLink,
-          authorId,
+          name: prismaPortfolio.name,
+          description: prismaPortfolio.description,
+          pageLink: prismaPortfolio.pageLink,
+          authorId: prismaPortfolio.authorId,
         },
       });
       return portfolio;
@@ -24,22 +20,22 @@ export const PrismaPortfolioRepository: IPortfolioRepository = {
       throw new HttpError(500, "Erro ao salvar Portfolio!");
     }
   },
-  findMany: async (): Promise<Portfolio[]> => {
+  findMany: async (): Promise<PrismaPortfolio[]> => {
     return prisma.portfolio.findMany();
   },
-  findById: async (id: number): Promise<Portfolio | null> => {
+  findById: async (id: number): Promise<PrismaPortfolio | null> => {
     return prisma.portfolio.findUnique({
       where: {
         id,
       },
     });
   },
-  findByAuthor: async (authorId: number): Promise<Portfolio[]> => {
+  findByAuthor: async (authorId: number): Promise<PrismaPortfolio[]> => {
     return prisma.portfolio.findMany({
       where: { authorId },
     });
   },
-  deleteById: function (id: number): Promise<Portfolio | null> {
+  deleteById: function (id: number): Promise<PrismaPortfolio | null> {
     throw new Error("Function not implemented.");
   },
 };

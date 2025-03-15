@@ -1,7 +1,9 @@
 import PrismaUser from "../adapters/entities/PrismaUser";
 import User from "../domain/User/User";
+import PrismaPortfolio from "../adapters/entities/PrismaPortfolio";
+import Portfolio from "../domain/Portfolio/Portfolio";
 
-export const Mapper = {
+export const UserMapper = {
   toDomain(prismaUser: PrismaUser): User {
     return new User(
       prismaUser.id,
@@ -18,6 +20,27 @@ export const Mapper = {
       email: user.email,
       passWord: user.passWord,
       status: user.status,
+    };
+  },
+};
+
+export const PortfolioMapper = {
+  toDomain(prismaPortfolio: PrismaPortfolio): Portfolio {
+    return new Portfolio(
+      prismaPortfolio.id,
+      prismaPortfolio.name,
+      prismaPortfolio.description,
+      prismaPortfolio.pageLink,
+      prismaPortfolio.authorId
+    );
+  },
+  toPrisma(portfolio: Portfolio): PrismaPortfolio {
+    return {
+      id: portfolio.id,
+      name: portfolio.name,
+      description: portfolio.description,
+      pageLink: portfolio.pageLink,
+      authorId: portfolio.authorId,
     };
   },
 };

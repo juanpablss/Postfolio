@@ -2,11 +2,11 @@ import User from "../../domain/User/User";
 import PrismaUser from "../entities/PrismaUser";
 import { UserRepository } from "../../domain/User/UserRepository";
 import { PrismaUserRepository } from "./PrismaUserRepository";
-import { Mapper } from "../../util/mapper";
+import { UserMapper } from "../../util/mapper";
 
 export default class UserRepositoryImp implements UserRepository {
   async insert(user: User): Promise<User | null> {
-    const userEntity: PrismaUser = Mapper.toPrisma(user);
+    const userEntity: PrismaUser = UserMapper.toPrisma(user);
 
     return await PrismaUserRepository.insert(userEntity);
   }
@@ -14,7 +14,7 @@ export default class UserRepositoryImp implements UserRepository {
   async findMany(): Promise<User[]> {
     const usersEntity = PrismaUserRepository.findMany();
 
-    const users = (await usersEntity).map(Mapper.toDomain);
+    const users = (await usersEntity).map(UserMapper.toDomain);
 
     return users;
   }

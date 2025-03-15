@@ -1,6 +1,7 @@
 import Fastify from "fastify";
 import { UserRoutes } from "./adapters/routes/UserRoute";
 import fastifyCors from "@fastify/cors";
+import "./infrastructure/@types/fastify";
 import { PortfolioRoute } from "./adapters/routes/PortfolioRoute";
 
 const app = Fastify();
