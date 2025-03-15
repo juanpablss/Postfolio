@@ -1,6 +1,7 @@
 import { prisma } from "../config/prisma";
 import { User } from "@prisma/client";
 import { IUserRepository } from "./contracts/IUserRepository";
+import { HttpError } from "../error/HttpError";
 
 export const UserRepository: IUserRepository = {
   insert: async (
@@ -19,8 +20,9 @@ export const UserRepository: IUserRepository = {
         },
       });
       return user;
-    } catch (error) {}
-    return null;
+    } catch (error) {
+      throw new HttpError(500, "Erro ao registrar usuario!");
+    }
   },
   findMany: async (): Promise<User[]> => {
     return prisma.user.findMany();

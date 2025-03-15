@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { UserRepository } from "../repository/UserRepository";
 import { UserService } from "../service/UserService";
-import { HttpError } from "../util/error/HttpError";
+import { HttpError } from "../error/HttpError";
 import "../@types/fastify";
 
 export const UserController = {
@@ -19,14 +19,7 @@ export const UserController = {
     }>;
 
     const userService = UserService(UserRepository);
-
-    try {
-      await userService.register(name, email, passWord, status);
-    } catch (error) {
-      if (error instanceof HttpError)
-        return reply.status(error.status).send({ msg: error.message });
-      return reply.status(400).send({ msg: "Erro ao registrar usuario!" });
-    }
+    await userService.register(name, email, passWord, status);
 
     return reply.send({ msg: "Usuario criado com sucesso!" });
   },
@@ -37,17 +30,15 @@ export const UserController = {
   },
 
   getByEmail: async (req: FastifyRequest, reply: FastifyReply) => {
-    const { email = null } = req.body as Partial<{ email: string }>;
-
-    const userService = UserService(UserRepository);
-
-    try {
-      const user = await userService.findByEmail(email);
-      return reply.send(user);
-    } catch (error) {
-      const err = error as Error;
-      reply.status(400).send({ msg: err.message });
-    }
+    throw new HttpError(500, "Método não implementado!");
+    // const userService = UserService(UserRepository);
+    // try {
+    //   const user = await userService.findByEmail(email);
+    //   return reply.send(user);
+    // } catch (error) {
+    //   const err = error as Error;
+    //   reply.status(400).send({ msg: err.message });
+    // }
   },
 
   login: async (req: FastifyRequest, resply: FastifyReply) => {
@@ -56,16 +47,9 @@ export const UserController = {
       passWord: string;
     }>;
 
-    try {
-      const userService = UserService(UserRepository);
-      const token = await userService.login(email, passWord);
-
-      resply.send({ msg: "Login bem-sucedido!", token });
-    } catch (error) {
-      if (error instanceof HttpError)
-        return resply.status(error.status).send({ msg: error.message });
-      resply.status(500).send({ msg: "Não foi possivel fazer login!" });
-    }
+    const userService = UserService(UserRepository);
+    const token = await userService.login(email, passWord);
+    resply.send({ msg: "Login bem-sucedido!", token });
   },
 
   getProfile: async (req: FastifyRequest, resply: FastifyReply) => {

@@ -1,7 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { PortfolioRepository } from "../repository/PortfolioRepository";
 import { PortfolioService } from "../service/PortfolioService";
-import { HttpError } from "../util/error/HttpError";
 
 export const PorftolioController = {
   register: async (req: FastifyRequest, reply: FastifyReply) => {
@@ -19,13 +18,8 @@ export const PorftolioController = {
 
     const portfolioService = PortfolioService(PortfolioRepository);
 
-    try {
-      await portfolioService.register(name, description, pageLink, authorId);
-    } catch (error) {
-      if (error instanceof HttpError)
-        return reply.status(error.status).send(error.message);
-      return reply.status(400).send({ msg: "Erro ao registrar portfolio!" });
-    }
+    await portfolioService.register(name, description, pageLink, authorId);
+
     reply.send({ msg: "Portfolio criado com sucesso!" });
   },
   getAll: async (req: FastifyRequest, reply: FastifyReply) => {

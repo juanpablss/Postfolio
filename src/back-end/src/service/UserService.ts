@@ -3,7 +3,7 @@ import { User } from "@prisma/client";
 import { IUserRepository } from "../repository/contracts/IUserRepository";
 import { Cryto } from "../util/Crypto";
 import jwt from "jsonwebtoken";
-import { HttpError } from "../util/error/HttpError";
+import { HttpError } from "../error/HttpError";
 
 export const UserService = (userRepository: IUserRepository) => ({
   register: async (
@@ -12,43 +12,23 @@ export const UserService = (userRepository: IUserRepository) => ({
     passWord: string | null,
     status: string | null
   ) => {
-    if (!name) {
-      throw new HttpError(400, "O nome é obrigatório!");
-    }
-
-    if (!email) {
-      throw new HttpError(400, "O email é obrigatório!");
-    }
-
-    if (!passWord) {
-      throw new HttpError(400, "A senha é obrigatória!");
-    }
-
-    if (!status) {
-      throw new HttpError(400, "O status é obrigatório!");
-    }
+    if (!name) throw new HttpError(400, "O nome é obrigatório!");
+    if (!email) throw new HttpError(400, "O email é obrigatório!");
+    if (!passWord) throw new HttpError(400, "A senha é obrigatória!");
+    if (!status) throw new HttpError(400, "O status é obrigatório!");
 
     const user = await userRepository.findByEmail(email);
 
-    if (user) {
-      throw new HttpError(400, "Por favor, use outro email!");
-    }
+    if (user) throw new HttpError(400, "Por favor, use outro email!");
 
-    try {
-      const hashPassWord = await Cryto.hashPassWord(passWord);
-      await userRepository.insert(name, email, hashPassWord, status);
-    } catch (error) {
-      throw new HttpError(500, "Erro ao registrar usuario!");
-    }
-    // return null;
+    const hashPassWord = await Cryto.hashPassWord(passWord);
+    await userRepository.insert(name, email, hashPassWord, status);
   },
   findMany: async (): Promise<User[]> => {
     return userRepository.findMany();
   },
   findByEmail: async (email: string | null): Promise<User | null> => {
-    if (!email) {
-      throw new Error("O email é obrigatório!");
-    }
+    if (!email) throw new HttpError(400, "O email é obrigatório!");
 
     const user = await userRepository.findByEmail(email);
     return user;
@@ -57,25 +37,16 @@ export const UserService = (userRepository: IUserRepository) => ({
     email: string | null,
     passWord: string | null
   ): Promise<string> => {
-    if (!email) {
-      throw new HttpError(400, "O email é obrigatório!");
-    }
-
-    if (!passWord) {
-      throw new HttpError(400, "A senha é obrigatória!");
-    }
+    if (!email) throw new HttpError(400, "O email é obrigatório!");
+    if (!passWord) throw new HttpError(400, "A senha é obrigatória!");
 
     const user = await userRepository.findByEmail(email);
 
-    if (!user) {
-      throw new HttpError(404, "Usuário não encontrado!");
-    }
+    if (!user) throw new HttpError(404, "Usuário não encontrado!");
 
     const checkPassWord = await Cryto.compare(passWord, user.passWord);
 
-    if (!checkPassWord) {
-      throw new HttpError(401, "Senha incorreta!");
-    }
+    if (!checkPassWord) throw new HttpError(401, "Senha incorreta!");
 
     try {
       const secret = process.env.JWT_SECRET || "default_secret";
@@ -85,7 +56,6 @@ export const UserService = (userRepository: IUserRepository) => ({
       });
       return token;
     } catch (error) {
-      // return resply.status(500).send({ msg: "Não é possivel fazer login!" });
       throw new HttpError(500, "Não é possivel fazer login!");
     }
   },

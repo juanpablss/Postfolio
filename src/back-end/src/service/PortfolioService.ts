@@ -1,5 +1,5 @@
 import { IPortfolioRepository } from "../repository/contracts/IPortfolioRepository";
-import { HttpError } from "../util/error/HttpError";
+import { HttpError } from "../error/HttpError";
 import { Portfolio } from "@prisma/client";
 
 export const PortfolioService = (
