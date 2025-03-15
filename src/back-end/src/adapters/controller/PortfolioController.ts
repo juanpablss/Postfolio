@@ -1,10 +1,9 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import PortfolioRepositoryImp from "../repository/PortfolioRepositoryImp";
-import { PortfolioServiceImp } from "../../application/service/PortfolioServiceImp";
 import Portflio from "../../domain/Portfolio/Portfolio";
 import { HttpError } from "../../infrastructure/error/HttpError";
+import PortfolioUseCases from "../../application/UseCases/PortfolioUseCases";
 
-export const PorftolioController = {
+export const PortfolioController = (portfolioService: PortfolioUseCases) => ({
   register: async (req: FastifyRequest, reply: FastifyReply) => {
     const {
       name = null,
@@ -21,8 +20,6 @@ export const PorftolioController = {
     if (!name || !description || !pageLink || !authorId)
       throw new HttpError(400, "Todos os campos são obrigatórios!");
 
-    const portfolioService = PortfolioServiceImp(new PortfolioRepositoryImp());
-
     await portfolioService.register(
       new Portflio(-1, name, description, pageLink, authorId)
     );
@@ -30,7 +27,6 @@ export const PorftolioController = {
     reply.send({ msg: "Portfolio criado com sucesso!" });
   },
   getAll: async (req: FastifyRequest, reply: FastifyReply) => {
-    const portfolioService = PortfolioServiceImp(new PortfolioRepositoryImp());
     const portfolios = await portfolioService.findMany();
     reply.send(portfolios);
     // const portfolios = portfolioService.
@@ -38,7 +34,6 @@ export const PorftolioController = {
   getById: async (req: FastifyRequest, reply: FastifyReply) => {
     const id = req.params as { id: string };
 
-    const portfolioService = PortfolioServiceImp(new PortfolioRepositoryImp());
     const portfolio = portfolioService.findById(Number(id));
 
     reply.send(portfolio);
@@ -46,9 +41,8 @@ export const PorftolioController = {
   getByUser: async (req: FastifyRequest, reply: FastifyReply) => {
     const authorId = Number(req.user?.id);
 
-    const portfolioService = PortfolioServiceImp(new PortfolioRepositoryImp());
     const portfolios = await portfolioService.findByAuthorId(authorId);
 
     reply.send(portfolios);
   },
-};
+});

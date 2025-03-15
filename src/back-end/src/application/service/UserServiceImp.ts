@@ -4,7 +4,7 @@ import { UserRepository } from "../../domain/User/UserRepository";
 import { Crypt } from "../../util/Crypto";
 import jwt from "jsonwebtoken";
 import { HttpError } from "../../infrastructure/error/HttpError";
-import UserUseCases from "../usecases/UserUseCases";
+import UserUseCases from "../UseCases/UserUseCases";
 
 export const UserServiceImp = (
   userRepository: UserRepository

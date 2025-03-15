@@ -1,7 +1,7 @@
 import Portfolio from "../../domain/Portfolio/Portfolio";
 import PortfolioRepository from "../../domain/Portfolio/PortfolioRepository";
 import { HttpError } from "../../infrastructure/error/HttpError";
-import PortfolioUseCases from "../usecases/PortfolioUseCases";
+import PortfolioUseCases from "../UseCases/PortfolioUseCases";
 
 export const PortfolioServiceImp = (
   portfolioRepository: PortfolioRepository
