@@ -23,9 +23,11 @@ export default class UserRepositoryImp implements UserRepository {
     throw new Error("Function not implemented.");
   }
   async findByEmail(email: string): Promise<User | null> {
-    throw new Error("Function not implemented.");
+    return await PrismaUserRepository.findByEmail(email);
   }
   async deleteById(id: number): Promise<User | null> {
-    throw new Error("Function not implemented.");
+    const userEntity = await PrismaUserRepository.deleteById(id);
+    if (!userEntity) return null;
+    return UserMapper.toDomain(userEntity);
   }
 }

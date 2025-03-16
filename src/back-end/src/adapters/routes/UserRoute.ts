@@ -19,5 +19,9 @@ export async function UserRoutes(app: FastifyInstance) {
     userController.getProfile
   );
 
-  // app.delete('/', UserController.delete)
+  app.delete(
+    "",
+    { preHandler: UserMiddle.authenticate },
+    userController.deleteById
+  );
 }

@@ -53,4 +53,7 @@ export const UserServiceImp = (
       throw new HttpError(500, "Não é possivel fazer login!");
     }
   },
+  deleteById: async (id: number): Promise<User | null> => {
+    return await userRepository.deleteById(id);
+  },
 });

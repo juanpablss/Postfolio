@@ -34,8 +34,9 @@ export const PrismaUserRepository = {
       });
       return userDelete;
     } catch (error) {
-      console.log(`Erro: ${error}`);
-      return null;
+      console.log("Id: ", id, "\n");
+      // console.log(error);
+      throw new HttpError(500, "Não foi possivel deletar usuario!");
     }
   },
 };

@@ -41,17 +41,24 @@ export const UserController = (userService: UserUseCases) => ({
     // }
   },
 
-  login: async (req: FastifyRequest, resply: FastifyReply) => {
+  login: async (req: FastifyRequest, reply: FastifyReply) => {
     const { email = null, passWord = null } = req.body as Partial<{
       email: string;
       passWord: string;
     }>;
 
     const token = await userService.login(email, passWord);
-    resply.send({ msg: "Login bem-sucedido!", token });
+    reply.send({ msg: "Login bem-sucedido!", token });
   },
 
-  getProfile: async (req: FastifyRequest, resply: FastifyReply) => {
-    resply.send({ msg: "Perfil do usuário", user: req.user });
+  getProfile: async (req: FastifyRequest, reply: FastifyReply) => {
+    reply.send({ msg: "Perfil do usuário", user: req.user });
+  },
+  deleteById: async (req: FastifyRequest, reply: FastifyReply) => {
+    const id = req.user?.id;
+
+    console.log("Id Controller: ", id, "\n");
+    const user = await userService.deleteById(Number(id));
+    reply.send(user);
   },
 });
