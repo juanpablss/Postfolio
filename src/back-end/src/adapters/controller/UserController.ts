@@ -1,9 +1,9 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { HttpError } from "../../infrastructure/error/HttpError";
 import User from "../../domain/User/User";
-import UserUseCases from "../../application/UseCases/UserUseCases";
+import userService from "../../application/service/UserServiceImp";
 
-export const UserController = (userService: UserUseCases) => ({
+export const UserController = {
   register: async (req: FastifyRequest, reply: FastifyReply) => {
     const {
       name = null,
@@ -31,6 +31,7 @@ export const UserController = (userService: UserUseCases) => ({
 
   getByEmail: async (req: FastifyRequest, reply: FastifyReply) => {
     throw new HttpError(500, "Método não implementado!");
+    // if (!email) throw new HttpError(400, "O email é obrigatório!");
     // const userService = UserService(UserRepository);
     // try {
     //   const user = await userService.findByEmail(email);
@@ -47,6 +48,9 @@ export const UserController = (userService: UserUseCases) => ({
       passWord: string;
     }>;
 
+    if (!email) throw new HttpError(400, "O email é obrigatório!");
+    if (!passWord) throw new HttpError(400, "A senha é obrigatória!");
+
     const token = await userService.login(email, passWord);
     reply.send({ msg: "Login bem-sucedido!", token });
   },
@@ -55,10 +59,12 @@ export const UserController = (userService: UserUseCases) => ({
     reply.send({ msg: "Perfil do usuário", user: req.user });
   },
   deleteById: async (req: FastifyRequest, reply: FastifyReply) => {
-    const id = req.user?.id;
+    const strId = req.user?.id;
+    if (!strId) throw new HttpError(400, "Id do usuario é obrigatorio!");
 
-    console.log("Id Controller: ", id, "\n");
-    const user = await userService.deleteById(Number(id));
+    const id = Number(strId);
+
+    const user = await userService.deleteById(id);
     reply.send(user);
   },
-});
+};

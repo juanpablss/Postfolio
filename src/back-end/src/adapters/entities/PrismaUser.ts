@@ -1,3 +1,5 @@
-import { User as PrismaUser } from "@prisma/client";
+import { User as UserEntity } from "@prisma/client";
 
+type PrismaUser = UserEntity;
 export default PrismaUser;
+// export default PrismaUser;

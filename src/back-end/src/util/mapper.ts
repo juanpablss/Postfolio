@@ -17,7 +17,7 @@ export const UserMapper = {
     return {
       id: user.id,
       name: user.name,
-      email: user.email,
+      email: user.email.getValue(),
       passWord: user.passWord,
       status: user.status,
     };

@@ -1,24 +1,24 @@
 import { FastifyInstance } from "fastify";
 import { PortfolioController } from "../controller/PortfolioController";
 import { UserMiddle } from "../middleware/UserMiddle";
-import PortfolioRepositoryImp from "../repository/PortfolioRepositoryImp";
-import { PortfolioServiceImp } from "../../application/service/PortfolioServiceImp";
-
-const portfolioRepository = new PortfolioRepositoryImp();
-const portfolioService = PortfolioServiceImp(portfolioRepository);
-const portfolioController = PortfolioController(portfolioService);
 
 export async function PortfolioRoute(app: FastifyInstance) {
-  app.get("/all", portfolioController.getAll);
+  app.get("/all", PortfolioController.getAll);
   app.post(
     "",
     { preHandler: UserMiddle.authenticate },
-    portfolioController.register
+    PortfolioController.register
   );
   app.get(
     "",
     { preHandler: UserMiddle.authenticate },
-    portfolioController.getByUser
+    PortfolioController.getByUser
+  );
+
+  app.delete(
+    "/:id",
+    { preHandler: UserMiddle.authenticate },
+    PortfolioController.deleteById
   );
 
   // app.get("/:id", )

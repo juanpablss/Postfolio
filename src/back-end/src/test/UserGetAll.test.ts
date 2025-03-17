@@ -1,7 +1,7 @@
 import request from "supertest";
 
 // cd src/back-end
-// yarn jest UserAll.test.ts
+// yarn jest UserGetAll.test.ts
 describe("User API Tests", () => {
   const api = "http://localhost:8080";
   const userPassWord = "123456789";

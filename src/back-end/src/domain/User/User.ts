@@ -1,7 +1,9 @@
+import Email from "../ValueObject/Email";
+
 export default class User {
   id: number;
   name: string;
-  email: string;
+  email: Email;
   passWord: string;
   status: string;
 
@@ -14,7 +16,7 @@ export default class User {
   ) {
     this.id = id;
     this.name = name;
-    this.email = email;
+    this.email = new Email(email);
     this.passWord = passWord;
     this.status = status;
   }

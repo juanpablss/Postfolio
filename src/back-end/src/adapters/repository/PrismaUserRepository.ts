@@ -3,7 +3,7 @@ import PrismaUser from "../entities/PrismaUser";
 import { HttpError } from "../../infrastructure/error/HttpError";
 
 export const PrismaUserRepository = {
-  insert: async (prismaUser: PrismaUser): Promise<PrismaUser | null> => {
+  insert: async (prismaUser: PrismaUser): Promise<PrismaUser> => {
     try {
       const user = prisma.user.create({
         data: {

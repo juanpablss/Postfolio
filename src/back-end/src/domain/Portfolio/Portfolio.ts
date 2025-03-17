@@ -1,4 +1,4 @@
-export default class Portflio {
+export default class Portfolio {
   id: number;
   name: string;
   description: string;

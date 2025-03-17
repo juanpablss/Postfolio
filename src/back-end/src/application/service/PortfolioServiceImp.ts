@@ -1,29 +1,60 @@
+import portfolioRepository from "../../adapters/repository/PortfolioRepositoryImp";
 import Portfolio from "../../domain/Portfolio/Portfolio";
-import PortfolioRepository from "../../domain/Portfolio/PortfolioRepository";
 import { HttpError } from "../../infrastructure/error/HttpError";
 import PortfolioUseCases from "../UseCases/PortfolioUseCases";
+import userService from "./UserServiceImp";
 
-export const PortfolioServiceImp = (
-  portfolioRepository: PortfolioRepository
-): PortfolioUseCases => ({
-  register: async (portfolio: Portfolio) => {
-    await portfolioRepository.insert(portfolio);
-  },
-  findMany: async (): Promise<Portfolio[]> => {
+class PortfolioServiceImp implements PortfolioUseCases {
+  async register(portfolio: Portfolio): Promise<Portfolio> {
+    const author = await userService.findById(portfolio.authorId);
+    if (!author) throw new HttpError(400, "Author não registrado!");
+    return await portfolioRepository.insert(portfolio);
+  }
+
+  async findMany(): Promise<Portfolio[]> {
     const portfolios = await portfolioRepository.findMany();
     return portfolios;
-  },
+  }
 
-  findById: async (id: number | null): Promise<Portfolio | null> => {
-    if (!id || typeof id !== "number")
-      throw new HttpError(400, "Author é obrigatorio");
+  async findById(id: number): Promise<Portfolio | null> {
     return await portfolioRepository.findById(id);
-  },
+  }
 
-  findByAuthorId: async (authorId: number | null): Promise<Portfolio[]> => {
-    if (!authorId || typeof authorId !== "number")
-      throw new HttpError(400, "Author é obrigatorio");
-
+  async findByAuthorId(authorId: number): Promise<Portfolio[]> {
     return await portfolioRepository.findByAuthor(authorId);
-  },
-});
+  }
+
+  async deleteById(id: number): Promise<Portfolio | null> {
+    const portfolio = await portfolioRepository.deleteById(id);
+    return portfolio;
+  }
+}
+
+const portfolioService: PortfolioUseCases = new PortfolioServiceImp();
+export default portfolioService;
+// export const PortfolioServiceImp = (
+//   portfolioRepository: PortfolioRepository,
+//   userService: UserUseCases
+// ): PortfolioUseCases => ({
+//   register: async (portfolio: Portfolio) => {
+//     // const author =
+//     await portfolioRepository.insert(portfolio);
+//   },
+//   findMany: async (): Promise<Portfolio[]> => {
+//     const portfolios = await portfolioRepository.findMany();
+//     return portfolios;
+//   },
+
+//   findById: async (id: number | null): Promise<Portfolio | null> => {
+//     if (!id || typeof id !== "number")
+//       throw new HttpError(400, "Author é obrigatorio");
+//     return await portfolioRepository.findById(id);
+//   },
+
+//   findByAuthorId: async (authorId: number | null): Promise<Portfolio[]> => {
+//     if (!authorId || typeof authorId !== "number")
+//       throw new HttpError(400, "Author é obrigatorio");
+
+//     return await portfolioRepository.findByAuthor(authorId);
+//   },
+// });

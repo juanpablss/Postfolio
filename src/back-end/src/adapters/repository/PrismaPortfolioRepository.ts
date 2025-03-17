@@ -36,6 +36,14 @@ export const PrismaPortfolioRepository = {
     });
   },
   deleteById: function (id: number): Promise<PrismaPortfolio | null> {
-    throw new Error("Function not implemented.");
+    try {
+      return prisma.portfolio.delete({
+        where: {
+          id,
+        },
+      });
+    } catch (error) {
+      throw new HttpError(500, "Não foi possivel deletar o portfolio!");
+    }
   },
 };
