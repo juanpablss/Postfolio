@@ -6,7 +6,7 @@ describe("Portfolio API Tests", () => {
   const api = "http://localhost:8080";
 
   test("GET ALL", async () => {
-    const response = await request(api).get("/api/portfolio/all");
+    const response = await request(api).post("/api/portfolio/all");
 
     console.log("Responde body: ", response.body);
 

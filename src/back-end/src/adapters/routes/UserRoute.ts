@@ -4,10 +4,10 @@ import { UserMiddle } from "../middleware/UserMiddle";
 
 export async function UserRoutes(app: FastifyInstance) {
   app.post("/register", UserController.register);
-  app.get("/all", UserController.getAll);
+  app.post("/all", UserController.getAll);
   app.post("/login", UserController.login);
 
-  app.get(
+  app.post(
     "/profile",
     { preHandler: UserMiddle.authenticate },
     UserController.getProfile

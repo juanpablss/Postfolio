@@ -8,7 +8,7 @@ describe("User API Tests", () => {
   let userToken: string;
 
   test("GET all", async () => {
-    const response = await request(api).get("/api/user/all");
+    const response = await request(api).post("/api/user/all");
 
     console.log("Responde body: ", response.body);
 

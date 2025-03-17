@@ -36,7 +36,7 @@ describe("User API Tests", () => {
 
   test("GET /api/user/profile", async () => {
     const response = await request(api)
-      .get("/api/user/profile")
+      .post("/api/user/profile")
       .set("Authorization", `Bearer ${userToken}`);
 
     console.log("Get Profile responde: ", response.body);
