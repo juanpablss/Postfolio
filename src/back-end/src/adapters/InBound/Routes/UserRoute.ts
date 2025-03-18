@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
-import { UserController } from "../controller/UserController";
-import { UserMiddle } from "../middleware/UserMiddle";
+import { UserController } from "../Controller/UserController";
+import { UserMiddle } from "../Middleware/UserMiddle";
 
 export async function UserRoutes(app: FastifyInstance) {
   app.post("", UserController.register);

@@ -1,8 +1,8 @@
 import Fastify from "fastify";
-import { UserRoutes } from "./adapters/routes/UserRoute";
+import { UserRoutes } from "./adapters/InBound/Routes/UserRoute";
 import fastifyCors from "@fastify/cors";
 import "./infrastructure/@types/fastify";
-import { PortfolioRoute } from "./adapters/routes/PortfolioRoute";
+import { PortfolioRoute } from "./adapters/InBound/Routes/PortfolioRoute";
 
 const app = Fastify();
 const PORT = 8080;

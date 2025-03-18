@@ -1,11 +1,11 @@
+import UserUseCases from "../usecases/UserUseCases";
 import User from "../../domain/Entities/User/User";
+import Portfolio from "../../domain/Entities/Portfolio/Portfolio";
+import userRepository from "../../adapters/OutBound/Repository/UserRepositoryImp";
+import portfolioRepository from "../../adapters/OutBound/Repository/PortfolioRepositoryImp";
 import { Crypt } from "../../util/Crypto";
 import { HttpError } from "../../infrastructure/error/HttpError";
-import UserUseCases from "../usecases/UserUseCases";
 import { Token } from "../../util/Token";
-import userRepository from "../../adapters/repository/UserRepositoryImp";
-import Portfolio from "../../domain/Entities/Portfolio/Portfolio";
-import portfolioRepository from "../../adapters/repository/PortfolioRepositoryImp";
 
 class UserServiceImp implements UserUseCases {
   async register(user: User): Promise<void> {
