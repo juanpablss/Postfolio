@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import Portfolio from "../../domain/Portfolio/Portfolio";
+import Portfolio from "../../domain/Entities/Portfolio/Portfolio";
 import { HttpError } from "../../infrastructure/error/HttpError";
 import portfolioService from "../../application/service/PortfolioServiceImp";
 
@@ -32,8 +32,8 @@ export const PortfolioController = {
     // const portfolios = portfolioService.
   },
   getById: async (req: FastifyRequest, reply: FastifyReply) => {
-    const strId = req.params as { id: string };
-    const id = Number(strId);
+    const params = req.params as { id: string };
+    const id = Number(params.id);
     if (!id || typeof id !== "number")
       throw new HttpError(400, "Id é obrigatorio");
 
@@ -43,8 +43,9 @@ export const PortfolioController = {
   },
 
   deleteById: async (req: FastifyRequest, reply: FastifyReply) => {
-    const strId = req.params as { id: string };
-    const id = Number(strId);
+    const params = req.params as { id: string };
+    const id = Number(params.id);
+
     if (!id || typeof id !== "number")
       throw new HttpError(400, "Id do portofolio é obrigatorio!");
 

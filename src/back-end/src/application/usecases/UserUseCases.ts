@@ -1,5 +1,5 @@
-import Portfolio from "../../domain/Portfolio/Portfolio";
-import User from "../../domain/User/User";
+import Portfolio from "../../domain/Entities/Portfolio/Portfolio";
+import User from "../../domain/Entities/User/User";
 
 export default interface UserUseCases {
   register(user: User): Promise<void>;

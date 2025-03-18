@@ -7,8 +7,8 @@ describe("User API Tests", () => {
   const userPassWord = "123456789";
   let userToken: string; // Para armazenar o token de autenticação
 
-  test("POST /api/user/register", async () => {
-    const response = await request(api).post("/api/user/register").send({
+  test("POST /api/user", async () => {
+    const response = await request(api).post("/api/user").send({
       name: "Test User",
       email: "test@example.com",
       passWord: userPassWord,
