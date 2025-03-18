@@ -1,6 +1,7 @@
 import { prisma } from "../../infrastructure/config/prisma";
 import PrismaUser from "../entities/PrismaUser";
 import { HttpError } from "../../infrastructure/error/HttpError";
+import PrismaPortfolio from "../entities/PrismaPortfolio";
 
 export const PrismaUserRepository = {
   insert: async (prismaUser: PrismaUser): Promise<PrismaUser> => {

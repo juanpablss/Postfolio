@@ -1,7 +1,7 @@
 import portfolioRepository from "../../adapters/repository/PortfolioRepositoryImp";
 import Portfolio from "../../domain/Portfolio/Portfolio";
 import { HttpError } from "../../infrastructure/error/HttpError";
-import PortfolioUseCases from "../UseCases/PortfolioUseCases";
+import PortfolioUseCases from "../usecases/PortfolioUseCases";
 import userService from "./UserServiceImp";
 
 class PortfolioServiceImp implements PortfolioUseCases {

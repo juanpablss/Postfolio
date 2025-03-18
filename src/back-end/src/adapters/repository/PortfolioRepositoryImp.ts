@@ -24,7 +24,13 @@ class PortfolioRepositoryImp implements PortfolioRepository {
     return Mapper.Portfolio.toDomain(portfolioEntity);
   }
   async findByAuthor(authorId: number): Promise<Portfolio[]> {
-    throw new Error("Function not implemented.");
+    const portfolioEntities = await PrismaPortfolioRepository.findByAuthor(
+      authorId
+    );
+    // console.log("Aqui:\n", portfolioEntities);
+    const portfolios = portfolioEntities.map(Mapper.Portfolio.toDomain);
+    // console.log("Aqui2  :\n", portfolioEntities);
+    return portfolios;
   }
   async deleteById(id: number): Promise<Portfolio | null> {
     return await PrismaPortfolioRepository.deleteById(id);

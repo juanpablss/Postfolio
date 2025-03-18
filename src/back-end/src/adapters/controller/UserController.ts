@@ -58,11 +58,24 @@ export const UserController = {
   getProfile: async (req: FastifyRequest, reply: FastifyReply) => {
     reply.send({ msg: "Perfil do usuário", user: req.user });
   },
-  deleteById: async (req: FastifyRequest, reply: FastifyReply) => {
-    const strId = req.user?.id;
-    if (!strId) throw new HttpError(400, "Id do usuario é obrigatorio!");
+  getPortfolio: async (req: FastifyRequest, reply: FastifyReply) => {
+    const authorID = req.user?.id;
 
-    const id = Number(strId);
+    if (!authorID)
+      throw new HttpError(400, "Os dados enviados não são validos!");
+
+    if (typeof authorID !== "number")
+      throw new HttpError(400, "O id é invalido!");
+
+    const portfolios = await userService.findPortfolio(authorID);
+
+    reply.send(portfolios);
+  },
+  deleteById: async (req: FastifyRequest, reply: FastifyReply) => {
+    const id = req.user?.id;
+    if (!id) throw new HttpError(400, "Id do usuario é obrigatorio!");
+
+    if (typeof id !== "number") throw new HttpError(400, "O id é invalido!");
 
     const user = await userService.deleteById(id);
     reply.send(user);

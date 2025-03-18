@@ -1,10 +1,12 @@
+import Portfolio from "../../domain/Portfolio/Portfolio";
 import User from "../../domain/User/User";
 
 export default interface UserUseCases {
   register(user: User): Promise<void>;
-  findById(id: number): Promise<User | null>;
   findMany(): Promise<User[]>;
   findByEmail(email: string): Promise<User | null>;
+  findById(id: number): Promise<User | null>;
+  findPortfolio(authorId: number): Promise<Portfolio[]>;
   login(email: string, passWord: string): Promise<string>;
   deleteById(id: number): Promise<User | null>;
 }

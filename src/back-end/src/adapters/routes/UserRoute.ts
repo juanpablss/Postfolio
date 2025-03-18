@@ -3,7 +3,7 @@ import { UserController } from "../controller/UserController";
 import { UserMiddle } from "../middleware/UserMiddle";
 
 export async function UserRoutes(app: FastifyInstance) {
-  app.post("/register", UserController.register);
+  app.post("", UserController.register);
   app.post("/all", UserController.getAll);
   app.post("/login", UserController.login);
 
@@ -11,6 +11,12 @@ export async function UserRoutes(app: FastifyInstance) {
     "/profile",
     { preHandler: UserMiddle.authenticate },
     UserController.getProfile
+  );
+
+  app.post(
+    "/portfolio",
+    { preHandler: UserMiddle.authenticate },
+    UserController.getPortfolio
   );
 
   app.delete(
