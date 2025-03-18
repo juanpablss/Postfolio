@@ -1,18 +1,19 @@
 import { PrismaPortfolioRepository } from "./PrismaPortfolioRepository";
 import PortfolioRepository from "../../domain/Portfolio/PortfolioRepository";
 import Portfolio from "../../domain/Portfolio/Portfolio";
-import { PortfolioMapper } from "../../util/mapper";
+// import { PortfolioMapper } from "../../util/Mapper";
+import Mapper from "../../util/Mapper";
 
 class PortfolioRepositoryImp implements PortfolioRepository {
   async insert(portfolio: Portfolio): Promise<Portfolio> {
-    const portfolioEntity = PortfolioMapper.toPrisma(portfolio);
+    const portfolioEntity = Mapper.Portfolio.toPrisma(portfolio);
     portfolio.id = (await PrismaPortfolioRepository.insert(portfolioEntity)).id;
     return portfolio;
   }
 
   async findMany(): Promise<Portfolio[]> {
     return (await PrismaPortfolioRepository.findMany()).map(
-      PortfolioMapper.toDomain
+      Mapper.Portfolio.toDomain
     );
   }
   async findById(id: number): Promise<Portfolio | null> {
@@ -20,7 +21,7 @@ class PortfolioRepositoryImp implements PortfolioRepository {
 
     if (!portfolioEntity) return null;
 
-    return PortfolioMapper.toDomain(portfolioEntity);
+    return Mapper.Portfolio.toDomain(portfolioEntity);
   }
   async findByAuthor(authorId: number): Promise<Portfolio[]> {
     throw new Error("Function not implemented.");

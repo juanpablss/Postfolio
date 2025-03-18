@@ -2,19 +2,18 @@ import User from "../../domain/User/User";
 import PrismaUser from "../entities/PrismaUser";
 import { UserRepository } from "../../domain/User/UserRepository";
 import { PrismaUserRepository } from "./PrismaUserRepository";
-import { UserMapper } from "../../util/mapper";
+import Mapper from "../../util/Mapper";
 
 class UserRepositoryImp implements UserRepository {
   async insert(user: User): Promise<User | null> {
-    const userEntity: PrismaUser = UserMapper.toPrisma(user);
-    // const  = await PrismaUserRepository.insert(userEntity).;
-    return UserMapper.toDomain(await PrismaUserRepository.insert(userEntity));
+    const userEntity: PrismaUser = Mapper.User.toPrisma(user);
+    return Mapper.User.toDomain(await PrismaUserRepository.insert(userEntity));
   }
 
   async findMany(): Promise<User[]> {
     const usersEntity = PrismaUserRepository.findMany();
 
-    const users = (await usersEntity).map(UserMapper.toDomain);
+    const users = (await usersEntity).map(Mapper.User.toDomain);
 
     return users;
   }
@@ -22,17 +21,17 @@ class UserRepositoryImp implements UserRepository {
   async findById(id: number): Promise<User | null> {
     const userEntity = await PrismaUserRepository.findById(id);
     if (!userEntity) return null;
-    return UserMapper.toDomain(userEntity);
+    return Mapper.User.toDomain(userEntity);
   }
   async findByEmail(email: string): Promise<User | null> {
     const userEntity = await PrismaUserRepository.findByEmail(email);
     if (!userEntity) return null;
-    return UserMapper.toDomain(userEntity);
+    return Mapper.User.toDomain(userEntity);
   }
   async deleteById(id: number): Promise<User | null> {
     const userEntity = await PrismaUserRepository.deleteById(id);
     if (!userEntity) return null;
-    return UserMapper.toDomain(userEntity);
+    return Mapper.User.toDomain(userEntity);
   }
 }
 
