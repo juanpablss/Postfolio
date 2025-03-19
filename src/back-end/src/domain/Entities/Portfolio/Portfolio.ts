@@ -3,14 +3,14 @@ export default class Portfolio {
   name: string;
   description: string;
   pageLink: string;
-  authorId: number;
+  authorId: string;
 
   constructor(
     id: number,
     name: string,
     description: string,
     pageLink: string,
-    authorId: number
+    authorId: string
   ) {
     this.id = id;
     this.name = name;

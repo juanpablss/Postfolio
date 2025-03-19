@@ -18,7 +18,7 @@ class UserRepositoryImp implements UserRepository {
     return users;
   }
 
-  async findById(id: number): Promise<User | null> {
+  async findById(id: string): Promise<User | null> {
     const userEntity = await PrismaUserRepository.findById(id);
     if (!userEntity) return null;
     return Mapper.User.toDomain(userEntity);
@@ -28,7 +28,7 @@ class UserRepositoryImp implements UserRepository {
     if (!userEntity) return null;
     return Mapper.User.toDomain(userEntity);
   }
-  async deleteById(id: number): Promise<User | null> {
+  async deleteById(id: string): Promise<User | null> {
     const userEntity = await PrismaUserRepository.deleteById(id);
     if (!userEntity) return null;
     return Mapper.User.toDomain(userEntity);

@@ -14,7 +14,8 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
+  @@map("tb_user")
+  id String @id @default(uuid())
   name String
   email String @unique
   passWord String
@@ -23,20 +24,22 @@ model User {
   ratings Rating[]
 }
 
-model Portfolio{
+model Portfolio {
+  @@map("tb_portfolio")
   id Int @id @default(autoincrement())
   name String
   description String
   pageLink String
-  authorId Int
+  authorId String
   author User @relation(fields: [authorId], references: [id])
   ratings Rating[]
 }
 
 model Rating{
   // id Int @id @default(autoincrement())
+  @@map("tb_rating")
   user User @relation(fields: [userId], references: [id])
-  userId Int
+  userId String
   portfolio Portfolio @relation(fields: [portfolioId], references: [id])
   portfolioId Int
   score Float

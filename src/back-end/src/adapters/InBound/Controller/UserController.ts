@@ -2,6 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { HttpError } from "../../../infrastructure/error/HttpError";
 import User from "../../../domain/Entities/User/User";
 import userService from "../../../application/service/UserServiceImp";
+import { Uuid } from "../../../util/Uuid";
 
 export const UserController = {
   register: async (req: FastifyRequest, reply: FastifyReply) => {
@@ -20,7 +21,9 @@ export const UserController = {
     if (!name || !email || !passWord || !status)
       throw new HttpError(400, "Todos os campos são obrigatórios!");
 
-    await userService.register(new User(-1, name, email, passWord, status));
+    await userService.register(
+      new User(Uuid.generate(), name, email, passWord, status)
+    );
 
     return reply.send({ msg: "Usuario criado com sucesso!" });
   },
@@ -64,9 +67,6 @@ export const UserController = {
     if (!authorID)
       throw new HttpError(400, "Os dados enviados não são validos!");
 
-    if (typeof authorID !== "number")
-      throw new HttpError(400, "O id é invalido!");
-
     const portfolios = await userService.findPortfolio(authorID);
 
     reply.send(portfolios);
@@ -74,8 +74,6 @@ export const UserController = {
   deleteById: async (req: FastifyRequest, reply: FastifyReply) => {
     const id = req.user?.id;
     if (!id) throw new HttpError(400, "Id do usuario é obrigatorio!");
-
-    if (typeof id !== "number") throw new HttpError(400, "O id é invalido!");
 
     const user = await userService.deleteById(id);
     reply.send(user);

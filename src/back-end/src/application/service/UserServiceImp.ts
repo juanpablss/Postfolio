@@ -24,7 +24,7 @@ class UserServiceImp implements UserUseCases {
     return userRepository.findMany();
   }
 
-  async findById(id: number): Promise<User | null> {
+  async findById(id: string): Promise<User | null> {
     return await userRepository.findById(id);
   }
 
@@ -33,7 +33,7 @@ class UserServiceImp implements UserUseCases {
     return user;
   }
 
-  async findPortfolio(authorId: number): Promise<Portfolio[]> {
+  async findPortfolio(authorId: string): Promise<Portfolio[]> {
     return await portfolioRepository.findByAuthor(authorId);
   }
 
@@ -48,7 +48,7 @@ class UserServiceImp implements UserUseCases {
 
     return Token.generate(user.id, user.email.getValue());
   }
-  async deleteById(id: number): Promise<User | null> {
+  async deleteById(id: string): Promise<User | null> {
     return await userRepository.deleteById(id);
   }
 }

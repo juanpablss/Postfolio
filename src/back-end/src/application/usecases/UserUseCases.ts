@@ -5,8 +5,8 @@ export default interface UserUseCases {
   register(user: User): Promise<void>;
   findMany(): Promise<User[]>;
   findByEmail(email: string): Promise<User | null>;
-  findById(id: number): Promise<User | null>;
-  findPortfolio(authorId: number): Promise<Portfolio[]>;
+  findById(id: string): Promise<User | null>;
+  findPortfolio(authorId: string): Promise<Portfolio[]>;
   login(email: string, passWord: string): Promise<string>;
-  deleteById(id: number): Promise<User | null>;
+  deleteById(id: string): Promise<User | null>;
 }

@@ -14,7 +14,7 @@ export const PortfolioController = {
       name: string;
       description: string;
       pageLink: string;
-      authorId: number;
+      authorId: string;
     }>;
 
     if (!name || !description || !pageLink || !authorId)

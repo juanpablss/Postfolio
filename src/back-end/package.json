@@ -33,6 +33,7 @@
     "jsonwebtoken": "^9.0.2",
     "package": "^1.0.1",
     "supertest": "^7.0.0",
+    "uuid": "^11.1.0",
     "validator": "^13.12.0"
   }
 }

@@ -23,7 +23,7 @@ class PortfolioRepositoryImp implements PortfolioRepository {
 
     return Mapper.Portfolio.toDomain(portfolioEntity);
   }
-  async findByAuthor(authorId: number): Promise<Portfolio[]> {
+  async findByAuthor(authorId: string): Promise<Portfolio[]> {
     const portfolioEntities = await PrismaPortfolioRepository.findByAuthor(
       authorId
     );

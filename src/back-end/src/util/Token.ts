@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { HttpError } from "../infrastructure/error/HttpError";
 
 export const Token = {
-  generate(id: number, email: string): string {
+  generate(id: string, email: string): string {
     try {
       const secret = process.env.JWT_SECRET || "default_secret";
 

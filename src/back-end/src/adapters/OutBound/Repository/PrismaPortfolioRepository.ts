@@ -30,7 +30,7 @@ export const PrismaPortfolioRepository = {
       },
     });
   },
-  findByAuthor: async (authorId: number): Promise<PrismaPortfolio[]> => {
+  findByAuthor: async (authorId: string): Promise<PrismaPortfolio[]> => {
     return prisma.portfolio.findMany({
       where: { authorId },
     });

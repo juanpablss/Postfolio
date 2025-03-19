@@ -1,14 +1,14 @@
 import Email from "../../ValueObject/Email";
 
 export default class User {
-  id: number;
+  id: string;
   name: string;
   email: Email;
   passWord: string;
   status: string;
 
   constructor(
-    id: number,
+    id: string,
     name: string,
     email: string,
     passWord: string,

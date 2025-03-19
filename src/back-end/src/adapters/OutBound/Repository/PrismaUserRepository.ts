@@ -7,6 +7,7 @@ export const PrismaUserRepository = {
     try {
       const user = prisma.user.create({
         data: {
+          id: prismaUser.id,
           name: prismaUser.name,
           email: prismaUser.email,
           passWord: prismaUser.passWord,
@@ -21,13 +22,13 @@ export const PrismaUserRepository = {
   findMany: async (): Promise<PrismaUser[]> => {
     return prisma.user.findMany();
   },
-  findById: async (id: number): Promise<PrismaUser | null> => {
+  findById: async (id: string): Promise<PrismaUser | null> => {
     return prisma.user.findUnique({ where: { id } });
   },
   findByEmail: async (email: string): Promise<PrismaUser | null> => {
     return prisma.user.findUnique({ where: { email } });
   },
-  deleteById: async (id: number): Promise<PrismaUser | null> => {
+  deleteById: async (id: string): Promise<PrismaUser | null> => {
     try {
       const userDelete = await prisma.user.delete({
         where: { id },
