@@ -1,8 +1,8 @@
 import UserUseCases from "../UseCases/UserUseCases";
 import User from "../../Domain/Entities/User/User";
 import Portfolio from "../../Domain/Entities/Portfolio/Portfolio";
-import userRepository from "../../Adapters/OutBound/Repository/UserRepositoryImp";
-import portfolioRepository from "../../Adapters/OutBound/Repository/PortfolioRepositoryImp";
+import userRepository from "../../Adapters/OutBound/Repository/UserRep/UserRepositoryImp";
+import portfolioRepository from "../../Adapters/OutBound/Repository/PortfolioRep/PortfolioRepositoryImp";
 import { Crypt } from "../../Util/Crypto";
 import { HttpError } from "../../Infrastructure/Error/HttpError";
 import { Token } from "../../Util/Token";
