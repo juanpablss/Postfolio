@@ -1,8 +1,8 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { HttpError } from "../../../infrastructure/error/HttpError";
-import User from "../../../domain/Entities/User/User";
-import userService from "../../../application/service/UserServiceImp";
-import { Uuid } from "../../../util/Uuid";
+import { HttpError } from "../../../Infrastructure/Error/HttpError";
+import User from "../../../Domain/Entities/User/User";
+import userService from "../../../Application/Service/UserServiceImp";
+import { Uuid } from "../../../Util/Uuid";
 
 export const UserController = {
   register: async (req: FastifyRequest, reply: FastifyReply) => {

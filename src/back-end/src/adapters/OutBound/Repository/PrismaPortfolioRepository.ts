@@ -1,6 +1,6 @@
 import PrismaPortfolio from "../Entities/PrismaPortfolio";
-import { prisma } from "../../../infrastructure/config/prisma";
-import { HttpError } from "../../../infrastructure/error/HttpError";
+import { prisma } from "../../../Infrastructure/Config/prisma";
+import { HttpError } from "../../../Infrastructure/Error/HttpError";
 
 export const PrismaPortfolioRepository = {
   insert: async (

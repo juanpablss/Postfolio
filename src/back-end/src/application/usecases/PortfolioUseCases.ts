@@ -1,4 +1,4 @@
-import Portfolio from "../../domain/Entities/Portfolio/Portfolio";
+import Portfolio from "../../Domain/Entities/Portfolio/Portfolio";
 
 export default interface PortfolioUseCases {
   register(portfolio: Portfolio): Promise<Portfolio>;
