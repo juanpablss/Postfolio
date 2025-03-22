@@ -2,6 +2,8 @@ import PrismaUser from "../Adapters/OutBound/Entities/PrismaUser";
 import User from "../Domain/Entities/User/User";
 import PrismaPortfolio from "../Adapters/OutBound/Entities/PrismaPortfolio";
 import Portfolio from "../Domain/Entities/Portfolio/Portfolio";
+import PrismaRating from "../Adapters/OutBound/Entities/PrismaRating";
+import Rating from "../Domain/Entities/Rating/Rating";
 
 const UserMapper = {
   toDomain(prismaUser: PrismaUser): User {
@@ -45,9 +47,27 @@ const PortfolioMapper = {
   },
 };
 
+const RatingMapper = {
+  toDomain(prismaRating: PrismaRating): Rating {
+    return new Rating(
+      prismaRating.userId,
+      prismaRating.portfolioId,
+      prismaRating.score
+    );
+  },
+  toPrisma(rating: Rating): PrismaRating {
+    return {
+      userId: rating.userId,
+      portfolioId: rating.portfolioId,
+      score: rating.score,
+    };
+  },
+};
+
 const Mapper = {
   User: UserMapper,
   Portfolio: PortfolioMapper,
+  Rating: RatingMapper,
 };
 
 export default Mapper;

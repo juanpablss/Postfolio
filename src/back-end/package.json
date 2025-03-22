@@ -14,9 +14,9 @@
     "@types/bcrypt": "^5.0.2",
     "@types/cookiejar": "^2.1.5",
     "@types/jsonwebtoken": "^9.0.9",
-    "@types/node": "^22.13.8",
+    "@types/node": "^22.13.11",
     "fastify": "^5.2.1",
-    "prisma": "^6.4.1",
+    "prisma": "^6.5.0",
     "ts-jest": "^29.2.6",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.2"
