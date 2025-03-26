@@ -19,7 +19,7 @@ export default {
         },
       },
       backgroundImage: {
-        pattern: 'url(/bg1.png)',
+        pattern: 'url(/bg.png)',
       },
       fontFamily: {
         sans: 'Inter',
