@@ -18,6 +18,14 @@ export const PrismaRatingRepository = {
       throw new HttpError(500, "Erro ao salvar Analise!");
     }
   },
+  findMany: async (): Promise<PrismaRating[]> => {
+    try {
+      const ratings = await prisma.rating.findMany();
+      return ratings;
+    } catch (error) {
+      throw new HttpError(500, "Não foi possivel buscar todas as Analise!");
+    }
+  },
   findByPortfolioId: async (portfolioId: number): Promise<PrismaRating[]> => {
     try {
       const ratings = await prisma.rating.findMany({
@@ -42,6 +50,25 @@ export const PrismaRatingRepository = {
       return ratings;
     } catch (error) {
       throw new HttpError(500, "Erro ao buscar Analises do usuario!");
+    }
+  },
+  findByUserAndPortfolio: async (
+    userId: string,
+    portfolioId: number
+  ): Promise<PrismaRating | null> => {
+    try {
+      const rating = await prisma.rating.findUnique({
+        where: {
+          userId_portfolioId: {
+            userId,
+            portfolioId,
+          },
+        },
+      });
+
+      return rating;
+    } catch (error) {
+      throw new HttpError(500, "Erro ao buscar analise do usuario!");
     }
   },
   update: async (ratingEntity: PrismaRating): Promise<PrismaRating> => {
