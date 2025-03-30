@@ -15,6 +15,7 @@ export const PrismaRatingRepository = {
 
       return rating;
     } catch (error) {
+      console.log(error);
       throw new HttpError(500, "Erro ao salvar Analise!");
     }
   },

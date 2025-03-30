@@ -36,6 +36,7 @@ export const PrismaPortfolioRepository = {
     });
   },
   deleteById: function (id: number): Promise<PrismaPortfolio | null> {
+    console.log("Aqui 2:", id, "\n");
     try {
       return prisma.portfolio.delete({
         where: {

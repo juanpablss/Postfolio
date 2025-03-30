@@ -33,6 +33,7 @@ class PortfolioRepositoryImp implements PortfolioRepository {
     return portfolios;
   }
   async deleteById(id: number): Promise<Portfolio | null> {
+    console.log("Aqui 1\n");
     return await PrismaPortfolioRepository.deleteById(id);
   }
 }

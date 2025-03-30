@@ -31,16 +31,16 @@ model Portfolio {
   description String
   pageLink String
   authorId String
-  author User @relation(fields: [authorId], references: [id])
+  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
   ratings Rating[]
 }
 
 model Rating{
   // id Int @id @default(autoincrement())
   @@map("tb_rating")
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
-  portfolio Portfolio @relation(fields: [portfolioId], references: [id])
+  portfolio Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
   portfolioId Int
   score Float
 
