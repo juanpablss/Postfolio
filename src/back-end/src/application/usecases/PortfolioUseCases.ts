@@ -5,5 +5,6 @@ export default interface PortfolioUseCases {
   findMany(): Promise<Portfolio[]>;
   findById(id: number): Promise<Portfolio | null>;
   findByAuthorId(authorId: string): Promise<Portfolio[]>;
+  update(portfolio: Portfolio): Promise<Portfolio>;
   deleteById(id: number): Promise<Portfolio | null>;
 }

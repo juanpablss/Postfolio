@@ -27,13 +27,17 @@ class PortfolioRepositoryImp implements PortfolioRepository {
     const portfolioEntities = await PrismaPortfolioRepository.findByAuthor(
       authorId
     );
-    // console.log("Aqui:\n", portfolioEntities);
     const portfolios = portfolioEntities.map(Mapper.Portfolio.toDomain);
-    // console.log("Aqui2  :\n", portfolioEntities);
     return portfolios;
   }
+
+  async update(portfolio: Portfolio): Promise<Portfolio> {
+    const portfolioEntity = Mapper.Portfolio.toPrisma(portfolio);
+    await PrismaPortfolioRepository.update(portfolioEntity);
+    return portfolio;
+  }
+
   async deleteById(id: number): Promise<Portfolio | null> {
-    console.log("Aqui 1\n");
     return await PrismaPortfolioRepository.deleteById(id);
   }
 }

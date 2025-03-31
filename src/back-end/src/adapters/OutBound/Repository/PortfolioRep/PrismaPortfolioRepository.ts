@@ -7,7 +7,7 @@ export const PrismaPortfolioRepository = {
     prismaPortfolio: PrismaPortfolio
   ): Promise<PrismaPortfolio> => {
     try {
-      const portfolio = prisma.portfolio.create({
+      const portfolio = await prisma.portfolio.create({
         data: {
           name: prismaPortfolio.name,
           description: prismaPortfolio.description,
@@ -21,24 +21,38 @@ export const PrismaPortfolioRepository = {
     }
   },
   findMany: async (): Promise<PrismaPortfolio[]> => {
-    return prisma.portfolio.findMany();
+    return await prisma.portfolio.findMany();
   },
   findById: async (id: number): Promise<PrismaPortfolio | null> => {
-    return prisma.portfolio.findUnique({
+    return await prisma.portfolio.findUnique({
       where: {
         id,
       },
     });
   },
   findByAuthor: async (authorId: string): Promise<PrismaPortfolio[]> => {
-    return prisma.portfolio.findMany({
+    return await prisma.portfolio.findMany({
       where: { authorId },
     });
   },
-  deleteById: function (id: number): Promise<PrismaPortfolio | null> {
+  update: async (
+    prismaPortfolio: PrismaPortfolio
+  ): Promise<PrismaPortfolio> => {
+    return await prisma.portfolio.update({
+      where: {
+        id: prismaPortfolio.id,
+      },
+      data: {
+        name: prismaPortfolio.name,
+        description: prismaPortfolio.description,
+        pageLink: prismaPortfolio.pageLink,
+      },
+    });
+  },
+  deleteById: async (id: number): Promise<PrismaPortfolio | null> => {
     console.log("Aqui 2:", id, "\n");
     try {
-      return prisma.portfolio.delete({
+      return await prisma.portfolio.delete({
         where: {
           id,
         },

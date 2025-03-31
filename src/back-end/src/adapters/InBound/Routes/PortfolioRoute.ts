@@ -15,6 +15,12 @@ export async function PortfolioRoute(app: FastifyInstance) {
   //   PortfolioController.getByUser
   // );
 
+  app.put(
+    "",
+    { preHandler: UserMiddle.authenticate },
+    PortfolioController.update
+  );
+
   app.delete(
     "/:id",
     { preHandler: UserMiddle.authenticate },

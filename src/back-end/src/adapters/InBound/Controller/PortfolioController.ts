@@ -41,7 +41,30 @@ export const PortfolioController = {
 
     reply.send(portfolio);
   },
+  update: async (req: FastifyRequest, reply: FastifyReply) => {
+    const {
+      id = null,
+      name = null,
+      description = null,
+      pageLink = null,
+      authorId = req.user?.id || null,
+    } = req.body as Partial<{
+      id: number;
+      name: string;
+      description: string;
+      pageLink: string;
+      authorId: string;
+    }>;
 
+    if (!id || !name || !description || !pageLink || !authorId)
+      throw new HttpError(400, "Todos os campos são obrigatórios!");
+
+    const portfolio = await portfolioService.update(
+      new Portfolio(id, name, description, pageLink, authorId)
+    );
+
+    reply.send(portfolio);
+  },
   deleteById: async (req: FastifyRequest, reply: FastifyReply) => {
     const params = req.params as { id: string };
     const id = Number(params.id);

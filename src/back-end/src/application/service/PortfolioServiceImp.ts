@@ -24,6 +24,10 @@ class PortfolioServiceImp implements PortfolioUseCases {
     return await portfolioRepository.findByAuthor(authorId);
   }
 
+  async update(portfolio: Portfolio): Promise<Portfolio> {
+    return await portfolioRepository.update(portfolio);
+  }
+
   async deleteById(id: number): Promise<Portfolio | null> {
     const portfolio = await portfolioRepository.deleteById(id);
     return portfolio;
@@ -32,29 +36,3 @@ class PortfolioServiceImp implements PortfolioUseCases {
 
 const portfolioService: PortfolioUseCases = new PortfolioServiceImp();
 export default portfolioService;
-// export const PortfolioServiceImp = (
-//   portfolioRepository: PortfolioRepository,
-//   userService: UserUseCases
-// ): PortfolioUseCases => ({
-//   register: async (portfolio: Portfolio) => {
-//     // const author =
-//     await portfolioRepository.insert(portfolio);
-//   },
-//   findMany: async (): Promise<Portfolio[]> => {
-//     const portfolios = await portfolioRepository.findMany();
-//     return portfolios;
-//   },
-
-//   findById: async (id: number | null): Promise<Portfolio | null> => {
-//     if (!id || typeof id !== "number")
-//       throw new HttpError(400, "Author é obrigatorio");
-//     return await portfolioRepository.findById(id);
-//   },
-
-//   findByAuthorId: async (authorId: number | null): Promise<Portfolio[]> => {
-//     if (!authorId || typeof authorId !== "number")
-//       throw new HttpError(400, "Author é obrigatorio");
-
-//     return await portfolioRepository.findByAuthor(authorId);
-//   },
-// });

@@ -45,6 +45,7 @@ export const RatingController = {
 
     if (!userId || !portfolioId || !score)
       throw new HttpError(400, "Todos os campos são obrigatórios!");
+
     const portfolioIdNumber = Number(portfolioId);
     const scoreNumber = Number(score);
 
