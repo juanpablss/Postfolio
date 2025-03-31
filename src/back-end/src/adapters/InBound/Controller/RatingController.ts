@@ -27,15 +27,6 @@ export const RatingController = {
     return reply.send({ msg: "Analise criada com sucesso!" });
   },
 
-  getRatingByUser: async (req: FastifyRequest, reply: FastifyReply) => {
-    const userId = req.user?.id;
-    if (!userId) throw new HttpError(400, "Id do usuario é obrigatorio!");
-
-    const ratings = await ratingService.findByUserId(userId);
-
-    reply.send(ratings);
-  },
-
   getAll: async (req: FastifyRequest, reply: FastifyReply) => {
     const allRatings = await ratingService.findMany();
     reply.send(allRatings);

@@ -1,5 +1,5 @@
 import Portfolio from "../../Domain/Entities/Portfolio/Portfolio";
-// import Rating from "../../Domain/Entities/Rating/Rating";
+import Rating from "../../Domain/Entities/Rating/Rating";
 import User from "../../Domain/Entities/User/User";
 
 export default interface UserUseCases {
@@ -10,8 +10,8 @@ export default interface UserUseCases {
   findByEmail(email: string): Promise<User | null>;
   findById(id: string): Promise<User | null>;
 
-  findPortfolio(authorId: string): Promise<Portfolio[]>;
-
+  findPortfolios(authorId: string): Promise<Portfolio[]>;
+  findRatings(authorId: string): Promise<Rating[]>;
   // createReting(rating: Rating): Promise<Rating>;
   // findManyRating(id: string): Promise<Rating[]>;
 

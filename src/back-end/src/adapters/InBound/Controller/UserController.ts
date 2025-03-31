@@ -61,16 +61,27 @@ export const UserController = {
   getProfile: async (req: FastifyRequest, reply: FastifyReply) => {
     reply.send({ msg: "Perfil do usuário", user: req.user });
   },
-  getPortfolio: async (req: FastifyRequest, reply: FastifyReply) => {
+
+  getPortfolios: async (req: FastifyRequest, reply: FastifyReply) => {
     const authorID = req.user?.id;
 
     if (!authorID)
       throw new HttpError(400, "Os dados enviados não são validos!");
 
-    const portfolios = await userService.findPortfolio(authorID);
+    const portfolios = await userService.findPortfolios(authorID);
 
     reply.send(portfolios);
   },
+
+  getRatings: async (req: FastifyRequest, reply: FastifyReply) => {
+    const userId = req.user?.id;
+    if (!userId) throw new HttpError(400, "Id do usuario é obrigatorio!");
+
+    const ratings = await userService.findRatings(userId);
+
+    reply.send(ratings);
+  },
+
   deleteById: async (req: FastifyRequest, reply: FastifyReply) => {
     const id = req.user?.id;
     if (!id) throw new HttpError(400, "Id do usuario é obrigatorio!");

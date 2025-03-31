@@ -14,9 +14,15 @@ export async function UserRoutes(app: FastifyInstance) {
   );
 
   app.post(
-    "/portfolio",
+    "/portfolios",
     { preHandler: UserMiddle.authenticate },
-    UserController.getPortfolio
+    UserController.getPortfolios
+  );
+
+  app.post(
+    "/ratings",
+    { preHandler: UserMiddle.authenticate },
+    UserController.getRatings
   );
 
   app.delete(

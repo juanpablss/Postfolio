@@ -6,6 +6,8 @@ import portfolioRepository from "../../Adapters/OutBound/Repository/PortfolioRep
 import { Crypt } from "../../Util/Crypto";
 import { HttpError } from "../../Infrastructure/Error/HttpError";
 import { Token } from "../../Util/Token";
+import Rating from "../../Domain/Entities/Rating/Rating";
+import ratingRepository from "../../Adapters/OutBound/Repository/RatingRep/RatingRepositoryImp";
 
 class UserServiceImp implements UserUseCases {
   async register(user: User): Promise<void> {
@@ -33,8 +35,12 @@ class UserServiceImp implements UserUseCases {
     return user;
   }
 
-  async findPortfolio(authorId: string): Promise<Portfolio[]> {
+  async findPortfolios(authorId: string): Promise<Portfolio[]> {
     return await portfolioRepository.findByAuthor(authorId);
+  }
+
+  async findRatings(authorId: string): Promise<Rating[]> {
+    return await ratingRepository.findByUserId(authorId);
   }
 
   async login(email: string, passWord: string): Promise<string> {

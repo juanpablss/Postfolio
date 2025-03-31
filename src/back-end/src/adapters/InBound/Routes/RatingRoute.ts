@@ -5,12 +5,6 @@ import { UserMiddle } from "../Middleware/UserMiddle";
 export async function RatingRoute(app: FastifyInstance) {
   app.post("", RatingController.register);
 
-  app.post(
-    "user",
-    { preHandler: UserMiddle.authenticate },
-    RatingController.getRatingByUser
-  );
-
   app.post("/all", RatingController.getAll);
 
   app.put("", { preHandler: UserMiddle.authenticate }, RatingController.update);
