@@ -33,3 +33,22 @@ body:hover::-webkit-scrollbar-thumb {
 ::-webkit-scrollbar-track {
     background: rgba(0, 0, 0, 0.718);
 }
+
+
+/* Tailwind não tem suporte nativo a essas propriedades */
+.perspective {
+  perspective: 1000px;
+}
+.transform-style {
+  transform-style: preserve-3d;
+}
+.backface-hidden {
+  backface-visibility: hidden;
+}
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}

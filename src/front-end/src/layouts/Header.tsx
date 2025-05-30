@@ -14,7 +14,7 @@ export default function Header() {
           <li><Link to="/ranking" className="hover:text-light-500 hover:underline">Ranking</Link></li>
           <li><Link to="/sobre" className="hover:text-light-500 hover:underline">Sobre</Link></li>
         </ul>
-        <button className="px-4 py-2 bg-light-pink text-dark-900 rounded-md hover:bg-dark-pink">Login</button>
+        <button className="px-4 py-2 bg-dark-pink text-dark-900 rounded-md hover:bg-dark-pink">Login</button>
       </nav>
 
       {/* Ícone do Menu no Mobile */}
