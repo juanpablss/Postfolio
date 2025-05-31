@@ -1,6 +1,7 @@
 import Header from "../layouts/Header";
+import ProjectCard from '../components/projects/ProjectCard';
 
-export default function Home() {
+export default function Home()  {
   return (
     <div className="bg-pattern bg-no-repeat bg-top bg-cover min-h-screen w-full text-light-white">
       <Header />
@@ -26,7 +27,7 @@ export default function Home() {
           </h1>
         </div>
         <div className="flex justify-end md:w-[50%] order-2 md:order-1">
-          <img src="pages-img.png" alt="Imagem de competição"  />
+          <img src="pages-img.png" alt="Imagem de competição" />
         </div>
       </div>
 
@@ -63,92 +64,58 @@ export default function Home() {
           </h1>
 
           <div className="flex flex-col sm:flex-row justify-between gap-6 mt-10">
-  {/* Card 1 */}
-  <div className="bg-dark-blue text-white border-blue-950 border-4   rounded-2xl p-6 shadow-lg flex-1">
-    <h3 className="text-xl font-bold mb-4 text-center">🎨 Design e Estética</h3>
-    <ul className="list-disc list-inside space-y-1 text-sm sm:text-base">
-      <li>Criatividade</li>
-      <li>Layout</li>
-      <li>Cores e Tipografia</li>
-    </ul>
-  </div>
+            {/* Card 1 */}
+            <div className="bg-dark-blue text-white border-blue-950 border-4   rounded-2xl p-6 shadow-lg flex-1">
+              <h3 className="text-xl font-bold mb-4 text-center">🎨 Design e Estética</h3>
+              <ul className="list-disc list-inside space-y-1 text-sm sm:text-base">
+                <li>Criatividade</li>
+                <li>Layout</li>
+                <li>Cores e Tipografia</li>
+              </ul>
+            </div>
 
-  {/* Card 2 */}
-  <div className="bg-dark-blue text-white border-blue-950 border-4 rounded-2xl p-6 shadow-lg flex-1">
-    <h3 className="text-xl font-bold mb-4 text-center">⚙️ Funcionalidade e Performance</h3>
-    <ul className="list-disc list-inside space-y-1 text-sm sm:text-base">
-      <li>Adequação ao Propósito</li>
-      <li>Escalabilidade</li>
-      <li>Confiabilidade</li>
-    </ul>
-  </div>
+            {/* Card 2 */}
+            <div className="bg-dark-blue text-white border-blue-950 border-4 rounded-2xl p-6 shadow-lg flex-1">
+              <h3 className="text-xl font-bold mb-4 text-center">⚙️ Funcionalidade e Performance</h3>
+              <ul className="list-disc list-inside space-y-1 text-sm sm:text-base">
+                <li>Adequação ao Propósito</li>
+                <li>Escalabilidade</li>
+                <li>Confiabilidade</li>
+              </ul>
+            </div>
 
-    {/* Card 3 */}
-    <div className="bg-dark-blue text-white border-blue-950 border-4 rounded-2xl p-6 shadow-lg flex-1">
-      <h3 className="text-xl font-bold mb-4 text-center">🧭 Usabilidade do Usuário</h3>
-      <ul className="list-disc list-inside space-y-1 text-sm sm:text-base">
-        <li>Navegação Intuitiva</li>
-        <li>Acessibilidade e Legibilidade</li>
-        <li>Facilidade de Uso</li>
-      </ul>
-    </div>
-  </div>
-
-
-  <div className="w-[280px] h-[360px] perspective group cursor-pointer">
-    <div className="relative w-full h-full transition-transform duration-700 transform-style preserve-3d group-hover:rotate-y-180">
-      
-      <div className="group [perspective:1000px] w-80 h-96 relative">
-    <div className="relative w-full h-full duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-      {/* Frente */}
-      <div className="absolute w-full h-full backface-hidden bg-white rounded-2xl shadow-md overflow-hidden font-sans">
-        <div className="bg-[#f5f7fa] p-4 text-center">
-          <img src="flyplan.png" alt="Logo FlyPlan" className="w-full h-auto mx-auto" />
-        </div>
-        <div className="p-5 text-center">
-          <p className="text-sm text-gray-500 mb-2">Desenvolvedor Full Stack</p>
-          <h2 className="text-xl text-gray-900 mb-4 font-semibold">José Cassios</h2>
-          <a
-            href="http://localhost:5174/"
-            className="inline-block px-6 py-2 bg-blue-500 text-white text-sm font-semibold rounded-lg transition-all hover:bg-blue-600 hover:-translate-y-0.5"
-          >
-            Ver Portfolio
-          </a>
-        </div>
-      </div>
-      {/* Verso */}
-      <div className="absolute w-full h-full backface-hidden bg-blue-600 rounded-2xl shadow-md text-white flex flex-col items-center justify-center [transform:rotateY(180deg)]">
-        <h3 className="text-lg font-bold mb-2">Sobre mim</h3>
-        <p className="text-sm px-4">Desenvolvedor apaixonado por tecnologia, focado em soluções inovadoras e experiência do usuário.</p>
-        <a
-          href="mailto:josecassios@email.com"
-          className="mt-4 inline-block px-4 py-2 bg-white text-blue-600 rounded-lg font-semibold hover:bg-gray-100"
-        >
-          Entrar em contato
-        </a>
-      </div>
-    </div>
-  </div>
-
-      {/* Verso do card */}
-      <div className="absolute w-full h-full backface-hidden rotate-y-180 bg-blue-800 text-white rounded-2xl shadow-md flex flex-col items-center justify-center p-6">
-        <h2 className="text-lg font-bold mb-2">Mais sobre mim</h2>
-        <p className="text-sm text-center mb-4">
-          Gosto de criar APIs eficientes, resolver desafios técnicos e participar de projetos colaborativos. 💻
-        </p>
-        <a
-          href="mailto:contato@josecassios.dev"
-          className="text-sm underline hover:text-blue-300"
-        >
-          contato@josecassios.dev
-        </a>
-      </div>
-    </div>
-  </div>
-
-    
+            {/* Card 3 */}
+            <div className="bg-dark-blue text-white border-blue-950 border-4 rounded-2xl p-6 shadow-lg flex-1">
+              <h3 className="text-xl font-bold mb-4 text-center">🧭 Usabilidade do Usuário</h3>
+              <ul className="list-disc list-inside space-y-1 text-sm sm:text-base">
+                <li>Navegação Intuitiva</li>
+                <li>Acessibilidade e Legibilidade</li>
+                <li>Facilidade de Uso</li>
+              </ul>
+            </div>
+          </div>
+        
+        {/* Card Componentizado */}
+        <div className="flex flex-row gap-48 justify-center items-center min-h-screen p-4">
+          <ProjectCard
+            title="José Cassios"
+            role="Desenvolvedor Full Stack"
+            frontImage="flyplan.png"
+            backContent="Desenvolvedor apaixonado por tecnologia, focado em soluções inovadoras e experiência do usuário."
+            portfolioLink="http://localhost:5174/"
+            emailContact="josecassios@email.com"
+          />
+          <ProjectCard
+            title="Mickaela Evely"
+            role="Desenvolvedora Frontend e games mobile"
+            frontImage="micka.png"
+            backContent="Estudante determinada e focada, sempre em busca de novos desafios e dedicada ao aprimoramento contínuo de suas habilidades."
+            portfolioLink="http://localhost:5174/"
+            emailContact="micka@email.com"
+          />
         </div>
 
+        </div>
       </div>
       <div className="h-[200vh]"></div>
     </div>
