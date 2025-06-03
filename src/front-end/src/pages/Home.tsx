@@ -1,7 +1,51 @@
 import Header from "../layouts/Header";
-import ProjectCard from '../components/projects/ProjectCard';
+// import ProjectCard from '../components/projects/ProjectCard';
+import ProjectCarousel from '../components/projects/ProjectCarousel';
 
 export default function Home()  {
+  const projects = [
+    {
+      title: "José Cassios",
+      role: "Desenvolvedor Full Stack",
+      frontImage: "cassios.png",
+      backContent: "Desenvolvedor apaixonado por tecnologia, focado em soluções inovadoras e experiência do usuário.",
+      portfolioLink: "http://localhost:5174/",
+      emailContact: "josecassios@email.com"
+    },
+    {
+      title: "Mickaela Evely",
+      role: "Desenvolvedora Frontend e games mobile",
+      frontImage: "micka.png",
+      backContent: "Estudante determinada e focada, sempre em busca de novos desafios e dedicada ao aprimoramento contínuo de suas habilidades.",
+      portfolioLink: "http://localhost:5174/",
+      emailContact: "micka@email.com"
+    },
+    {
+      title: "Debriane da Silva",
+      role: "Leitora profissional de livros de romance",
+      frontImage: "debriane.png",
+      backContent: "Leio de tudo, não só romance.",
+      portfolioLink: "http://localhost:5174/",
+      emailContact: "micka@email.com"
+    },
+    {
+      title: "Juan Pablo",
+      role: "Desenvolvedor Backend e DevOps",
+      frontImage: "juan.png",
+      backContent: "Desenvolvo qualquer sistema backend avançado, tenho experiencia em integração, devops, testes e desenvolvimento ágil.",
+      portfolioLink: "http://localhost:5174/",
+      emailContact: "juan@email.com"
+    },
+    {
+      title: "Jonas Davi Nogueira",
+      role: "Contador, e gerente de projetos",
+      frontImage: "jonas.png",
+      backContent: "Se você busca alguém comprometido com resultados, organização e liderança, posso transformar ideias em entregas concretas.",
+      portfolioLink: "http://localhost:5174/",
+      emailContact: "juan@email.com"
+    },
+  ];
+
   return (
     <div className="bg-pattern bg-no-repeat bg-top bg-cover min-h-screen w-full text-light-white">
       <Header />
@@ -96,11 +140,11 @@ export default function Home()  {
           </div>
         
         {/* Card Componentizado */}
-        <div className="flex flex-row gap-48 justify-center items-center min-h-screen p-4">
+        {/* <div className="flex flex-row gap-48 justify-center items-center min-h-screen p-4">
           <ProjectCard
             title="José Cassios"
             role="Desenvolvedor Full Stack"
-            frontImage="flyplan.png"
+            frontImage="cassios.png"
             backContent="Desenvolvedor apaixonado por tecnologia, focado em soluções inovadoras e experiência do usuário."
             portfolioLink="http://localhost:5174/"
             emailContact="josecassios@email.com"
@@ -113,7 +157,14 @@ export default function Home()  {
             portfolioLink="http://localhost:5174/"
             emailContact="micka@email.com"
           />
+        </div> */}
+
+        <div className="w-full flex max-w-4xl justify-center">
+          <div className="relative w-full max-w-full overflow-x-visible">
+            <ProjectCarousel projects={projects} />
+          </div>
         </div>
+
 
         </div>
       </div>
