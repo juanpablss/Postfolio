@@ -1,32 +1,22 @@
-import Fastify, { FastifyRequest, FastifyReply } from "fastify";
-import { prisma } from "./config/prisma";
+import Fastify from "fastify";
+import { UserRoutes } from "./adapters/InBound/Routes/UserRoute";
+import fastifyCors from "@fastify/cors";
+import "./infrastructure/@types/fastify";
+import { PortfolioRoute } from "./adapters/InBound/Routes/PortfolioRoute";
+import { RatingRoute } from "./Adapters/InBound/Routes/RatingRoute";
 
 const app = Fastify();
 const PORT = 8080;
 
-app.get("/api/user", async (req: FastifyRequest, reply: FastifyReply) => {
-  reply.send(await prisma.user.findMany());
+app.register(fastifyCors, {
+  origin: "http://127.0.0.1:5500",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 });
 
-app.post("/api/user", async (req: FastifyRequest, reply: FastifyReply) => {
-  const { name, email, passWord, status } = req.body as {
-    name: string;
-    email: string;
-    passWord: string;
-    status: string;
-  };
-
-  try {
-    // const u = await prisma.
-    const user = await prisma.user.create({
-      data: { name, email, passWord, status },
-    });
-    reply.send(user);
-  } catch (error) {
-    console.log(error);
-    reply.status(500).send({ error: "Erro ao criar usuário" });
-  }
-});
+app.register(UserRoutes, { prefix: "api/user" });
+app.register(PortfolioRoute, { prefix: "api/portfolio" });
+app.register(RatingRoute, { prefix: "api/rating" });
 
 const start = async () => {
   try {
