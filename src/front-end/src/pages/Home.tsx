@@ -98,7 +98,7 @@ export default function Home()  {
               <h2 className="text-lg text-zinc-50">Objetivo</h2>
               <div className="flex flex-col w-full mb-10 relative">
                 <label className="bg-[#9E2777] shadow-shape px-10 py-5 text-light-white rounded-2xl md:rounded-full transition whitespace-normal text-center max-w-screen-md w-full sm:min-h-[100px] min-h-[150px] flex items-center justify-center relative">
-                  1. O objetivo principal da competição foi estimular o desenvolvimento dos alunos, o compartilhamento de experiência e um passatempo durante as férias!
+                  O objetivo principal da competição foi estimular o desenvolvimento dos alunos, o compartilhamento de experiência e um passatempo durante as férias!
                 </label>
                 <img src="cup.png" alt="Img" className="absolute top-20 -left-10 w-32 h-32 sm:-top-5 sm:-left-20 sm:w-40 sm:h-40" />
               </div>
@@ -106,7 +106,7 @@ export default function Home()  {
               <h2 className="text-lg text-zinc-50">Quem está participando?</h2>
               <div className="flex flex-col w-full mb-20 relative">
                 <label className="bg-[#9E2777] shadow-shape px-10 py-5 text-light-white rounded-2xl md:rounded-full transition whitespace-normal text-center max-w-screen-md w-full sm:min-h-[100px] min-h-[150px] flex items-center justify-center relative">
-                  1. Os participantes são os alunos de Ciências da Computação da turma de CC10.
+                  Os participantes são os alunos de Ciências da Computação da turma de CC10.
                 </label>
                 <img src="woman.png" alt="Img" className="absolute top-20 right-[-40px] w-32 h-32 sm:-top-0 sm:right-[-60px] sm:w-40 sm:h-40" />
               </div>
@@ -115,7 +115,7 @@ export default function Home()  {
           </div>
           <div className="flex flex-col items-center justify-center space-y-5 order-1 md:order-1">
             <h1 className="text-light-white text-[33px] font-bold text-center md:text-left">
-              Critérios para avaliação
+              2. Critérios para avaliação
             </h1>
 
             <div className="flex flex-col sm:flex-row justify-between gap-6 mt-10">
@@ -149,37 +149,28 @@ export default function Home()  {
                 </ul>
               </div>
             </div>
-          
-          {/* Card Componentizado */}
-          {/* <div className="flex flex-row gap-48 justify-center items-center min-h-screen p-4">
-            <ProjectCard
-              title="José Cassios"
-              role="Desenvolvedor Full Stack"
-              frontImage="cassios.png"
-              backContent="Desenvolvedor apaixonado por tecnologia, focado em soluções inovadoras e experiência do usuário."
-              portfolioLink="http://localhost:5174/"
-              emailContact="josecassios@email.com"
-            />
-            <ProjectCard
-              title="Mickaela Evely"
-              role="Desenvolvedora Frontend e games mobile"
-              frontImage="micka.png"
-              backContent="Estudante determinada e focada, sempre em busca de novos desafios e dedicada ao aprimoramento contínuo de suas habilidades."
-              portfolioLink="http://localhost:5174/"
-              emailContact="micka@email.com"
-            />
-          </div> */}
+        
 
-          <div className="w-full flex max-w-4xl justify-center">
-            <div className="relative w-full max-w-full overflow-x-visible">
-              <ProjectCarousel projects={projects} />
+
+
+          </div>
+
+
+
+
+
+          <div className="flex flex-col items-center justify-center space-y-5 order-1 md:order-1">
+            <h1 className="text-light-white text-[33px] font-bold text-center md:text-left">
+              3. Conheça os Participantes
+            </h1>
+            <div className="w-full flex max-w-4xl justify-center">
+              <div className="relative w-full max-w-full overflow-x-visible">
+                <ProjectCarousel projects={projects} />
+              </div>
             </div>
           </div>
 
-
-          </div>
         </div>
-        <div className="h-[200vh]"></div>
       </div>
     </div>
   )
