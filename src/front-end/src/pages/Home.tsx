@@ -30,8 +30,8 @@ const projects = [
     },
     {
       title: "Juan Pablo",
-      role: "Desenvolvedor Backend e DevOps",
       frontImage: "juan.png",
+      role: "Desenvolvedor Backend e DevOps",
       backContent: "Desenvolvo qualquer sistema backend avançado, tenho experiencia em integração, devops, testes e desenvolvimento ágil.",
       portfolioLink: "http://localhost:5174/",
       emailContact: "juan@email.com"
@@ -71,11 +71,11 @@ export default function Home()  {
               A competição foi uma ideia para incentivar a criatividade e o espírito competitivo entre os alunos. Explore o <span>portfólio</span> dos alunos e vote no seu projeto favorito! Seu voto é importante para deixar a competição ainda mais interessante.
             </p>
             <div className="flex gap-4">
-              <button className="px-4 py-2 bg-gradient-to-t from-[#322d92] to-[#882a69] text-light-white rounded-3xl hover:bg-opacity-80 hover:text-[#709FA9] transition">
+              <button className="px-4 py-2 bg-gradient-to-t from-[#322d92] to-[#882a69] text-light-white rounded-3xl hover:bg-opacity-80 hover:text-dark-black transition">
                 Veja os competidores
               </button>
               <button className="px-4 py-2 bg-gradient-to-t from-[#322d92] to-[#882a69] text-light-white rounded-3xl hover:bg-opacity-80 hover:text-dark-black transition">
-                Participante da competição
+                Participe da competição
               </button>
             </div>
             <h1 className="text-light-white text-[33px] font-bold text-center md:text-left">
@@ -118,9 +118,9 @@ export default function Home()  {
               2. Critérios para avaliação
             </h1>
 
-            <div className="flex flex-col sm:flex-row justify-between gap-6 mt-10">
+            <div className="flex flex-col p-5 sm:flex-row justify-between gap-6 mt-10">
               {/* Card 1 */}
-              <div className="bg-dark-blue text-white border-blue-950 border-4   rounded-2xl p-6 shadow-lg flex-1">
+              <div className="bg-dark-blue text-white border-blue-950 border-4 rounded-2xl p-6 shadow-lg flex-1">
                 <h3 className="text-xl font-bold mb-4 text-center">🎨 Design e Estética</h3>
                 <ul className="list-disc list-inside space-y-1 text-sm sm:text-base">
                   <li>Criatividade</li>
@@ -149,17 +149,9 @@ export default function Home()  {
                 </ul>
               </div>
             </div>
-        
-
-
-
-          </div>
-
-
-
-
-
-          <div className="flex flex-col items-center justify-center space-y-5 order-1 md:order-1">
+          </div> 
+          
+          <div className="flex flex-col items-center justify-center space-y-3 order-1 md:order-1 mt-24">
             <h1 className="text-light-white text-[33px] font-bold text-center md:text-left">
               3. Conheça os Participantes
             </h1>
@@ -175,6 +167,3 @@ export default function Home()  {
     </div>
   )
 }
-<h1 className="text-light-white text-[38px] font-bold text-center md:text-left">
-  Critérios para a Avalição
-</h1>
