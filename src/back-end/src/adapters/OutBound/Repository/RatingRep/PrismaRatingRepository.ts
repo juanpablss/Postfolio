@@ -1,6 +1,6 @@
-import { prisma } from "../../../../Infrastructure/Config/prisma";
+import { prisma } from "../../../../infrastructure/config/Prisma";
 import { HttpError } from "../../../../Infrastructure/Error/HttpError";
-import PrismaRating from "../../Entities/PrismaRating";
+import PrismaRating from "../../entities/PrismaRating";
 
 export const PrismaRatingRepository = {
   insert: async (ratingEntity: PrismaRating): Promise<PrismaRating> => {

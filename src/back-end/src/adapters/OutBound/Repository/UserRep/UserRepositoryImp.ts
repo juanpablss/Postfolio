@@ -1,6 +1,6 @@
-import User from "../../../../Domain/Entities/User/User";
-import PrismaUser from "../../Entities/PrismaUser";
-import { UserRepository } from "../../../../Domain/Entities/User/UserRepository";
+import User from "../../../../domain/entities/user/User";
+import PrismaUser from "../../entities/PrismaUser";
+import { UserRepository } from "../../../../domain/entities/user/UserRepository";
 import { PrismaUserRepository } from "./PrismaUserRepository";
 import Mapper from "../../../../Util/Mapper";
 

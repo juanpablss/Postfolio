@@ -1,6 +1,6 @@
 import { PrismaPortfolioRepository } from "./PrismaPortfolioRepository";
-import PortfolioRepository from "../../../../Domain/Entities/Portfolio/PortfolioRepository";
-import Portfolio from "../../../../Domain/Entities/Portfolio/Portfolio";
+import PortfolioRepository from "../../../../domain/entities/portfolio/PortfolioRepository";
+import Portfolio from "../../../../domain/entities/portfolio/Portfolio";
 // import { PortfolioMapper } from "../../util/Mapper";
 import Mapper from "../../../../Util/Mapper";
 

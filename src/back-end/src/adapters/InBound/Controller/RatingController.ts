@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { HttpError } from "../../../Infrastructure/Error/HttpError";
-import Rating from "../../../Domain/Entities/Rating/Rating";
+import Rating from "../../../domain/entities/rating/Rating";
 import ratingService from "../../../Application/Service/RatingServiceImp";
 
 export const RatingController = {

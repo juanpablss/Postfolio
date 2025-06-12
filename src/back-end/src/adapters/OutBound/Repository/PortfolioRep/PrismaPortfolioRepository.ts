@@ -1,5 +1,5 @@
-import PrismaPortfolio from "../../Entities/PrismaPortfolio";
-import { prisma } from "../../../../Infrastructure/Config/prisma";
+import PrismaPortfolio from "../../entities/PrismaPortfolio";
+import { prisma } from "../../../../infrastructure/config/Prisma";
 import { HttpError } from "../../../../Infrastructure/Error/HttpError";
 
 export const PrismaPortfolioRepository = {

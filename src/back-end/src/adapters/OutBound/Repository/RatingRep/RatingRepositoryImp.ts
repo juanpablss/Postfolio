@@ -1,5 +1,5 @@
-import Rating from "../../../../Domain/Entities/Rating/Rating";
-import RatingRepository from "../../../../Domain/Entities/Rating/RatingRepository";
+import Rating from "../../../../domain/entities/rating/Rating";
+import RatingRepository from "../../../../domain/entities/rating/RatingRepository";
 import Mapper from "../../../../Util/Mapper";
 import { PrismaRatingRepository } from "./PrismaRatingRepository";
 

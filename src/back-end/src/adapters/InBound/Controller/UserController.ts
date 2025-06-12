@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { HttpError } from "../../../Infrastructure/Error/HttpError";
-import User from "../../../Domain/Entities/User/User";
+import User from "../../../domain/entities/user/User";
 import userService from "../../../Application/Service/UserServiceImp";
 // import { Uuid } from "../../../Util/Uuid";
 

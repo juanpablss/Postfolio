@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import Portfolio from "../../../Domain/Entities/Portfolio/Portfolio";
+import Portfolio from "../../../domain/entities/portfolio/Portfolio";
 import { HttpError } from "../../../Infrastructure/Error/HttpError";
 import portfolioService from "../../../Application/Service/PortfolioServiceImp";
 
