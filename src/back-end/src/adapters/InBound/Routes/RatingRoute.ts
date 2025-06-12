@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
-import { RatingController } from "../Controller/RatingController";
-import { UserMiddle } from "../Middleware/UserMiddle";
+import { RatingController } from "../controller/RatingController";
+import { UserMiddle } from "../middleware/UserMiddle";
 
 export async function RatingRoute(app: FastifyInstance) {
   app.post("", RatingController.register);

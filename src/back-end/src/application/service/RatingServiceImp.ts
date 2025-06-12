@@ -1,6 +1,6 @@
-import ratingRepository from "../../Adapters/OutBound/Repository/RatingRep/RatingRepositoryImp";
-import Rating from "../../Domain/Entities/Rating/Rating";
-import RatingUseCases from "../UseCases/RatingUseCases";
+import ratingRepository from "../../adapters/outBound/repository/ratingRep/RatingRepositoryImp";
+import Rating from "../../domain/entities/rating/Rating";
+import RatingUseCases from "../useCases/RatingUseCases";
 
 class RatingServiceImp implements RatingUseCases {
   async register(rating: Rating): Promise<Rating> {

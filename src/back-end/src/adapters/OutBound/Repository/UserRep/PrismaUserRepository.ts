@@ -1,5 +1,5 @@
-import PrismaUser from "../../Entities/PrismaUser";
-import { prisma } from "../../../../Infrastructure/Config/prisma";
+import PrismaUser from "../../entities/PrismaUser";
+import { prisma } from "../../../../infrastructure/config/Prisma";
 import { HttpError } from "../../../../Infrastructure/Error/HttpError";
 
 export const PrismaUserRepository = {
