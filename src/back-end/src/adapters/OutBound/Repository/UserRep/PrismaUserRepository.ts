@@ -1,4 +1,4 @@
-import PrismaUser from "../../entities/PrismaUser";
+import PrismaUser from "../../models/PrismaUser";
 import { prisma } from "../../../../infrastructure/config/Prisma";
 import { HttpError } from "../../../../Infrastructure/Error/HttpError";
 

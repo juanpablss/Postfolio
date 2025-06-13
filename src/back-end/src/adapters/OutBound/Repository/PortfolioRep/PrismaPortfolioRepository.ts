@@ -1,4 +1,4 @@
-import PrismaPortfolio from "../../entities/PrismaPortfolio";
+import PrismaPortfolio from "../../models/PrismaPortfolio";
 import { prisma } from "../../../../infrastructure/config/Prisma";
 import { HttpError } from "../../../../Infrastructure/Error/HttpError";
 
