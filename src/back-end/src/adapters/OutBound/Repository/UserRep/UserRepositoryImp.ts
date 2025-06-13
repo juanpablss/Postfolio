@@ -1,8 +1,8 @@
-import User from "../../../../domain/entities/user/User";
-import PrismaUser from "../../models/PrismaUser";
-import { UserRepository } from "../../../../domain/entities/user/UserRepository";
-import { PrismaUserRepository } from "./PrismaUserRepository";
-import Mapper from "../../../../Util/Mapper";
+import User from "@domain/entities/user/User";
+import PrismaUser from "@adapters/outBound/models/PrismaUser";
+import { UserRepository } from "@domain/entities/user/UserRepository";
+import { PrismaUserRepository } from "@adapters/outBound/repository/userRep/PrismaUserRepository";
+import Mapper from "@util/Mapper";
 
 class UserRepositoryImp implements UserRepository {
   async insert(user: User): Promise<User | null> {

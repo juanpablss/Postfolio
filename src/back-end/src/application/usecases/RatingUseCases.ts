@@ -1,4 +1,4 @@
-import Rating from "../../domain/entities/rating/Rating";
+import Rating from "@domain/entities/rating/Rating";
 
 export default interface RatingUseCases {
   register(rating: Rating): Promise<Rating>;

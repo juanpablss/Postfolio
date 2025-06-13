@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import Portfolio from "../../../domain/entities/portfolio/Portfolio";
-import { HttpError } from "../../../Infrastructure/Error/HttpError";
-import portfolioService from "../../../Application/Service/PortfolioServiceImp";
+import Portfolio from "@domain/entities/portfolio/Portfolio";
+import { HttpError } from "@infrastructure/error/HttpError";
+import portfolioService from "@application/service/PortfolioServiceImp";
 
 export const PortfolioController = {
   register: async (req: FastifyRequest, reply: FastifyReply) => {

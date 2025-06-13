@@ -1,4 +1,4 @@
-import { HttpError } from "../../../Infrastructure/Error/HttpError";
+import { HttpError } from "@infrastructure/error/HttpError";
 
 export default class Rating {
   id: string;

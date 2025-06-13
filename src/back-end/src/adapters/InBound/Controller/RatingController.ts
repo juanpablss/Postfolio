@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { HttpError } from "../../../Infrastructure/Error/HttpError";
-import Rating from "../../../domain/entities/rating/Rating";
-import ratingService from "../../../Application/Service/RatingServiceImp";
+import { HttpError } from "@infrastructure/error/HttpError";
+import Rating from "@domain/entities/rating/Rating";
+import ratingService from "@application/service/RatingServiceImp";
 
 export const RatingController = {
   register: async (req: FastifyRequest, reply: FastifyReply) => {

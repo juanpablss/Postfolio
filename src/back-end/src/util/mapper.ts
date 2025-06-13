@@ -1,9 +1,9 @@
-import PrismaUser from "../adapters/outBound/models/PrismaUser";
-import User from "../domain/entities/user/User";
-import PrismaPortfolio from "../adapters/outBound/models/PrismaPortfolio";
-import Portfolio from "../domain/entities/portfolio/Portfolio";
-import PrismaRating from "../adapters/outBound/models/PrismaRating";
-import Rating from "../domain/entities/rating/Rating";
+import PrismaUser from "@adapters/outBound/models/PrismaUser";
+import User from "@domain/entities/user/User";
+import PrismaPortfolio from "@adapters/outBound/models/PrismaPortfolio";
+import Portfolio from "@domain/entities/portfolio/Portfolio";
+import PrismaRating from "@adapters/outBound/models/PrismaRating";
+import Rating from "@domain/entities/rating/Rating";
 
 const UserMapper = {
   toDomain(prismaUser: PrismaUser): User {

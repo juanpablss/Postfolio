@@ -1,6 +1,6 @@
-import PrismaPortfolio from "../../models/PrismaPortfolio";
-import { prisma } from "../../../../infrastructure/config/Prisma";
-import { HttpError } from "../../../../Infrastructure/Error/HttpError";
+import PrismaPortfolio from "@adapters/outBound/models/PrismaPortfolio";
+import { prisma } from "@infrastructure/config/Prisma";
+import { HttpError } from "@infrastructure/error/HttpError";
 
 export const PrismaPortfolioRepository = {
   insert: async (

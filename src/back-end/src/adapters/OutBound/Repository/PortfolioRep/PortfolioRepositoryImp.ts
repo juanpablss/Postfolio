@@ -1,8 +1,7 @@
-import { PrismaPortfolioRepository } from "./PrismaPortfolioRepository";
-import PortfolioRepository from "../../../../domain/entities/portfolio/PortfolioRepository";
-import Portfolio from "../../../../domain/entities/portfolio/Portfolio";
-// import { PortfolioMapper } from "../../util/Mapper";
-import Mapper from "../../../../Util/Mapper";
+import { PrismaPortfolioRepository } from "@adapters/outBound/repository/portfolioRep/PrismaPortfolioRepository";
+import PortfolioRepository from "@domain/entities/portfolio/PortfolioRepository";
+import Portfolio from "@domain/entities/portfolio/Portfolio";
+import Mapper from "@util/Mapper";
 
 class PortfolioRepositoryImp implements PortfolioRepository {
   async insert(portfolio: Portfolio): Promise<Portfolio> {

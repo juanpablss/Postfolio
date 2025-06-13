@@ -1,4 +1,4 @@
-import User from "./User";
+import User from "@domain/entities/user/User";
 
 export interface UserRepository {
   insert: (user: User) => Promise<User | null>;

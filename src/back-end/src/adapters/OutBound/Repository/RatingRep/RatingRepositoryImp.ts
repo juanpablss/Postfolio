@@ -1,7 +1,7 @@
-import Rating from "../../../../domain/entities/rating/Rating";
-import RatingRepository from "../../../../domain/entities/rating/RatingRepository";
-import Mapper from "../../../../Util/Mapper";
-import { PrismaRatingRepository } from "./PrismaRatingRepository";
+import Rating from "@domain/entities/rating/Rating";
+import RatingRepository from "@domain/entities/rating/RatingRepository";
+import Mapper from "@util/Mapper";
+import { PrismaRatingRepository } from "@adapters/outBound/repository/ratingRep/PrismaRatingRepository";
 
 class RatingRepositoryImp implements RatingRepository {
   async insert(rating: Rating): Promise<Rating> {

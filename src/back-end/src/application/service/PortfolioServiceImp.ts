@@ -1,8 +1,8 @@
-import PortfolioUseCases from "../useCases/PortfolioUseCases";
-import portfolioRepository from "../../adapters/outBound/repository/portfolioRep/PortfolioRepositoryImp";
-import Portfolio from "../../domain/entities/portfolio/Portfolio";
-import userService from "./UserServiceImp";
-import { HttpError } from "../../Infrastructure/Error/HttpError";
+import PortfolioUseCases from "@application/useCases/PortfolioUseCases";
+import portfolioRepository from "@adapters/outBound/repository/portfolioRep/PortfolioRepositoryImp";
+import Portfolio from "@domain/entities/portfolio/Portfolio";
+import userService from "@application/service/UserServiceImp";
+import { HttpError } from "@infrastructure/error/HttpError";
 
 class PortfolioServiceImp implements PortfolioUseCases {
   async register(portfolio: Portfolio): Promise<Portfolio> {

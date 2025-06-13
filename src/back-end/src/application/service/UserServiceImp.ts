@@ -1,13 +1,13 @@
-import UserUseCases from "../useCases/UserUseCases";
-import User from "../../domain/entities/user/User";
-import Portfolio from "../../domain/entities/portfolio/Portfolio";
-import userRepository from "../../adapters/outBound/repository/userRep/UserRepositoryImp";
-import portfolioRepository from "../../adapters/outBound/repository/portfolioRep/PortfolioRepositoryImp";
-import { Crypt } from "../../Util/Crypto";
-import { HttpError } from "../../Infrastructure/Error/HttpError";
-import { Token } from "../../Util/Token";
-import Rating from "../../domain/entities/rating/Rating";
-import ratingRepository from "../../adapters/outBound/repository/ratingRep/RatingRepositoryImp";
+import UserUseCases from "@application/useCases/UserUseCases";
+import User from "@domain/entities/user/User";
+import Portfolio from "@domain/entities/portfolio/Portfolio";
+import userRepository from "@adapters/outBound/repository/userRep/UserRepositoryImp";
+import portfolioRepository from "@adapters/outBound/repository/portfolioRep/PortfolioRepositoryImp";
+import { Crypt } from "@util/Crypto";
+import { HttpError } from "@infrastructure/error/HttpError";
+import { Token } from "@util/Token";
+import Rating from "@domain/entities/rating/Rating";
+import ratingRepository from "@adapters/outBound/repository/ratingRep/RatingRepositoryImp";
 
 class UserServiceImp implements UserUseCases {
   async register(user: User): Promise<void> {
