@@ -241,7 +241,7 @@ export default function Login() {
               <span style={{ backgroundColor: '#9370db' }}></span>
               <span style={{ backgroundColor: '#00cfff' }}></span>
             </div>
-            <h1>POSTIFOLIO</h1>
+            <h1>POSTFOLIO</h1>
           </div>
 
           <div className="right-panel">
