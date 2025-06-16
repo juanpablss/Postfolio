@@ -1,4 +1,4 @@
-import { PrismaPortfolioRepository } from "@adapters/outBound/repository/portfolioRep/PrismaPortfolioRepository";
+import { PrismaPortfolioRepository } from "@repository/portfolioRep/PrismaPortfolioRepository";
 import PortfolioRepository from "@domain/entities/portfolio/PortfolioRepository";
 import Portfolio from "@domain/entities/portfolio/Portfolio";
 import Mapper from "@util/Mapper";

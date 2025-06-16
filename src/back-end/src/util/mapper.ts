@@ -1,8 +1,8 @@
-import PrismaUser from "@adapters/outBound/models/PrismaUser";
+import PrismaUser from "@models/PrismaUser";
 import User from "@domain/entities/user/User";
-import PrismaPortfolio from "@adapters/outBound/models/PrismaPortfolio";
+import PrismaPortfolio from "@models/PrismaPortfolio";
 import Portfolio from "@domain/entities/portfolio/Portfolio";
-import PrismaRating from "@adapters/outBound/models/PrismaRating";
+import PrismaRating from "@models/PrismaRating";
 import Rating from "@domain/entities/rating/Rating";
 
 const UserMapper = {

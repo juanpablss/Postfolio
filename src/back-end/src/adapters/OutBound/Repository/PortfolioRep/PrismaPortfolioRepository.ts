@@ -1,4 +1,4 @@
-import PrismaPortfolio from "@adapters/outBound/models/PrismaPortfolio";
+import PrismaPortfolio from "@models/PrismaPortfolio";
 import { prisma } from "@infrastructure/config/Prisma";
 import { HttpError } from "@infrastructure/error/HttpError";
 

@@ -1,4 +1,4 @@
-import ratingRepository from "@adapters/outBound/repository/ratingRep/RatingRepositoryImp";
+import ratingRepository from "@repository/ratingRep/RatingRepositoryImp";
 import Rating from "@domain/entities/rating/Rating";
 import RatingUseCases from "@application/useCases/RatingUseCases";
 

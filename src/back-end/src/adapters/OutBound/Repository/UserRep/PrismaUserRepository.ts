@@ -1,4 +1,4 @@
-import PrismaUser from "@adapters/outBound/models/PrismaUser";
+import PrismaUser from "@models/PrismaUser";
 import { prisma } from "@infrastructure/config/Prisma";
 import { HttpError } from "@infrastructure/error/HttpError";
 

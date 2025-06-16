@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
-import { PortfolioController } from "@adapters/inBound/controller/PortfolioController";
-import { UserMiddle } from "@adapters/inBound/middleware/UserMiddle";
+import { PortfolioController } from "@controller/PortfolioController";
+import { UserMiddle } from "@middleware/UserMiddle";
 
 export async function PortfolioRoute(app: FastifyInstance) {
   app.post("/all", PortfolioController.getAll);

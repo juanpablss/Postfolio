@@ -1,5 +1,5 @@
 import PortfolioUseCases from "@application/useCases/PortfolioUseCases";
-import portfolioRepository from "@adapters/outBound/repository/portfolioRep/PortfolioRepositoryImp";
+import portfolioRepository from "@repository/portfolioRep/PortfolioRepositoryImp";
 import Portfolio from "@domain/entities/portfolio/Portfolio";
 import userService from "@application/service/UserServiceImp";
 import { HttpError } from "@infrastructure/error/HttpError";
