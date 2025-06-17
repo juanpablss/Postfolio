@@ -1,12 +1,16 @@
 import PortfolioUseCases from "@application/useCases/PortfolioUseCases";
 import portfolioRepository from "@repository/portfolioRep/PortfolioRepositoryImp";
 import Portfolio from "@domain/entities/portfolio/Portfolio";
-import userService from "@application/service/UserServiceImp";
+// import userService from "@application/service/UserServiceImp";
 import { HttpError } from "@infrastructure/error/HttpError";
+import UserUseCases from "@useCases/UserUseCases";
+import userServiceImp from "@application/service/UserServiceImp";
 
 class PortfolioServiceImp implements PortfolioUseCases {
+  constructor(private readonly userService: UserUseCases) {}
+
   async register(portfolio: Portfolio): Promise<Portfolio> {
-    const author = await userService.findById(portfolio.authorId);
+    const author = await this.userService.findById(portfolio.authorId);
     if (!author) throw new HttpError(400, "Author não registrado!");
     return await portfolioRepository.insert(portfolio);
   }
@@ -34,5 +38,7 @@ class PortfolioServiceImp implements PortfolioUseCases {
   }
 }
 
-const portfolioService: PortfolioUseCases = new PortfolioServiceImp();
+const portfolioService: PortfolioUseCases = new PortfolioServiceImp(
+  userServiceImp
+);
 export default portfolioService;

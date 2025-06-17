@@ -2,7 +2,7 @@ import PrismaUser from "@models/PrismaUser";
 import { prisma } from "@infrastructure/config/Prisma";
 import { HttpError } from "@infrastructure/error/HttpError";
 
-export default class PrismaUserRepositoryT {
+export class PrismaUserRepository {
   async insert(prismaUser: PrismaUser): Promise<PrismaUser> {
     try {
       const user = prisma.user.create({
@@ -44,6 +44,9 @@ export default class PrismaUserRepositoryT {
     }
   }
 }
+
+const prismaUserRepository = new PrismaUserRepository();
+export default prismaUserRepository;
 
 // export const PrismaUserRepository = {
 //   insert: async (prismaUser: PrismaUser): Promise<PrismaUser> => {

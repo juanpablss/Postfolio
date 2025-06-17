@@ -1,17 +1,12 @@
 import { FastifyInstance } from "fastify";
-import { UserControllerT } from "@controller/UserController";
+import { UserController } from "@controller/UserController";
 import { UserMiddle } from "@middleware/UserMiddle";
-import UserServiceImp from "@service/UserServiceImp";
-import UserRepositoryImp from "@repository/userRep/UserRepositoryImp";
-import PrismaUserRepositoryT from "@repository/userRep/PrismaUserRepository";
+import userServiceImp from "@service/UserServiceImp";
 // import { UserServiceImp } from "@service/UserServiceImp";
 // import UserServiceImp from "@service/UserServiceImp";
 
 export async function UserRoutes(app: FastifyInstance) {
-  const prismaUserRepository = new PrismaUserRepositoryT();
-  const userRepository = new UserRepositoryImp(prismaUserRepository);
-  const userService = new UserServiceImp(userRepository);
-  const userController = new UserControllerT(userService);
+  const userController = new UserController(userServiceImp);
 
   app.get("", (req, reply) => userController.hello(req, reply));
 

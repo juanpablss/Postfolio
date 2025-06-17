@@ -3,7 +3,7 @@ import { HttpError } from "@infrastructure/error/HttpError";
 import User from "@domain/entities/user/User";
 import UserUseCases from "@useCases/UserUseCases";
 
-export class UserControllerT {
+export class UserController {
   // private useService: UserUseCases;
   private str: string = "STRING";
 
@@ -85,6 +85,7 @@ export class UserControllerT {
     reply.send(user);
   }
 }
+
 /*
 export const UserController = {
   hello: async (req: FastifyRequest, reply: FastifyReply) => {

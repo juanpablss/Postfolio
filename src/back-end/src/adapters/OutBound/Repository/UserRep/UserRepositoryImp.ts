@@ -1,11 +1,13 @@
 import User from "@domain/entities/user/User";
 import PrismaUser from "@models/PrismaUser";
 import { UserRepository } from "@domain/entities/user/UserRepository";
-import PrismaUserRepositoryT from "@repository/userRep/PrismaUserRepository";
+import prismaUserRepository, {
+  PrismaUserRepository,
+} from "@repository/userRep/PrismaUserRepository";
 import Mapper from "@util/Mapper";
 
-export default class UserRepositoryImp implements UserRepository {
-  constructor(private readonly prismaUserRepository: PrismaUserRepositoryT) {}
+export class UserRepositoryImp implements UserRepository {
+  constructor(private readonly prismaUserRepository: PrismaUserRepository) {}
 
   async insert(user: User): Promise<User | null> {
     const userEntity: PrismaUser = Mapper.User.toPrisma(user);
@@ -38,6 +40,8 @@ export default class UserRepositoryImp implements UserRepository {
     return Mapper.User.toDomain(userEntity);
   }
 }
+const userRepositoryImp = new UserRepositoryImp(prismaUserRepository);
+export default userRepositoryImp;
 
 // const userRepository: UserRepository = new UserRepositoryImp();
 // export default userRepository;

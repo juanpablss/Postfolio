@@ -5,8 +5,9 @@ import { Crypt } from "@util/Crypto";
 import { HttpError } from "@infrastructure/error/HttpError";
 import { Token } from "@util/Token";
 import { UserRepository } from "@domain/entities/user/UserRepository";
+import userRepositoryImp from "@repository/userRep/UserRepositoryImp";
 
-export default class UserServiceImp implements UserUseCases {
+export class UserServiceImp implements UserUseCases {
   constructor(private userRepository: UserRepository) {}
 
   async register(user: User): Promise<void> {
@@ -58,6 +59,9 @@ export default class UserServiceImp implements UserUseCases {
     return await this.userRepository.deleteById(id);
   }
 }
+
+const userServiceImp = new UserServiceImp(userRepositoryImp);
+export default userServiceImp;
 
 // const userService: UserUseCases = new UserServiceImp();
 // export default userService;
