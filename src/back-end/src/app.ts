@@ -1,7 +1,7 @@
 import Fastify from "fastify";
 import { UserRoutes } from "./adapters/inBound/routes/UserRoute";
 import fastifyCors from "@fastify/cors";
-import "./infrastructure/@types/Fastify";
+import "@infrastructure/@types/fastify";
 import { PortfolioRoute } from "./adapters/inBound/routes/PortfolioRoute";
 import { RatingRoute } from "./adapters/inBound/routes/RatingRoute";
 

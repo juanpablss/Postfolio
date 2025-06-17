@@ -2,8 +2,8 @@ import PrismaUser from "@models/PrismaUser";
 import { prisma } from "@infrastructure/config/Prisma";
 import { HttpError } from "@infrastructure/error/HttpError";
 
-export const PrismaUserRepository = {
-  insert: async (prismaUser: PrismaUser): Promise<PrismaUser> => {
+export default class PrismaUserRepositoryT {
+  async insert(prismaUser: PrismaUser): Promise<PrismaUser> {
     try {
       const user = prisma.user.create({
         data: {
@@ -17,17 +17,21 @@ export const PrismaUserRepository = {
     } catch (error) {
       throw new HttpError(500, "Erro ao registrar usuario!");
     }
-  },
-  findMany: async (): Promise<PrismaUser[]> => {
+  }
+
+  async findMany(): Promise<PrismaUser[]> {
     return prisma.user.findMany();
-  },
-  findById: async (id: string): Promise<PrismaUser | null> => {
+  }
+
+  async findById(id: string): Promise<PrismaUser | null> {
     return prisma.user.findUnique({ where: { id } });
-  },
-  findByEmail: async (email: string): Promise<PrismaUser | null> => {
+  }
+
+  async findByEmail(email: string): Promise<PrismaUser | null> {
     return prisma.user.findUnique({ where: { email } });
-  },
-  deleteById: async (id: string): Promise<PrismaUser | null> => {
+  }
+
+  async deleteById(id: string): Promise<PrismaUser | null> {
     try {
       const userDelete = await prisma.user.delete({
         where: { id },
@@ -38,5 +42,44 @@ export const PrismaUserRepository = {
       // console.log(error);
       throw new HttpError(500, "Não foi possivel deletar usuario!");
     }
-  },
-};
+  }
+}
+
+// export const PrismaUserRepository = {
+//   insert: async (prismaUser: PrismaUser): Promise<PrismaUser> => {
+//     try {
+//       const user = prisma.user.create({
+//         data: {
+//           name: prismaUser.name,
+//           email: prismaUser.email,
+//           passWord: prismaUser.passWord,
+//           status: prismaUser.status,
+//         },
+//       });
+//       return user;
+//     } catch (error) {
+//       throw new HttpError(500, "Erro ao registrar usuario!");
+//     }
+//   },
+//   findMany: async (): Promise<PrismaUser[]> => {
+//     return prisma.user.findMany();
+//   },
+//   findById: async (id: string): Promise<PrismaUser | null> => {
+//     return prisma.user.findUnique({ where: { id } });
+//   },
+//   findByEmail: async (email: string): Promise<PrismaUser | null> => {
+//     return prisma.user.findUnique({ where: { email } });
+//   },
+//   deleteById: async (id: string): Promise<PrismaUser | null> => {
+//     try {
+//       const userDelete = await prisma.user.delete({
+//         where: { id },
+//       });
+//       return userDelete;
+//     } catch (error) {
+//       console.log("Id: ", id, "\n");
+//       // console.log(error);
+//       throw new HttpError(500, "Não foi possivel deletar usuario!");
+//     }
+//   },
+// };
