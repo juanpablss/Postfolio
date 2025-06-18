@@ -1,14 +1,15 @@
 import { FastifyInstance } from "fastify";
 import { PortfolioController } from "@controller/PortfolioController";
 import { UserMiddle } from "@middleware/UserMiddle";
+import portfolioService from "@service/PortfolioServiceImp";
 
 export async function PortfolioRoute(app: FastifyInstance) {
-  app.post("/all", PortfolioController.getAll);
+  const portfolioController = new PortfolioController(portfolioService);
 
-  app.post(
-    "",
-    { preHandler: UserMiddle.authenticate },
-    PortfolioController.register
+  app.post("/all", (req, rep) => portfolioController.getAll(req, rep));
+
+  app.post("", { preHandler: UserMiddle.authenticate }, (req, rep) =>
+    portfolioController.register(req, rep)
   );
   // app.post(
   //   "/",
@@ -16,16 +17,12 @@ export async function PortfolioRoute(app: FastifyInstance) {
   //   PortfolioController.getByUser
   // );
 
-  app.put(
-    "",
-    { preHandler: UserMiddle.authenticate },
-    PortfolioController.update
+  app.put("", { preHandler: UserMiddle.authenticate }, (req, rep) =>
+    portfolioController.update(req, rep)
   );
 
-  app.delete(
-    "/:id",
-    { preHandler: UserMiddle.authenticate },
-    PortfolioController.deleteById
+  app.delete("/:id", { preHandler: UserMiddle.authenticate }, (req, rep) =>
+    portfolioController.deleteById(req, rep)
   );
 
   // app.get("/:id", )
