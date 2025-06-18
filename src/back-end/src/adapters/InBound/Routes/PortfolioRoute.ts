@@ -4,6 +4,7 @@ import { UserMiddle } from "@middleware/UserMiddle";
 
 export async function PortfolioRoute(app: FastifyInstance) {
   app.post("/all", PortfolioController.getAll);
+
   app.post(
     "",
     { preHandler: UserMiddle.authenticate },

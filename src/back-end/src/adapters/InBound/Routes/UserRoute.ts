@@ -18,18 +18,6 @@ export async function UserRoutes(app: FastifyInstance) {
     userController.getProfile(req, reply)
   );
 
-  // app.post(
-  //   "/portfolios",
-  //   { preHandler: UserMiddle.authenticate },
-  //   UserController.getPortfolios
-  // );
-
-  // app.post(
-  //   "/ratings",
-  //   { preHandler: UserMiddle.authenticate },
-  //   UserController.getRatings
-  // );
-
   app.delete("", { preHandler: UserMiddle.authenticate }, (req, reply) =>
     userController.deleteById(req, reply)
   );
