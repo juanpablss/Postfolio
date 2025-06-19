@@ -2,6 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { HttpError } from "@infrastructure/error/HttpError";
 import User from "@domain/entities/user/User";
 import UserUseCases from "@useCases/UserUseCases";
+import Email from "@domain/valueObject/Email";
 
 export class UserController {
   // private useService: UserUseCases;
@@ -33,7 +34,7 @@ export class UserController {
       throw new HttpError(400, "Todos os campos são obrigatórios!");
 
     await this.userService.register(
-      new User("", name, email, passWord, status)
+      new User("", name, new Email(email), passWord, status)
     );
 
     return reply.send({ msg: "Usuario criado com sucesso!" });
@@ -49,28 +50,18 @@ export class UserController {
   }
 
   async login(req: FastifyRequest, reply: FastifyReply) {
-    const { email = null, password = null } = req.body as Partial<{
-      email: string;
+    const { emailStr = null, password = null } = req.body as Partial<{
+      emailStr: string;
       password: string;
     }>;
 
-    if (!email) throw new HttpError(400, "O email é obrigatório!");
+    if (!emailStr) throw new HttpError(400, "O email é obrigatório!");
     if (!password) throw new HttpError(400, "A senha é obrigatória!");
 
+    const email = new Email(emailStr);
     const token = await this.userService.login(email, password);
 
     reply.send({ msg: "Login bem-sucedido!", token });
-
-    // Meramente para testes
-    // console.log("Teste Cassios: ", email, " : ", password);
-
-    // reply.send({
-    //   msg: "Login bem-sucedido!",
-    //   dados: {
-    //     email,
-    //     password,
-    //   },
-    // });
   }
 
   async getProfile(req: FastifyRequest, reply: FastifyReply) {

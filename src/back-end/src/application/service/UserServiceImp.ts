@@ -6,14 +6,13 @@ import { HttpError } from "@infrastructure/error/HttpError";
 import { Token } from "@util/Token";
 import { UserRepository } from "@domain/entities/user/UserRepository";
 import userRepositoryImp from "@repository/userRep/UserRepositoryImp";
+import Email from "@domain/valueObject/Email";
 
 export class UserServiceImp implements UserUseCases {
   constructor(private userRepository: UserRepository) {}
 
   async register(user: User): Promise<void> {
-    const existingUser = await this.userRepository.findByEmail(
-      user.email.getValue()
-    );
+    const existingUser = await this.userRepository.findByEmail(user.email);
 
     if (existingUser) throw new HttpError(400, "Por favor, use outro email!");
 
@@ -30,7 +29,7 @@ export class UserServiceImp implements UserUseCases {
     return await this.userRepository.findById(id);
   }
 
-  async findByEmail(email: string): Promise<User | null> {
+  async findByEmail(email: Email): Promise<User | null> {
     const user = await this.userRepository.findByEmail(email);
     return user;
   }
@@ -43,7 +42,7 @@ export class UserServiceImp implements UserUseCases {
   //   return await ratingRepository.findByUserId(authorId);
   // }
 
-  async login(email: string, passWord: string): Promise<string> {
+  async login(email: Email, passWord: string): Promise<string> {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) throw new HttpError(404, "Usuário não encontrado!");

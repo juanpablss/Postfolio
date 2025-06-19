@@ -4,8 +4,9 @@ import { HttpError } from "@infrastructure/error/HttpError";
 export default class Email {
   private value: string;
 
-  constructor(email: string) {
-    if (!validator.isEmail(email)) throw new HttpError(400, "Email inválido!");
+  constructor(email: string, requiredValidation: boolean = true) {
+    if (!validator.isEmail(email) && requiredValidation)
+      throw new HttpError(400, "Email inválido!");
     this.value = email;
   }
 

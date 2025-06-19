@@ -5,6 +5,7 @@ import prismaUserRepository, {
   PrismaUserRepository,
 } from "@repository/userRep/PrismaUserRepository";
 import Mapper from "@util/Mapper";
+import Email from "@domain/valueObject/Email";
 
 export class UserRepositoryImp implements UserRepository {
   constructor(private readonly prismaUserRepository: PrismaUserRepository) {}
@@ -29,8 +30,10 @@ export class UserRepositoryImp implements UserRepository {
     if (!userEntity) return null;
     return Mapper.User.toDomain(userEntity);
   }
-  async findByEmail(email: string): Promise<User | null> {
-    const userEntity = await this.prismaUserRepository.findByEmail(email);
+  async findByEmail(email: Email): Promise<User | null> {
+    const userEntity = await this.prismaUserRepository.findByEmail(
+      email.getValue()
+    );
     if (!userEntity) return null;
     return Mapper.User.toDomain(userEntity);
   }

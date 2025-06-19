@@ -4,13 +4,14 @@ import PrismaPortfolio from "@models/PrismaPortfolio";
 import Portfolio from "@domain/entities/portfolio/Portfolio";
 import PrismaRating from "@models/PrismaRating";
 import Rating from "@domain/entities/rating/Rating";
+import Email from "@domain/valueObject/Email";
 
 const UserMapper = {
   toDomain(prismaUser: PrismaUser): User {
     return new User(
       prismaUser.id,
       prismaUser.name,
-      prismaUser.email,
+      new Email(prismaUser.email, false),
       prismaUser.passWord,
       prismaUser.status
     );
