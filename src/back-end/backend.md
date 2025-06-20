@@ -1,4 +1,8 @@
+---
+version: 1.0.0
+---
 # Tutorial
+**Versão:** 1.0.0
 Está seção trata do tutorial para fazer a api ser executada. De prefencia, tenho o gerenciador de pacotes **yarn** instalado em sua maquina, caso não tenha, pode prosseguir com **npm.** Os seguintes comandos serão feitos em **yarn.** 
 
 1. Nague ou abra o terminal do diretorio back-end do projeto.
@@ -31,49 +35,101 @@ yarn run dev
 ```
 # Documentação da api
 
-Descrição?
+# Índice
 
-## 1. End-points
+- [1. Endpoints](#1-endpoints)
+- [2. Arquitetura](#2-arquitetura)
+  - [2.1 Descrição da Arquitetura](#21-descrição-da-arquitetura)
+  - [2.2 Estrutura de Pastas](#22-estrutura-de-pastas)
+- [3. Código e Propósitos](#3-código-e-propósitos)
+- [4. Conclusão](#4-conclusão)
+
+---
+
+## 1. Endpoints
+
+A seguir, estudaremos cada end-point, seus cabeçalhos, corpos e respostas.
+Segiu o local onde todos os end-poins estão sendo registrados pelo *app*
+
+```shell
+📦 back-end/
+├── 📁 src/
+│   └── 📁 adapters/
+│       └── 📁 inBound/
+│           ├── 📁 controllers/
+|           ├── 📁 middleware/
+|           └── 📁 routes/
+|               ├── PortfolioRoute.ts
+|               ├── RatingRoute.ts
+|               └── UserRoute.ts
+```
+obs: Estudaremos mais sobre a arquitetura e estrutura de pastas do projeto no tópico [2. Arquitetura](#2-arquitetura)
 
 ### users
 
-- POST /api/user
+**- POST /api/user**
 
-endpoint onde o usuario será criado. Segui o formato de request e response realidados.
+Descrição: Cria um novo usuário no sistema.
+Autenticação: Não requerida.
+Content-Type: application/json.
 
-**request:**
+request:
 ```json
 {
-    "name": "test",
-    "email": "test@gmail.com",
-    "password": "123456789",
-    "status": "None"
+    "name": "test", // nome do user.
+    "email": "test@gmail.com", // email valido e único.
+    "password": "123456789", // senha de pelo menos 8 digitos
+    "status": "None" // Ainda não disponivel na atual verção.
 }
 ```
-**response:**
+response (`201`):
 ```json
 {
     "msg": "Usuario criado com sucesso!"
 }
 ```
+| Código HTTP | Resposta (JSON) | 
+|:-------------:|:-----------------:|
+| 400         | {"message": "Todos os campos são obrigatórios!"} | 
+| 400         | {"message": "Senha muito fraca!"} |
+| 400         | {"message": "Email inválido!"} |
+| 400         | {"message": "Por favor, use outro email!"} |
 
 
-- POST /api/user/login
+**- POST /api/user/login**
 
-endpoint onde o login será feito. Segui o formato de request e response realidados.
+Descrição: Faz o login de um usuario no sistema.
+Autenticação: Não requerida.
+Content-Type: application/json.
 
-**request:**
+request:
 ```json
 {
     "email": "test@gmail.com",
     "password": "123456789"
 }
 ```
-**response:**
+response:
 ```json
 { 
     "msg": "Login bem-sucedido!", 
-    "token": "token_jwt"
+    "token": "alsnfqoboiqroho8hf0h3ub1oius7dg9qeboh0HhOH0HH89H1R" // token_jwt
 }
 ```
+| Código HTTP | Resposta (JSON) | 
+|:-------------:|:-----------------:|
+| 400         | {"message": "O email é obrigatório!"} | 
+| 400         | {"message": "A senha é obrigatória!"} |
+| 400         | {"message": "Email inválido!"} |
+| 404         | {"message": "Usuário não encontrado!"} |
+| 401         | {"message": "Senha incorreta!"} |
 
+## 2. Arquitetura
+
+### 2.1 Descrição da Arquitetura
+
+### 2.2 Estrutura de Pastas
+
+## 3. Código e Propósitos
+
+## 4. Conclusão

@@ -20,22 +20,26 @@ export class UserController {
   async register(req: FastifyRequest, reply: FastifyReply) {
     const {
       name = null,
-      email = null,
-      passWord = null,
+      email: emailStr = null,
+      password = null,
       status = null,
     } = req.body as Partial<{
       name: string;
       email: string;
-      passWord: string;
+      password: string;
       status: string;
     }>;
 
-    if (!name || !email || !passWord || !status)
+    if (!name || !emailStr || !password || !status)
       throw new HttpError(400, "Todos os campos são obrigatórios!");
 
+    if (password.length <= 8) throw new HttpError(400, "Senha muito fraca!");
+
+    const email = new Email(emailStr); // pode dar erro HttpError(400, "Email inválido!");
+
     await this.userService.register(
-      new User("", name, new Email(email), passWord, status)
-    );
+      new User("", name, email, password, status)
+    ); // pode dar erro HttpError(400, "Por favor, use outro email!");
 
     return reply.send({ msg: "Usuario criado com sucesso!" });
   }
