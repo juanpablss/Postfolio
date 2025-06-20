@@ -9,7 +9,7 @@ const app = Fastify();
 const PORT = 8080;
 
 app.register(fastifyCors, {
-  origin: "http://127.0.0.1:5500",
+  origin: true,
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 });

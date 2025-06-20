@@ -35,8 +35,10 @@ yarn run dev
 ```
 # Documentação da api
 
-# Índice
+A api foi desenvolvida para ser usada como backend do projeto Postfolio.
 
+## Índice
+- [0. Sobre app.ts](#0-sobre-appts)
 - [1. Endpoints](#1-endpoints)
 - [2. Arquitetura](#2-arquitetura)
   - [2.1 Descrição da Arquitetura](#21-descrição-da-arquitetura)
@@ -45,6 +47,44 @@ yarn run dev
 - [4. Conclusão](#4-conclusão)
 
 ---
+
+## 0. Sobre app.ts
+
+O arquivo app.ts é a porta de entrada para a execução da api.
+É nele onde o servidor é inicializado:
+```ts
+import Fastify from "fastify";
+const app = Fastify();
+const PORT = 8080;
+```
+Onde é CORS é configurado:
+```ts
+app.register(fastifyCors, {
+  origin: true, // Permite todas as fontes
+  methods: ["GET", "POST", "PUT", "DELETE"], // Métodos HTTP permitidos
+  allowedHeaders: ["Content-Type", "Authorization"], // Headers permitidos
+});
+```
+Registro de rotas:
+```ts
+app.register(UserRoutes, { prefix: "api/user" }); // Gerenciamento de usuários
+app.register(PortfolioRoute, { prefix: "api/portfolio" }); // Operações de portfólio
+app.register(RatingRoute, { prefix: "api/rating" }); // Avaliações e feedback
+```
+E onde é vervidor é executado:
+```ts
+const start = async () => {
+  try {
+    await app.listen({ port: PORT, host: "0.0.0.0" });
+    console.log(`Servidor rodando em http://localhost:${PORT}`);
+  } catch (err) {
+    app.log.error(err);
+    process.exit(1);
+  }
+};
+
+start();
+```
 
 ## 1. Endpoints
 
@@ -62,6 +102,7 @@ Segiu o local onde todos os end-poins estão sendo registrados pelo *app*
 |               ├── PortfolioRoute.ts
 |               ├── RatingRoute.ts
 |               └── UserRoute.ts
+....
 ```
 obs: Estudaremos mais sobre a arquitetura e estrutura de pastas do projeto no tópico [2. Arquitetura](#2-arquitetura)
 
