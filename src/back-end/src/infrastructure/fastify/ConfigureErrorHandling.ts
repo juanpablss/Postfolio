@@ -29,5 +29,16 @@ export default function configureErrorHandling(
     response.message = error.message;
   }
 
+  request.log.error(
+    {
+      err: error, // Campo especial que o Pino reconhece
+      reqId: request.id,
+      path: request.url,
+      params: request.params,
+      query: request.query,
+    },
+    error.message
+  );
+
   reply.status(response.statusCode).send(response);
 }

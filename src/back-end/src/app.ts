@@ -4,14 +4,16 @@ import fastifyCors from "@fastify/cors";
 import "@infrastructure/@types/fastify";
 import { PortfolioRoute } from "./adapters/inBound/routes/PortfolioRoute";
 import { RatingRoute } from "./adapters/inBound/routes/RatingRoute";
-import { configureFastify } from "@infrastructure/fastify/configureFastify";
+import { configureFastify } from "@infrastructure/fastify/ConfigureFastify";
 
 const app = Fastify({
   logger: {
+    level: "error",
     transport: {
       target: "pino-pretty",
       options: {
         colorize: true,
+        ignore: "pid,hostname,reqId,req,res",
       },
     },
   },
