@@ -14,11 +14,13 @@ export async function UserRoutes(app: FastifyInstance) {
   app.post("/all", (req, reply) => userController.getAll(req, reply));
   app.post("/login", (req, reply) => userController.login(req, reply));
 
-  app.post("/profile", { preHandler: UserMiddle.authenticate }, (req, reply) =>
-    userController.getProfile(req, reply)
+  app.post(
+    "/profile",
+    { preValidation: UserMiddle.authenticate },
+    (req, reply) => userController.getProfile(req, reply)
   );
 
-  app.delete("", { preHandler: UserMiddle.authenticate }, (req, reply) =>
+  app.delete("", { preValidation: UserMiddle.authenticate }, (req, reply) =>
     userController.deleteById(req, reply)
   );
 }
