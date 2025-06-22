@@ -6,7 +6,16 @@ import { PortfolioRoute } from "./adapters/inBound/routes/PortfolioRoute";
 import { RatingRoute } from "./adapters/inBound/routes/RatingRoute";
 import { configureFastify } from "@infrastructure/fastify/configureFastify";
 
-const app = Fastify();
+const app = Fastify({
+  logger: {
+    transport: {
+      target: "pino-pretty",
+      options: {
+        colorize: true,
+      },
+    },
+  },
+});
 const PORT = 8080;
 
 app.register(fastifyCors, {

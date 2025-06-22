@@ -14,6 +14,7 @@ export default function configureErrorHandling(
   request: FastifyRequest,
   reply: FastifyReply
 ) {
+  //   console.log("Error");
   const response: ErrorResponse = {
     statusCode: 500,
     error: "Internal Server Error",
@@ -27,14 +28,6 @@ export default function configureErrorHandling(
     response.error = error.name;
     response.message = error.message;
   }
-
-  request.log.error({
-    error: {
-      name: error.name,
-      message: error.message,
-      stack: error.stack,
-    },
-  });
 
   reply.status(response.statusCode).send(response);
 }
