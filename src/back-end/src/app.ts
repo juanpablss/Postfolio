@@ -4,6 +4,7 @@ import fastifyCors from "@fastify/cors";
 import "@infrastructure/@types/fastify";
 import { PortfolioRoute } from "./adapters/inBound/routes/PortfolioRoute";
 import { RatingRoute } from "./adapters/inBound/routes/RatingRoute";
+import { configureFastify } from "@infrastructure/fastify/configureFastify";
 
 const app = Fastify();
 const PORT = 8080;
@@ -17,6 +18,8 @@ app.register(fastifyCors, {
 app.register(UserRoutes, { prefix: "api/user" });
 app.register(PortfolioRoute, { prefix: "api/portfolio" });
 app.register(RatingRoute, { prefix: "api/rating" });
+
+configureFastify(app);
 
 const start = async () => {
   try {

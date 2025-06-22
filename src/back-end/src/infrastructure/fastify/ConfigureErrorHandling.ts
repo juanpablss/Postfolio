@@ -1,0 +1,40 @@
+import { HttpError } from "@domain/error/HttpError";
+import { FastifyReply, FastifyRequest } from "fastify";
+
+interface ErrorResponse {
+  statusCode: number;
+  error: string;
+  message: string;
+  details?: any;
+  timestamp?: string;
+}
+
+export default function configureErrorHandling(
+  error: Error,
+  request: FastifyRequest,
+  reply: FastifyReply
+) {
+  const response: ErrorResponse = {
+    statusCode: 500,
+    error: "Internal Server Error",
+    message: "Ocorreu um erro inesperado",
+    timestamp: new Date().toISOString(),
+  };
+
+  // Tratamento para erros conhecidos
+  if (error instanceof HttpError) {
+    response.statusCode = error.statusCode;
+    response.error = error.name;
+    response.message = error.message;
+  }
+
+  request.log.error({
+    error: {
+      name: error.name,
+      message: error.message,
+      stack: error.stack,
+    },
+  });
+
+  reply.status(response.statusCode).send(response);
+}
