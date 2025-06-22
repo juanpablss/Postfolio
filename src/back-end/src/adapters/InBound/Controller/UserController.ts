@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { HttpError } from "@infrastructure/error/HttpError";
+import { HttpError } from "@domain/error/HttpError";
 import User from "@domain/entities/user/User";
 import UserUseCases from "@useCases/UserUseCases";
 import Email from "@domain/valueObject/Email";
@@ -54,8 +54,8 @@ export class UserController {
   }
 
   async login(req: FastifyRequest, reply: FastifyReply) {
-    const { emailStr = null, password = null } = req.body as Partial<{
-      emailStr: string;
+    const { email: emailStr = null, password = null } = req.body as Partial<{
+      email: string;
       password: string;
     }>;
 

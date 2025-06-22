@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { HttpError } from "@infrastructure/error/HttpError";
+import { HttpError } from "@domain/error/HttpError";
 
 export const Crypt = {
   hashPassWord: async (passWord: string): Promise<string> => {

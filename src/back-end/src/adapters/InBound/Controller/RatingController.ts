@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { HttpError } from "@infrastructure/error/HttpError";
+import { HttpError } from "@domain/error/HttpError";
 import Rating from "@domain/entities/rating/Rating";
 import RatingUseCases from "@useCases/RatingUseCases";
 // import ratingService from "@application/service/RatingServiceImp";

@@ -1,6 +1,6 @@
 import PrismaPortfolio from "@models/PrismaPortfolio";
 import { prisma } from "@infrastructure/config/Prisma";
-import { HttpError } from "@infrastructure/error/HttpError";
+import { HttpError } from "@domain/error/HttpError";
 
 export class PrismaPortfolioRepository {
   async insert(prismaPortfolio: PrismaPortfolio): Promise<PrismaPortfolio> {

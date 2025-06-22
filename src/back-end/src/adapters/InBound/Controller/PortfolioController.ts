@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import Portfolio from "@domain/entities/portfolio/Portfolio";
-import { HttpError } from "@infrastructure/error/HttpError";
+import { HttpError } from "@domain/error/HttpError";
 import PortfolioUseCases from "@useCases/PortfolioUseCases";
 // import portfolioService from "@application/service/PortfolioServiceImp";
 

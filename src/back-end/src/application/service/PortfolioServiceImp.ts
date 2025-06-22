@@ -2,7 +2,7 @@ import PortfolioUseCases from "@application/useCases/PortfolioUseCases";
 import userServiceImp from "@application/service/UserServiceImp";
 import portfolioRepository from "@repository/portfolioRep/PortfolioRepositoryImp";
 import Portfolio from "@domain/entities/portfolio/Portfolio";
-import { HttpError } from "@infrastructure/error/HttpError";
+import { HttpError } from "@domain/error/HttpError";
 import PortfolioRepository from "@domain/entities/portfolio/PortfolioRepository";
 import UserUseCases from "@useCases/UserUseCases";
 

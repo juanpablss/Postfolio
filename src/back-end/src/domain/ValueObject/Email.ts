@@ -1,5 +1,5 @@
 import validator from "validator";
-import { HttpError } from "@infrastructure/error/HttpError";
+import { HttpError } from "@domain/error/HttpError";
 
 export default class Email {
   private value: string;

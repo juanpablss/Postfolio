@@ -2,7 +2,7 @@ import UserUseCases from "@application/useCases/UserUseCases";
 import User from "@domain/entities/user/User";
 // import userRepository from "@repository/userRep/UserRepositoryImp";
 import { Crypt } from "@util/Crypto";
-import { HttpError } from "@infrastructure/error/HttpError";
+import { HttpError } from "@domain/error/HttpError";
 import { Token } from "@util/Token";
 import { UserRepository } from "@domain/entities/user/UserRepository";
 import userRepositoryImp from "@repository/userRep/UserRepositoryImp";

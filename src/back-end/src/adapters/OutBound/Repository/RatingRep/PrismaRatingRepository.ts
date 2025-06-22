@@ -1,5 +1,5 @@
 import { prisma } from "@infrastructure/config/Prisma";
-import { HttpError } from "@infrastructure/error/HttpError";
+import { HttpError } from "@domain/error/HttpError";
 import PrismaRating from "@models/PrismaRating";
 
 export class PrismaRatingRepository {

@@ -2,7 +2,7 @@ import ratingRepository from "@repository/ratingRep/RatingRepositoryImp";
 import Rating from "@domain/entities/rating/Rating";
 import RatingUseCases from "@application/useCases/RatingUseCases";
 import RatingRepository from "@domain/entities/rating/RatingRepository";
-import { HttpError } from "@infrastructure/error/HttpError";
+import { HttpError } from "@domain/error/HttpError";
 
 class RatingServiceImp implements RatingUseCases {
   constructor(private readonly ratingRepository: RatingRepository) {}
