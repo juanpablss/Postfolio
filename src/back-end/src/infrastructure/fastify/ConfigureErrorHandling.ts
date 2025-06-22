@@ -1,4 +1,4 @@
-import { HttpError } from "@domain/error/HttpError";
+import { GenericHttpError } from "@domain/error/HttpError";
 import { FastifyReply, FastifyRequest } from "fastify";
 
 interface ErrorResponse {
@@ -23,7 +23,7 @@ export default function configureErrorHandling(
   };
 
   // Tratamento para erros conhecidos
-  if (error instanceof HttpError) {
+  if (error instanceof GenericHttpError) {
     response.statusCode = error.statusCode;
     response.error = error.name;
     response.message = error.message;

@@ -1,5 +1,5 @@
 import { prisma } from "@infrastructure/config/Prisma";
-import { HttpError } from "@domain/error/HttpError";
+import { InternalServerError } from "@domain/error/HttpError";
 import PrismaRating from "@models/PrismaRating";
 
 export class PrismaRatingRepository {
@@ -16,7 +16,7 @@ export class PrismaRatingRepository {
       return rating;
     } catch (error) {
       console.log(error);
-      throw new HttpError(500, "Erro ao salvar Analise!");
+      throw new InternalServerError("Erro ao salvar Analise!");
     }
   }
 
@@ -25,7 +25,9 @@ export class PrismaRatingRepository {
       const ratings = await prisma.rating.findMany();
       return ratings;
     } catch (error) {
-      throw new HttpError(500, "Não foi possivel buscar todas as Analise!");
+      throw new InternalServerError(
+        "Não foi possivel buscar todas as Analise!"
+      );
     }
   }
 
@@ -39,7 +41,7 @@ export class PrismaRatingRepository {
 
       return ratings;
     } catch (error) {
-      throw new HttpError(500, "Erro ao buscar Analises do portfolio!");
+      throw new InternalServerError("Erro ao buscar Analises do portfolio!");
     }
   }
 
@@ -53,7 +55,7 @@ export class PrismaRatingRepository {
 
       return ratings;
     } catch (error) {
-      throw new HttpError(500, "Erro ao buscar Analises do usuario!");
+      throw new InternalServerError("Erro ao buscar Analises do usuario!");
     }
   }
 
@@ -71,7 +73,7 @@ export class PrismaRatingRepository {
 
       return rating;
     } catch (error) {
-      throw new HttpError(500, "Erro ao buscar analise do usuario!");
+      throw new InternalServerError("Erro ao buscar analise do usuario!");
     }
   }
 
@@ -88,7 +90,7 @@ export class PrismaRatingRepository {
 
       return rating;
     } catch (error) {
-      throw new HttpError(500, "Erro ao atualizar dados da analise!");
+      throw new InternalServerError("Erro ao atualizar dados da analise!");
     }
   }
 
@@ -102,7 +104,7 @@ export class PrismaRatingRepository {
 
       return rating;
     } catch (error) {
-      throw new HttpError(500, "Erro ao deletar analise!");
+      throw new InternalServerError("Erro ao deletar analise!");
     }
   }
 }

@@ -2,7 +2,7 @@ import ratingRepository from "@repository/ratingRep/RatingRepositoryImp";
 import Rating from "@domain/entities/rating/Rating";
 import RatingUseCases from "@application/useCases/RatingUseCases";
 import RatingRepository from "@domain/entities/rating/RatingRepository";
-import { HttpError } from "@domain/error/HttpError";
+import { Conflict } from "@domain/error/HttpError";
 
 class RatingServiceImp implements RatingUseCases {
   constructor(private readonly ratingRepository: RatingRepository) {}
@@ -14,7 +14,7 @@ class RatingServiceImp implements RatingUseCases {
     );
 
     if (existeRating)
-      throw new HttpError(409, "Não é permitido mais de uma avaliação");
+      throw new Conflict("Não é permitido mais de uma avaliação");
 
     const ratingDomain = await this.ratingRepository.insert(rating);
     return ratingDomain;

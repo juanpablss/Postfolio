@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import Portfolio from "@domain/entities/portfolio/Portfolio";
-import { HttpError } from "@domain/error/HttpError";
+import { BadRequest } from "@domain/error/HttpError";
 import PortfolioUseCases from "@useCases/PortfolioUseCases";
 // import portfolioService from "@application/service/PortfolioServiceImp";
 
@@ -23,7 +23,7 @@ export class PortfolioController {
     console.log("ID: ", authorId);
 
     if (!name || !description || !pageLink || !authorId)
-      throw new HttpError(400, "Todos os campos são obrigatórios!");
+      throw new BadRequest("Todos os campos são obrigatórios!");
 
     const portfolio = await this.portfolioService.register(
       new Portfolio("", name, description, pageLink, authorId)
@@ -42,7 +42,7 @@ export class PortfolioController {
     const params = req.params as { id: string };
     const id = params.id;
 
-    if (!id) throw new HttpError(400, "Id é obrigatorio");
+    if (!id) throw new BadRequest("Id é obrigatorio");
 
     const portfolio = await this.portfolioService.findById(id);
 
@@ -65,7 +65,7 @@ export class PortfolioController {
     }>;
 
     if (!id || !name || !description || !pageLink || !authorId)
-      throw new HttpError(400, "Todos os campos são obrigatórios!");
+      throw new BadRequest("Todos os campos são obrigatórios!");
 
     const portfolio = await this.portfolioService.update(
       new Portfolio(id, name, description, pageLink, authorId)
@@ -78,7 +78,7 @@ export class PortfolioController {
     const params = req.params as { id: string };
     const id = params.id;
 
-    if (!id) throw new HttpError(400, "Id do portofolio é obrigatorio!");
+    if (!id) throw new BadRequest("Id do portofolio é obrigatorio!");
 
     const portfolio = await this.portfolioService.deleteById(id);
     reply.send(portfolio);

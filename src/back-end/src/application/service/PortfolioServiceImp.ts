@@ -2,7 +2,7 @@ import PortfolioUseCases from "@application/useCases/PortfolioUseCases";
 import userServiceImp from "@application/service/UserServiceImp";
 import portfolioRepository from "@repository/portfolioRep/PortfolioRepositoryImp";
 import Portfolio from "@domain/entities/portfolio/Portfolio";
-import { HttpError } from "@domain/error/HttpError";
+import { BadRequest } from "@domain/error/HttpError";
 import PortfolioRepository from "@domain/entities/portfolio/PortfolioRepository";
 import UserUseCases from "@useCases/UserUseCases";
 
@@ -17,7 +17,7 @@ class PortfolioServiceImp implements PortfolioUseCases {
 
     console.log("\nAuthor: ", author);
 
-    if (!author) throw new HttpError(400, "Author não registrado!");
+    if (!author) throw new BadRequest("Author não registrado!");
     return await this.portfolioRepository.insert(portfolio);
   }
 

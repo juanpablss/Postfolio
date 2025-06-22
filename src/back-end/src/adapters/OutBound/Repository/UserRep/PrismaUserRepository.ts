@@ -1,6 +1,6 @@
 import PrismaUser from "@models/PrismaUser";
 import { prisma } from "@infrastructure/config/Prisma";
-import { HttpError } from "@domain/error/HttpError";
+import { InternalServerError } from "@domain/error/HttpError";
 
 export class PrismaUserRepository {
   async insert(prismaUser: PrismaUser): Promise<PrismaUser> {
@@ -15,7 +15,7 @@ export class PrismaUserRepository {
       });
       return user;
     } catch (error) {
-      throw new HttpError(500, "Erro ao registrar usuario!");
+      throw new InternalServerError("Erro ao registrar usuario!");
     }
   }
 
@@ -40,7 +40,7 @@ export class PrismaUserRepository {
     } catch (error) {
       console.log("Id: ", id, "\n");
       // console.log(error);
-      throw new HttpError(500, "Não foi possivel deletar usuario!");
+      throw new InternalServerError("Não foi possivel deletar usuario!");
     }
   }
 }

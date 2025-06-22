@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { HttpError } from "@domain/error/HttpError";
+import { BadRequest, InternalServerError } from "@domain/error/HttpError";
 import User from "@domain/entities/user/User";
 import UserUseCases from "@useCases/UserUseCases";
 import Email from "@domain/valueObject/Email";
@@ -31,9 +31,9 @@ export class UserController {
     }>;
 
     if (!name || !emailStr || !password || !status)
-      throw new HttpError(400, "Todos os campos são obrigatórios!");
+      throw new BadRequest("Todos os campos são obrigatórios!");
 
-    if (password.length <= 8) throw new HttpError(400, "Senha muito fraca!");
+    if (password.length <= 8) throw new BadRequest("Senha muito fraca!");
 
     const email = new Email(emailStr); // pode dar erro HttpError(400, "Email inválido!");
 
@@ -50,7 +50,7 @@ export class UserController {
   }
 
   async getByEmail(req: FastifyRequest, reply: FastifyReply) {
-    throw new HttpError(500, "Método não implementado!");
+    throw new InternalServerError("Método não implementado!");
   }
 
   async login(req: FastifyRequest, reply: FastifyReply) {
@@ -59,8 +59,8 @@ export class UserController {
       password: string;
     }>;
 
-    if (!emailStr) throw new HttpError(400, "O email é obrigatório!");
-    if (!password) throw new HttpError(400, "A senha é obrigatória!");
+    if (!emailStr) throw new BadRequest("O email é obrigatório!");
+    if (!password) throw new BadRequest("A senha é obrigatória!");
 
     const email = new Email(emailStr);
     const token = await this.userService.login(email, password);
@@ -74,7 +74,7 @@ export class UserController {
 
   async deleteById(req: FastifyRequest, reply: FastifyReply) {
     const id = req.user?.id;
-    if (!id) throw new HttpError(400, "Id do usuario é obrigatorio!");
+    if (!id) throw new BadRequest("Id do usuario é obrigatorio!");
 
     const user = await this.userService.deleteById(id);
     reply.send(user);

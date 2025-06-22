@@ -2,7 +2,7 @@ import UserUseCases from "@application/useCases/UserUseCases";
 import User from "@domain/entities/user/User";
 // import userRepository from "@repository/userRep/UserRepositoryImp";
 import { Crypt } from "@util/Crypto";
-import { HttpError } from "@domain/error/HttpError";
+import { Conflict, NotFound, Unauthorized } from "@domain/error/HttpError";
 import { Token } from "@util/Token";
 import { UserRepository } from "@domain/entities/user/UserRepository";
 import userRepositoryImp from "@repository/userRep/UserRepositoryImp";
@@ -14,7 +14,7 @@ export class UserServiceImp implements UserUseCases {
   async register(user: User): Promise<void> {
     const existingUser = await this.userRepository.findByEmail(user.email);
 
-    if (existingUser) throw new HttpError(400, "Por favor, use outro email!");
+    if (existingUser) throw new Conflict("Por favor, use outro email!");
 
     user.passWord = await Crypt.hashPassWord(user.passWord);
 
@@ -45,11 +45,11 @@ export class UserServiceImp implements UserUseCases {
   async login(email: Email, passWord: string): Promise<string> {
     const user = await this.userRepository.findByEmail(email);
 
-    if (!user) throw new HttpError(404, "Usuário não encontrado!");
+    if (!user) throw new NotFound("Usuário não encontrado!");
 
     const checkPassWord = await Crypt.compare(passWord, user.passWord);
 
-    if (!checkPassWord) throw new HttpError(401, "Senha incorreta!");
+    if (!checkPassWord) throw new Unauthorized("Senha incorreta!");
 
     return Token.generate(user.id, user.email.getValue());
   }

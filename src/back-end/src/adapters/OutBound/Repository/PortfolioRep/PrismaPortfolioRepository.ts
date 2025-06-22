@@ -1,6 +1,6 @@
 import PrismaPortfolio from "@models/PrismaPortfolio";
 import { prisma } from "@infrastructure/config/Prisma";
-import { HttpError } from "@domain/error/HttpError";
+import { InternalServerError } from "@domain/error/HttpError";
 
 export class PrismaPortfolioRepository {
   async insert(prismaPortfolio: PrismaPortfolio): Promise<PrismaPortfolio> {
@@ -15,7 +15,7 @@ export class PrismaPortfolioRepository {
       });
       return portfolio;
     } catch (error) {
-      throw new HttpError(500, "Erro ao salvar Portfolio!");
+      throw new InternalServerError("Erro ao salvar Portfolio!");
     }
   }
 
@@ -59,7 +59,7 @@ export class PrismaPortfolioRepository {
         },
       });
     } catch (error) {
-      throw new HttpError(500, "Não foi possivel deletar o portfolio!");
+      throw new InternalServerError("Não foi possivel deletar o portfolio!");
     }
   }
 }
