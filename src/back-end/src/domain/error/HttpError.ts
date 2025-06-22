@@ -1,11 +1,29 @@
 export class HttpError extends Error {
-  statusCode: number;
-  //   msg: string;
-
-  constructor(status: number, message: string) {
+  constructor(public statusCode: number, public name: string, message: string) {
     super(message);
-    this.statusCode = status;
+  }
+}
 
-    // this.msg = msg;
+export class Unauthorized extends HttpError {
+  constructor(message: string) {
+    super(401, "Unauthorized", message);
+  }
+}
+
+export class TokenExpired extends Unauthorized {
+  constructor() {
+    super("Token de acesso expirado");
+  }
+}
+
+export class Forbidden extends HttpError {
+  constructor(message: string) {
+    super(403, "Forbidden", message);
+  }
+}
+
+export class NotFound extends HttpError {
+  constructor(message: string) {
+    super(404, "Not Found", message);
   }
 }
