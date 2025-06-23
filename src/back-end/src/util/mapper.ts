@@ -21,7 +21,7 @@ const UserMapper = {
       id: user.id,
       name: user.name,
       email: user.email.getValue(),
-      passWord: user.passWord,
+      passWord: user.password,
       status: user.status,
     };
   },

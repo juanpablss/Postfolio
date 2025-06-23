@@ -16,7 +16,7 @@ export class UserServiceImp implements UserUseCases {
 
     if (existingUser) throw new Conflict("Por favor, use outro email!");
 
-    user.passWord = await Crypt.hashPassWord(user.passWord);
+    user.password = await Crypt.hashPassWord(user.password);
 
     await this.userRepository.insert(user);
   }
@@ -47,7 +47,7 @@ export class UserServiceImp implements UserUseCases {
 
     if (!user) throw new NotFound("Usuário não encontrado!");
 
-    const checkPassWord = await Crypt.compare(passWord, user.passWord);
+    const checkPassWord = await Crypt.compare(passWord, user.password);
 
     if (!checkPassWord) throw new Unauthorized("Senha incorreta!");
 

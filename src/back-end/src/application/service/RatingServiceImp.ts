@@ -29,14 +29,14 @@ class RatingServiceImp implements RatingUseCases {
   }
 
   async findByPortfolioId(portfolioId: string): Promise<Rating[]> {
-    return await this.ratingRepository.findByPortfolioId(portfolioId);
+    return await this.ratingRepository.findByWorkCompDetails(portfolioId);
   }
 
   async findByUserAndPortfolio(
     userId: string,
     portfolioId: string
   ): Promise<Rating | null> {
-    return await this.ratingRepository.findByUserAndPortfolio(
+    return await this.ratingRepository.findByUserAndWorkCompDetails(
       userId,
       portfolioId
     );

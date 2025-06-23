@@ -27,13 +27,13 @@ class RatingRepositoryImp implements RatingRepository {
     );
   }
 
-  async findByPortfolioId(portfolioId: string): Promise<Rating[]> {
+  async findByWorkCompDetails(portfolioId: string): Promise<Rating[]> {
     return (
       await this.prismaRatingRepository.findByPortfolioId(portfolioId)
     ).map(Mapper.Rating.toDomain);
   }
 
-  async findByUserAndPortfolio(
+  async findByUserAndWorkCompDetails(
     userId: string,
     portfolioId: string
   ): Promise<Rating | null> {

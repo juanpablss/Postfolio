@@ -21,57 +21,61 @@ model User {
 }
 
 model Portfolio {
-  id          String @id @default(uuid())
+  id          String  @id @default(uuid())
   name        String
   description String
-  pageLink    String
-  authorId    String @unique
-  author      User   @relation(fields: [authorId], references: [id])
+  pageLink    String?
+  authorId    String  @unique
+  author      User    @relation(fields: [authorId], references: [id])
   works       Work[]
 
   @@map("tb_portfolio")
 }
 
 model Rating {
-  id            String                    @id @default(uuid())
+  id            String          @id @default(uuid())
   score         Float
   userId        String
-  user          User                      @relation(fields: [userId], references: [id])
-  workDetails   WorkForCompetitionDetails @relation(fields: [workDetailsId], references: [id])
-  workDetailsId String                    @unique
+  user          User            @relation(fields: [userId], references: [id])
+  workDetailsId String
+  workDetails   WorkCompDetails @relation(fields: [workDetailsId], references: [id])
 
   @@map("tb_rating")
 }
 
 model Competition {
-  id           String                      @id @default(uuid())
+  id           String            @id @default(uuid())
   name         String
-  createdAt    DateTime                    @default(now())
+  createdAt    DateTime          @default(now())
   startsAt     DateTime?
   endsAt       DateTime?
-  worksDetails WorkForCompetitionDetails[]
+  worksDetails WorkCompDetails[]
 
   @@map("tb_competition")
 }
 
 model Work {
-  id          String    @id @default(uuid())
-  name        String
-  description String
-  githubLink  String?
-  portfolioId String
-  portfolio   Portfolio @relation(fields: [portfolioId], references: [id])
+  id                 String            @id @default(uuid())
+  name               String
+  description        String
+  githubLink         String?
+  portfolioId        String
+  portfolio          Portfolio         @relation(fields: [portfolioId], references: [id])
+  competitionDetails WorkCompDetails[]
 
   @@map("tb_work")
 }
 
-model WorkForCompetitionDetails {
+model WorkCompDetails {
   id             String      @id @default(uuid())
   totalReviewers Int
   totalScore     Float
   competitionId  String
   competition    Competition @relation(fields: [competitionId], references: [id])
-  rating         Rating?
+  workId         String
+  work           Work        @relation(fields: [workId], references: [id])
+  rating         Rating[]
 
-  @@map("tb_work_for_competition_details")
+  @@unique([competitionId, workId])
+  @@map("tb_work_comp_details")
 }
