@@ -5,7 +5,7 @@ import { InternalServerError } from "@domain/error/HttpError";
 export class PrismaUserRepository {
   async insert(prismaUser: PrismaUser): Promise<PrismaUser> {
     try {
-      const user = prisma.user.create({
+      const user = await prisma.user.create({
         data: {
           name: prismaUser.name,
           email: prismaUser.email,
