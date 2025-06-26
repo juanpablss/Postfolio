@@ -32,7 +32,22 @@
     // "moduleResolution": "node10",                     /* Specify how TypeScript looks up a file from a given module specifier. */
     "baseUrl": "./src",                                  /* Specify the base directory to resolve non-relative module names. */
     "paths": {
-      "@adapters/*":["adapters/*"],
+      /* adapters */
+      // inBound
+      "@controller/*":["adapters/inBound/controller/*"],
+      "@middleware/*":["adapters/inBound/middleware/*"],
+      "@routes/*":["adapters/inBound/routes/*"],
+      //outBound
+      "@models/*":["adapters/outBound/models/*"],
+      "@repository/*":["adapters/outBound/repository/*"],
+
+      // Talvez mudar?
+      /* application */ 
+      // service
+      "@service/*":["application/service/*"],
+      // useCases
+      "@useCases/*":["application/useCases/*"],
+
       "@application/*":["application/*"],
       "@domain/*":["domain/*"],
       "@infrastructure/*":["infrastructure/*"],
