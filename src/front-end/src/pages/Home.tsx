@@ -60,7 +60,7 @@ export default function Home()  {
       <ParticleComponent />
       <div className="relative z-10">
         <Header />
-        <div className="flex flex-col md:flex-row justify-between items-center px-6 md:px-10 py-16 gap-10">
+        <div className="flex flex-col md:flex-row justify-between items-center px-6 md:px-10 py-32 gap-10">
           {/* Texto - Fica primeiro no mobile, mas mantém a posição no desktop */}
           <div className="flex flex-col items-left md:items-left justify-right space-y-5 max-w-[600px] order-1 md:order-1">
             <h1 className="text-light-white text-[60px] font-bold text-left md:text-left leading-tight">
