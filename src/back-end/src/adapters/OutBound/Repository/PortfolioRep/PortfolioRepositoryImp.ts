@@ -52,7 +52,7 @@ class PortfolioRepositoryImp implements PortfolioRepository {
   }
 }
 
-const portfolioRepository: PortfolioRepository = new PortfolioRepositoryImp(
+const portfolioRepositoryImp: PortfolioRepository = new PortfolioRepositoryImp(
   prismaPortfolioRepository
 );
-export default portfolioRepository;
+export default portfolioRepositoryImp;

@@ -59,7 +59,7 @@ class RatingRepositoryImp implements RatingRepository {
   }
 }
 
-const ratingRepository: RatingRepository = new RatingRepositoryImp(
+const ratingRepositoryImp: RatingRepository = new RatingRepositoryImp(
   prismaRatingRepository
 );
-export default ratingRepository;
+export default ratingRepositoryImp;

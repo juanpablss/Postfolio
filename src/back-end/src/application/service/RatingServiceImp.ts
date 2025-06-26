@@ -1,4 +1,4 @@
-import ratingRepository from "@repository/ratingRep/RatingRepositoryImp";
+import ratingRepositoryImp from "@repository/ratingRep/RatingRepositoryImp";
 import Rating from "@domain/entities/rating/Rating";
 import RatingUseCases from "@application/useCases/RatingUseCases";
 import RatingRepository from "@domain/entities/rating/RatingRepository";
@@ -51,5 +51,5 @@ class RatingServiceImp implements RatingUseCases {
   }
 }
 
-const ratingService: RatingUseCases = new RatingServiceImp(ratingRepository);
+const ratingService: RatingUseCases = new RatingServiceImp(ratingRepositoryImp);
 export default ratingService;

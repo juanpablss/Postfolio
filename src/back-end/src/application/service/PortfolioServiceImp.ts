@@ -1,6 +1,6 @@
 import PortfolioUseCases from "@application/useCases/PortfolioUseCases";
 import userServiceImp from "@application/service/UserServiceImp";
-import portfolioRepository from "@repository/portfolioRep/PortfolioRepositoryImp";
+import portfolioRepositoryImp from "@repository/portfolioRep/PortfolioRepositoryImp";
 import Portfolio from "@domain/entities/portfolio/Portfolio";
 import { BadRequest } from "@domain/error/HttpError";
 import PortfolioRepository from "@domain/entities/portfolio/PortfolioRepository";
@@ -45,7 +45,7 @@ class PortfolioServiceImp implements PortfolioUseCases {
 }
 
 const portfolioService: PortfolioUseCases = new PortfolioServiceImp(
-  portfolioRepository,
+  portfolioRepositoryImp,
   userServiceImp
 );
 export default portfolioService;

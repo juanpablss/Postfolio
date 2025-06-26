@@ -6,7 +6,7 @@ import prismaUserRepository, {
 import Mapper from "@util/Mapper";
 import Email from "@domain/valueObject/Email";
 
-export class UserRepositoryImp implements UserRepository {
+class UserRepositoryImp implements UserRepository {
   constructor(private readonly prismaUserRepository: PrismaUserRepository) {}
 
   async insert(user: User): Promise<User | null> {

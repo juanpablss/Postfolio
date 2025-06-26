@@ -5,7 +5,7 @@ import prismaWorkRepository, {
 } from "@repository/workRep/PrismaWorkRepository";
 import Mapper from "@util/Mapper";
 
-export class WorkRepositoryImp implements WorkRepository {
+class WorkRepositoryImp implements WorkRepository {
   constructor(private readonly prismaWorkRepository: PrismaWorkRepository) {}
 
   async insert(work: Work): Promise<Work> {
@@ -45,7 +45,7 @@ export class WorkRepositoryImp implements WorkRepository {
   }
 }
 
-const workRepository: WorkRepository = new WorkRepositoryImp(
+const workRepositoryImp: WorkRepository = new WorkRepositoryImp(
   prismaWorkRepository
 );
-export default workRepository;
+export default workRepositoryImp;

@@ -77,7 +77,7 @@ class WorkCompDetailsRepositoryImp implements WorkCompDetailsRepository {
   }
 }
 
-const workCompDetailsRepository: WorkCompDetailsRepository =
+const workCompDetailsRepositoryImp: WorkCompDetailsRepository =
   new WorkCompDetailsRepositoryImp(prismaWorkCompDetails);
 
-export default workCompDetailsRepository;
+export default workCompDetailsRepositoryImp;

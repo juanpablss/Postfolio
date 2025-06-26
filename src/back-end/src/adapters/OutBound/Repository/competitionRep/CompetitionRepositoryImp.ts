@@ -5,7 +5,7 @@ import prismaCompetitionRepository, {
 } from "@repository/competitionRep/PrismaCompetitionRepository";
 import Mapper from "@util/Mapper";
 
-export class CompetitionRepositoryImp implements CompetitionRepository {
+class CompetitionRepositoryImp implements CompetitionRepository {
   constructor(
     private readonly prismaCompetitionRepository: PrismaCompetitionRepository
   ) {}
@@ -49,6 +49,6 @@ export class CompetitionRepositoryImp implements CompetitionRepository {
   }
 }
 
-const competitionRepository: CompetitionRepository =
+const competitionRepositoryImp: CompetitionRepository =
   new CompetitionRepositoryImp(prismaCompetitionRepository);
-export default competitionRepository;
+export default competitionRepositoryImp;
