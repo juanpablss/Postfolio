@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../layouts/Header";
 
-// Exemplo de projetos de várias pessoas, com imagens genéricas, avatar e descrição do autor
 const allProjects = [
   {
     id: 1,
@@ -11,7 +10,8 @@ const allProjects = [
     authorName: "Cassios",
     authorProfile: "/profile/cassios",
     authorImage: "cassios.png",
-    description: "Dashboard interativo para análise de vendas com gráficos e métricas em tempo real."
+    description: "Dashboard interativo para análise de vendas com gráficos e métricas em tempo real.",
+    category: "backend"
   },
   {
     id: 2,
@@ -20,7 +20,8 @@ const allProjects = [
     authorName: "Mickaela",
     authorProfile: "/profile/mickaela",
     authorImage: "micka.png",
-    description: "Landing page responsiva, com design moderno, animações sutis e foco em conversão para campanhas de marketing digital e lançamentos de produtos."
+    description: "Landing page responsiva, com design moderno, animações sutis e foco em conversão para campanhas de marketing digital e lançamentos de produtos.",
+    category: "frontend"
   },
   {
     id: 3,
@@ -29,7 +30,8 @@ const allProjects = [
     authorName: "Debriane",
     authorProfile: "/profile/debriane",
     authorImage: "debriane.png",
-    description: "Blog colaborativo para resenhas de livros, filmes e séries, com sistema de comentários, avaliações e integração com redes sociais."
+    description: "Blog colaborativo para resenhas de livros, filmes e séries, com sistema de comentários, avaliações e integração com redes sociais.",
+    category: "frontend"
   },
   {
     id: 4,
@@ -38,7 +40,8 @@ const allProjects = [
     authorName: "Juan Pablo",
     authorProfile: "/profile/juanpablo",
     authorImage: "juan.png",
-    description: "API RESTful robusta para integração entre sistemas, com autenticação JWT, documentação Swagger e testes automatizados."
+    description: "API RESTful robusta para integração entre sistemas, com autenticação JWT, documentação Swagger e testes automatizados.",
+    category: "backend"
   },
   {
     id: 5,
@@ -47,7 +50,8 @@ const allProjects = [
     authorName: "Jonas Davi",
     authorProfile: "/profile/jonasdavi",
     authorImage: "jonas.png",
-    description: "Sistema completo de gestão empresarial, incluindo módulos de estoque, financeiro, RH e relatórios customizáveis."
+    description: "Sistema completo de gestão empresarial, incluindo módulos de estoque, financeiro, RH e relatórios customizáveis.",
+    category: "gestao"
   },
   {
     id: 6,
@@ -56,7 +60,8 @@ const allProjects = [
     authorName: "Lara Emanuelly",
     authorProfile: "/profile/laraemanuely",
     authorImage: "lara.png",
-    description: "Portal para escritórios de advocacia, com área do cliente, upload seguro de documentos e agenda de audiências integrada."
+    description: "Portal para escritórios de advocacia, com área do cliente, upload seguro de documentos e agenda de audiências integrada.",
+    category: "frontend"
   },
   {
     id: 7,
@@ -65,7 +70,8 @@ const allProjects = [
     authorName: "Randeson",
     authorProfile: "/profile/randerson",
     authorImage: "https://randomuser.me/api/portraits/men/45.jpg",
-    description: "Aplicativo mobile para acompanhamento de saúde, agendamento de consultas, controle de medicamentos e notificações personalizadas."
+    description: "Aplicativo mobile para acompanhamento de saúde, agendamento de consultas, controle de medicamentos e notificações personalizadas.",
+    category: "mobile"
   },
   {
     id: 8,
@@ -74,7 +80,8 @@ const allProjects = [
     authorName: "Loyse",
     authorProfile: "/profile/loyse",
     authorImage: "https://randomuser.me/api/portraits/women/62.jpg",
-    description: "Portfólio visual para designers e ilustradores, com galerias de imagens, animações e integração com Behance e Dribbble."
+    description: "Portfólio visual para designers e ilustradores, com galerias de imagens, animações e integração com Behance e Dribbble.",
+    category: "design"
   },
   {
     id: 9,
@@ -83,7 +90,8 @@ const allProjects = [
     authorName: "Antonio",
     authorProfile: "/profile/antonio",
     authorImage: "https://randomuser.me/api/portraits/men/22.jpg",
-    description: "Loja virtual moderna, com carrinho de compras, checkout seguro, painel de administração e integração com meios de pagamento."
+    description: "Loja virtual moderna, com carrinho de compras, checkout seguro, painel de administração e integração com meios de pagamento.",
+    category: "frontend"
   },
 ];
 
@@ -108,19 +116,18 @@ export default function Home() {
   const [order, setOrder] = useState("recent");
   const [visible, setVisible] = useState(6);
 
-  // Filtro e ordenação simples para exemplo
   let filtered = allProjects.filter((p) =>
-    (filter === "all" || (p.projectTitle + p.authorName).toLowerCase().includes(filter))
-    && (
+    (filter === "all" || p.category === filter) &&
+    (
       p.authorName.toLowerCase().includes(search.toLowerCase()) ||
       p.projectTitle.toLowerCase().includes(search.toLowerCase())
     )
   );
-  if (order === "views") filtered = [...filtered]; // Adapte se quiser ordenar por views futuramente
+  if (order === "views") filtered = [...filtered];
   if (order === "az") filtered = [...filtered].sort((a, b) => a.projectTitle.localeCompare(b.projectTitle));
 
   return (
-    <div className="bg-pattern bg-no-repeat bg-top bg-cover min-h-screen bg-gradient-to-br from-blue-950 via-indigo-950 to-purple-950">
+    <div className="bg-pattern bg-no-repeat bg-top bg-cover min-h-screen">
       <Header />
       {/* HERO */}
       <section className="w-full flex flex-col items-center justify-center pt-28 pb-10 px-4">
