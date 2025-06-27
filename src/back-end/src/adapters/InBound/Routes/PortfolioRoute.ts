@@ -24,9 +24,7 @@ export async function PortfolioRoute(app: FastifyInstance) {
     portfolioController.update(req, rep)
   );
 
-  app.delete("/:id", { preValidation: UserMiddle.authenticate }, (req, rep) =>
+  app.delete("", { preValidation: UserMiddle.authenticate }, (req, rep) =>
     portfolioController.deleteById(req, rep)
   );
-
-  // app.get("/:id", )
 }

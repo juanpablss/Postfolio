@@ -31,6 +31,7 @@ export class PrismaPortfolioRepository {
   }
 
   async findByAuthor(authorId: string): Promise<PrismaPortfolio | null> {
+    console.log("AQUI author");
     return await prisma.portfolio.findUnique({
       where: { authorId },
     });

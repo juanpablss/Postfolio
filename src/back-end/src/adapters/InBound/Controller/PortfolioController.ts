@@ -11,20 +11,20 @@ export class PortfolioController {
     const {
       name = null,
       description = null,
-      pageLink = null,
+      pagelink = null,
       authorId = req.user?.id || null,
     } = req.body as Partial<{
       name: string;
       description: string;
-      pageLink: string;
+      pagelink: string;
       authorId: string;
     }>;
 
-    if (!name || !description || !pageLink || !authorId)
+    if (!name || !description || !pagelink || !authorId)
       throw new BadRequest("Todos os campos são obrigatórios!");
 
     const portfolio = await this.portfolioService.register(
-      new Portfolio("", name, description, pageLink, authorId)
+      new Portfolio("", name, description, pagelink, authorId)
     );
 
     reply.send(portfolio);
@@ -37,14 +37,12 @@ export class PortfolioController {
   }
 
   async getByUser(req: FastifyRequest, reply: FastifyReply) {
-    const { authorId = req.user?.id || null } = req.body as Partial<{
-      authorId: string;
-    }>;
+    console.log("AQUI");
+    const authorId = req.user?.id || null;
 
     if (!authorId) throw new BadRequest("Id é obrigatorio");
 
-    const portfolio = await this.portfolioService.findById(authorId);
-
+    const portfolio = await this.portfolioService.findByAuthor(authorId);
     reply.send(portfolio);
   }
 
@@ -59,10 +57,12 @@ export class PortfolioController {
   }
 
   async getWorks(req: FastifyRequest, reply: FastifyReply) {
+    console.log("AQUI 0");
     const { id = null } = req.body as Partial<{ id: string }>;
 
     if (!id) throw new BadRequest("Id é obrigatorio");
 
+    console.log("AQUI 1");
     const works = await this.portfolioService.getWorks(id);
 
     reply.send(works);

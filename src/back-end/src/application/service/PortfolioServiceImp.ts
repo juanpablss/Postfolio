@@ -34,7 +34,7 @@ class PortfolioServiceImp implements PortfolioUseCases {
     return await this.portfolioRepository.findById(id);
   }
 
-  async findByAuthorId(authorId: string): Promise<Portfolio | null> {
+  async findByAuthor(authorId: string): Promise<Portfolio | null> {
     return await this.portfolioRepository.findByAuthor(authorId);
   }
 

@@ -34,7 +34,7 @@ class PortfolioRepositoryImp implements PortfolioRepository {
   async findByAuthor(authorId: string): Promise<Portfolio | null> {
     const existPortfolioModel =
       await this.prismaPortfolioRepository.findByAuthor(authorId);
-
+    console.log("AQUI author 2");
     if (!existPortfolioModel) return null;
 
     const portfolios = Mapper.Portfolio.toDomain(existPortfolioModel);

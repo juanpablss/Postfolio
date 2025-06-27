@@ -8,7 +8,7 @@ export default interface PortfolioUseCases {
 
   findMany(): Promise<Portfolio[]>;
   findById(id: string): Promise<Portfolio | null>;
-  findByAuthorId(authorId: string): Promise<Portfolio | null>;
+  findByAuthor(authorId: string): Promise<Portfolio | null>;
 
   getWorks(portfolioId: string): Promise<Work[]>;
 }
