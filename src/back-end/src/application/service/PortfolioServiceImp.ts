@@ -15,9 +15,8 @@ class PortfolioServiceImp implements PortfolioUseCases {
   async register(portfolio: Portfolio): Promise<Portfolio> {
     const author = await this.userService.findById(portfolio.authorId);
 
-    console.log("\nAuthor: ", author);
-
     if (!author) throw new BadRequest("Author não registrado!");
+
     return await this.portfolioRepository.insert(portfolio);
   }
 
@@ -30,7 +29,7 @@ class PortfolioServiceImp implements PortfolioUseCases {
     return await this.portfolioRepository.findById(id);
   }
 
-  async findByAuthorId(authorId: string): Promise<Portfolio[]> {
+  async findByAuthorId(authorId: string): Promise<Portfolio | null> {
     return await this.portfolioRepository.findByAuthor(authorId);
   }
 

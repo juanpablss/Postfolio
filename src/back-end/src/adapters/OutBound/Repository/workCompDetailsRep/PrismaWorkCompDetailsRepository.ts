@@ -1,5 +1,6 @@
 import { InternalServerError } from "@domain/error/HttpError";
 import { prisma } from "@infrastructure/config/Prisma";
+import PrismaWork from "@models/PrismaWork";
 import PrismaWorkCompDetails from "@models/PrismaWorkComDetails";
 import { Prisma } from "@prisma/client";
 
@@ -55,6 +56,15 @@ export class PrismaWorkCompDetailsRepository {
       where: {
         workId,
       },
+    });
+  }
+
+  async findWorksByCompetition(
+    competitionId: string
+  ): Promise<PrismaWorkCompDetails[]> {
+    return await prisma.workCompDetails.findMany({
+      where: { competitionId },
+      include: { work: true },
     });
   }
 

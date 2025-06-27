@@ -117,13 +117,19 @@ const WorkMapper = {
 
 const WorkCompDetailsMapper = {
   toDomain(prismaWorkCompDetails: PrismaWorkCompDetails): WorkCompDetails {
-    return new WorkCompDetails(
+    const details = new WorkCompDetails(
       prismaWorkCompDetails.id,
       prismaWorkCompDetails.totalReviewers,
       prismaWorkCompDetails.totalScore,
       prismaWorkCompDetails.competitionId,
       prismaWorkCompDetails.workId
     );
+
+    if (prismaWorkCompDetails.work) {
+      details.work = WorkMapper.toDomain(prismaWorkCompDetails.work);
+    }
+
+    return details;
   },
   toPrisma(workCompDetails: WorkCompDetails): PrismaWorkCompDetails {
     return {

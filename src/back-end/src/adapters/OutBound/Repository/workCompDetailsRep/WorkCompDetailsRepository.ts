@@ -9,6 +9,7 @@ class WorkCompDetailsRepositoryImp implements WorkCompDetailsRepository {
   constructor(
     private readonly prismaWorkCompDetailsRepository: PrismaWorkCompDetailsRepository
   ) {}
+
   async insert(workCompDetails: WorkCompDetails): Promise<WorkCompDetails> {
     const workCompDetailsModel =
       await this.prismaWorkCompDetailsRepository.insert(
@@ -16,6 +17,7 @@ class WorkCompDetailsRepositoryImp implements WorkCompDetailsRepository {
       );
     return Mapper.WorkCompDetails.toDomain(workCompDetailsModel);
   }
+
   async findMany(): Promise<WorkCompDetails[]> {
     const workCompDetailsModels =
       await this.prismaWorkCompDetailsRepository.findMany();
@@ -57,6 +59,16 @@ class WorkCompDetailsRepositoryImp implements WorkCompDetailsRepository {
     if (!workCompDetailsModel) return null;
 
     return Mapper.WorkCompDetails.toDomain(workCompDetailsModel);
+  }
+
+  async findWorksByCompetition(
+    competitionId: string
+  ): Promise<WorkCompDetails[]> {
+    const details =
+      await this.prismaWorkCompDetailsRepository.findWorksByCompetition(
+        competitionId
+      );
+    return details.map(Mapper.WorkCompDetails.toDomain);
   }
 
   async update(workCompDetails: WorkCompDetails): Promise<WorkCompDetails> {

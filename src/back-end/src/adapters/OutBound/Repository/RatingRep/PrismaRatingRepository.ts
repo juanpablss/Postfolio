@@ -39,7 +39,7 @@ export class PrismaRatingRepository {
       },
     });
   }
-
+  // Preisa garante a unicidade depois
   async findByUserAndWorkCompDetails(
     userId: string,
     workCompDetailsId: string
