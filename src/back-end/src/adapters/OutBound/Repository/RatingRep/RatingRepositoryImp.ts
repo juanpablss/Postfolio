@@ -2,7 +2,7 @@ import Rating from "@domain/entities/rating/Rating";
 import RatingRepository from "@domain/entities/rating/RatingRepository";
 import Mapper from "@util/Mapper";
 import { PrismaRatingRepository } from "@repository/ratingRep/PrismaRatingRepository";
-import prismaRatingRepository from "./PrismaRatingRepository";
+import prismaRatingRepository from "@repository/ratingRep/PrismaRatingRepository";
 
 class RatingRepositoryImp implements RatingRepository {
   constructor(
@@ -10,8 +10,8 @@ class RatingRepositoryImp implements RatingRepository {
   ) {}
 
   async insert(rating: Rating): Promise<Rating> {
-    const ratingEntity = Mapper.Rating.toPrisma(rating);
-    await this.prismaRatingRepository.insert(ratingEntity);
+    const ratingModel = Mapper.Rating.toPrisma(rating);
+    await this.prismaRatingRepository.insert(ratingModel);
     return rating;
   }
 
@@ -27,29 +27,30 @@ class RatingRepositoryImp implements RatingRepository {
     );
   }
 
-  async findByPortfolioId(portfolioId: string): Promise<Rating[]> {
+  async findByWorkCompDetails(workCompDetailsId: string): Promise<Rating[]> {
     return (
-      await this.prismaRatingRepository.findByPortfolioId(portfolioId)
+      await this.prismaRatingRepository.findByWorkCompDetails(workCompDetailsId)
     ).map(Mapper.Rating.toDomain);
   }
 
-  async findByUserAndPortfolio(
+  async findByUserAndWorkCompDetails(
     userId: string,
-    portfolioId: string
+    workCompDetailsId: string
   ): Promise<Rating | null> {
-    const rating = await this.prismaRatingRepository.findByUserAndPortfolio(
-      userId,
-      portfolioId
-    );
+    const rating =
+      await this.prismaRatingRepository.findByUserAndWorkCompDetails(
+        userId,
+        workCompDetailsId
+      );
     if (!rating) return null;
 
     return Mapper.Rating.toDomain(rating);
   }
 
   async update(rating: Rating): Promise<Rating> {
-    const ratingEntity = Mapper.Rating.toPrisma(rating);
+    const ratingModel = Mapper.Rating.toPrisma(rating);
     return Mapper.Rating.toDomain(
-      await this.prismaRatingRepository.update(ratingEntity)
+      await this.prismaRatingRepository.update(ratingModel)
     );
   }
 
@@ -58,7 +59,7 @@ class RatingRepositoryImp implements RatingRepository {
   }
 }
 
-const ratingRepository: RatingRepository = new RatingRepositoryImp(
+const ratingRepositoryImp: RatingRepository = new RatingRepositoryImp(
   prismaRatingRepository
 );
-export default ratingRepository;
+export default ratingRepositoryImp;

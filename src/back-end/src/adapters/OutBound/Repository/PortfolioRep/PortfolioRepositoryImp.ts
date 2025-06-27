@@ -11,9 +11,9 @@ class PortfolioRepositoryImp implements PortfolioRepository {
   ) {}
 
   async insert(portfolio: Portfolio): Promise<Portfolio> {
-    const portfolioEntity = Mapper.Portfolio.toPrisma(portfolio);
+    const portfolioModel = Mapper.Portfolio.toPrisma(portfolio);
     portfolio.id = (
-      await this.prismaPortfolioRepository.insert(portfolioEntity)
+      await this.prismaPortfolioRepository.insert(portfolioModel)
     ).id;
     return portfolio;
   }
@@ -25,23 +25,25 @@ class PortfolioRepositoryImp implements PortfolioRepository {
   }
 
   async findById(id: string): Promise<Portfolio | null> {
-    const portfolioEntity = await this.prismaPortfolioRepository.findById(id);
+    const portfolioModel = await this.prismaPortfolioRepository.findById(id);
 
-    if (!portfolioEntity) return null;
+    if (!portfolioModel) return null;
 
-    return Mapper.Portfolio.toDomain(portfolioEntity);
+    return Mapper.Portfolio.toDomain(portfolioModel);
   }
-  async findByAuthor(authorId: string): Promise<Portfolio[]> {
-    const portfolioEntities = await this.prismaPortfolioRepository.findByAuthor(
-      authorId
-    );
-    const portfolios = portfolioEntities.map(Mapper.Portfolio.toDomain);
+  async findByAuthor(authorId: string): Promise<Portfolio | null> {
+    const existPortfolioModel =
+      await this.prismaPortfolioRepository.findByAuthor(authorId);
+
+    if (!existPortfolioModel) return null;
+
+    const portfolios = Mapper.Portfolio.toDomain(existPortfolioModel);
     return portfolios;
   }
 
   async update(portfolio: Portfolio): Promise<Portfolio> {
-    const portfolioEntity = Mapper.Portfolio.toPrisma(portfolio);
-    await this.prismaPortfolioRepository.update(portfolioEntity);
+    const portfolioModel = Mapper.Portfolio.toPrisma(portfolio);
+    await this.prismaPortfolioRepository.update(portfolioModel);
     return portfolio;
   }
 
@@ -50,7 +52,7 @@ class PortfolioRepositoryImp implements PortfolioRepository {
   }
 }
 
-const portfolioRepository: PortfolioRepository = new PortfolioRepositoryImp(
+const portfolioRepositoryImp: PortfolioRepository = new PortfolioRepositoryImp(
   prismaPortfolioRepository
 );
-export default portfolioRepository;
+export default portfolioRepositoryImp;

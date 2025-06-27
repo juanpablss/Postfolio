@@ -1,4 +1,4 @@
-import ratingRepository from "@repository/ratingRep/RatingRepositoryImp";
+import ratingRepositoryImp from "@repository/ratingRep/RatingRepositoryImp";
 import Rating from "@domain/entities/rating/Rating";
 import RatingUseCases from "@application/useCases/RatingUseCases";
 import RatingRepository from "@domain/entities/rating/RatingRepository";
@@ -8,9 +8,9 @@ class RatingServiceImp implements RatingUseCases {
   constructor(private readonly ratingRepository: RatingRepository) {}
 
   async register(rating: Rating): Promise<Rating> {
-    const existeRating = await this.findByUserAndPortfolio(
+    const existeRating = await this.findByUserAndWorkCompDetails(
       rating.userId,
-      rating.portfolioId
+      rating.workDetailsId
     );
 
     if (existeRating)
@@ -28,28 +28,30 @@ class RatingServiceImp implements RatingUseCases {
     return await this.ratingRepository.findByUserId(userId);
   }
 
-  async findByPortfolioId(portfolioId: string): Promise<Rating[]> {
-    return await this.ratingRepository.findByPortfolioId(portfolioId);
+  async findByWorkCompDetails(workCompDetailsId: string): Promise<Rating[]> {
+    return await this.ratingRepository.findByWorkCompDetails(workCompDetailsId);
   }
 
-  async findByUserAndPortfolio(
+  async findByUserAndWorkCompDetails(
     userId: string,
-    portfolioId: string
+    workCompDetailsId: string
   ): Promise<Rating | null> {
-    return await this.ratingRepository.findByUserAndPortfolio(
+    return await this.ratingRepository.findByUserAndWorkCompDetails(
       userId,
-      portfolioId
+      workCompDetailsId
     );
   }
 
   async update(rating: Rating): Promise<Rating> {
+    // Precisa atualzar o WorkCompDetails também
     return await this.ratingRepository.update(rating);
   }
 
   async delete(id: string): Promise<Rating> {
+    // Precisa atualzar o WorkCompDetails também
     return await this.ratingRepository.delete(id);
   }
 }
 
-const ratingService: RatingUseCases = new RatingServiceImp(ratingRepository);
+const ratingService: RatingUseCases = new RatingServiceImp(ratingRepositoryImp);
 export default ratingService;

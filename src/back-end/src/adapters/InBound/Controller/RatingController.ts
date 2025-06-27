@@ -49,10 +49,11 @@ export default class RatingControllerT {
     if (!userId || !portfolioId || !score)
       throw new BadRequest("Todos os campos são obrigatórios!");
 
-    const existingRating = await this.ratingService.findByUserAndPortfolio(
-      userId,
-      portfolioId
-    );
+    const existingRating =
+      await this.ratingService.findByUserAndWorkCompDetails(
+        userId,
+        portfolioId
+      );
 
     if (!existingRating)
       throw new NotFound(
@@ -61,15 +62,15 @@ export default class RatingControllerT {
 
     const newScore = Number(score);
 
-    const rating = new Rating(
-      existingRating.portfolioId,
-      userId,
-      portfolioId,
-      newScore
-    );
-    await this.ratingService.update(rating);
+    // const rating = new Rating(
+    //   existingRating.,
+    //   userId,
+    //   portfolioId,
+    //   newScore
+    // );
+    // await this.ratingService.update(rating);
 
-    reply.send({ msg: "Atualização bem sucedida!", rating: rating });
+    // reply.send({ msg: "Atualização bem sucedida!", rating: rating });
   }
 
   async delete(req: FastifyRequest, reply: FastifyReply) {
@@ -82,10 +83,11 @@ export default class RatingControllerT {
 
     if (!userId) throw new BadRequest("Id do usuario é obrigatorio!");
 
-    const existingRating = await this.ratingService.findByUserAndPortfolio(
-      userId,
-      portfolioId
-    );
+    const existingRating =
+      await this.ratingService.findByUserAndWorkCompDetails(
+        userId,
+        portfolioId
+      );
 
     if (!existingRating)
       throw new NotFound(

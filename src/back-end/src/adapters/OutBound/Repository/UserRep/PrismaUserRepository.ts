@@ -5,11 +5,11 @@ import { InternalServerError } from "@domain/error/HttpError";
 export class PrismaUserRepository {
   async insert(prismaUser: PrismaUser): Promise<PrismaUser> {
     try {
-      const user = prisma.user.create({
+      const user = await prisma.user.create({
         data: {
           name: prismaUser.name,
           email: prismaUser.email,
-          passWord: prismaUser.passWord,
+          password: prismaUser.password,
           status: prismaUser.status,
         },
       });
@@ -20,15 +20,15 @@ export class PrismaUserRepository {
   }
 
   async findMany(): Promise<PrismaUser[]> {
-    return prisma.user.findMany();
+    return await prisma.user.findMany();
   }
 
   async findById(id: string): Promise<PrismaUser | null> {
-    return prisma.user.findUnique({ where: { id } });
+    return await prisma.user.findUnique({ where: { id } });
   }
 
   async findByEmail(email: string): Promise<PrismaUser | null> {
-    return prisma.user.findUnique({ where: { email } });
+    return await prisma.user.findUnique({ where: { email } });
   }
 
   async deleteById(id: string): Promise<PrismaUser | null> {
@@ -38,8 +38,6 @@ export class PrismaUserRepository {
       });
       return userDelete;
     } catch (error) {
-      console.log("Id: ", id, "\n");
-      // console.log(error);
       throw new InternalServerError("Não foi possivel deletar usuario!");
     }
   }

@@ -1,4 +1,4 @@
-import { Portfolio as PortfolioEntity } from "@prisma/client";
+import { Portfolio as PortfolioModel } from "@prisma/client";
 
-type PrismaPortfolio = PortfolioEntity;
+type PrismaPortfolio = PortfolioModel;
 export default PrismaPortfolio;

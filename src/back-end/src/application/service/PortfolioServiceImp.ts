@@ -1,23 +1,27 @@
 import PortfolioUseCases from "@application/useCases/PortfolioUseCases";
 import userServiceImp from "@application/service/UserServiceImp";
-import portfolioRepository from "@repository/portfolioRep/PortfolioRepositoryImp";
+import portfolioRepositoryImp from "@repository/portfolioRep/PortfolioRepositoryImp";
 import Portfolio from "@domain/entities/portfolio/Portfolio";
-import { BadRequest } from "@domain/error/HttpError";
+import { BadRequest, NotFound } from "@domain/error/HttpError";
 import PortfolioRepository from "@domain/entities/portfolio/PortfolioRepository";
-import UserUseCases from "@useCases/UserUseCases";
+import Work from "@domain/entities/work/Work";
+import { UserRepository } from "@domain/entities/user/UserRepository";
+import userRepositoryImp from "@repository/userRep/UserRepositoryImp";
+import workRepositoryImp from "@repository/workRep/WorkRepositoryImp";
+import WorkRepository from "@domain/entities/work/WorkRepository";
 
 class PortfolioServiceImp implements PortfolioUseCases {
   constructor(
     private readonly portfolioRepository: PortfolioRepository,
-    private readonly userService: UserUseCases
+    private readonly userRepository: UserRepository,
+    private readonly workRepository: WorkRepository
   ) {}
 
   async register(portfolio: Portfolio): Promise<Portfolio> {
-    const author = await this.userService.findById(portfolio.authorId);
-
-    console.log("\nAuthor: ", author);
+    const author = await this.userRepository.findById(portfolio.authorId);
 
     if (!author) throw new BadRequest("Author não registrado!");
+
     return await this.portfolioRepository.insert(portfolio);
   }
 
@@ -30,12 +34,19 @@ class PortfolioServiceImp implements PortfolioUseCases {
     return await this.portfolioRepository.findById(id);
   }
 
-  async findByAuthorId(authorId: string): Promise<Portfolio[]> {
+  async findByAuthorId(authorId: string): Promise<Portfolio | null> {
     return await this.portfolioRepository.findByAuthor(authorId);
   }
 
   async update(portfolio: Portfolio): Promise<Portfolio> {
     return await this.portfolioRepository.update(portfolio);
+  }
+
+  async getWorks(portfolioId: string): Promise<Work[]> {
+    const existPortfolio = await this.portfolioRepository.findById(portfolioId);
+    if (!existPortfolio) throw new NotFound("O portfolil não existe");
+
+    return await this.workRepository.findByPortfolio(portfolioId);
   }
 
   async deleteById(id: string): Promise<Portfolio | null> {
@@ -45,7 +56,8 @@ class PortfolioServiceImp implements PortfolioUseCases {
 }
 
 const portfolioService: PortfolioUseCases = new PortfolioServiceImp(
-  portfolioRepository,
-  userServiceImp
+  portfolioRepositoryImp,
+  userRepositoryImp,
+  workRepositoryImp
 );
 export default portfolioService;

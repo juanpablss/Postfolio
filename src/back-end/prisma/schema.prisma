@@ -1,51 +1,81 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mongodb"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
+  id         String     @id @default(uuid())
+  name       String
+  email      String     @unique
+  password   String
+  status     String
+  portfolios Portfolio?
+  ratings    Rating[]
+
   @@map("tb_user")
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
-  email String @unique
-  passWord String
-  status String
-  portfolios Portfolio[]
-  ratings Rating[]
 }
 
 model Portfolio {
-  @@map("tb_portfolio")
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  name String
+  id          String  @id @default(uuid())
+  name        String
   description String
-  pageLink String
-  authorId String @db.ObjectId
-  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  ratings Rating[]
+  pageLink    String?
+  authorId    String  @unique
+  author      User    @relation(fields: [authorId], references: [id])
+  works       Work[]
+
+  @@map("tb_portfolio")
 }
 
-model Rating{
-  // id Int @id @default(autoincrement())
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+model Rating {
+  id            String          @id @default(uuid())
+  score         Float
+  userId        String
+  user          User            @relation(fields: [userId], references: [id])
+  workDetailsId String
+  workDetails   WorkCompDetails @relation(fields: [workDetailsId], references: [id])
+
   @@map("tb_rating")
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String @db.ObjectId
-  portfolio Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
-  portfolioId String @db.ObjectId
-  score Float
-
-  // @@id([userId, portfolioId])
 }
 
+model Competition {
+  id           String            @id @default(uuid())
+  name         String
+  createdAt    DateTime          @default(now())
+  startsAt     DateTime?
+  endsAt       DateTime?
+  worksDetails WorkCompDetails[]
 
+  @@map("tb_competition")
+}
+
+model Work {
+  id                 String            @id @default(uuid())
+  name               String
+  description        String
+  githubLink         String?
+  portfolioId        String
+  portfolio          Portfolio         @relation(fields: [portfolioId], references: [id])
+  competitionDetails WorkCompDetails[]
+
+  @@map("tb_work")
+}
+
+model WorkCompDetails {
+  id             String      @id @default(uuid())
+  totalReviewers Int
+  totalScore     Float
+  competitionId  String
+  competition    Competition @relation(fields: [competitionId], references: [id])
+  workId         String
+  work           Work        @relation(fields: [workId], references: [id])
+  rating         Rating[]
+
+  @@unique([competitionId, workId])
+  @@map("tb_work_comp_details")
+}

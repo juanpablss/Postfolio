@@ -3,17 +3,15 @@ import { InternalServerError } from "@domain/error/HttpError";
 import PrismaRating from "@models/PrismaRating";
 
 export class PrismaRatingRepository {
-  async insert(ratingEntity: PrismaRating): Promise<PrismaRating> {
+  async insert(prismaRating: PrismaRating): Promise<PrismaRating> {
     try {
-      const rating = await prisma.rating.create({
+      return await prisma.rating.create({
         data: {
-          userId: ratingEntity.userId,
-          portfolioId: ratingEntity.portfolioId,
-          score: ratingEntity.score,
+          userId: prismaRating.userId,
+          workDetailsId: prismaRating.workDetailsId,
+          score: prismaRating.score,
         },
       });
-
-      return rating;
     } catch (error) {
       console.log(error);
       throw new InternalServerError("Erro ao salvar Analise!");
@@ -21,70 +19,47 @@ export class PrismaRatingRepository {
   }
 
   async findMany(): Promise<PrismaRating[]> {
-    try {
-      const ratings = await prisma.rating.findMany();
-      return ratings;
-    } catch (error) {
-      throw new InternalServerError(
-        "Não foi possivel buscar todas as Analise!"
-      );
-    }
+    return await prisma.rating.findMany();
   }
 
-  async findByPortfolioId(portfolioId: string): Promise<PrismaRating[]> {
-    try {
-      const ratings = await prisma.rating.findMany({
-        where: {
-          portfolioId,
-        },
-      });
-
-      return ratings;
-    } catch (error) {
-      throw new InternalServerError("Erro ao buscar Analises do portfolio!");
-    }
+  async findByWorkCompDetails(
+    workCompDetailsId: string
+  ): Promise<PrismaRating[]> {
+    return await prisma.rating.findMany({
+      where: {
+        workDetailsId: workCompDetailsId,
+      },
+    });
   }
 
   async findByUserId(userId: string): Promise<PrismaRating[]> {
-    try {
-      const ratings = await prisma.rating.findMany({
-        where: {
-          userId,
-        },
-      });
-
-      return ratings;
-    } catch (error) {
-      throw new InternalServerError("Erro ao buscar Analises do usuario!");
-    }
+    return await prisma.rating.findMany({
+      where: {
+        userId,
+      },
+    });
   }
-
-  async findByUserAndPortfolio(
+  // Preisa garante a unicidade depois
+  async findByUserAndWorkCompDetails(
     userId: string,
-    portfolioId: string
+    workCompDetailsId: string
   ): Promise<PrismaRating | null> {
-    try {
-      const rating = await prisma.rating.findFirst({
-        where: {
-          userId,
-          portfolioId,
-        },
-      });
-
-      return rating;
-    } catch (error) {
-      throw new InternalServerError("Erro ao buscar analise do usuario!");
-    }
+    return await prisma.rating.findFirst({
+      where: {
+        userId,
+        workDetailsId: workCompDetailsId,
+      },
+    });
   }
 
-  async update(ratingEntity: PrismaRating): Promise<PrismaRating> {
+  async update(prismaRating: PrismaRating): Promise<PrismaRating> {
     try {
       const rating = await prisma.rating.update({
         where: {
-          id: ratingEntity.id,
+          id: prismaRating.id,
         },
         data: {
-          score: ratingEntity.score,
+          score: prismaRating.score,
         },
       });
 

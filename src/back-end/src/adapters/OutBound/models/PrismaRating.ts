@@ -1,4 +1,4 @@
-import { Rating as RatingEntity } from "@prisma/client";
+import { Rating as RatingModel } from "@prisma/client";
 
-type PrismaRating = RatingEntity;
+type PrismaRating = RatingModel;
 export default PrismaRating;

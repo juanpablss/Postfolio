@@ -1,6 +1,5 @@
 import UserUseCases from "@application/useCases/UserUseCases";
 import User from "@domain/entities/user/User";
-// import userRepository from "@repository/userRep/UserRepositoryImp";
 import { Crypt } from "@util/Crypto";
 import { Conflict, NotFound, Unauthorized } from "@domain/error/HttpError";
 import { Token } from "@util/Token";
@@ -8,7 +7,7 @@ import { UserRepository } from "@domain/entities/user/UserRepository";
 import userRepositoryImp from "@repository/userRep/UserRepositoryImp";
 import Email from "@domain/valueObject/Email";
 
-export class UserServiceImp implements UserUseCases {
+class UserServiceImp implements UserUseCases {
   constructor(private userRepository: UserRepository) {}
 
   async register(user: User): Promise<void> {
@@ -16,7 +15,7 @@ export class UserServiceImp implements UserUseCases {
 
     if (existingUser) throw new Conflict("Por favor, use outro email!");
 
-    user.passWord = await Crypt.hashPassWord(user.passWord);
+    user.password = await Crypt.hashPassWord(user.password);
 
     await this.userRepository.insert(user);
   }
@@ -34,20 +33,12 @@ export class UserServiceImp implements UserUseCases {
     return user;
   }
 
-  // async findPortfolios(authorId: string): Promise<Portfolio[]> {
-  //   return await portfolioRepository.findByAuthor(authorId);
-  // }
-
-  // async findRatings(authorId: string): Promise<Rating[]> {
-  //   return await ratingRepository.findByUserId(authorId);
-  // }
-
   async login(email: Email, passWord: string): Promise<string> {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) throw new NotFound("Usuário não encontrado!");
 
-    const checkPassWord = await Crypt.compare(passWord, user.passWord);
+    const checkPassWord = await Crypt.compare(passWord, user.password);
 
     if (!checkPassWord) throw new Unauthorized("Senha incorreta!");
 
@@ -59,7 +50,7 @@ export class UserServiceImp implements UserUseCases {
   }
 }
 
-const userServiceImp = new UserServiceImp(userRepositoryImp);
+const userServiceImp: UserUseCases = new UserServiceImp(userRepositoryImp);
 export default userServiceImp;
 
 // const userService: UserUseCases = new UserServiceImp();

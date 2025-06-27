@@ -5,6 +5,12 @@ import Portfolio from "@domain/entities/portfolio/Portfolio";
 import PrismaRating from "@models/PrismaRating";
 import Rating from "@domain/entities/rating/Rating";
 import Email from "@domain/valueObject/Email";
+import PrismaCompetition from "@models/PrismaCompetition";
+import Competition from "@domain/entities/competition/Competition";
+import PrismaWork from "@models/PrismaWork";
+import Work from "@domain/entities/work/Work";
+import PrismaWorkCompDetails from "@models/PrismaWorkComDetails";
+import WorkCompDetails from "@domain/entities/workCompDetails/WorkCompDetails";
 
 const UserMapper = {
   toDomain(prismaUser: PrismaUser): User {
@@ -12,7 +18,7 @@ const UserMapper = {
       prismaUser.id,
       prismaUser.name,
       new Email(prismaUser.email, false),
-      prismaUser.passWord,
+      prismaUser.password,
       prismaUser.status
     );
   },
@@ -21,7 +27,7 @@ const UserMapper = {
       id: user.id,
       name: user.name,
       email: user.email.getValue(),
-      passWord: user.passWord,
+      password: user.password,
       status: user.status,
     };
   },
@@ -53,7 +59,7 @@ const RatingMapper = {
     return new Rating(
       prismaRating.id,
       prismaRating.userId,
-      prismaRating.portfolioId,
+      prismaRating.workDetailsId,
       prismaRating.score
     );
   },
@@ -61,8 +67,77 @@ const RatingMapper = {
     return {
       id: rating.id,
       userId: rating.userId,
-      portfolioId: rating.portfolioId,
+      workDetailsId: rating.workDetailsId,
       score: rating.score,
+    };
+  },
+};
+
+const CompetitionMapper = {
+  toDomain(prismaCompetition: PrismaCompetition): Competition {
+    return new Competition(
+      prismaCompetition.id,
+      prismaCompetition.name,
+      prismaCompetition.createdAt,
+      prismaCompetition.startsAt,
+      prismaCompetition.endsAt
+    );
+  },
+  toPrisma(competition: Competition): PrismaCompetition {
+    return {
+      id: competition.id,
+      name: competition.name,
+      createdAt: competition.createdAt,
+      startsAt: competition.startsAt,
+      endsAt: competition.endsAt,
+    };
+  },
+};
+
+const WorkMapper = {
+  toDomain(prismaWork: PrismaWork): Work {
+    return new Work(
+      prismaWork.id,
+      prismaWork.name,
+      prismaWork.description,
+      prismaWork.githubLink,
+      prismaWork.portfolioId
+    );
+  },
+  toPrisma(work: Work): PrismaWork {
+    return {
+      id: work.id,
+      name: work.name,
+      description: work.description,
+      githubLink: work.githubLink,
+      portfolioId: work.portfolioId,
+    };
+  },
+};
+
+const WorkCompDetailsMapper = {
+  toDomain(prismaWorkCompDetails: PrismaWorkCompDetails): WorkCompDetails {
+    const details = new WorkCompDetails(
+      prismaWorkCompDetails.id,
+      prismaWorkCompDetails.totalReviewers,
+      prismaWorkCompDetails.totalScore,
+      prismaWorkCompDetails.competitionId,
+      prismaWorkCompDetails.workId
+    );
+
+    if (prismaWorkCompDetails.work) {
+      details.work = WorkMapper.toDomain(prismaWorkCompDetails.work);
+    }
+
+    return details;
+  },
+  toPrisma(workCompDetails: WorkCompDetails): PrismaWorkCompDetails {
+    return {
+      id: workCompDetails.id,
+      totalReviewers: workCompDetails.totalReviewers,
+      totalScore: workCompDetails.totalScore,
+      competitionId: workCompDetails.competitionId,
+      workId: workCompDetails.workId,
     };
   },
 };
@@ -71,6 +146,9 @@ const Mapper = {
   User: UserMapper,
   Portfolio: PortfolioMapper,
   Rating: RatingMapper,
+  Competition: CompetitionMapper,
+  Work: WorkMapper,
+  WorkCompDetails: WorkCompDetailsMapper,
 };
 
 export default Mapper;
