@@ -10,13 +10,11 @@ class CompetitionRepositoryImp implements CompetitionRepository {
     private readonly prismaCompetitionRepository: PrismaCompetitionRepository
   ) {}
 
-  async insert(competition: Competition): Promise<Competition | null> {
+  async insert(competition: Competition): Promise<Competition> {
     const competitionModel = Mapper.Competition.toPrisma(competition);
     const compeititonDomain = await this.prismaCompetitionRepository.inserte(
       competitionModel
     );
-
-    if (!compeititonDomain) return null;
 
     return Mapper.Competition.toDomain(compeititonDomain);
   }

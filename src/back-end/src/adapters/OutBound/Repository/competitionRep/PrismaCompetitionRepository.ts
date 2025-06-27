@@ -6,7 +6,7 @@ import { Prisma } from "@prisma/client";
 export class PrismaCompetitionRepository {
   async inserte(
     prismaCompetition: PrismaCompetition
-  ): Promise<PrismaCompetition | null> {
+  ): Promise<PrismaCompetition> {
     try {
       return await prisma.competition.create({
         data: {

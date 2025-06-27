@@ -2,6 +2,8 @@ import PortfolioRepository from "@domain/entities/portfolio/PortfolioRepository"
 import Work from "@domain/entities/work/Work";
 import WorkRepository from "@domain/entities/work/WorkRepository";
 import { BadRequest } from "@domain/error/HttpError";
+import portfolioRepositoryImp from "@repository/portfolioRep/PortfolioRepositoryImp";
+import workRepositoryImp from "@repository/workRep/WorkRepositoryImp";
 import WorkUseCase from "@useCases/WorkUseCase";
 
 class WorkServiceImp implements WorkUseCase {
@@ -21,16 +23,20 @@ class WorkServiceImp implements WorkUseCase {
     return await this.workRepository.findMany();
   }
 
-  findById(id: string): Promise<Work | null> {
-    return this.workRepository.findById(id);
+  async findById(id: string): Promise<Work | null> {
+    return await this.workRepository.findById(id);
   }
-  findByPortfolio(portfolioId: string): Promise<Work[]> {
-    throw new Error("Method not implemented.");
+  async update(work: Work): Promise<Work> {
+    return await this.workRepository.update(work);
   }
-  update(work: Work): Promise<Work> {
-    throw new Error("Method not implemented.");
-  }
-  delete(id: string): Promise<Work | null> {
-    throw new Error("Method not implemented.");
+  async delete(id: string): Promise<Work | null> {
+    return await this.workRepository.delete(id);
   }
 }
+
+const workServiceImp: WorkUseCase = new WorkServiceImp(
+  workRepositoryImp,
+  portfolioRepositoryImp
+);
+
+export default workServiceImp;
