@@ -20,8 +20,6 @@ export class PortfolioController {
       authorId: string;
     }>;
 
-    console.log("ID: ", authorId);
-
     if (!name || !description || !pageLink || !authorId)
       throw new BadRequest("Todos os campos são obrigatórios!");
 
@@ -38,15 +36,36 @@ export class PortfolioController {
     // const portfolios = portfolioService.
   }
 
+  async getByUser(req: FastifyRequest, reply: FastifyReply) {
+    const { authorId = req.user?.id || null } = req.body as Partial<{
+      authorId: string;
+    }>;
+
+    if (!authorId) throw new BadRequest("Id é obrigatorio");
+
+    const portfolio = await this.portfolioService.findById(authorId);
+
+    reply.send(portfolio);
+  }
+
   async getById(req: FastifyRequest, reply: FastifyReply) {
-    const params = req.params as { id: string };
-    const id = params.id;
+    const { id = null } = req.body as Partial<{ id: string }>;
 
     if (!id) throw new BadRequest("Id é obrigatorio");
 
     const portfolio = await this.portfolioService.findById(id);
 
     reply.send(portfolio);
+  }
+
+  async getWorks(req: FastifyRequest, reply: FastifyReply) {
+    const { id = null } = req.body as Partial<{ id: string }>;
+
+    if (!id) throw new BadRequest("Id é obrigatorio");
+
+    const works = await this.portfolioService.getWorks(id);
+
+    reply.send(works);
   }
 
   async update(req: FastifyRequest, reply: FastifyReply) {
@@ -75,85 +94,11 @@ export class PortfolioController {
   }
 
   async deleteById(req: FastifyRequest, reply: FastifyReply) {
-    const params = req.params as { id: string };
-    const id = params.id;
+    const { id = null } = req.body as Partial<{ id: string }>;
 
-    if (!id) throw new BadRequest("Id do portofolio é obrigatorio!");
+    if (!id) throw new BadRequest("Id é obrigatorio");
 
     const portfolio = await this.portfolioService.deleteById(id);
     reply.send(portfolio);
   }
 }
-
-// export const PortfolioController = {
-//   register: async (req: FastifyRequest, reply: FastifyReply) => {
-//     const {
-//       name = null,
-//       description = null,
-//       pageLink = null,
-//       authorId = req.user?.id || null,
-//     } = req.body as Partial<{
-//       name: string;
-//       description: string;
-//       pageLink: string;
-//       authorId: string;
-//     }>;
-
-//     if (!name || !description || !pageLink || !authorId)
-//       throw new HttpError(400, "Todos os campos são obrigatórios!");
-
-//     const portfolio = await portfolioService.register(
-//       new Portfolio("", name, description, pageLink, authorId)
-//     );
-
-//     reply.send(portfolio);
-//   },
-//   getAll: async (req: FastifyRequest, reply: FastifyReply) => {
-//     const portfolios = await portfolioService.findMany();
-//     reply.send(portfolios);
-//     // const portfolios = portfolioService.
-//   },
-//   getById: async (req: FastifyRequest, reply: FastifyReply) => {
-//     const params = req.params as { id: string };
-//     const id = params.id;
-
-//     if (!id) throw new HttpError(400, "Id é obrigatorio");
-
-//     const portfolio = portfolioService.findById(id);
-
-//     reply.send(portfolio);
-//   },
-//   update: async (req: FastifyRequest, reply: FastifyReply) => {
-//     const {
-//       id = null,
-//       name = null,
-//       description = null,
-//       pageLink = null,
-//       authorId = req.user?.id || null,
-//     } = req.body as Partial<{
-//       id: string;
-//       name: string;
-//       description: string;
-//       pageLink: string;
-//       authorId: string;
-//     }>;
-
-//     if (!id || !name || !description || !pageLink || !authorId)
-//       throw new HttpError(400, "Todos os campos são obrigatórios!");
-
-//     const portfolio = await portfolioService.update(
-//       new Portfolio(id, name, description, pageLink, authorId)
-//     );
-
-//     reply.send(portfolio);
-//   },
-//   deleteById: async (req: FastifyRequest, reply: FastifyReply) => {
-//     const params = req.params as { id: string };
-//     const id = params.id;
-
-//     if (!id) throw new HttpError(400, "Id do portofolio é obrigatorio!");
-
-//     const portfolio = await portfolioService.deleteById(id);
-//     reply.send(portfolio);
-//   },
-// };

@@ -3,6 +3,7 @@ import Rating from "@domain/entities/rating/Rating";
 export default interface RatingRepository {
   insert(rating: Rating): Promise<Rating>;
   findMany(): Promise<Rating[]>;
+  findById(id: string): Promise<Rating | null>;
   findByUserId(userId: string): Promise<Rating[]>;
   findByWorkCompDetails(workCompDetailsId: string): Promise<Rating[]>;
   findByUserAndWorkCompDetails(

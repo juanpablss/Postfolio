@@ -6,6 +6,7 @@ export default interface RatingUseCases {
   delete(id: string): Promise<Rating>;
 
   findMany(): Promise<Rating[]>;
+  findById(id: string): Promise<Rating | null>;
   findByUserId(userId: string): Promise<Rating[]>;
   findByWorkCompDetails(workCompDetailsId: string): Promise<Rating[]>;
   findByUserAndWorkCompDetails(

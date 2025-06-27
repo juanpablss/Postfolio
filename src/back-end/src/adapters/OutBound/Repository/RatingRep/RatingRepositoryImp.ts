@@ -21,6 +21,12 @@ class RatingRepositoryImp implements RatingRepository {
     );
   }
 
+  async findById(id: string): Promise<Rating | null> {
+    const ratingModel = await this.prismaRatingRepository.findById(id);
+    if (!ratingModel) return null;
+    return Mapper.Rating.toDomain(ratingModel);
+  }
+
   async findByUserId(userId: string): Promise<Rating[]> {
     return (await this.prismaRatingRepository.findByUserId(userId)).map(
       Mapper.Rating.toDomain

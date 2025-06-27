@@ -5,6 +5,9 @@ import WorkRepository from "@domain/entities/work/WorkRepository";
 import WorkCompDetails from "@domain/entities/workCompDetails/WorkCompDetails";
 import WorkCompDetailsRepository from "@domain/entities/workCompDetails/WorkCompDetailsRepository";
 import { Conflict, NotFound } from "@domain/error/HttpError";
+import competitionRepositoryImp from "@repository/competitionRep/CompetitionRepositoryImp";
+import workCompDetailsRepositoryImp from "@repository/workCompDetailsRep/WorkCompDetailsRepository";
+import workRepositoryImp from "@repository/workRep/WorkRepositoryImp";
 import CompetitionUseCase from "@useCases/CompetitionUseCase";
 
 class CompetitionServiceImp implements CompetitionUseCase {
@@ -45,23 +48,53 @@ class CompetitionServiceImp implements CompetitionUseCase {
     return details;
   }
 
-  unsubscribeWork(competitionId: string, workId: string): Promise<void> {
+  async unsubscribeWork(competitionId: string, workId: string): Promise<void> {
+    const details =
+      await this.workCompDetailsRepository.findByCompetitionAndWork(
+        competitionId,
+        workId
+      );
+
+    if (!details)
+      throw new NotFound(
+        "Inscrição não encontrada para esta competição e trabalho"
+      );
+
     throw new Error("Method not implemented.");
   }
 
-  update(competition: Competition): Promise<Competition> {
-    throw new Error("Method not implemented.");
+  async update(competition: Competition): Promise<Competition> {
+    return await this.competitionRepository.update(competition);
   }
-  deleteById(id: string): Promise<Competition | null> {
-    throw new Error("Method not implemented.");
+
+  async deleteById(id: string): Promise<Competition | null> {
+    return await this.competitionRepository.deleteById(id);
   }
-  findMany(): Promise<Competition[]> {
-    throw new Error("Method not implemented.");
+
+  async findMany(): Promise<Competition[]> {
+    return await this.competitionRepository.findMany();
   }
-  findById(id: string): Promise<Competition | null> {
-    throw new Error("Method not implemented.");
+
+  async findById(id: string): Promise<Competition | null> {
+    return await this.competitionRepository.findById(id);
   }
-  findSubscribedWorks(competitionId: string): Promise<Work[]> {
-    throw new Error("Method not implemented.");
+
+  async findSubscribedWorks(competitionId: string): Promise<Work[]> {
+    const details = await this.workCompDetailsRepository.findWorksByCompetition(
+      competitionId
+    );
+    const works = details.map((d) => {
+      if (!d.work) throw new NotFound("Dados do trabalho estão imcompletos");
+      return d.work;
+    });
+
+    return works;
   }
 }
+
+const competitionServiceImp: CompetitionUseCase = new CompetitionServiceImp(
+  competitionRepositoryImp,
+  workCompDetailsRepositoryImp,
+  workRepositoryImp
+);
+export default competitionServiceImp;

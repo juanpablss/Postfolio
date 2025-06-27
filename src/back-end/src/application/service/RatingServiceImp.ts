@@ -2,10 +2,15 @@ import ratingRepositoryImp from "@repository/ratingRep/RatingRepositoryImp";
 import Rating from "@domain/entities/rating/Rating";
 import RatingUseCases from "@application/useCases/RatingUseCases";
 import RatingRepository from "@domain/entities/rating/RatingRepository";
-import { Conflict } from "@domain/error/HttpError";
+import { Conflict, NotFound } from "@domain/error/HttpError";
+import WorkCompDetailsRepository from "@domain/entities/workCompDetails/WorkCompDetailsRepository";
+import workCompDetailsRepositoryImp from "@repository/workCompDetailsRep/WorkCompDetailsRepository";
 
 class RatingServiceImp implements RatingUseCases {
-  constructor(private readonly ratingRepository: RatingRepository) {}
+  constructor(
+    private readonly ratingRepository: RatingRepository,
+    private readonly workCompDetailsRepository: WorkCompDetailsRepository
+  ) {}
 
   async register(rating: Rating): Promise<Rating> {
     const existeRating = await this.findByUserAndWorkCompDetails(
@@ -22,6 +27,10 @@ class RatingServiceImp implements RatingUseCases {
 
   async findMany(): Promise<Rating[]> {
     return await this.ratingRepository.findMany();
+  }
+
+  async findById(id: string): Promise<Rating | null> {
+    return await this.ratingRepository.findById(id);
   }
 
   async findByUserId(userId: string): Promise<Rating[]> {
@@ -44,14 +53,49 @@ class RatingServiceImp implements RatingUseCases {
 
   async update(rating: Rating): Promise<Rating> {
     // Precisa atualzar o WorkCompDetails também
-    return await this.ratingRepository.update(rating);
+    const [oldRating, oldDetails] = await Promise.all([
+      this.ratingRepository.findById(rating.id),
+      this.workCompDetailsRepository.findById(rating.workDetailsId),
+    ]);
+
+    if (!oldRating) throw new NotFound("Avaliação não encontrada");
+    if (!oldDetails) throw new NotFound("Avaliação não vinculada");
+
+    oldDetails.totalScore = rating.score - oldRating.score;
+
+    const [newRating, newDetails] = await Promise.all([
+      this.ratingRepository.update(rating),
+      this.workCompDetailsRepository.update(oldDetails),
+    ]);
+
+    return await this.ratingRepository.update(newRating);
   }
 
   async delete(id: string): Promise<Rating> {
-    // Precisa atualzar o WorkCompDetails também
-    return await this.ratingRepository.delete(id);
+    const rating = await this.ratingRepository.findById(id);
+
+    if (!rating) throw new NotFound("Avaliação não encontrada");
+
+    const details = await this.workCompDetailsRepository.findById(
+      rating.workDetailsId
+    );
+
+    if (!details) throw new NotFound("Avaliação não vinculada");
+
+    details.totalReviewers -= 1;
+    details.totalScore -= rating.score;
+
+    const [ratingDelete] = await Promise.all([
+      this.ratingRepository.delete(id),
+      this.workCompDetailsRepository.update(details),
+    ]);
+
+    return ratingDelete;
   }
 }
 
-const ratingService: RatingUseCases = new RatingServiceImp(ratingRepositoryImp);
+const ratingService: RatingUseCases = new RatingServiceImp(
+  ratingRepositoryImp,
+  workCompDetailsRepositoryImp
+);
 export default ratingService;

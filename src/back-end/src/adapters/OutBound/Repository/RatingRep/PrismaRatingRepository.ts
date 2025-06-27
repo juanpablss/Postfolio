@@ -22,6 +22,14 @@ export class PrismaRatingRepository {
     return await prisma.rating.findMany();
   }
 
+  async findById(id: string): Promise<PrismaRating | null> {
+    return await prisma.rating.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
   async findByWorkCompDetails(
     workCompDetailsId: string
   ): Promise<PrismaRating[]> {
