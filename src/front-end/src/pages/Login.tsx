@@ -86,9 +86,6 @@ export default function Login() {
         >
           POSTFOLIO
         </h1>
-        <p className="mb-6 text-indigo-200 text-center text-base font-light animate-fade-in-up" style={{ letterSpacing: '1px' }}>
-          Acesse sua conta para continuar
-        </p>
         {/* Card de login */}
         <div className="w-full max-w-[370px] rounded-2xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.28)] bg-glass px-8 py-10 animate-fade-in-up">
           <h2 className="text-center text-[24px] mb-8 tracking-[2px] font-semibold text-blue-100 drop-shadow-[0_1px_5px_rgba(0,0,0,0.25)]">

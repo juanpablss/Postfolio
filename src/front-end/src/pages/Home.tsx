@@ -1,170 +1,207 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import Header from "../layouts/Header";
-// import ProjectCard from '../components/projects/ProjectCard';
-import ProjectCarousel from '../components/projects/ProjectCarousel';
-import ParticleComponent from "../components/ParticleComponent";
 
-const projects = [
-    {
-      title: "José Cassios",
-      role: "Desenvolvedor Full Stack",
-      frontImage: "cassios.png",
-      backContent: "Desenvolvedor apaixonado por tecnologia, focado em soluções inovadoras e experiência do usuário.",
-      portfolioLink: "http://localhost:5174/",
-      emailContact: "josecassios@email.com"
-    },
-    {
-      title: "Mickaela Evely",
-      role: "Desenvolvedora Frontend e games mobile",
-      frontImage: "micka.png",
-      backContent: "Estudante determinada e focada, sempre em busca de novos desafios e dedicada ao aprimoramento contínuo de suas habilidades.",
-      portfolioLink: "http://localhost:5174/",
-      emailContact: "micka@email.com"
-    },
-    {
-      title: "Debriane da Silva",
-      role: "Leitora profissional de livros de romance",
-      frontImage: "debriane.png",
-      backContent: "Leio de tudo, não só romance.",
-      portfolioLink: "http://localhost:5174/",
-      emailContact: "micka@email.com"
-    },
-    {
-      title: "Juan Pablo",
-      frontImage: "juan.png",
-      role: "Desenvolvedor Backend e DevOps",
-      backContent: "Desenvolvo qualquer sistema backend avançado, tenho experiencia em integração, devops, testes e desenvolvimento ágil.",
-      portfolioLink: "http://localhost:5174/",
-      emailContact: "juan@email.com"
-    },
-    {
-      title: "Jonas Davi Nogueira",
-      role: "Contador, e gerente de projetos",
-      frontImage: "jonas.png",
-      backContent: "Se você busca alguém comprometido com resultados, organização e liderança, posso transformar ideias em entregas concretas.",
-      portfolioLink: "http://localhost:5174/",
-      emailContact: "juan@email.com"
-    },
-    {
-      title: "Lara Emanuelly",
-      role: "CEO e Advogada",
-      frontImage: "lara.png",
-      backContent: "Conte com a expertise de Lara Emanuelly, CEO visionária e advogada dedicada, para impulsionar o sucesso do seu negócio. Com liderança estratégica, profundo conhecimento jurídico e foco em resultados.",
-      portfolioLink: "http://localhost:5174/",
-      emailContact: "lara@email.com"
-    },
-  ];
+// Exemplo de projetos de várias pessoas, com imagens genéricas, avatar e descrição do autor
+const allProjects = [
+  {
+    id: 1,
+    projectTitle: "Dashboard de Vendas",
+    projectImage: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80",
+    authorName: "Cassios",
+    authorProfile: "/profile/cassios",
+    authorImage: "cassios.png",
+    description: "Dashboard interativo para análise de vendas com gráficos e métricas em tempo real."
+  },
+  {
+    id: 2,
+    projectTitle: "Landing Page Criativa",
+    projectImage: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80",
+    authorName: "Mickaela",
+    authorProfile: "/profile/mickaela",
+    authorImage: "micka.png",
+    description: "Landing page responsiva, com design moderno, animações sutis e foco em conversão para campanhas de marketing digital e lançamentos de produtos."
+  },
+  {
+    id: 3,
+    projectTitle: "Blog de Resenhas",
+    projectImage: "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=400&q=80",
+    authorName: "Debriane",
+    authorProfile: "/profile/debriane",
+    authorImage: "debriane.png",
+    description: "Blog colaborativo para resenhas de livros, filmes e séries, com sistema de comentários, avaliações e integração com redes sociais."
+  },
+  {
+    id: 4,
+    projectTitle: "API de Integração",
+    projectImage: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80",
+    authorName: "Juan Pablo",
+    authorProfile: "/profile/juanpablo",
+    authorImage: "juan.png",
+    description: "API RESTful robusta para integração entre sistemas, com autenticação JWT, documentação Swagger e testes automatizados."
+  },
+  {
+    id: 5,
+    projectTitle: "Sistema de Gestão",
+    projectImage: "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=400&q=80",
+    authorName: "Jonas Davi",
+    authorProfile: "/profile/jonasdavi",
+    authorImage: "jonas.png",
+    description: "Sistema completo de gestão empresarial, incluindo módulos de estoque, financeiro, RH e relatórios customizáveis."
+  },
+  {
+    id: 6,
+    projectTitle: "Portal Jurídico",
+    projectImage: "https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=400&q=80",
+    authorName: "Lara Emanuelly",
+    authorProfile: "/profile/laraemanuely",
+    authorImage: "lara.png",
+    description: "Portal para escritórios de advocacia, com área do cliente, upload seguro de documentos e agenda de audiências integrada."
+  },
+  {
+    id: 7,
+    projectTitle: "App de Saúde",
+    projectImage: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80",
+    authorName: "Randeson",
+    authorProfile: "/profile/randerson",
+    authorImage: "https://randomuser.me/api/portraits/men/45.jpg",
+    description: "Aplicativo mobile para acompanhamento de saúde, agendamento de consultas, controle de medicamentos e notificações personalizadas."
+  },
+  {
+    id: 8,
+    projectTitle: "Portfólio Ilustrado",
+    projectImage: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80",
+    authorName: "Loyse",
+    authorProfile: "/profile/loyse",
+    authorImage: "https://randomuser.me/api/portraits/women/62.jpg",
+    description: "Portfólio visual para designers e ilustradores, com galerias de imagens, animações e integração com Behance e Dribbble."
+  },
+  {
+    id: 9,
+    projectTitle: "E-commerce",
+    projectImage: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80",
+    authorName: "Antonio",
+    authorProfile: "/profile/antonio",
+    authorImage: "https://randomuser.me/api/portraits/men/22.jpg",
+    description: "Loja virtual moderna, com carrinho de compras, checkout seguro, painel de administração e integração com meios de pagamento."
+  },
+];
 
-export default function Home()  {
+const filters = [
+  { label: "Todos", value: "all" },
+  { label: "Frontend", value: "frontend" },
+  { label: "Backend", value: "backend" },
+  { label: "Design", value: "design" },
+  { label: "Mobile", value: "mobile" },
+  { label: "Gestão", value: "gestao" },
+];
+
+const orders = [
+  { label: "Mais recentes", value: "recent" },
+  { label: "Mais vistos", value: "views" },
+  { label: "A-Z", value: "az" },
+];
+
+export default function Home() {
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("all");
+  const [order, setOrder] = useState("recent");
+  const [visible, setVisible] = useState(6);
+
+  // Filtro e ordenação simples para exemplo
+  let filtered = allProjects.filter((p) =>
+    (filter === "all" || (p.projectTitle + p.authorName).toLowerCase().includes(filter))
+    && (
+      p.authorName.toLowerCase().includes(search.toLowerCase()) ||
+      p.projectTitle.toLowerCase().includes(search.toLowerCase())
+    )
+  );
+  if (order === "views") filtered = [...filtered]; // Adapte se quiser ordenar por views futuramente
+  if (order === "az") filtered = [...filtered].sort((a, b) => a.projectTitle.localeCompare(b.projectTitle));
+
   return (
-    <div className="bg-pattern bg-no-repeat bg-top bg-cover min-h-screen w-full text-light-white relative">
-      <ParticleComponent />
-      <div className="relative z-10">
-        <Header />
-        <div className="flex flex-col md:flex-row justify-between items-center px-6 md:px-10 py-32 gap-10">
-          {/* Texto - Fica primeiro no mobile, mas mantém a posição no desktop */}
-          <div className="flex flex-col items-left md:items-left justify-right space-y-5 max-w-[600px] order-1 md:order-1">
-            <h1 className="text-light-white text-[60px] font-bold text-left md:text-left leading-tight">
-              A competição de <br />
-              Portfólios começou!
-            </h1>
-            {/* <h2 className="text-xl font-semibold text-light-blue text-center md:text-left">Design, Frontend e Backend</h2> */}
-            <p className="text-justify justify-center leading-relaxed">
-              A competição foi uma ideia para incentivar a criatividade e o espírito competitivo entre os alunos. Explore o <span>portfólio</span> dos alunos e vote no seu projeto favorito! Seu voto é importante para deixar a competição ainda mais interessante.
-            </p>
-            <div className="flex gap-4 items-center justify-center">
-              <button className="px-4 py-2 bg-gradient-to-t from-[#322d92] to-[#8657de] text-light-white rounded-3xl hover:bg-opacity-80 hover:text-dark-black transition">
-                Veja os competidores
-              </button>
-              <button className="px-4 py-2 bg-gradient-to-t from-[#322d92] to-[#8657de] text-light-white rounded-3xl hover:bg-opacity-80 hover:text-dark-black transition">
-                Participe da competição
-              </button>
-            </div>
-            <h1 className="text-light-white text-[33px] font-bold text-center md:text-left">
-            </h1>
-          </div>
-          <div className="flex justify-end md:w-[50%] order-2 md:order-1">
-            <img src="pages-img.png" alt="Imagem de competição" />
-          </div>
+    <div className="bg-pattern bg-no-repeat bg-top bg-cover min-h-screen bg-gradient-to-br from-blue-950 via-indigo-950 to-purple-950">
+      <Header />
+      {/* HERO */}
+      <section className="w-full flex flex-col items-center justify-center pt-28 pb-10 px-4">
+        <div className="max-w-2xl w-full flex flex-col items-center text-center gap-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400 drop-shadow-lg">
+            Conecte-se com talentos, inspire-se com projetos reais
+          </h1>
+          <p className="text-lg md:text-xl text-blue-100 font-light mt-2 mb-4">
+            Descubra portfólios de profissionais de diversas áreas de tecnologia, design e inovação. Encontre inspiração, faça networking e acompanhe as tendências do mercado.
+          </p>
+        </div>
+      </section>
+
+      {/* EXPLORAR PORTFÓLIOS */}
+      <section className="w-full flex flex-col items-center bg-transparent px-4 pt-2 pb-20">
+        <h2 className="text-2xl md:text-3xl font-semibold text-blue-100 mb-8">Explorar Portfólios</h2>
+        {/* Inputs de busca, filtro e ordenação */}
+        <div className="flex flex-col md:flex-row gap-4 mb-10 w-full max-w-4xl">
+          <input
+            type="text"
+            placeholder="Procurar Portfólio"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            className="flex-1 px-4 py-2 rounded-lg bg-indigo-900/80 border border-indigo-700 text-blue-100 placeholder:text-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+          />
+          <select
+            value={filter}
+            onChange={e => setFilter(e.target.value)}
+            className="px-4 py-2 rounded-lg bg-indigo-900/80 border border-indigo-700 text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+          >
+            {filters.map(f => (
+              <option key={f.value} value={f.value}>{f.label}</option>
+            ))}
+          </select>
+          <select
+            value={order}
+            onChange={e => setOrder(e.target.value)}
+            className="px-4 py-2 rounded-lg bg-indigo-900/80 border border-indigo-700 text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+          >
+            {orders.map(o => (
+              <option key={o.value} value={o.value}>{o.label}</option>
+            ))}
+          </select>
         </div>
 
-        <div className="flex flex-col justify-center items-center px-6 md:px-10 py-16 gap-10">
-
-          <div className="flex flex-col items-center justify-center space-y-5 order-1 md:order-1">
-            <h1 className="text-light-white text-[33px] font-bold text-center md:text-left">
-              1. O que é a competição?
-            </h1>
-
-            <div className="flex flex-col gap-3">
-
-              <h2 className="text-lg text-zinc-50">Objetivo</h2>
-              <div className="flex flex-col w-full mb-10 relative">
-                <label className="bg-[#162d71] shadow-shape px-10 py-5 text-light-white rounded-2xl md:rounded-full transition whitespace-normal text-center max-w-screen-md w-full sm:min-h-[100px] min-h-[150px] flex items-center justify-center relative">
-                  O objetivo principal da competição foi estimular o desenvolvimento dos alunos, o compartilhamento de experiência e um passatempo durante as férias!
-                </label>
-                <img src="cup.png" alt="Img" className="absolute top-20 -left-10 w-32 h-32 sm:-top-5 sm:-left-20 sm:w-40 sm:h-40" />
+        {/* Grid de projetos */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 w-full max-w-5xl">
+          {filtered.slice(0, visible).map((project) => (
+            <Link
+              key={project.id}
+              to={project.authorProfile}
+              className="block bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 border border-blue-800 rounded-2xl shadow-lg p-5 transition hover:scale-105 hover:shadow-2xl"
+            >
+              <img
+                src={project.projectImage}
+                alt={project.projectTitle}
+                className="w-full h-40 object-cover rounded-xl mb-3"
+              />
+              <h3 className="text-lg font-bold text-blue-100 mb-2">{project.projectTitle}</h3>
+              <div className="flex items-center gap-3 mt-2">
+                <img
+                  src={project.authorImage}
+                  alt={project.authorName}
+                  className="w-9 h-9 rounded-full border-2 border-indigo-700"
+                />
+                <span className="text-sm text-indigo-200 font-medium">{project.authorName}</span>
               </div>
-
-              <h2 className="text-lg text-zinc-50">Quem está participando?</h2>
-              <div className="flex flex-col w-full mb-20 relative">
-                <label className="bg-[#162d71] shadow-shape px-10 py-5 text-light-white rounded-2xl md:rounded-full transition whitespace-normal text-center max-w-screen-md w-full sm:min-h-[100px] min-h-[150px] flex items-center justify-center relative">
-                  Os participantes são os alunos de Ciências da Computação da turma de CC10.
-                </label>
-                <img src="woman.png" alt="Img" className="absolute top-20 right-[-40px] w-32 h-32 sm:-top-0 sm:right-[-60px] sm:w-40 sm:h-40" />
-              </div>
-
-            </div>
-          </div>
-          <div className="flex flex-col items-center justify-center space-y-5 order-1 md:order-1">
-            <h1 className="text-light-white text-[33px] font-bold text-center md:text-left">
-              2. Critérios para avaliação
-            </h1>
-
-            <div className="flex flex-col p-5 sm:flex-row justify-between gap-6 mt-10">
-              {/* Card 1 */}
-              <div className="bg-dark-blue text-white border-blue-950 border-4 rounded-2xl p-6 shadow-lg flex-1">
-                <h3 className="text-xl font-bold mb-4 text-center">🎨 Design e Estética</h3>
-                <ul className="list-disc list-inside space-y-1 text-sm sm:text-base">
-                  <li>Criatividade</li>
-                  <li>Layout</li>
-                  <li>Cores e Tipografia</li>
-                </ul>
-              </div>
-
-              {/* Card 2 */}
-              <div className="bg-dark-blue text-white border-blue-950 border-4 rounded-2xl p-6 shadow-lg flex-1">
-                <h3 className="text-xl font-bold mb-4 text-center">⚙️ Funcionalidade e Performance</h3>
-                <ul className="list-disc list-inside space-y-1 text-sm sm:text-base">
-                  <li>Adequação ao Propósito</li>
-                  <li>Escalabilidade</li>
-                  <li>Confiabilidade</li>
-                </ul>
-              </div>
-
-              {/* Card 3 */}
-              <div className="bg-dark-blue text-white border-blue-950 border-4 rounded-2xl p-6 shadow-lg flex-1">
-                <h3 className="text-xl font-bold mb-4 text-center">🧭 Usabilidade do Usuário</h3>
-                <ul className="list-disc list-inside space-y-1 text-sm sm:text-base">
-                  <li>Navegação Intuitiva</li>
-                  <li>Acessibilidade e Legibilidade</li>
-                  <li>Facilidade de Uso</li>
-                </ul>
-              </div>
-            </div>
-          </div> 
-          
-          <div className="flex flex-col items-center justify-center space-y-3 order-1 md:order-1 mt-24">
-            <h1 className="text-light-white text-[33px] font-bold text-center md:text-left">
-              3. Conheça os Participantes
-            </h1>
-            <div className="w-full flex max-w-4xl justify-center">
-              <div className="relative w-full max-w-full overflow-x-visible">
-                <ProjectCarousel projects={projects} />
-              </div>
-            </div>
-          </div>
-
+            </Link>
+          ))}
         </div>
-      </div>
+
+        {/* Botão de carregar mais */}
+        {visible < filtered.length && (
+          <button
+            onClick={() => setVisible(v => v + 6)}
+            className="mt-10 px-8 py-2 rounded-full bg-gradient-to-r from-blue-700 to-indigo-700 text-white font-semibold shadow-lg hover:brightness-110 transition"
+          >
+            Load More
+          </button>
+        )}
+      </section>
     </div>
-  )
+  );
 }
