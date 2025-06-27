@@ -1,6 +1,7 @@
 import React from 'react';
 import { FiGithub } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
+import { useNavigate } from 'react-router-dom';
 
 const TailwindCustomStyles = () => (
   <style>
@@ -71,6 +72,40 @@ const TailwindCustomStyles = () => (
 
 export default function Login() {
   const [remember, setRemember] = React.useState(false);
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  const navigate = useNavigate(); // Adicione isso no início do componente Login
+
+  const handleSubmit = async (event: { preventDefault: () => void; }) => {
+    console.log('Submitting login form...');
+    event.preventDefault();
+
+    try {
+      console.log('Sending login request to server, email:', email, ' password:', password);
+      const response = await fetch('http://localhost:8080/api/user/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Login successful:', data);
+        localStorage.setItem("token", data.token);
+        navigate("/");
+      } else {
+        const errorData = await response.json();
+        console.error('Login failed:', errorData);
+        alert(`Erro ao fazer login: ${errorData.message || 'Credenciais inválidas'}`);
+      }
+    } catch (error) {
+      console.error('There was an error during the login request:', error);
+      alert('Ocorreu um erro na conexão. Tente novamente mais tarde.');
+    }
+  };
 
   return (
     <>
@@ -91,18 +126,20 @@ export default function Login() {
           <h2 className="text-center text-[24px] mb-8 tracking-[2px] font-semibold text-blue-100 drop-shadow-[0_1px_5px_rgba(0,0,0,0.25)]">
             Bem-vindo!
           </h2>
-          <form>
-            {/* Usuário */}
+          <form onSubmit={handleSubmit}>
+            {/* Email */}
             <div className="mb-6">
-              <label htmlFor="username" className="text-[14px] mb-1 block text-blue-100">
-                Usuário
+              <label htmlFor="email" className="text-[14px] mb-1 block text-blue-100">
+                Email
               </label>
               <div className="relative">
                 <input
-                  id="username"
-                  type="text"
-                  placeholder="Insira seu nome de usuário"
+                  id="email"
+                  type="email"
+                  placeholder="Insira seu email"
                   className="w-full py-3 pl-11 pr-4 rounded-lg border border-transparent input-glass text-white text-[15px] outline-none transition-all duration-300 placeholder:text-white/70"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-indigo-300 pointer-events-none">
                   <i className="fa-solid fa-user"></i>
@@ -121,6 +158,8 @@ export default function Login() {
                   type="password"
                   placeholder="Insira sua senha"
                   className="w-full py-3 pl-11 pr-4 rounded-lg border border-transparent input-glass text-white text-[15px] outline-none transition-all duration-300 placeholder:text-white/70"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-indigo-300 pointer-events-none">
                   <i className="fa-solid fa-lock"></i>
