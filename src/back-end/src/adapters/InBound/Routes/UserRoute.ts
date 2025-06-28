@@ -1,11 +1,8 @@
 import { FastifyInstance } from "fastify";
-import { UserController } from "@controller/UserController";
+import userController from "@controller/UserController";
 import { UserMiddle } from "@infrastructure/middleware/UserMiddle";
-import userServiceImp from "@service/UserServiceImp";
 
 export async function UserRoutes(app: FastifyInstance) {
-  const userController = new UserController(userServiceImp);
-
   app.get("", (req, reply) => userController.hello(req, reply));
 
   app.post("", (req, reply) => userController.register(req, reply));

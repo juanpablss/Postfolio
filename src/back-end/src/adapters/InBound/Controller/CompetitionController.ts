@@ -1,6 +1,6 @@
 import Competition from "@domain/entities/competition/Competition";
 import { BadRequest, InternalServerError } from "@domain/error/HttpError";
-import competitionServiceImp from "@service/CompetitionServiceImp";
+import competitionService from "@service/CompetitionServiceImp";
 import CompetitionUseCase from "@useCases/CompetitionUseCase";
 import { FastifyReply, FastifyRequest } from "fastify";
 
@@ -94,5 +94,5 @@ class CompetitionController {
   }
 }
 
-const competitionController = new CompetitionController(competitionServiceImp);
+const competitionController = new CompetitionController(competitionService);
 export default competitionController;

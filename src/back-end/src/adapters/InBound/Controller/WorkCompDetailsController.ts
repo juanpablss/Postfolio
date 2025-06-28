@@ -1,5 +1,5 @@
 import { BadRequest } from "@domain/error/HttpError";
-import workCompDetailsServiceImp from "@service/WorkCompDetailsServiceImp";
+import workCompDetailsService from "@service/WorkCompDetailsServiceImp";
 import WorkCompDetailsUseCase from "@useCases/WorkCompDetailsUseCase";
 import { FastifyReply, FastifyRequest } from "fastify";
 
@@ -28,6 +28,6 @@ class WorkCompDetailsController {
 }
 
 const workCompDetailsController = new WorkCompDetailsController(
-  workCompDetailsServiceImp
+  workCompDetailsService
 );
 export default workCompDetailsController;

@@ -2,9 +2,10 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import Portfolio from "@domain/entities/portfolio/Portfolio";
 import { BadRequest } from "@domain/error/HttpError";
 import PortfolioUseCases from "@useCases/PortfolioUseCases";
+import portfolioService from "@service/PortfolioServiceImp";
 // import portfolioService from "@application/service/PortfolioServiceImp";
 
-export class PortfolioController {
+class PortfolioController {
   constructor(private readonly portfolioService: PortfolioUseCases) {}
 
   async register(req: FastifyRequest, reply: FastifyReply) {
@@ -102,3 +103,5 @@ export class PortfolioController {
     reply.send(portfolio);
   }
 }
+const portfolioController = new PortfolioController(portfolioService);
+export default portfolioController;

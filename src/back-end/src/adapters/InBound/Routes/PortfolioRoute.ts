@@ -1,11 +1,8 @@
 import { FastifyInstance } from "fastify";
-import { PortfolioController } from "@controller/PortfolioController";
+import portfolioController from "@controller/PortfolioController";
 import { UserMiddle } from "@infrastructure/middleware/UserMiddle";
-import portfolioService from "@service/PortfolioServiceImp";
 
 export async function PortfolioRoute(app: FastifyInstance) {
-  const portfolioController = new PortfolioController(portfolioService);
-
   app.post("/all", (req, rep) => portfolioController.getAll(req, rep));
 
   app.post("", { preValidation: UserMiddle.authenticate }, (req, rep) =>

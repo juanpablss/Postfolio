@@ -2,8 +2,9 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { BadRequest, InternalServerError } from "@domain/error/HttpError";
 import UserUseCases from "@useCases/UserUseCases";
 import { CreateUserDTO, LoginUserDTO } from "@dtos/UserDTO";
+import userService from "@service/UserServiceImp";
 
-export class UserController {
+class UserController {
   constructor(private readonly userService: UserUseCases) {}
 
   async hello(req: FastifyRequest, reply: FastifyReply) {
@@ -47,3 +48,6 @@ export class UserController {
     reply.send(user);
   }
 }
+
+const userController = new UserController(userService);
+export default userController;
