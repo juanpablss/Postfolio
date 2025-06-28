@@ -5,6 +5,8 @@ import "@infrastructure/@types/fastify";
 import { PortfolioRoute } from "./adapters/inBound/routes/PortfolioRoute";
 import { RatingRoute } from "./adapters/inBound/routes/RatingRoute";
 import { configureFastify } from "@infrastructure/fastify/ConfigureFastify";
+import { WorkRoutes } from "@routes/WorkRoute";
+import { CompetitionRoute } from "@routes/CompetitionRoute";
 
 const app = Fastify({
   logger: {
@@ -29,6 +31,8 @@ app.register(fastifyCors, {
 app.register(UserRoutes, { prefix: "api/user" });
 app.register(PortfolioRoute, { prefix: "api/portfolio" });
 app.register(RatingRoute, { prefix: "api/rating" });
+app.register(WorkRoutes, { prefix: "api/work" });
+app.register(CompetitionRoute, { prefix: "api/competition" });
 
 configureFastify(app);
 
