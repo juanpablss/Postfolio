@@ -46,6 +46,8 @@
       "@service/*":["application/service/*"],
       // useCases
       "@useCases/*":["application/useCases/*"],
+      // dtos
+      "@dtos/*": ["application/dtos/*"],
 
       "@application/*":["application/*"],
       "@domain/*":["domain/*"],

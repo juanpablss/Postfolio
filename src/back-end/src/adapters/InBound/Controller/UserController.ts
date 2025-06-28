@@ -1,8 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { BadRequest, InternalServerError } from "@domain/error/HttpError";
-import User from "@domain/entities/user/User";
 import UserUseCases from "@useCases/UserUseCases";
-import Email from "@domain/valueObject/Email";
+import { CreateUserDTO, LoginUserDTO } from "@dtos/UserDTO";
 
 export class UserController {
   constructor(private readonly userService: UserUseCases) {}
@@ -12,28 +11,9 @@ export class UserController {
   }
 
   async register(req: FastifyRequest, reply: FastifyReply) {
-    const {
-      name = null,
-      email: emailStr = null,
-      password = null,
-      status = null,
-    } = req.body as Partial<{
-      name: string;
-      email: string;
-      password: string;
-      status: string;
-    }>;
+    const userDto = req.body as Partial<CreateUserDTO>;
 
-    if (!name || !emailStr || !password || !status)
-      throw new BadRequest("Todos os campos são obrigatórios!");
-
-    if (password.length <= 8) throw new BadRequest("Senha muito fraca!");
-
-    const email = new Email(emailStr); // pode dar erro HttpError(400, "Email inválido!");
-
-    await this.userService.register(
-      new User("", name, email, password, status)
-    ); // pode dar erro HttpError(400, "Por favor, use outro email!");
+    await this.userService.register(userDto);
 
     return reply.send({ msg: "Usuario criado com sucesso!" });
   }
@@ -48,16 +28,9 @@ export class UserController {
   }
 
   async login(req: FastifyRequest, reply: FastifyReply) {
-    const { email: emailStr = null, password = null } = req.body as Partial<{
-      email: string;
-      password: string;
-    }>;
+    const loginDto = req.body as Partial<LoginUserDTO>;
 
-    if (!emailStr) throw new BadRequest("O email é obrigatório!");
-    if (!password) throw new BadRequest("A senha é obrigatória!");
-
-    const email = new Email(emailStr);
-    const token = await this.userService.login(email, password);
+    const token = await this.userService.login(loginDto);
 
     reply.send({ msg: "Login bem-sucedido!", token });
   }

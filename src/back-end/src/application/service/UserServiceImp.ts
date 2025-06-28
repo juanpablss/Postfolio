@@ -1,23 +1,42 @@
 import UserUseCases from "@application/useCases/UserUseCases";
 import User from "@domain/entities/user/User";
 import { Crypt } from "@util/Crypto";
-import { Conflict, NotFound, Unauthorized } from "@domain/error/HttpError";
+import {
+  BadRequest,
+  Conflict,
+  NotFound,
+  Unauthorized,
+} from "@domain/error/HttpError";
 import { Token } from "@util/Token";
 import { UserRepository } from "@domain/entities/user/UserRepository";
 import userRepositoryImp from "@repository/userRep/UserRepositoryImp";
 import Email from "@domain/valueObject/Email";
+import { CreateUserDTO, LoginUserDTO } from "@dtos/UserDTO";
+import Mapper from "@util/Mapper";
 
 class UserServiceImp implements UserUseCases {
   constructor(private userRepository: UserRepository) {}
 
-  async register(user: User): Promise<void> {
-    const existingUser = await this.userRepository.findByEmail(user.email);
+  async register(userDto: CreateUserDTO): Promise<void> {
+    if (!userDto.name || !userDto.email || !userDto.password || !userDto.status)
+      throw new BadRequest("Todos os campos são obrigatórios!");
+
+    if (userDto.password.length <= 8)
+      throw new BadRequest("Senha muito fraca!");
+
+    const hashedPassword = await Crypt.hashPassWord(userDto.password);
+    const userDomain = Mapper.User.fromCreateUserDTOtoDomain(
+      userDto,
+      hashedPassword
+    );
+
+    const existingUser = await this.userRepository.findByEmail(
+      userDomain.email
+    );
 
     if (existingUser) throw new Conflict("Por favor, use outro email!");
 
-    user.password = await Crypt.hashPassWord(user.password);
-
-    await this.userRepository.insert(user);
+    await this.userRepository.insert(userDomain);
   }
 
   async findMany(): Promise<User[]> {
@@ -33,12 +52,17 @@ class UserServiceImp implements UserUseCases {
     return user;
   }
 
-  async login(email: Email, passWord: string): Promise<string> {
+  async login(loginDto: Partial<LoginUserDTO>): Promise<string> {
+    if (!loginDto.email) throw new BadRequest("O email é obrigatório!");
+    if (!loginDto.password) throw new BadRequest("A senha é obrigatória!");
+
+    const email = new Email(loginDto.email);
+
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) throw new NotFound("Usuário não encontrado!");
 
-    const checkPassWord = await Crypt.compare(passWord, user.password);
+    const checkPassWord = await Crypt.compare(loginDto.password, user.password);
 
     if (!checkPassWord) throw new Unauthorized("Senha incorreta!");
 

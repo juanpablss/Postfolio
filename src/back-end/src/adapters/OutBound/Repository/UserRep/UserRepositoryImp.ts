@@ -10,8 +10,8 @@ class UserRepositoryImp implements UserRepository {
   constructor(private readonly prismaUserRepository: PrismaUserRepository) {}
 
   async insert(user: User): Promise<User | null> {
-    const userModel = Mapper.User.toPrisma(user);
-    return Mapper.User.toDomain(
+    const userModel = Mapper.User.fromDomaintoPrisma(user);
+    return Mapper.User.fromPrismatoDomain(
       await this.prismaUserRepository.insert(userModel)
     );
   }
@@ -19,7 +19,7 @@ class UserRepositoryImp implements UserRepository {
   async findMany(): Promise<User[]> {
     const userModels = await this.prismaUserRepository.findMany();
 
-    const users = userModels.map(Mapper.User.toDomain);
+    const users = userModels.map(Mapper.User.fromPrismatoDomain);
 
     return users;
   }
@@ -27,19 +27,19 @@ class UserRepositoryImp implements UserRepository {
   async findById(id: string): Promise<User | null> {
     const userModel = await this.prismaUserRepository.findById(id);
     if (!userModel) return null;
-    return Mapper.User.toDomain(userModel);
+    return Mapper.User.fromPrismatoDomain(userModel);
   }
   async findByEmail(email: Email): Promise<User | null> {
     const userModel = await this.prismaUserRepository.findByEmail(
       email.getValue()
     );
     if (!userModel) return null;
-    return Mapper.User.toDomain(userModel);
+    return Mapper.User.fromPrismatoDomain(userModel);
   }
   async deleteById(id: string): Promise<User | null> {
     const userModel = await this.prismaUserRepository.deleteById(id);
     if (!userModel) return null;
-    return Mapper.User.toDomain(userModel);
+    return Mapper.User.fromPrismatoDomain(userModel);
   }
 }
 const userRepositoryImp = new UserRepositoryImp(prismaUserRepository);

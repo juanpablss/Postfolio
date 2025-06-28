@@ -11,9 +11,10 @@ import PrismaWork from "@models/PrismaWork";
 import Work from "@domain/entities/work/Work";
 import PrismaWorkCompDetails from "@models/PrismaWorkComDetails";
 import WorkCompDetails from "@domain/entities/workCompDetails/WorkCompDetails";
+import { CreateUserDTO } from "@dtos/UserDTO";
 
 const UserMapper = {
-  toDomain(prismaUser: PrismaUser): User {
+  fromPrismatoDomain(prismaUser: PrismaUser): User {
     return new User(
       prismaUser.id,
       prismaUser.name,
@@ -22,7 +23,7 @@ const UserMapper = {
       prismaUser.status
     );
   },
-  toPrisma(user: User): PrismaUser {
+  fromDomaintoPrisma(user: User): PrismaUser {
     return {
       id: user.id,
       name: user.name,
@@ -30,6 +31,15 @@ const UserMapper = {
       password: user.password,
       status: user.status,
     };
+  },
+  fromCreateUserDTOtoDomain(dto: CreateUserDTO, hashedPassword: string): User {
+    return new User(
+      "",
+      dto.name,
+      new Email(dto.email),
+      hashedPassword,
+      dto.status
+    );
   },
 };
 
