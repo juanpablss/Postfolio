@@ -51,20 +51,28 @@ class RatingServiceImp implements RatingUseCases {
     );
   }
 
-  async update(rating: Rating): Promise<Rating> {
-    // Precisa atualzar o WorkCompDetails também
+  async update(
+    score: number,
+    competitionId: string,
+    workId: string,
+    ratingId: string
+  ): Promise<Rating> {
     const [oldRating, oldDetails] = await Promise.all([
-      this.ratingRepository.findById(rating.id),
-      this.workCompDetailsRepository.findById(rating.workDetailsId),
+      this.ratingRepository.findById(ratingId),
+      this.workCompDetailsRepository.findByCompetitionAndWork(
+        competitionId,
+        workId
+      ),
     ]);
 
     if (!oldRating) throw new NotFound("Avaliação não encontrada");
     if (!oldDetails) throw new NotFound("Avaliação não vinculada");
 
-    oldDetails.totalScore = rating.score - oldRating.score;
+    oldDetails.totalScore = score - oldRating.score;
+    oldRating.score = score;
 
     const [newRating, newDetails] = await Promise.all([
-      this.ratingRepository.update(rating),
+      this.ratingRepository.update(oldRating),
       this.workCompDetailsRepository.update(oldDetails),
     ]);
 

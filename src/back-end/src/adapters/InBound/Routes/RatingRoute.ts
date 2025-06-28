@@ -1,10 +1,8 @@
 import { FastifyInstance } from "fastify";
-import RatingController from "@controller/RatingController";
 import { UserMiddle } from "@middleware/UserMiddle";
-import ratingService from "@service/RatingServiceImp";
+import ratingController from "@controller/RatingController";
 
 export async function RatingRoute(app: FastifyInstance) {
-  const ratingController = new RatingController(ratingService);
   app.post("/all", (req, rep) => ratingController.getAll(req, rep));
 
   app.post("", { preValidation: UserMiddle.authenticate }, (req, rep) =>

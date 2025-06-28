@@ -12,7 +12,7 @@ export async function PortfolioRoute(app: FastifyInstance) {
     portfolioController.register(req, rep)
   );
 
-  app.post("/details", { preValidation: UserMiddle.authenticate }, (req, rep) =>
+  app.post("/user/me", { preValidation: UserMiddle.authenticate }, (req, rep) =>
     portfolioController.getByUser(req, rep)
   );
 

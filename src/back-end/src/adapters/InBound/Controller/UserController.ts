@@ -5,15 +5,9 @@ import UserUseCases from "@useCases/UserUseCases";
 import Email from "@domain/valueObject/Email";
 
 export class UserController {
-  // private useService: UserUseCases;
-  private str: string = "STRING";
-
-  constructor(private readonly userService: UserUseCases) {
-    // console.log("AQUI\n");
-  }
+  constructor(private readonly userService: UserUseCases) {}
 
   async hello(req: FastifyRequest, reply: FastifyReply) {
-    console.log(this.str);
     reply.send({ msg: "Ola mundo" });
   }
 

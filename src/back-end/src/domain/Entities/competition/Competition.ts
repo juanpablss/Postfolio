@@ -3,7 +3,7 @@ export default class Competition {
     public id: string,
     public name: string,
     public createdAt: Date,
-    public startsAt: Date | null,
-    public endsAt: Date | null
+    public startsAt: Date | null = null,
+    public endsAt: Date | null = null
   ) {}
 }
