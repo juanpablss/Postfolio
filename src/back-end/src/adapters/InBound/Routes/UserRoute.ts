@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { UserController } from "@controller/UserController";
-import { UserMiddle } from "@middleware/UserMiddle";
+import { UserMiddle } from "@infrastructure/middleware/UserMiddle";
 import userServiceImp from "@service/UserServiceImp";
 // import { UserServiceImp } from "@service/UserServiceImp";
 // import UserServiceImp from "@service/UserServiceImp";

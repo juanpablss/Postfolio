@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { UserMiddle } from "@middleware/UserMiddle";
+import { UserMiddle } from "@infrastructure/middleware/UserMiddle";
 import ratingController from "@controller/RatingController";
 
 export async function RatingRoute(app: FastifyInstance) {

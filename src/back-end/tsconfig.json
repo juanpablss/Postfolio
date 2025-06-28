@@ -35,7 +35,6 @@
       /* adapters */
       // inBound
       "@controller/*":["adapters/inBound/controller/*"],
-      "@middleware/*":["adapters/inBound/middleware/*"],
       "@routes/*":["adapters/inBound/routes/*"],
       //outBound
       "@models/*":["adapters/outBound/models/*"],

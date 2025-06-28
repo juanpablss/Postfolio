@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { UserMiddle } from "@middleware/UserMiddle";
+import { UserMiddle } from "@infrastructure/middleware/UserMiddle";
 import competitionController from "@controller/CompetitionController";
 import workCompDetailsController from "@controller/WorkCompDetailsController";
 import ratingController from "@controller/RatingController";

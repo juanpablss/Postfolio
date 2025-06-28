@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { PortfolioController } from "@controller/PortfolioController";
-import { UserMiddle } from "@middleware/UserMiddle";
+import { UserMiddle } from "@infrastructure/middleware/UserMiddle";
 import portfolioService from "@service/PortfolioServiceImp";
 
 export async function PortfolioRoute(app: FastifyInstance) {
