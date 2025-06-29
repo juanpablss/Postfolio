@@ -1,5 +1,5 @@
 import { GenericHttpError } from "@domain/error/HttpError";
-import { FastifyReply, FastifyRequest } from "fastify";
+import { FastifyError, FastifyReply, FastifyRequest } from "fastify";
 
 interface ErrorResponse {
   statusCode: number;
@@ -10,7 +10,7 @@ interface ErrorResponse {
 }
 
 export default function configureErrorHandling(
-  error: Error,
+  error: FastifyError,
   request: FastifyRequest,
   reply: FastifyReply
 ) {
@@ -22,9 +22,27 @@ export default function configureErrorHandling(
     timestamp: new Date().toISOString(),
   };
 
+  console.log(`\nAQUI ${typeof error}\n`);
+  console.log(`\nAQUI ${error}\n`);
+
+  // if(error instanceof FastifyError){
+
+  // }
+
+  // if (error instanceof ZodError) {
+  //   console.log(`\n${error.errors[0].message}\n`);
+  //   return reply.status(400).send(new ValidationError(error.errors));
+  // }
+
   // Tratamento para erros conhecidos
   if (error instanceof GenericHttpError) {
     response.statusCode = error.statusCode;
+    response.error = error.name;
+    response.message = error.message;
+  }
+
+  if (error.code == "FST_ERR_VALIDATION") {
+    response.statusCode = error.statusCode || 500;
     response.error = error.name;
     response.message = error.message;
   }

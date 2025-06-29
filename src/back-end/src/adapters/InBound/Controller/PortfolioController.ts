@@ -3,30 +3,22 @@ import Portfolio from "@domain/entities/portfolio/Portfolio";
 import { BadRequest } from "@domain/error/HttpError";
 import PortfolioUseCases from "@useCases/PortfolioUseCases";
 import portfolioService from "@service/PortfolioServiceImp";
-// import portfolioService from "@application/service/PortfolioServiceImp";
-
+import {
+  RegisterPortfolioRequest,
+  UpdatePortfolioRequest,
+} from "@schamas/PortfolioSchema";
+import { CreatePortfolioDTO, UpdatePortfolioDTO } from "@dtos/PortfolioDTO";
 class PortfolioController {
   constructor(private readonly portfolioService: PortfolioUseCases) {}
 
-  async register(req: FastifyRequest, reply: FastifyReply) {
-    const {
-      name = null,
-      description = null,
-      pagelink = null,
-      authorId = req.user?.id || null,
-    } = req.body as Partial<{
-      name: string;
-      description: string;
-      pagelink: string;
-      authorId: string;
-    }>;
+  async register(req: RegisterPortfolioRequest, reply: FastifyReply) {
+    const authorId = req.user?.id;
 
-    if (!name || !description || !pagelink || !authorId)
-      throw new BadRequest("Todos os campos são obrigatórios!");
+    if (!authorId) throw new BadRequest("Autor é obrigatorio");
 
-    const portfolio = await this.portfolioService.register(
-      new Portfolio("", name, description, pagelink, authorId)
-    );
+    const createPortfolioDto: CreatePortfolioDTO = { ...req.body, authorId };
+
+    const portfolio = await this.portfolioService.register(createPortfolioDto);
 
     reply.send(portfolio);
   }
@@ -38,7 +30,6 @@ class PortfolioController {
   }
 
   async getByUser(req: FastifyRequest, reply: FastifyReply) {
-    console.log("AQUI");
     const authorId = req.user?.id || null;
 
     if (!authorId) throw new BadRequest("Id é obrigatorio");
@@ -58,40 +49,29 @@ class PortfolioController {
   }
 
   async getWorks(req: FastifyRequest, reply: FastifyReply) {
-    console.log("AQUI 0");
     const { id = null } = req.body as Partial<{ id: string }>;
 
     if (!id) throw new BadRequest("Id é obrigatorio");
 
-    console.log("AQUI 1");
     const works = await this.portfolioService.getWorks(id);
 
     reply.send(works);
   }
 
-  async update(req: FastifyRequest, reply: FastifyReply) {
-    const {
-      id = null,
-      name = null,
-      description = null,
-      pageLink = null,
-      authorId = req.user?.id || null,
-    } = req.body as Partial<{
-      id: string;
-      name: string;
-      description: string;
-      pageLink: string;
-      authorId: string;
-    }>;
+  async update(req: UpdatePortfolioRequest, reply: FastifyReply) {
+    const authorId = req.user?.id;
 
-    if (!id || !name || !description || !pageLink || !authorId)
-      throw new BadRequest("Todos os campos são obrigatórios!");
+    if (!authorId) throw new BadRequest("Autor é obrigatorio");
 
-    const portfolio = await this.portfolioService.update(
-      new Portfolio(id, name, description, pageLink, authorId)
-    );
+    const updatePortfolioDto: UpdatePortfolioDTO = {
+      id: req.params.id,
+      ...req.body,
+      authorId,
+    };
 
-    reply.send(portfolio);
+    const response = await this.portfolioService.update(updatePortfolioDto);
+
+    reply.send(response);
   }
 
   async deleteById(req: FastifyRequest, reply: FastifyReply) {

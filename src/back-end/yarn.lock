@@ -427,6 +427,11 @@
   resolved "https://registry.npmjs.org/@fastify/error/-/error-4.0.0.tgz"
   integrity sha512-OO/SA8As24JtT1usTUTKgGH7uLvhfwZPwlptRi2Dp5P4KKmJI3gvsZ8MIHnNwDs4sLf/aai5LzTyl66xr7qMxA==
 
+"@fastify/error@^4.1.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@fastify/error/-/error-4.2.0.tgz#d40f46ba75f541fdcc4dc276b7308bbc8e8e6d7a"
+  integrity sha512-RSo3sVDXfHskiBZKBPRgnQTtIqpi/7zhJOEmAxCiBcM7d0uwdGdxLlsCaLzGs8v8NnxIRlfG0N51p5yFaOentQ==
+
 "@fastify/fast-json-stringify-compiler@^5.0.0":
   version "5.0.2"
   resolved "https://registry.npmjs.org/@fastify/fast-json-stringify-compiler/-/fast-json-stringify-compiler-5.0.2.tgz"
@@ -1161,14 +1166,16 @@ babel-preset-jest@^29.6.3:
     "@types/jest" "^29.5.14"
     "@types/supertest" "^6.0.2"
     "@types/validator" "^13.12.2"
-    backend "file:../../../../../../../AppData/Local/Yarn/Cache/v6/npm-backend-1.0.0-88a20167-0b0a-4b0c-9cfe-83c4254fa3c4-1750595835353/node_modules/backend"
+    backend "file:../../../../../../../AppData/Local/Yarn/Cache/v6/npm-backend-1.0.0-26366443-1ad4-4528-93c1-108df4a4e4b0-1751239192905/node_modules/backend"
     bcrypt "^5.1.1"
+    fastify-type-provider-zod "^5.0.1"
     jest "^29.7.0"
     jsonwebtoken "^9.0.2"
     package "^1.0.1"
     supertest "^7.0.0"
     uuid "^11.1.0"
     validator "^13.12.0"
+    zod "^3.25.67"
 
 balanced-match@^1.0.0:
   version "1.0.2"
@@ -1721,6 +1728,13 @@ fastify-plugin@^5.0.0:
   version "5.0.1"
   resolved "https://registry.npmjs.org/fastify-plugin/-/fastify-plugin-5.0.1.tgz"
   integrity sha512-HCxs+YnRaWzCl+cWRYFnHmeRFyR5GVnJTAaCJQiYzQSDwK9MgJdyAsuL3nh0EWRCYMgQ5MeziymvmAhUHYHDUQ==
+
+fastify-type-provider-zod@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/fastify-type-provider-zod/-/fastify-type-provider-zod-5.0.1.tgz#8d0c8712adaed4e465b93051eec589063817ebd1"
+  integrity sha512-h2XEUakE8WCfL/Qnd0VcF1NcpKtCx7XvK8Mz0VclwSksNDpu0ggJt80HMg9oOUm/wOcfxojndBrq0QKnhyVp5A==
+  dependencies:
+    "@fastify/error" "^4.1.0"
 
 fastify@^5.2.1:
   version "5.2.1"
@@ -3680,3 +3694,8 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.npmjs.org/yocto-queue/-/yocto-queue-0.1.0.tgz"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
+
+zod@^3.25.67:
+  version "3.25.67"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.25.67.tgz#62987e4078e2ab0f63b491ef0c4f33df24236da8"
+  integrity sha512-idA2YXwpCdqUSKRCACDE6ItZD9TZzy3OZMtpfLoh6oPR47lipysRrJfjzMqFxQ3uJuUPyUeWe1r9vLH33xO/Qw==

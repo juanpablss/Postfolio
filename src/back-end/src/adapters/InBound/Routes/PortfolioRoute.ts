@@ -1,12 +1,25 @@
-import { FastifyInstance } from "fastify";
+import { FastifyInstance, FastifyRequest } from "fastify";
 import portfolioController from "@controller/PortfolioController";
 import { UserMiddle } from "@infrastructure/middleware/UserMiddle";
+import {
+  portfolioRouteSchemas,
+  RegisterPortfolioRequest,
+  UpdatePortfolioRequest,
+} from "@schamas/PortfolioSchema";
+
+// import { portfolioSchemas } from "@schamas/PortofolioSchemas";
 
 export async function PortfolioRoute(app: FastifyInstance) {
   app.post("/all", (req, rep) => portfolioController.getAll(req, rep));
 
-  app.post("", { preValidation: UserMiddle.authenticate }, (req, rep) =>
-    portfolioController.register(req, rep)
+  app.post(
+    "",
+    {
+      schema: portfolioRouteSchemas.create,
+      preValidation: UserMiddle.authenticate,
+    },
+    (req, rep) =>
+      portfolioController.register(req as RegisterPortfolioRequest, rep)
   );
 
   app.post("/user/me", { preValidation: UserMiddle.authenticate }, (req, rep) =>
@@ -17,8 +30,13 @@ export async function PortfolioRoute(app: FastifyInstance) {
     portfolioController.getWorks(req, rep)
   );
 
-  app.put("", { preValidation: UserMiddle.authenticate }, (req, rep) =>
-    portfolioController.update(req, rep)
+  app.put(
+    "/:id",
+    {
+      schema: portfolioRouteSchemas.update,
+      preValidation: UserMiddle.authenticate,
+    },
+    (req, rep) => portfolioController.update(req as UpdatePortfolioRequest, rep)
   );
 
   app.delete("", { preValidation: UserMiddle.authenticate }, (req, rep) =>

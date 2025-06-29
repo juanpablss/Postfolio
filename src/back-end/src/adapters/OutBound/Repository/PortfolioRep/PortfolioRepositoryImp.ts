@@ -11,7 +11,7 @@ class PortfolioRepositoryImp implements PortfolioRepository {
   ) {}
 
   async insert(portfolio: Portfolio): Promise<Portfolio> {
-    const portfolioModel = Mapper.Portfolio.toPrisma(portfolio);
+    const portfolioModel = Mapper.Portfolio.fromDomaintoPrisma(portfolio);
     portfolio.id = (
       await this.prismaPortfolioRepository.insert(portfolioModel)
     ).id;
@@ -20,7 +20,7 @@ class PortfolioRepositoryImp implements PortfolioRepository {
 
   async findMany(): Promise<Portfolio[]> {
     return (await this.prismaPortfolioRepository.findMany()).map(
-      Mapper.Portfolio.toDomain
+      Mapper.Portfolio.fromPrismatoDomain
     );
   }
 
@@ -29,20 +29,19 @@ class PortfolioRepositoryImp implements PortfolioRepository {
 
     if (!portfolioModel) return null;
 
-    return Mapper.Portfolio.toDomain(portfolioModel);
+    return Mapper.Portfolio.fromPrismatoDomain(portfolioModel);
   }
   async findByAuthor(authorId: string): Promise<Portfolio | null> {
     const existPortfolioModel =
       await this.prismaPortfolioRepository.findByAuthor(authorId);
-    console.log("AQUI author 2");
     if (!existPortfolioModel) return null;
 
-    const portfolios = Mapper.Portfolio.toDomain(existPortfolioModel);
+    const portfolios = Mapper.Portfolio.fromPrismatoDomain(existPortfolioModel);
     return portfolios;
   }
 
   async update(portfolio: Portfolio): Promise<Portfolio> {
-    const portfolioModel = Mapper.Portfolio.toPrisma(portfolio);
+    const portfolioModel = Mapper.Portfolio.fromDomaintoPrisma(portfolio);
     await this.prismaPortfolioRepository.update(portfolioModel);
     return portfolio;
   }

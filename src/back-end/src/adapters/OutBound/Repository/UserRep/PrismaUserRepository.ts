@@ -1,10 +1,17 @@
 import PrismaUser from "@models/PrismaUser";
 import { prisma } from "@infrastructure/config/Prisma";
 import { InternalServerError } from "@domain/error/HttpError";
+import { Prisma } from "@prisma/client";
 
 export class PrismaUserRepository {
   async insert(prismaUser: PrismaUser): Promise<PrismaUser> {
     try {
+      console.log(
+        prismaUser.name,
+        prismaUser.email,
+        prismaUser.password,
+        prismaUser.status
+      );
       const user = await prisma.user.create({
         data: {
           name: prismaUser.name,
@@ -15,6 +22,11 @@ export class PrismaUserRepository {
       });
       return user;
     } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        throw new InternalServerError(
+          `Não foi possivel salvar o usuario! Código: ${error.code}`
+        );
+      }
       throw new InternalServerError("Erro ao registrar usuario!");
     }
   }

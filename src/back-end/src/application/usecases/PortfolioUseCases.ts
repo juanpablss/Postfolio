@@ -1,9 +1,10 @@
 import Portfolio from "@domain/entities/portfolio/Portfolio";
 import Work from "@domain/entities/work/Work";
+import { CreatePortfolioDTO, UpdatePortfolioDTO } from "@dtos/PortfolioDTO";
 
 export default interface PortfolioUseCases {
-  register(portfolio: Portfolio): Promise<Portfolio>;
-  update(portfolio: Portfolio): Promise<Portfolio>;
+  register(createPortfolioDto: CreatePortfolioDTO): Promise<Portfolio>;
+  update(updatePortfolioDto: UpdatePortfolioDTO): Promise<Portfolio>;
   deleteById(id: string): Promise<Portfolio | null>;
 
   findMany(): Promise<Portfolio[]>;

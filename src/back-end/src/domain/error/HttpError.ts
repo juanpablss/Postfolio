@@ -1,3 +1,5 @@
+import z from "zod";
+
 export class GenericHttpError extends Error {
   constructor(public statusCode: number, public name: string, message: string) {
     super(message);

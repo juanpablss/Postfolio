@@ -36,6 +36,7 @@
       // inBound
       "@controller/*":["adapters/inBound/controller/*"],
       "@routes/*":["adapters/inBound/routes/*"],
+      "@schamas/*": ["adapters/inBound/schemas/*"],
       //outBound
       "@models/*":["adapters/outBound/models/*"],
       "@repository/*":["adapters/outBound/repository/*"],

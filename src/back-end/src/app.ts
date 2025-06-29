@@ -7,6 +7,11 @@ import { RatingRoute } from "./adapters/inBound/routes/RatingRoute";
 import { configureFastify } from "@infrastructure/fastify/ConfigureFastify";
 import { WorkRoutes } from "@routes/WorkRoute";
 import { CompetitionRoute } from "@routes/CompetitionRoute";
+import {
+  serializerCompiler,
+  validatorCompiler,
+  ZodTypeProvider,
+} from "fastify-type-provider-zod";
 
 const app = Fastify({
   logger: {
@@ -19,8 +24,11 @@ const app = Fastify({
       },
     },
   },
-});
+}).withTypeProvider<ZodTypeProvider>();
 const PORT = 8080;
+
+app.setValidatorCompiler(validatorCompiler);
+app.setSerializerCompiler(serializerCompiler);
 
 app.register(fastifyCors, {
   origin: true,

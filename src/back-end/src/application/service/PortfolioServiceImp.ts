@@ -1,5 +1,4 @@
 import PortfolioUseCases from "@application/useCases/PortfolioUseCases";
-import userServiceImp from "@application/service/UserServiceImp";
 import portfolioRepositoryImp from "@repository/portfolioRep/PortfolioRepositoryImp";
 import Portfolio from "@domain/entities/portfolio/Portfolio";
 import { BadRequest, NotFound } from "@domain/error/HttpError";
@@ -9,6 +8,8 @@ import { UserRepository } from "@domain/entities/user/UserRepository";
 import userRepositoryImp from "@repository/userRep/UserRepositoryImp";
 import workRepositoryImp from "@repository/workRep/WorkRepositoryImp";
 import WorkRepository from "@domain/entities/work/WorkRepository";
+import { CreatePortfolioDTO, UpdatePortfolioDTO } from "@dtos/PortfolioDTO";
+import Mapper from "@util/Mapper";
 
 class PortfolioServiceImp implements PortfolioUseCases {
   constructor(
@@ -17,12 +18,17 @@ class PortfolioServiceImp implements PortfolioUseCases {
     private readonly workRepository: WorkRepository
   ) {}
 
-  async register(portfolio: Portfolio): Promise<Portfolio> {
-    const author = await this.userRepository.findById(portfolio.authorId);
+  async register(createPortfolioDto: CreatePortfolioDTO): Promise<Portfolio> {
+    const author = await this.userRepository.findById(
+      createPortfolioDto.authorId
+    );
 
     if (!author) throw new BadRequest("Author não registrado!");
 
-    return await this.portfolioRepository.insert(portfolio);
+    const portfoioDomain =
+      Mapper.Portfolio.fromCreatePortfolioDTOtoDomain(createPortfolioDto);
+
+    return await this.portfolioRepository.insert(portfoioDomain);
   }
 
   async findMany(): Promise<Portfolio[]> {
@@ -38,8 +44,10 @@ class PortfolioServiceImp implements PortfolioUseCases {
     return await this.portfolioRepository.findByAuthor(authorId);
   }
 
-  async update(portfolio: Portfolio): Promise<Portfolio> {
-    return await this.portfolioRepository.update(portfolio);
+  async update(updatePortfolioDto: UpdatePortfolioDTO): Promise<Portfolio> {
+    const portfolioDomain =
+      Mapper.Portfolio.fromUpdatePortfolioDTOtoDomain(updatePortfolioDto);
+    return await this.portfolioRepository.update(portfolioDomain);
   }
 
   async getWorks(portfolioId: string): Promise<Work[]> {

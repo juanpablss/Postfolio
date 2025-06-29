@@ -12,6 +12,7 @@ import Work from "@domain/entities/work/Work";
 import PrismaWorkCompDetails from "@models/PrismaWorkComDetails";
 import WorkCompDetails from "@domain/entities/workCompDetails/WorkCompDetails";
 import { CreateUserDTO } from "@dtos/UserDTO";
+import { CreatePortfolioDTO, UpdatePortfolioDTO } from "@dtos/PortfolioDTO";
 
 const UserMapper = {
   fromPrismatoDomain(prismaUser: PrismaUser): User {
@@ -44,7 +45,7 @@ const UserMapper = {
 };
 
 const PortfolioMapper = {
-  toDomain(prismaPortfolio: PrismaPortfolio): Portfolio {
+  fromPrismatoDomain(prismaPortfolio: PrismaPortfolio): Portfolio {
     return new Portfolio(
       prismaPortfolio.id,
       prismaPortfolio.name,
@@ -53,7 +54,7 @@ const PortfolioMapper = {
       prismaPortfolio.authorId
     );
   },
-  toPrisma(portfolio: Portfolio): PrismaPortfolio {
+  fromDomaintoPrisma(portfolio: Portfolio): PrismaPortfolio {
     return {
       id: portfolio.id,
       name: portfolio.name,
@@ -61,6 +62,24 @@ const PortfolioMapper = {
       pageLink: portfolio.pageLink,
       authorId: portfolio.authorId,
     };
+  },
+  fromCreatePortfolioDTOtoDomain(dto: CreatePortfolioDTO): Portfolio {
+    return new Portfolio(
+      "",
+      dto.name,
+      dto.description,
+      dto.pagelink,
+      dto.authorId
+    );
+  },
+  fromUpdatePortfolioDTOtoDomain(dto: UpdatePortfolioDTO): Portfolio {
+    return new Portfolio(
+      dto.id,
+      dto.name,
+      dto.description,
+      dto.pagelink,
+      dto.authorId
+    );
   },
 };
 
