@@ -13,6 +13,7 @@ import PrismaWorkCompDetails from "@models/PrismaWorkComDetails";
 import WorkCompDetails from "@domain/entities/workCompDetails/WorkCompDetails";
 import { CreateUserDTO } from "@dtos/UserDTO";
 import { CreatePortfolioDTO, UpdatePortfolioDTO } from "@dtos/PortfolioDTO";
+import { CreateWorkDTO, UpdateWorkDTO } from "@dtos/WorkDTO";
 
 const UserMapper = {
   fromPrismatoDomain(prismaUser: PrismaUser): User {
@@ -84,7 +85,7 @@ const PortfolioMapper = {
 };
 
 const RatingMapper = {
-  toDomain(prismaRating: PrismaRating): Rating {
+  fromPrismatoDomain(prismaRating: PrismaRating): Rating {
     return new Rating(
       prismaRating.id,
       prismaRating.userId,
@@ -92,7 +93,7 @@ const RatingMapper = {
       prismaRating.score
     );
   },
-  toPrisma(rating: Rating): PrismaRating {
+  fromDomaintoPrisma(rating: Rating): PrismaRating {
     return {
       id: rating.id,
       userId: rating.userId,
@@ -124,7 +125,7 @@ const CompetitionMapper = {
 };
 
 const WorkMapper = {
-  toDomain(prismaWork: PrismaWork): Work {
+  fromPrismatoDomain(prismaWork: PrismaWork): Work {
     return new Work(
       prismaWork.id,
       prismaWork.name,
@@ -133,7 +134,7 @@ const WorkMapper = {
       prismaWork.portfolioId
     );
   },
-  toPrisma(work: Work): PrismaWork {
+  fromDomaintoPrisma(work: Work): PrismaWork {
     return {
       id: work.id,
       name: work.name,
@@ -141,6 +142,24 @@ const WorkMapper = {
       githubLink: work.githubLink,
       portfolioId: work.portfolioId,
     };
+  },
+  fromCreateWorkDTOtoDomain(dto: CreateWorkDTO): Work {
+    return new Work(
+      "",
+      dto.name,
+      dto.description,
+      dto.githublink,
+      dto.portfolio
+    );
+  },
+  fromUpdateWorkDTOtoDomain(dto: UpdateWorkDTO): Work {
+    return new Work(
+      dto.id,
+      dto.name,
+      dto.description,
+      dto.githublink,
+      dto.portfolio
+    );
   },
 };
 
@@ -155,7 +174,7 @@ const WorkCompDetailsMapper = {
     );
 
     if (prismaWorkCompDetails.work) {
-      details.work = WorkMapper.toDomain(prismaWorkCompDetails.work);
+      details.work = WorkMapper.fromPrismatoDomain(prismaWorkCompDetails.work);
     }
 
     return details;
