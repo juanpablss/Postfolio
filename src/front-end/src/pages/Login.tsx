@@ -83,7 +83,9 @@ export default function Login() {
 
     try {
       console.log('Sending login request to server, email:', email, ' password:', password);
-      const response = await fetch('http://localhost:8080/api/user/login', {
+      const apiURL = import.meta.env.VITE_BACKEND_URL;
+      console.log('API URL:', apiURL);
+      const response = await fetch(`${apiURL}/api/user/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
