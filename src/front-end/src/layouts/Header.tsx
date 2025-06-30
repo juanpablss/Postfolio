@@ -5,34 +5,31 @@ import {
   FiX,
   FiAward,
   FiInfo,
-  FiMail,
   FiGithub,
   FiInstagram,
-  FiUser, // Added for user icon if no photo is available
-  FiBriefcase, // Icon for 'Contratante'
-  FiPlusCircle, // Icon for 'Criar Conta'
-  FiLogOut, // Icon for 'Sair'
+  FiUser,
+  FiBriefcase,
+  FiPlusCircle,
+  FiLogOut,
+  FiHome,
+  FiMessageSquare,
+  FiBell,
 } from "react-icons/fi";
 import { createPortal } from "react-dom";
 
-// Placeholder for user data. In a real app, this would come from an API.
-// Simulate different user types for demonstration
 const mockUserData = {
   name: "José Cássios",
   email: "jose.cassios@example.com",
-  photo: "https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg", // Example photo
-  userType: "freelancer", // Can be 'freelancer' or 'contractor'
+  photo: "cassios.png",
+  userType: "freelancer",
 };
-// Uncomment and modify this if you want to test contractor flow
-// const mockUserData = {
-//   name: "Maria Silva",
-//   email: "maria.silva@example.com",
-//   photo: "https://images.unsplash.com/photo-1573496359142-b8d877341ace?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-//   userType: "contractor",
-// };
-
 
 const navLinks = [
+  {
+    label: "Home",
+    path: "",
+    icon: <FiHome className="mr-3 text-lg text-green-300" />,
+  },
   {
     label: "Competição",
     path: "competicao",
@@ -40,13 +37,8 @@ const navLinks = [
   },
   {
     label: "Sobre",
-    path: "sobre",
+    path: "about-us",
     icon: <FiInfo className="mr-3 text-lg text-indigo-200" />,
-  },
-  {
-    label: "Contato",
-    path: "contato",
-    icon: <FiMail className="mr-3 text-lg text-blue-200" />,
   },
 ];
 
@@ -149,7 +141,7 @@ function MobileMenu({
               <button
                 onClick={() => {
                   setMenuOpen(false);
-                  handleToggleUserType(); // Call the handler to toggle type
+                  handleToggleUserType();
                 }}
                 className="w-full px-4 py-3 rounded-lg bg-green-700 text-white font-semibold shadow hover:bg-green-800 transition mb-3"
               >
@@ -159,7 +151,7 @@ function MobileMenu({
             <button
               onClick={() => {
                 setMenuOpen(false);
-                handleLogout(); // Call the logout handler
+                handleLogout();
               }}
               className="w-full px-4 py-3 rounded-lg bg-transparent border border-red-300 text-red-200 hover:bg-red-600 hover:text-white transition"
             >
@@ -209,7 +201,7 @@ function MobileMenu({
           </span>
           <div className="flex gap-4 mt-2">
             <a
-              href="https://github.com/seuusuario"
+              href="https://github.com/jose-cassios"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-200 hover:text-white text-xl transition"
@@ -217,7 +209,7 @@ function MobileMenu({
               <FiGithub />
             </a>
             <a
-              href="https://instagram.com/seuusuario"
+              href="https://instagram.com/jose-cassios"
               target="_blank"
               rel="noopener noreferrer"
               className="text-indigo-300 hover:text-white text-xl transition"
@@ -246,12 +238,11 @@ function MobileMenu({
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState(null); // State to store user data
-  const [dropdownOpen, setDropdownOpen] = useState(false); // State for desktop dropdown
-  const dropdownRef = useRef(null); // Ref for dropdown element
+  const [user, setUser] = useState(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
-  // Simulate fetching user data on component mount
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -295,8 +286,8 @@ export default function Header() {
     localStorage.removeItem("token");
     setIsLoggedIn(false);
     setUser(null);
-    setDropdownOpen(false); // Close dropdown on logout
-    setMenuOpen(false); // Close mobile menu on logout
+    setDropdownOpen(false);
+    setMenuOpen(false);
     navigate("/login");
   };
 
@@ -337,13 +328,13 @@ export default function Header() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-10">
-          <ul className="flex gap-8 font-medium text-blue-100">
+        <nav className="hidden md:flex items-center">
+          <ul className="flex gap-6 lg:gap-8 font-medium text-blue-100">
             {navLinks.map(({ label, path }) => (
               <li key={path}>
                 <Link
                   to={`/${path}`}
-                  className="hover:text-blue-400 text-blue-200 transition-colors duration-200"
+                  className="hover:text-indigo-300 text-blue-200 transition-colors duration-200 text-sm lg:text-base"
                 >
                   {label}
                 </Link>
@@ -352,13 +343,29 @@ export default function Header() {
           </ul>
         </nav>
 
-        {/* Desktop botões e Dropdown do Usuário */}
-        <div className="hidden md:flex items-center gap-4">
+        {/* Ícones à direita e Dropdown do Usuário (Desktop) */}
+        <div className="hidden md:flex items-center gap-5 lg:gap-6">
+          {/* Ícones de Mensagens e Notificações */}
+          {isLoggedIn && (
+            <>
+              <Link to="/messages" className="text-blue-200 hover:text-indigo-300 transition-colors" title="Mensagens">
+                <FiMessageSquare size={22} />
+              </Link>
+              <button className="relative text-blue-200 hover:text-indigo-300 transition-colors" title="Notificações">
+                <FiBell size={22} />
+                <span className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center animate-pulse">
+                  3
+                </span>
+              </button>
+            </>
+          )}
+
+          {/* Botões de Login/Registro ou Dropdown do Usuário */}
           {isLoggedIn && user ? (
             <div className="relative" ref={dropdownRef}>
               <button
                 id="dropdownAvatarNameButton"
-                className="flex items-center text-sm pe-1 font-medium text-blue-100 rounded-full hover:text-blue-400 focus:ring-4 focus:ring-blue-300/30 transition"
+                className="flex items-center text-sm pe-1 font-medium text-blue-100 rounded-full hover:text-indigo-300 focus:ring-4 focus:ring-blue-300/30 transition"
                 type="button"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
@@ -464,9 +471,23 @@ export default function Header() {
         </div>
 
         {/* Botão do menu mobile */}
-        <div className="flex md:hidden items-center gap-2">
+        <div className="flex md:hidden items-center gap-3">
+           {/* Ícones de Mensagens e Notificações (Mobile, se logado) */}
+           {isLoggedIn && (
+            <>
+              <Link to="/messages" className="text-blue-200 hover:text-indigo-300 transition-colors" title="Mensagens">
+                <FiMessageSquare size={24} />
+              </Link>
+              <button className="relative text-blue-200 hover:text-indigo-300 transition-colors" title="Notificações">
+                <FiBell size={24} />
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] rounded-full h-3.5 w-3.5 flex items-center justify-center animate-pulse">
+                  3
+                </span>
+              </button>
+            </>
+          )}
           <button
-            className="text-blue-200 text-3xl ml-2"
+            className="text-blue-200 text-3xl"
             onClick={() => setMenuOpen(true)}
             aria-label="Abrir Menu"
           >
