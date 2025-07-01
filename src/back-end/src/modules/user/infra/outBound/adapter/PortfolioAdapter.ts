@@ -1,8 +1,15 @@
+import { IPortfolioService } from "@portfolio/aplication/ports/IPortfolioService";
 import { IPortfolioPort } from "@user/infra/outBound/ports/IPortfolioPort";
 
 export class PortfolioAdapter implements IPortfolioPort {
+  private portfolioService?: IPortfolioService;
+
   async createDefaultPortfolioForUser(userId: string): Promise<void> {
     throw new Error("Method not implemented.");
+  }
+
+  setPortfolioService(portfolioService: IPortfolioService) {
+    this.portfolioService = portfolioService;
   }
 }
 

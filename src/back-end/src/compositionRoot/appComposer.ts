@@ -17,13 +17,14 @@ import { PortfolioService } from "@portfolio/aplication/useCases/PortfolioServic
 // ... Outros Services
 
 // Controladores
-import { UserController } from "../domains/user/infrastructure/adapters/inbound/controllers/UserController";
-import { PortfolioController } from "../domains/portfolio/infrastructure/adapters/inbound/controllers/PortfolioController";
+import { UserController } from "@user/infra/inBound/controller/UserController";
+import { PortfolioController } from "@portfolio/infra/inBound/controller/PortfolioController";
 // ... Outros Controladores
 
 // Rotas
-import { registerUserRoutes } from "../domains/user/infrastructure/adapters/inbound/routes/UserRoutes";
-import { registerPortfolioRoutes } from "../domains/portfolio/infrastructure/adapters/inbound/routes/PortfolioRoutes";
+import { UserRoutes } from "@user/infra/inBound/route/UserRoute";
+import { PortfolioRoutes } from "@portfolio/infra/inBound/route/PortfolioRoute";
+import configureErrorHandling from "@infrastructure/fastify/ConfigureErrorHandling";
 // ... Outras funções de registro de rotas
 
 // Interfaces dos Controladores (opcional, para tipagem mais clara)
@@ -45,48 +46,28 @@ export class AppComposer {
     // Nível mais baixo: Repositórios
     const userRepository = new PrismaUserRepository();
     const portfolioRepository = new PrismaPortfolioRepository();
-    // ... instancie outros repositórios aqui (competitionRepository, workRepository, etc.)
 
-    // Use Cases Granulares do Módulo Portfolio
-    const createPortfolioUseCase = new CreatePortfolioUseCase(
-      portfolioRepository
-    );
-    const addWorkToPortfolioUseCase = new AddWorkToPortfolioUseCase(
-      portfolioRepository
-    ); // Exemplo de Work
-    // ... instancie outros use cases de Portfolio aqui
+    const portfolioAdapter = new PortfolioAdapter();
+    const userAdapter = new UserAdaper();
 
     // Service do Módulo Portfolio (implementa IPortfolioUseCases)
-    const portfolioUseCasesInstance = new PortfolioService(
-      createPortfolioUseCase,
-      addWorkToPortfolioUseCase
-    );
-
-    // Adaptador de Saída do Módulo User para Portfolio
-    const portfolioServiceForUserModule = new PortfolioServiceAdapter(
-      portfolioUseCasesInstance
-    );
-
-    // Use Cases Granulares do Módulo User
-    const createUserUseCase = new CreateUserUseCase(
+    const userServiceInstance = new UserService(
       userRepository,
-      portfolioServiceForUserModule
+      portfolioAdapter
     );
-    const loginUserUseCase = new LoginUserUseCase(userRepository);
-    // ... instancie outros use cases de User aqui
-
-    // Service do Módulo User (implementa IUserUseCases)
-    const userUseCasesInstance = new UserService(
-      createUserUseCase,
-      loginUserUseCase
+    const portfolioServiceInstance = new PortfolioService(
+      portfolioRepository,
+      userAdapter
     );
+    portfolioAdapter.setPortfolioService(portfolioServiceInstance);
+    userAdapter.setUserService(userServiceInstance);
+    // Adaptador de Saída do Módulo User para Portfolio
 
     // Controladores (dependem dos Services/Use Cases de alto nível)
-    const userController = new UserController(userUseCasesInstance);
+    const userController = new UserController(userServiceInstance);
     const portfolioController = new PortfolioController(
-      portfolioUseCasesInstance
+      portfolioServiceInstance
     );
-    // ... instancie outros controladores aqui
 
     return {
       userController,
@@ -97,14 +78,12 @@ export class AppComposer {
 
   // Método para registrar todas as rotas no Fastify
   public registerRoutes(app: FastifyInstance): void {
-    registerUserRoutes(app, this.controllers.userController);
-    registerPortfolioRoutes(app, this.controllers.portfolioController);
-    // ... registre outras rotas aqui
+    UserRoutes(app, this.controllers.userController);
+    PortfolioRoutes(app, this.controllers.portfolioController);
   }
 
   // Se você tiver configurações globais do Fastify, pode tê-las aqui
   public configureFastify(app: FastifyInstance): void {
-    // Exemplo: configureErrorHandling(app);
-    // Exemplo: configurePlugins(app);
+    app.setErrorHandler(configureErrorHandling);
   }
 }

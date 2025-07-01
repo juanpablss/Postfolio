@@ -1,4 +1,4 @@
-import { GenericHttpError } from "@domain/error/HttpError";
+import { GenericHttpError } from "@shared/error/HttpError";
 import { FastifyError, FastifyReply, FastifyRequest } from "fastify";
 
 interface ErrorResponse {

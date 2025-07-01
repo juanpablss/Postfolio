@@ -11,10 +11,10 @@ import IUserRepository from "@user/domain/ports/IUserRepository";
 import Email from "@user/domain/valueObject/Email";
 import { CreateUserDTO, LoginUserDTO } from "@user/aplication/dtos/UserDTO";
 import Mapper from "@shared/util/Mapper";
-import IUserUseCases from "@user/aplication/ports/IUserUseCases";
+import IUserService from "@user/aplication/ports/IUserService";
 import { IPortfolioPort } from "@user/infra/outBound/ports/IPortfolioPort";
 
-export class UserService implements IUserUseCases {
+export class UserService implements IUserService {
   constructor(
     private readonly userRepository: IUserRepository,
     private readonly portfolioService: IPortfolioPort

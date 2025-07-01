@@ -2,7 +2,7 @@ import User from "modules/user/domain/entities/User";
 import Email from "@user/domain/valueObject/Email";
 import { CreateUserDTO, LoginUserDTO } from "@user/aplication/dtos/UserDTO";
 
-export default interface IUserUseCases {
+export default interface IUserService {
   register(userDto: Partial<CreateUserDTO>): Promise<void>;
   deleteById(id: string): Promise<User | null>;
 

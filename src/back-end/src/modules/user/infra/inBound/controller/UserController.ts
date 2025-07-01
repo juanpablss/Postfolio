@@ -6,10 +6,10 @@ import {
   LoginRequest,
   RegisterUserRequest,
 } from "@user/infra/inBound/schema/UserSchema";
-import IUserUseCases from "@user/aplication/ports/IUserUseCases";
+import IUserService from "@user/aplication/ports/IUserService";
 
-export default class UserController {
-  constructor(private readonly userService: IUserUseCases) {}
+export class UserController {
+  constructor(private readonly userService: IUserService) {}
 
   async hello(req: FastifyRequest, reply: FastifyReply) {
     reply.send({ msg: "Ola mundo" });

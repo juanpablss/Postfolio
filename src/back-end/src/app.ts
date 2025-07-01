@@ -1,17 +1,12 @@
 import Fastify from "fastify";
-import { UserRoutes } from "./adapters/inBound/routes/UserRoute";
 import fastifyCors from "@fastify/cors";
 import "@infrastructure/types/fastify";
-import { PortfolioRoute } from "./adapters/inBound/routes/PortfolioRoute";
-import { RatingRoute } from "./adapters/inBound/routes/RatingRoute";
-import { configureFastify } from "@infrastructure/fastify/ConfigureFastify";
-import { WorkRoutes } from "@routes/WorkRoute";
-import { CompetitionRoute } from "@routes/CompetitionRoute";
 import {
   serializerCompiler,
   validatorCompiler,
   ZodTypeProvider,
 } from "fastify-type-provider-zod";
+import { AppComposer } from "compositionRoot/appComposer";
 
 const app = Fastify({
   logger: {
@@ -36,13 +31,9 @@ app.register(fastifyCors, {
   allowedHeaders: ["Content-Type", "Authorization"],
 });
 
-app.register(UserRoutes, { prefix: "api/user" });
-app.register(PortfolioRoute, { prefix: "api/portfolio" });
-app.register(RatingRoute, { prefix: "api/rating" });
-app.register(WorkRoutes, { prefix: "api/work" });
-app.register(CompetitionRoute, { prefix: "api/competition" });
-
-configureFastify(app);
+const appCompose = new AppComposer();
+appCompose.registerRoutes(app);
+appCompose.configureFastify(app);
 
 const start = async () => {
   try {

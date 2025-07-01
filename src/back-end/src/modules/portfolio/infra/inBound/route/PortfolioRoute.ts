@@ -1,15 +1,16 @@
-import { FastifyInstance, FastifyRequest } from "fastify";
-import portfolioController from "@controller/PortfolioController";
+import { FastifyInstance } from "fastify";
+import { PortfolioController } from "@portfolio/infra/inBound/controller/PortfolioController";
 import { UserMiddle } from "@infrastructure/middleware/UserMiddle";
 import {
   portfolioRouteSchemas,
   RegisterPortfolioRequest,
   UpdatePortfolioRequest,
-} from "@schamas/PortfolioSchema";
+} from "@portfolio/infra/inBound/schema/PortfolioSchema";
 
-// import { portfolioSchemas } from "@schamas/PortofolioSchemas";
-
-export async function PortfolioRoute(app: FastifyInstance) {
+export async function PortfolioRoutes(
+  app: FastifyInstance,
+  portfolioController: PortfolioController
+) {
   app.post("/all", (req, rep) => portfolioController.findAll(req, rep));
 
   app.post(
