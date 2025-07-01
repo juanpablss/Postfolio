@@ -1,6 +1,6 @@
 import Rating from "@domain/entities/rating/Rating";
 import RatingRepository from "@domain/entities/rating/RatingRepository";
-import Mapper from "@util/Mapper";
+import Mapper from "@shared/util/Mapper";
 import { PrismaRatingRepository } from "@repository/ratingRep/PrismaRatingRepository";
 import prismaRatingRepository from "@repository/ratingRep/PrismaRatingRepository";
 

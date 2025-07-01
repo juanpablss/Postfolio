@@ -6,7 +6,7 @@ import { CreateWorkDTO, UpdateWorkDTO } from "@dtos/WorkDTO";
 import portfolioRepositoryImp from "@repository/portfolioRep/PortfolioRepositoryImp";
 import workRepositoryImp from "@repository/workRep/WorkRepositoryImp";
 import WorkUseCase from "@useCases/WorkUseCase";
-import Mapper from "@util/Mapper";
+import Mapper from "@shared/util/Mapper";
 
 class WorkServiceImp implements WorkUseCase {
   constructor(

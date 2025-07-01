@@ -3,7 +3,7 @@ import { UserRepository } from "@domain/entities/user/UserRepository";
 import prismaUserRepository, {
   PrismaUserRepository,
 } from "@repository/userRep/PrismaUserRepository";
-import Mapper from "@util/Mapper";
+import Mapper from "@shared/util/Mapper";
 import Email from "@domain/valueObject/Email";
 
 class UserRepositoryImp implements UserRepository {

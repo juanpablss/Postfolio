@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { InternalServerError } from "@domain/error/HttpError";
+import { InternalServerError } from "@shared/error/HttpError";
 
 export const Token = {
   generate(id: string, email: string): string {

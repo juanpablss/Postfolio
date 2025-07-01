@@ -1,12 +1,15 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { BadRequest, InternalServerError } from "@domain/error/HttpError";
-import UserUseCases from "@useCases/UserUseCases";
+import { BadRequest, InternalServerError } from "@shared/error/HttpError";
 import { CreateUserDTO, LoginUserDTO } from "@user/aplication/dtos/UserDTO";
-import userService from "@service/UserServiceImp";
-import { LoginRequest, RegisterUserRequest } from "@schamas/UserSchema";
+// import { LoginRequest, RegisterUserRequest } from "@schamas/UserSchema";
+import {
+  LoginRequest,
+  RegisterUserRequest,
+} from "@user/infra/inBound/schema/UserSchema";
+import IUserUseCases from "@user/aplication/ports/IUserUseCases";
 
-class UserController {
-  constructor(private readonly userService: UserUseCases) {}
+export default class UserController {
+  constructor(private readonly userService: IUserUseCases) {}
 
   async hello(req: FastifyRequest, reply: FastifyReply) {
     reply.send({ msg: "Ola mundo" });
@@ -49,6 +52,3 @@ class UserController {
     reply.send(user);
   }
 }
-
-const userController = new UserController(userService);
-export default userController;

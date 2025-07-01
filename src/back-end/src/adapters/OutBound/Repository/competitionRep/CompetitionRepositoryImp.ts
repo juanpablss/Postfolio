@@ -3,7 +3,7 @@ import CompetitionRepository from "@domain/entities/competition/CompetitionRepos
 import prismaCompetitionRepository, {
   PrismaCompetitionRepository,
 } from "@repository/competitionRep/PrismaCompetitionRepository";
-import Mapper from "@util/Mapper";
+import Mapper from "@shared/util/Mapper";
 
 class CompetitionRepositoryImp implements CompetitionRepository {
   constructor(

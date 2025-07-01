@@ -3,7 +3,7 @@ import WorkCompDetailsRepository from "@domain/entities/workCompDetails/WorkComp
 import prismaWorkCompDetails, {
   PrismaWorkCompDetailsRepository,
 } from "@repository/workCompDetailsRep/PrismaWorkCompDetailsRepository";
-import Mapper from "@util/Mapper";
+import Mapper from "@shared/util/Mapper";
 
 class WorkCompDetailsRepositoryImp implements WorkCompDetailsRepository {
   constructor(

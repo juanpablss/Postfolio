@@ -3,7 +3,7 @@ import WorkRepository from "@domain/entities/work/WorkRepository";
 import prismaWorkRepository, {
   PrismaWorkRepository,
 } from "@repository/workRep/PrismaWorkRepository";
-import Mapper from "@util/Mapper";
+import Mapper from "@shared/util/Mapper";
 
 class WorkRepositoryImp implements WorkRepository {
   constructor(private readonly prismaWorkRepository: PrismaWorkRepository) {}

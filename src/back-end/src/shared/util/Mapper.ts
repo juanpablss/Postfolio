@@ -11,7 +11,7 @@ import PrismaWork from "@models/PrismaWork";
 import Work from "@domain/entities/work/Work";
 import PrismaWorkCompDetails from "@models/PrismaWorkComDetails";
 import WorkCompDetails from "@domain/entities/workCompDetails/WorkCompDetails";
-import { CreateUserDTO } from "@dtos/UserDTO";
+import { CreateUserDTO } from "@user/aplication/dtos/UserDTO";
 import { CreatePortfolioDTO, UpdatePortfolioDTO } from "@dtos/PortfolioDTO";
 import { CreateWorkDTO, UpdateWorkDTO } from "@dtos/WorkDTO";
 

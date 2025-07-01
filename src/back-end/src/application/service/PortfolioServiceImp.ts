@@ -9,7 +9,7 @@ import userRepositoryImp from "@repository/userRep/UserRepositoryImp";
 import workRepositoryImp from "@repository/workRep/WorkRepositoryImp";
 import WorkRepository from "@domain/entities/work/WorkRepository";
 import { CreatePortfolioDTO, UpdatePortfolioDTO } from "@dtos/PortfolioDTO";
-import Mapper from "@util/Mapper";
+import Mapper from "@shared/util/Mapper";
 
 class PortfolioServiceImp implements PortfolioUseCases {
   constructor(

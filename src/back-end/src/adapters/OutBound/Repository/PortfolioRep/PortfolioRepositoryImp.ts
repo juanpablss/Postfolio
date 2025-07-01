@@ -3,7 +3,7 @@ import prismaPortfolioRepository, {
 } from "@repository/portfolioRep/PrismaPortfolioRepository";
 import PortfolioRepository from "@domain/entities/portfolio/PortfolioRepository";
 import Portfolio from "@domain/entities/portfolio/Portfolio";
-import Mapper from "@util/Mapper";
+import Mapper from "@shared/util/Mapper";
 
 class PortfolioRepositoryImp implements PortfolioRepository {
   constructor(

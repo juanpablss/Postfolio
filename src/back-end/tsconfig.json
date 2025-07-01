@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "typeRoots": ["./node_modules/@types", "src/infrastructure/@types"],
+    "typeRoots": ["./node_modules/@types", "src/infrastructure/types"],
     /* Visit https://aka.ms/tsconfig to read more about this file */
 
     /* Projects */
@@ -32,26 +32,13 @@
     // "moduleResolution": "node10",                     /* Specify how TypeScript looks up a file from a given module specifier. */
     "baseUrl": "./src",                                  /* Specify the base directory to resolve non-relative module names. */
     "paths": {
-      /* adapters */
-      // inBound
-      "@controller/*":["adapters/inBound/controller/*"],
-      "@routes/*":["adapters/inBound/routes/*"],
-      "@schamas/*": ["adapters/inBound/schemas/*"],
-      //outBound
-      "@models/*":["adapters/outBound/models/*"],
-      "@repository/*":["adapters/outBound/repository/*"],
+      /* modules */
+      // user
+      "@user/*" : ["modules/user/*"], 
 
-      // Talvez mudar?
-      /* application */ 
-      // service
-      "@service/*":["application/service/*"],
-      // useCases
-      "@useCases/*":["application/useCases/*"],
-      // dtos
-      "@dtos/*": ["application/dtos/*"],
+      /* shared */
+      "@shared/*" : ["shared/*"],
 
-      "@application/*":["application/*"],
-      "@domain/*":["domain/*"],
       "@infrastructure/*":["infrastructure/*"],
       "@util/*":["util/*"]
     },                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
@@ -136,5 +123,5 @@
   },
   "include": [
     "./src/**/*.ts",
-    "./src/infrastructure/@types/**/*.d.ts"]
+    "src/infrastructure/types/**/*.d.ts"]
 }

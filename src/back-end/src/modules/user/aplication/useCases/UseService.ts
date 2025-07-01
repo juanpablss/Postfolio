@@ -1,21 +1,24 @@
-import UserUseCases from "@application/useCases/UserUseCases";
-import User from "@domain/entities/user/User";
+import User from "@user/domain/entities/User";
 import { Crypt } from "@shared/util/Crypto";
 import {
-  BadRequest,
   Conflict,
+  InternalServerError,
   NotFound,
   Unauthorized,
-} from "@domain/error/HttpError";
+} from "@shared/error/HttpError";
 import { Token } from "@shared/util/Token";
-import { UserRepository } from "@domain/entities/user/UserRepository";
-import userRepositoryImp from "@repository/userRep/UserRepositoryImp";
-import Email from "@domain/valueObject/Email";
+import IUserRepository from "@user/domain/ports/IUserRepository";
+import Email from "@user/domain/valueObject/Email";
 import { CreateUserDTO, LoginUserDTO } from "@user/aplication/dtos/UserDTO";
 import Mapper from "@shared/util/Mapper";
+import IUserUseCases from "@user/aplication/ports/IUserUseCases";
+import { IPortfolioService } from "@user/infra/outBound/ports/IPortfolioService";
 
-class UserServiceImp implements UserUseCases {
-  constructor(private userRepository: UserRepository) {}
+export default class UserServiceImp implements IUserUseCases {
+  constructor(
+    private readonly userRepository: IUserRepository,
+    private readonly portfolioService: IPortfolioService
+  ) {}
 
   async register(userDto: CreateUserDTO): Promise<void> {
     const hashedPassword = await Crypt.hashPassWord(userDto.password);
@@ -30,7 +33,12 @@ class UserServiceImp implements UserUseCases {
 
     if (existingUser) throw new Conflict("Por favor, use outro email!");
 
-    await this.userRepository.insert(userDomain);
+    const user = await this.userRepository.create(userDomain);
+
+    if (!user)
+      throw new InternalServerError("Não foi possivel salver o usuario");
+    // Configurar melhor depois
+    await this.portfolioService.createDefaultPortfolioForUser(user.id);
   }
 
   async findMany(): Promise<User[]> {
@@ -64,9 +72,3 @@ class UserServiceImp implements UserUseCases {
     return await this.userRepository.deleteById(id);
   }
 }
-
-const userServiceImp: UserUseCases = new UserServiceImp(userRepositoryImp);
-export default userServiceImp;
-
-// const userService: UserUseCases = new UserServiceImp();
-// export default userService;

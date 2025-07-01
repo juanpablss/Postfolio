@@ -1,8 +1,8 @@
-import User from "@domain/entities/user/User";
-import Email from "@domain/valueObject/Email";
+import User from "modules/user/domain/entities/User";
+import Email from "@user/domain/valueObject/Email";
 import { CreateUserDTO, LoginUserDTO } from "@user/aplication/dtos/UserDTO";
 
-export default interface UserUseCases {
+export default interface IUserUseCases {
   register(userDto: Partial<CreateUserDTO>): Promise<void>;
   deleteById(id: string): Promise<User | null>;
 

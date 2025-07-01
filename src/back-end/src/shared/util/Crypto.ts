@@ -3,7 +3,7 @@ import {
   BadRequest,
   InternalServerError,
   Unauthorized,
-} from "@domain/error/HttpError";
+} from "@shared/error/HttpError";
 
 export const Crypt = {
   hashPassWord: async (passWord: string): Promise<string> => {
