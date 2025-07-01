@@ -4,24 +4,16 @@ import { FastifyInstance } from "fastify";
 
 // Repositórios
 import { PrismaUserRepository } from "@user/infra/outBound/persistence/PrismaUserRepository";
-import { PrismaPortfolioRepository } from "../domains/portfolio/infrastructure/adapters/outbound/persistence/PrismaPortfolioRepository";
+import { PrismaPortfolioRepository } from "@portfolio/infra/outBound/persistence/PrismaPortfolioRepository";
 
 // Adaptadores de Saída de Serviço (Portas de Saída)
-import { PortfolioServiceAdapter } from "../domains/user/infrastructure/adapters/outbound/services/PortfolioServiceAdapter";
+import { PortfolioAdapter } from "@user/infra/outBound/adapter/PortfolioAdapter";
+import { UserAdaper } from "@portfolio/infra/outBound/adapater/UserAdapter";
 // ... Outros adaptadores de serviço (ex: para Email, Chat, se User precisar deles)
 
-// Use Cases Granulares
-import { CreateUserUseCase } from "../domains/user/application/useCases/CreateUserUseCase";
-import { LoginUserUseCase } from "../domains/user/application/useCases/LoginUserUseCase";
-// ... Outros Use Cases de User
-import { CreatePortfolioUseCase } from "../domains/portfolio/application/useCases/CreatePortfolioUseCase";
-import { AddWorkToPortfolioUseCase } from "../domains/portfolio/application/useCases/AddWorkToPortfolioUseCase";
-// ... Outros Use Cases de Portfolio
-// ... Use Cases de Competition, Work, WorkCompDetails, Rating
-
 // Services (Orquestradores de Use Cases)
-import { UserService } from "../domains/user/application/useCases/UserService";
-import { PortfolioService } from "../domains/portfolio/application/useCases/PortfolioService";
+import { UserService } from "@user/aplication/useCases/UserService";
+import { PortfolioService } from "@portfolio/aplication/useCases/PortfolioService";
 // ... Outros Services
 
 // Controladores

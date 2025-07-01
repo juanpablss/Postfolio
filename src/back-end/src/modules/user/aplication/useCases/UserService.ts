@@ -12,12 +12,12 @@ import Email from "@user/domain/valueObject/Email";
 import { CreateUserDTO, LoginUserDTO } from "@user/aplication/dtos/UserDTO";
 import Mapper from "@shared/util/Mapper";
 import IUserUseCases from "@user/aplication/ports/IUserUseCases";
-import { IPortfolioService } from "@user/infra/outBound/ports/IPortfolioService";
+import { IPortfolioPort } from "@user/infra/outBound/ports/IPortfolioPort";
 
-export default class UserServiceImp implements IUserUseCases {
+export class UserService implements IUserUseCases {
   constructor(
     private readonly userRepository: IUserRepository,
-    private readonly portfolioService: IPortfolioService
+    private readonly portfolioService: IPortfolioPort
   ) {}
 
   async register(userDto: CreateUserDTO): Promise<void> {

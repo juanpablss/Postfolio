@@ -1,6 +1,6 @@
-import { IPortfolioService } from "@user/infra/outBound/ports/IPortfolioService";
+import { IPortfolioPort } from "@user/infra/outBound/ports/IPortfolioPort";
 
-export class PortfolioServiceAdapter implements IPortfolioService {
+export class PortfolioAdapter implements IPortfolioPort {
   async createDefaultPortfolioForUser(userId: string): Promise<void> {
     throw new Error("Method not implemented.");
   }

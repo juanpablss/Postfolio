@@ -35,7 +35,7 @@
       /* modules */
       // user
       "@user/*" : ["modules/user/*"], 
-
+      "@portfolio/*" : ["modules/portfolio/*"],
       /* shared */
       "@shared/*" : ["shared/*"],
 
