@@ -1,9 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Login from "./pages/Login"
-import Competition from "./pages/Competition";
-import UserProfile from "./pages/UserProfile";
+import Home from "./pages/HomePage";
+import Login from "./pages/LoginPage"
+import Competition from "./pages/CompetitionPage";
+import UserProfile from "./pages/UserProfilePage";
 import MessagesPage from "./pages/MessagesPage";
+import AboutUsPage from "./pages/AboutUsPage";
 
 export function App() {
   return (
@@ -14,6 +15,7 @@ export function App() {
         <Route path="/competicao" element={<Competition />} />
         <Route path="/login" element={<Login />}></Route>
         <Route path="/messages" element={<MessagesPage />} />
+        <Route path="/about-us" element={<AboutUsPage />} />
       </Routes>
     </Router>
   );

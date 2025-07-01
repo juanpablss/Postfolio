@@ -100,9 +100,9 @@ export default function Login() {
         navigate("/");
       } else {
         const errorData = await response.json();
-        localStorage.setItem("token", "1234567890");
-        alert("Hard code test passed")
-        navigate("/");
+        // localStorage.setItem("token", "1234567890");
+        // alert("Hard code test passed")
+        // navigate("/");
         console.error('Login failed:', errorData);
         alert(`Erro ao fazer login: ${errorData.message || 'Credenciais inválidas'}`);
       }
