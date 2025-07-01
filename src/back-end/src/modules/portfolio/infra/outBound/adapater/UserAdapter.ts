@@ -1,6 +1,6 @@
 import { IUserPort } from "@portfolio/infra/outBound/ports/IUserPort";
 import { InternalServerError } from "@shared/error/HttpError";
-import IUserService from "@user/aplication/ports/IUserService";
+import IUserService from "@user/interface/IUserService";
 
 export class UserAdaper implements IUserPort {
   private userService?: IUserService;

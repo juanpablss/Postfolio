@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { BadRequest, InternalServerError } from "@domain/error/HttpError";
 import UserUseCases from "@useCases/UserUseCases";
-import { CreateUserDTO, LoginUserDTO } from "@user/aplication/dtos/UserDTO";
+import { CreateUserDTO, LoginUserDTO } from "@user/aplication/UserDTO";
 import userService from "@service/UserServiceImp";
 import { LoginRequest, RegisterUserRequest } from "@schamas/UserSchema";
 

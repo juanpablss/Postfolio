@@ -3,26 +3,26 @@
 import { FastifyInstance } from "fastify";
 
 // Repositórios
-import { PrismaUserRepository } from "@user/infra/outBound/persistence/PrismaUserRepository";
+import { PrismaUserRepository } from "@user/infra/outBound/PrismaUserRepository";
 import { PrismaPortfolioRepository } from "@portfolio/infra/outBound/persistence/PrismaPortfolioRepository";
 
 // Adaptadores de Saída de Serviço (Portas de Saída)
-import { PortfolioAdapter } from "@user/infra/outBound/adapter/PortfolioAdapter";
+import { PortfolioAdapter } from "@user/interface/PortfolioAdapter";
 import { UserAdaper } from "@portfolio/infra/outBound/adapater/UserAdapter";
 // ... Outros adaptadores de serviço (ex: para Email, Chat, se User precisar deles)
 
 // Services (Orquestradores de Use Cases)
-import { UserService } from "@user/aplication/useCases/UserService";
+import { UserService } from "@user/aplication/UserService";
 import { PortfolioService } from "@portfolio/aplication/useCases/PortfolioService";
 // ... Outros Services
 
 // Controladores
-import { UserController } from "@user/infra/inBound/controller/UserController";
+import { UserController } from "@user/infra/inBound/UserController";
 import { PortfolioController } from "@portfolio/infra/inBound/controller/PortfolioController";
 // ... Outros Controladores
 
 // Rotas
-import { UserRoutes } from "@user/infra/inBound/route/UserRoute";
+import { UserRoutes } from "@user/infra/inBound/UserRoute";
 import { PortfolioRoutes } from "@portfolio/infra/inBound/route/PortfolioRoute";
 import configureErrorHandling from "@infrastructure/fastify/ConfigureErrorHandling";
 // ... Outras funções de registro de rotas

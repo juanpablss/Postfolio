@@ -1,6 +1,6 @@
 import User from "@domain/entities/user/User";
 import Email from "@domain/valueObject/Email";
-import { CreateUserDTO, LoginUserDTO } from "@user/aplication/dtos/UserDTO";
+import { CreateUserDTO, LoginUserDTO } from "@user/aplication/UserDTO";
 
 export default interface UserUseCases {
   register(userDto: Partial<CreateUserDTO>): Promise<void>;

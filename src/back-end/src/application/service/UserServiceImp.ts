@@ -11,7 +11,7 @@ import { Token } from "@shared/util/Token";
 import { UserRepository } from "@domain/entities/user/UserRepository";
 import userRepositoryImp from "@repository/userRep/UserRepositoryImp";
 import Email from "@domain/valueObject/Email";
-import { CreateUserDTO, LoginUserDTO } from "@user/aplication/dtos/UserDTO";
+import { CreateUserDTO, LoginUserDTO } from "@user/aplication/UserDTO";
 import Mapper from "@shared/util/Mapper";
 
 class UserServiceImp implements UserUseCases {

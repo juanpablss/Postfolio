@@ -1,11 +1,11 @@
 import { FastifyInstance } from "fastify";
-import { UserController } from "@user/infra/inBound/controller/UserController";
+import { UserController } from "@user/infra/inBound/UserController";
 import { UserMiddle } from "@infrastructure/middleware/UserMiddle";
 import {
   LoginRequest,
   RegisterUserRequest,
   userRouteSchema,
-} from "@user/infra/inBound/schema/UserSchema";
+} from "@user/infra/inBound/UserSchema";
 
 export async function UserRoutes(
   app: FastifyInstance,

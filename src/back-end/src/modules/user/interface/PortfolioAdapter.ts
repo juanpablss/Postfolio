@@ -1,5 +1,5 @@
 import { IPortfolioService } from "@portfolio/aplication/ports/IPortfolioService";
-import { IPortfolioPort } from "@user/infra/outBound/ports/IPortfolioPort";
+import { IPortfolioPort } from "@user/interface/IPortfolioPort";
 
 export class PortfolioAdapter implements IPortfolioPort {
   private portfolioService?: IPortfolioService;

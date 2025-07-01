@@ -1,6 +1,6 @@
-import User from "modules/user/domain/entities/User";
-import Email from "@user/domain/valueObject/Email";
-import { CreateUserDTO, LoginUserDTO } from "@user/aplication/dtos/UserDTO";
+import User from "@user/domain/User";
+import Email from "@user/domain/Email";
+import { CreateUserDTO, LoginUserDTO } from "@user/aplication/UserDTO";
 
 export default interface IUserService {
   register(userDto: Partial<CreateUserDTO>): Promise<void>;

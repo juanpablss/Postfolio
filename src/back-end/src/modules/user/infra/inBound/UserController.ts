@@ -1,12 +1,12 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { BadRequest, InternalServerError } from "@shared/error/HttpError";
-import { CreateUserDTO, LoginUserDTO } from "@user/aplication/dtos/UserDTO";
+import { CreateUserDTO, LoginUserDTO } from "@user/aplication/UserDTO";
 // import { LoginRequest, RegisterUserRequest } from "@schamas/UserSchema";
 import {
   LoginRequest,
   RegisterUserRequest,
-} from "@user/infra/inBound/schema/UserSchema";
-import IUserService from "@user/aplication/ports/IUserService";
+} from "@user/infra/inBound/UserSchema";
+import IUserService from "@user/interface/IUserService";
 
 export class UserController {
   constructor(private readonly userService: IUserService) {}

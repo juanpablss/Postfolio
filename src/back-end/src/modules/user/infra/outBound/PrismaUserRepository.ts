@@ -1,11 +1,11 @@
 // import PrismaUser from "@models/PrismaUser";
-import User from "@user/domain/entities/User";
+import User from "@user/domain/User";
 import { prisma } from "@infrastructure/config/Prisma";
 import { InternalServerError } from "@shared/error/HttpError";
 import { Prisma } from "@prisma/client";
 import { UserMapper } from "@user/util/UserMapper";
-import IUserRepository from "@user/domain/ports/IUserRepository";
-import Email from "@user/domain/valueObject/Email";
+import IUserRepository from "@user/interface/IUserRepository";
+import Email from "@user/domain/Email";
 
 export class PrismaUserRepository implements IUserRepository {
   async create(user: User): Promise<User | null> {

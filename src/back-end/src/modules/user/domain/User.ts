@@ -1,4 +1,4 @@
-import Email from "@user/domain/valueObject/Email";
+import Email from "@user/domain/Email";
 
 export default class User {
   id: string;
