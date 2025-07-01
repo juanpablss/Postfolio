@@ -8,7 +8,7 @@ const allProjects = [
     projectTitle: "Dashboard de Vendas",
     projectImage: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80",
     authorName: "Cassios",
-    authorProfile: "/profile/josecassios",
+    authorProfile: "/profile/jose-cassios",
     authorImage: "cassios.png",
     description: "Dashboard interativo para análise de vendas com gráficos e métricas em tempo real.",
     category: "backend"

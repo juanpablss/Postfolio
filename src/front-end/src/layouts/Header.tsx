@@ -19,6 +19,7 @@ import { createPortal } from "react-dom";
 
 const mockUserData = {
   name: "José Cássios",
+  username: "jose-cassios",
   email: "jose.cassios@example.com",
   photo: "cassios.png",
   userType: "freelancer",
@@ -417,7 +418,7 @@ export default function Header() {
                 <ul className="py-2 text-sm text-indigo-100">
                   <li>
                     <Link
-                      to={`/profile/${user.name.toLowerCase().replace(/\s/g, "")}`}
+                      to={`/profile/${user.username.toLowerCase().replace(/\s/g, "")}`}
                       className="flex items-center px-4 py-2 hover:bg-indigo-700 hover:text-white transition"
                       onClick={() => setDropdownOpen(false)}
                     >
