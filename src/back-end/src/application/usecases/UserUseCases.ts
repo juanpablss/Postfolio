@@ -6,7 +6,7 @@ export default interface UserUseCases {
   register(userDto: Partial<CreateUserDTO>): Promise<void>;
   deleteById(id: string): Promise<User | null>;
 
-  login(loginDto: Partial<LoginUserDTO>): Promise<string>;
+  login(loginDto: LoginUserDTO): Promise<string>;
   findMany(): Promise<User[]>;
   findByEmail(email: Email): Promise<User | null>;
   findById(id: string): Promise<User | null>;

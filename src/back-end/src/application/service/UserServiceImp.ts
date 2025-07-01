@@ -18,12 +18,6 @@ class UserServiceImp implements UserUseCases {
   constructor(private userRepository: UserRepository) {}
 
   async register(userDto: CreateUserDTO): Promise<void> {
-    if (!userDto.name || !userDto.email || !userDto.password || !userDto.status)
-      throw new BadRequest("Todos os campos são obrigatórios!");
-
-    if (userDto.password.length <= 8)
-      throw new BadRequest("Senha muito fraca!");
-
     const hashedPassword = await Crypt.hashPassWord(userDto.password);
     const userDomain = Mapper.User.fromCreateUserDTOtoDomain(
       userDto,
@@ -52,10 +46,7 @@ class UserServiceImp implements UserUseCases {
     return user;
   }
 
-  async login(loginDto: Partial<LoginUserDTO>): Promise<string> {
-    if (!loginDto.email) throw new BadRequest("O email é obrigatório!");
-    if (!loginDto.password) throw new BadRequest("A senha é obrigatória!");
-
+  async login(loginDto: LoginUserDTO): Promise<string> {
     const email = new Email(loginDto.email);
 
     const user = await this.userRepository.findByEmail(email);

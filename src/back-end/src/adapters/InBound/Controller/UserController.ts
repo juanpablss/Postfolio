@@ -3,6 +3,7 @@ import { BadRequest, InternalServerError } from "@domain/error/HttpError";
 import UserUseCases from "@useCases/UserUseCases";
 import { CreateUserDTO, LoginUserDTO } from "@dtos/UserDTO";
 import userService from "@service/UserServiceImp";
+import { LoginRequest, RegisterUserRequest } from "@schamas/UserSchema";
 
 class UserController {
   constructor(private readonly userService: UserUseCases) {}
@@ -11,8 +12,8 @@ class UserController {
     reply.send({ msg: "Ola mundo" });
   }
 
-  async register(req: FastifyRequest, reply: FastifyReply) {
-    const userDto = req.body as Partial<CreateUserDTO>;
+  async register(req: RegisterUserRequest, reply: FastifyReply) {
+    const userDto: CreateUserDTO = { ...req.body };
 
     await this.userService.register(userDto);
 
@@ -28,8 +29,8 @@ class UserController {
     throw new InternalServerError("Método não implementado!");
   }
 
-  async login(req: FastifyRequest, reply: FastifyReply) {
-    const loginDto = req.body as Partial<LoginUserDTO>;
+  async login(req: LoginRequest, reply: FastifyReply) {
+    const loginDto = req.body as LoginUserDTO;
 
     const token = await this.userService.login(loginDto);
 

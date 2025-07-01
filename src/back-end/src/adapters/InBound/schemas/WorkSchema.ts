@@ -46,10 +46,4 @@ const workRouteSchema = {
   },
 };
 
-export {
-  workRouteSchema,
-  RegisterWorkRequest,
-  UpdateWorkRequest,
-  UpdateWorkParamsSchema,
-  UpdateWorkBodySchema,
-};
+export { workRouteSchema, RegisterWorkRequest, UpdateWorkRequest };
