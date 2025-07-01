@@ -10,7 +10,7 @@ import {
 // import { portfolioSchemas } from "@schamas/PortofolioSchemas";
 
 export async function PortfolioRoute(app: FastifyInstance) {
-  app.post("/all", (req, rep) => portfolioController.getAll(req, rep));
+  app.post("/all", (req, rep) => portfolioController.findAll(req, rep));
 
   app.post(
     "",
@@ -23,7 +23,7 @@ export async function PortfolioRoute(app: FastifyInstance) {
   );
 
   app.post("/user/me", { preValidation: UserMiddle.authenticate }, (req, rep) =>
-    portfolioController.getByUser(req, rep)
+    portfolioController.findByUser(req, rep)
   );
 
   app.post("/works", { preValidation: UserMiddle.authenticate }, (req, rep) =>

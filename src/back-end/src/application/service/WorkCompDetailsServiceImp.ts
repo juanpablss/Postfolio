@@ -1,6 +1,6 @@
 import WorkCompDetails from "@domain/entities/workCompDetails/WorkCompDetails";
 import WorkCompDetailsRepository from "@domain/entities/workCompDetails/WorkCompDetailsRepository";
-import workCompDetailsRepositoryImp from "@repository/workCompDetailsRep/WorkCompDetailsRepository";
+import workCompDetailsRepositoryImp from "@repository/workCompDetailsRep/WorkCompDetailsRepositoryImp";
 import WorkCompDetailsUseCase from "@useCases/WorkCompDetailsUseCase";
 
 class WorkCompDetailsServiceImp implements WorkCompDetailsUseCase {

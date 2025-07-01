@@ -4,7 +4,7 @@ import RatingUseCases from "@application/useCases/RatingUseCases";
 import RatingRepository from "@domain/entities/rating/RatingRepository";
 import { Conflict, NotFound } from "@domain/error/HttpError";
 import WorkCompDetailsRepository from "@domain/entities/workCompDetails/WorkCompDetailsRepository";
-import workCompDetailsRepositoryImp from "@repository/workCompDetailsRep/WorkCompDetailsRepository";
+import workCompDetailsRepositoryImp from "@repository/workCompDetailsRep/WorkCompDetailsRepositoryImp";
 
 class RatingServiceImp implements RatingUseCases {
   constructor(

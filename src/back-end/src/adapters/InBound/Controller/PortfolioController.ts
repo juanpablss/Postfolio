@@ -22,13 +22,13 @@ class PortfolioController {
     reply.send(portfolio);
   }
 
-  async getAll(req: FastifyRequest, reply: FastifyReply) {
+  async findAll(req: FastifyRequest, reply: FastifyReply) {
     const portfolios = await this.portfolioService.findMany();
     reply.send(portfolios);
     // const portfolios = portfolioService.
   }
 
-  async getByUser(req: FastifyRequest, reply: FastifyReply) {
+  async findByUser(req: FastifyRequest, reply: FastifyReply) {
     const authorId = req.user?.id || null;
 
     if (!authorId) throw new BadRequest("Id é obrigatorio");
@@ -37,7 +37,7 @@ class PortfolioController {
     reply.send(portfolio);
   }
 
-  async getById(req: FastifyRequest, reply: FastifyReply) {
+  async findById(req: FastifyRequest, reply: FastifyReply) {
     const { id = null } = req.body as Partial<{ id: string }>;
 
     if (!id) throw new BadRequest("Id é obrigatorio");

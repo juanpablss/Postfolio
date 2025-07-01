@@ -6,7 +6,7 @@ import WorkCompDetails from "@domain/entities/workCompDetails/WorkCompDetails";
 import WorkCompDetailsRepository from "@domain/entities/workCompDetails/WorkCompDetailsRepository";
 import { Conflict, NotFound } from "@domain/error/HttpError";
 import competitionRepositoryImp from "@repository/competitionRep/CompetitionRepositoryImp";
-import workCompDetailsRepositoryImp from "@repository/workCompDetailsRep/WorkCompDetailsRepository";
+import workCompDetailsRepositoryImp from "@repository/workCompDetailsRep/WorkCompDetailsRepositoryImp";
 import workRepositoryImp from "@repository/workRep/WorkRepositoryImp";
 import CompetitionUseCase from "@useCases/CompetitionUseCase";
 
