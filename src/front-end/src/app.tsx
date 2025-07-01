@@ -5,6 +5,7 @@ import Competition from "./pages/CompetitionPage";
 import UserProfile from "./pages/UserProfilePage";
 import MessagesPage from "./pages/MessagesPage";
 import AboutUsPage from "./pages/AboutUsPage";
+import RegisterPage from "./pages/RegisterPage";
 
 export function App() {
   return (
@@ -16,6 +17,7 @@ export function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/messages" element={<MessagesPage />} />
         <Route path="/about-us" element={<AboutUsPage />} />
+        <Route path="/register" element={<RegisterPage />} />
       </Routes>
     </Router>
   );
