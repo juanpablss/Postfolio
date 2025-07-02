@@ -3,7 +3,7 @@
 import { FastifyInstance } from "fastify";
 
 // Repositórios
-import { PrismaUserRepository } from "@user/infra/outBound/PrismaUserRepository";
+import { PrismaUserRepository } from "@user/repository/PrismaUserRepository";
 import { PrismaPortfolioRepository } from "@portfolio/infra/outBound/persistence/PrismaPortfolioRepository";
 
 // Adaptadores de Saída de Serviço (Portas de Saída)
@@ -12,7 +12,7 @@ import { UserAdaper } from "@portfolio/infra/outBound/adapater/UserAdapter";
 // ... Outros adaptadores de serviço (ex: para Email, Chat, se User precisar deles)
 
 // Services (Orquestradores de Use Cases)
-import { UserService } from "@user/aplication/UserService";
+import { UserService } from "@user/service/UserService";
 import { PortfolioService } from "@portfolio/aplication/useCases/PortfolioService";
 // ... Outros Services
 

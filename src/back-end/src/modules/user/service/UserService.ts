@@ -1,4 +1,4 @@
-import User from "@user/domain/User";
+import User from "@user/domain/entities/User";
 import { Crypt } from "@shared/util/Crypto";
 import {
   Conflict,
@@ -7,11 +7,11 @@ import {
   Unauthorized,
 } from "@shared/error/HttpError";
 import { Token } from "@shared/util/Token";
-import IUserRepository from "@user/interface/IUserRepository";
-import Email from "@user/domain/Email";
+import IUserRepository from "@user/repository/IUserRepository";
+import Email from "@user/domain/valueObject/Email";
 import { CreateUserDTO, LoginUserDTO } from "@user/aplication/UserDTO";
 import Mapper from "@shared/util/Mapper";
-import IUserService from "@user/interface/IUserService";
+import IUserService from "@user/service/IUserService";
 import { IPortfolioPort } from "@user/interface/IPortfolioPort";
 
 export class UserService implements IUserService {

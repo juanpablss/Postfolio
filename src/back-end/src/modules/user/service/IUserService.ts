@@ -1,5 +1,5 @@
-import User from "@user/domain/User";
-import Email from "@user/domain/Email";
+import User from "@user/domain/entities/User";
+import Email from "@user/domain/valueObject/Email";
 import { CreateUserDTO, LoginUserDTO } from "@user/aplication/UserDTO";
 
 export default interface IUserService {

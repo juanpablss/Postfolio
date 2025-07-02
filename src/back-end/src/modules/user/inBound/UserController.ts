@@ -6,7 +6,7 @@ import {
   LoginRequest,
   RegisterUserRequest,
 } from "@user/infra/inBound/UserSchema";
-import IUserService from "@user/interface/IUserService";
+import IUserService from "@user/service/IUserService";
 
 export class UserController {
   constructor(private readonly userService: IUserService) {}
