@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 // Ícones podem ser adicionados depois, se necessário
 // import { FiUser, FiMail, FiLock, FiCamera, FiLink, FiGithub, FiLinkedin } from 'react-icons/fi';

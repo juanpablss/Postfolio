@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { FiMessageSquare, FiBell } from "react-icons/fi";
 
 interface ActionIconsProps {
-  notificationCount?: number; // Opcional, para o número no ícone de sino
+  notificationCount?: number;
 }
 
 export default function ActionIcons({ notificationCount = 3 }: ActionIconsProps) {

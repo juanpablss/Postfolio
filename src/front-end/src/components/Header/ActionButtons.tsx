@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
-// FiMessageSquare e FiBell movidos para ActionIcons
-// FiUser pode ser removido se UserDropdown sempre mostrar a foto/ícone
 import UserDropdown from "./UserDropdown";
-import ActionIcons from "./ActionIcons"; // Importando ActionIcons
+import ActionIcons from "./ActionIcons";
 import { ReactNode } from "react";
 
 interface User {
@@ -18,9 +16,6 @@ interface ActionButtonsProps {
   user: User | null;
   handleLogout: () => void;
   handleToggleUserType: () => void;
-  // Adicionar quaisquer outras props que os ícones ou UserDropdown possam precisar indiretamente
-  // Por exemplo, se o número de notificações viesse de uma prop:
-  // notificationCount?: number;
 }
 
 export default function ActionButtons({
@@ -28,15 +23,12 @@ export default function ActionButtons({
   user,
   handleLogout,
   handleToggleUserType,
-  // notificationCount = 3, // Exemplo de valor padrão
 }: ActionButtonsProps) {
   if (isLoggedIn && user) {
     return (
       <>
-        {/* Ícones de Mensagens e Notificações */}
         <ActionIcons /* notificationCount={...} // Passar a contagem real se disponível */ />
 
-        {/* Dropdown do Usuário */}
         <UserDropdown
           user={user}
           handleLogout={handleLogout}

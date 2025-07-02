@@ -75,7 +75,7 @@ export default function Login() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const navigate = useNavigate(); // Adicione isso no início do componente Login
+  const navigate = useNavigate();
 
   const handleSubmit = async (event: { preventDefault: () => void; }) => {
     console.log('Submitting login form...');

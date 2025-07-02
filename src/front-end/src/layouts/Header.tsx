@@ -1,26 +1,16 @@
-import { useState, useEffect, useRef, ReactNode } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   FiMenu,
-  FiX,
   FiAward,
   FiInfo,
-  FiGithub,
-  FiInstagram,
-  FiUser,
-  FiBriefcase,
-  FiPlusCircle,
-  FiLogOut,
   FiHome,
   FiMessageSquare,
   FiBell,
 } from "react-icons/fi";
-// import { createPortal } from "react-dom"; // Removido, pois MobileMenu agora gerencia seu próprio portal
-import MobileMenu from "../components/Header/MobileMenu";
-import DesktopNavigation from "../components/Header/DesktopNavigation";
-// UserDropdown é usado dentro de ActionButtons, então não precisa ser importado aqui diretamente se ActionButtons for o único local
-// import UserDropdown from "../components/Header/UserDropdown";
-import ActionButtons from "../components/Header/ActionButtons"; // Importando ActionButtons
+import MobileMenu from "../components/header/MobileMenu";
+import DesktopNavigation from "../components/header/DesktopNavigation";
+import ActionButtons from "../components/header/ActionButtons"; 
 
 const mockUserData = {
   name: "José Cássios",

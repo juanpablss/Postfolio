@@ -10,7 +10,7 @@ import {
 interface User {
   username: string;
   name: string;
-  email: string | ReactNode; // Permite string ou ReactNode para email
+  email: string | ReactNode;
   photo?: string;
   userType: string;
 }
@@ -29,7 +29,6 @@ export default function UserDropdown({
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -60,7 +59,7 @@ export default function UserDropdown({
         {user.photo ? (
           <img
             className="w-9 h-9 me-2 rounded-full border-2 border-indigo-400 object-cover"
-            src={`/${user.photo}`} // Assumindo que photo está em public/
+            src={`/${user.photo}`}
             alt={user.name}
           />
         ) : (
@@ -88,7 +87,6 @@ export default function UserDropdown({
         </svg>
       </button>
 
-      {/* Dropdown menu */}
       <div
         id="dropdownAvatarName"
         className={`absolute right-0 mt-2 z-10 bg-indigo-900/95 divide-y divide-indigo-800 rounded-lg shadow-xl w-52 backdrop-blur-md transition-all duration-200 ease-out transform ${
@@ -130,7 +128,7 @@ export default function UserDropdown({
                 }}
                 className="flex items-center w-full text-left px-4 py-2 hover:bg-green-700 hover:text-white transition"
               >
-                <FiPlusCircle className="mr-2" /> Trocar para Contratante {/* Ajustado texto */}
+                <FiPlusCircle className="mr-2" /> Trocar para Contratante
               </button>
             )}
           </li>

@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { JSX, ReactNode } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   FiX,
@@ -11,19 +11,12 @@ import {
 } from "react-icons/fi";
 import { createPortal } from "react-dom";
 
-// Definindo o tipo para navLinks diretamente, já que é usado apenas aqui por enquanto
-// Se for usado em mais lugares, pode ser movido para um arquivo de types
 type NavLinkItem = {
   label: string;
   path: string;
   icon: JSX.Element;
 };
 
-// navLinks pode ser passado como prop ou definido aqui se for específico do MobileMenu
-// Por ora, vamos assumir que ele pode ser passado como prop para maior flexibilidade
-// ou importado de uma fonte comum se o Header também o utiliza da mesma forma.
-// Para este exemplo, vou recriá-lo simplificado. Se Header.tsx o define,
-// é melhor passá-lo como prop.
 const defaultNavLinks: NavLinkItem[] = [
   {
     label: "Home",
@@ -47,15 +40,15 @@ interface MobileMenuProps {
   setMenuOpen: (open: boolean) => void;
   isLoggedIn: boolean;
   user: {
-    email: ReactNode; // Pode ser string se não precisar de JSX complexo
+    email: ReactNode;
     name: string;
     photo?: string;
     userType: string;
-    username?: string; // Adicionado para navegação de perfil
+    username?: string;
   } | null;
   handleLogout: () => void;
   handleToggleUserType: () => void;
-  navLinks?: NavLinkItem[]; // Tornando opcional, com fallback para defaultNavLinks
+  navLinks?: NavLinkItem[];
 }
 
 export default function MobileMenu({
@@ -65,7 +58,7 @@ export default function MobileMenu({
   user,
   handleLogout,
   handleToggleUserType,
-  navLinks = defaultNavLinks, // Usar os links passados ou o padrão
+  navLinks = defaultNavLinks,
 }: MobileMenuProps) {
   const navigate = useNavigate();
 
@@ -112,7 +105,7 @@ export default function MobileMenu({
             {user.photo ? (
               <img
                 className="w-20 h-20 rounded-full mx-auto mb-3 border-2 border-indigo-400 object-cover"
-                src={`/${user.photo}`} // Assumindo que photo é um nome de arquivo em public/
+                src={`/${user.photo}`}
                 alt={user.name}
               />
             ) : (
@@ -129,7 +122,6 @@ export default function MobileMenu({
             <button
               onClick={() => {
                 setMenuOpen(false);
-                // Usar user.username se disponível, senão fallback para o formato anterior
                 const profilePath = user.username
                   ? user.username.toLowerCase().replace(/\s/g, "")
                   : user.name.toLowerCase().replace(/\s/g, "");
@@ -213,7 +205,7 @@ export default function MobileMenu({
           </span>
           <div className="flex gap-4 mt-2">
             <a
-              href="https://github.com/jose-cassios" // Idealmente, isso também seria configurável ou viria de props/contexto
+              href="https://github.com/jose-cassios"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-200 hover:text-white text-xl transition"
@@ -221,7 +213,7 @@ export default function MobileMenu({
               <FiGithub />
             </a>
             <a
-              href="https://instagram.com/jose-cassios" // Idealmente, isso também seria configurável
+              href="https://instagram.com/jose-cassios"
               target="_blank"
               rel="noopener noreferrer"
               className="text-indigo-300 hover:text-white text-xl transition"
@@ -231,7 +223,6 @@ export default function MobileMenu({
           </div>
         </div>
       </div>
-      {/* O estilo @keyframes pode ser movido para um arquivo CSS global ou mantido aqui se for específico */}
       <style>
         {`
           @keyframes slideIn {

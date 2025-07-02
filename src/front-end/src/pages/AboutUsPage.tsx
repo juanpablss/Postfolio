@@ -62,7 +62,7 @@ const AboutUsPage: React.FC = () => {
           </a>
         </section>
       </div>
-      <style jsx global>{`
+      <style>{`
         .animate-move-gradient {
           animation: moveGradient 20s ease infinite;
           background-size: 200% 200%;

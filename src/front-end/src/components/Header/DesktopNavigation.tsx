@@ -1,11 +1,9 @@
+import { JSX } from "react";
 import { Link } from "react-router-dom";
 
-// Definindo o tipo para navLinks, similar ao MobileMenu
-// Se for usado em mais lugares, pode ser movido para um arquivo de types
 type NavLinkItem = {
   label: string;
   path: string;
-  // O ícone não é usado na navegação desktop atual, mas mantemos para consistência se necessário
   icon?: JSX.Element;
 };
 
