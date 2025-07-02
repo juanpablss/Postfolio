@@ -1,6 +1,6 @@
 import Portfolio from "@portfolio/domain/entities/Portfolio";
 
-export default interface IPortfolioRepository {
+export interface IPortfolioRepository {
   insert(portfolio: Portfolio): Promise<Portfolio>;
   findMany(): Promise<Portfolio[]>;
   findById(id: string): Promise<Portfolio | null>;

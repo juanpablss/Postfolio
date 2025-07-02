@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { BadRequest } from "@shared/error/HttpError";
-import { IPortfolioService } from "@portfolio/aplication/useCases/IPortfolioService";
+import { IPortfolioService } from "@portfolio/service/IPortfolioService";
 import {
   RegisterPortfolioRequest,
   UpdatePortfolioRequest,
@@ -9,9 +9,15 @@ import {
   CreatePortfolioDTO,
   UpdatePortfolioDTO,
 } from "@portfolio/dtos/PortfolioDTO";
+import { inject, injectable } from "inversify";
+import { TYPES } from "@compositionRoot/Types";
 
+@injectable()
 export class PortfolioController {
-  constructor(private readonly portfolioService: IPortfolioService) {}
+  constructor(
+    @inject(TYPES.IPortfolioService)
+    private portfolioService: IPortfolioService
+  ) {}
 
   async register(req: RegisterPortfolioRequest, reply: FastifyReply) {
     const authorId = req.user?.id;

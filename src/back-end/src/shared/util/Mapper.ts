@@ -199,4 +199,4 @@ const Mapper = {
   WorkCompDetails: WorkCompDetailsMapper,
 };
 
-export default Mapper;
+// export default Mapper;

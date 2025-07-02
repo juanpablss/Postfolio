@@ -7,14 +7,14 @@ import {
   Unauthorized,
 } from "@shared/error/HttpError";
 import { Token } from "@shared/util/Token";
-import IUserRepository from "@user/repository/IUserRepository";
+import { IUserRepository } from "@user/domain/entities/IUserRepository";
 import Email from "@user/domain/valueObject/Email";
 import { CreateUserDTO, LoginUserDTO } from "@user/dtos/UserDTO";
-import Mapper from "@shared/util/Mapper";
-import IUserService from "@user/service/IUserService";
-import { IPortfolioPort } from "@user/Ports/IPortfolioPort";
+import { IUserService } from "@user/service/IUserService";
+import { IPortfolioPort } from "@user/ports/IPortfolioPort";
 import { inject, injectable } from "inversify";
 import { TYPES } from "@compositionRoot/Types";
+import { UserMapper } from "@user/util/UserMapper";
 @injectable()
 export class UserService implements IUserService {
   constructor(
@@ -26,7 +26,7 @@ export class UserService implements IUserService {
 
   async register(userDto: CreateUserDTO): Promise<void> {
     const hashedPassword = await Crypt.hashPassWord(userDto.password);
-    const userDomain = Mapper.User.fromCreateUserDTOtoDomain(
+    const userDomain = UserMapper.fromCreateUserDTOtoDomain(
       userDto,
       hashedPassword
     );

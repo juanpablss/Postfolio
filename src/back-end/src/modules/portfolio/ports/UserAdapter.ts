@@ -1,14 +1,17 @@
+import { TYPES } from "@compositionRoot/Types";
 import { IUserPort } from "@portfolio/ports/IUserPort";
 import { InternalServerError } from "@shared/error/HttpError";
-import IUserService from "@user/service/IUserService";
+import { IUserService } from "@user/service/IUserService";
+import { inject, injectable } from "inversify";
 
+@injectable()
 export class UserAdaper implements IUserPort {
-  private userService?: IUserService;
+  constructor(
+    @inject(TYPES.IPortfolioService)
+    private userService: IUserService
+  ) {}
 
   async exist(userId: string): Promise<boolean> {
-    if (!this.userService)
-      throw new InternalServerError("userService não instanciado");
-
     const user = await this.userService.findById(userId);
 
     if (!user) return false;
@@ -16,7 +19,7 @@ export class UserAdaper implements IUserPort {
     return true;
   }
 
-  setUserService(userService: IUserService) {
-    this.userService = userService;
-  }
+  // setUserService(userService: IUserService) {
+  //   this.userService = userService;
+  // }
 }

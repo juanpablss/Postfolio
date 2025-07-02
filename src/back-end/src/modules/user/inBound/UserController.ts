@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { BadRequest, InternalServerError } from "@shared/error/HttpError";
 import { CreateUserDTO, LoginUserDTO } from "@user/dtos/UserDTO";
 import { LoginRequest, RegisterUserRequest } from "@user/inBound/UserSchema";
-import IUserService from "@user/service/IUserService";
+import { IUserService } from "@user/service/IUserService";
 import { inject, injectable } from "inversify";
 import { TYPES } from "@compositionRoot/Types";
 

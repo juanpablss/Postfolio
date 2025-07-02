@@ -1,7 +1,7 @@
 import User from "@user/domain/entities/User";
 import Email from "@user/domain/valueObject/Email";
 
-export default interface IUserRepository {
+export interface IUserRepository {
   create: (user: User) => Promise<User | null>;
   deleteById: (id: string) => Promise<User | null>;
 

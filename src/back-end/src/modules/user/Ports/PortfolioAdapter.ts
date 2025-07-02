@@ -1,6 +1,6 @@
 import { TYPES } from "@compositionRoot/Types";
 import { IPortfolioService } from "@portfolio/service/IPortfolioService";
-import { IPortfolioPort } from "@user/Ports/IPortfolioPort";
+import { IPortfolioPort } from "@user/ports/IPortfolioPort";
 import { inject, injectable } from "inversify";
 
 @injectable()
