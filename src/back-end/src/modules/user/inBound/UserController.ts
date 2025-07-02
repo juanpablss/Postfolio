@@ -1,15 +1,17 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { BadRequest, InternalServerError } from "@shared/error/HttpError";
-import { CreateUserDTO, LoginUserDTO } from "@user/aplication/UserDTO";
-// import { LoginRequest, RegisterUserRequest } from "@schamas/UserSchema";
-import {
-  LoginRequest,
-  RegisterUserRequest,
-} from "@user/infra/inBound/UserSchema";
+import { CreateUserDTO, LoginUserDTO } from "@user/dtos/UserDTO";
+import { LoginRequest, RegisterUserRequest } from "@user/inBound/UserSchema";
 import IUserService from "@user/service/IUserService";
+import { inject, injectable } from "inversify";
+import { TYPES } from "@compositionRoot/Types";
 
+@injectable()
 export class UserController {
-  constructor(private readonly userService: IUserService) {}
+  constructor(
+    @inject(TYPES.IUserService)
+    private userService: IUserService
+  ) {}
 
   async hello(req: FastifyRequest, reply: FastifyReply) {
     reply.send({ msg: "Ola mundo" });

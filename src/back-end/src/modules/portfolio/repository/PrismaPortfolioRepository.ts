@@ -1,7 +1,7 @@
 import { prisma } from "@infrastructure/config/Prisma";
 import { InternalServerError } from "@shared/error/HttpError";
 import Portfolio from "@portfolio/domain/entities/Portfolio";
-import IPortfolioRepository from "@portfolio/domain/ports/IPortfolioRepository";
+import IPortfolioRepository from "@portfolio/repository/IPortfolioRepository";
 // import { Portfolio as PortfolioModel } from "@prisma/client";
 import { PortfolioMapper } from "@portfolio/util/PortfolioMapper";
 

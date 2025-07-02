@@ -1,16 +1,22 @@
-import { IPortfolioService } from "@portfolio/aplication/ports/IPortfolioService";
-import { IPortfolioPort } from "@user/interface/IPortfolioPort";
+import { TYPES } from "@compositionRoot/Types";
+import { IPortfolioService } from "@portfolio/service/IPortfolioService";
+import { IPortfolioPort } from "@user/Ports/IPortfolioPort";
+import { inject, injectable } from "inversify";
 
+@injectable()
 export class PortfolioAdapter implements IPortfolioPort {
-  private portfolioService?: IPortfolioService;
+  constructor(
+    @inject(TYPES.IPortfolioService)
+    private portfolioService: IPortfolioService
+  ) {}
 
   async createDefaultPortfolioForUser(userId: string): Promise<void> {
     throw new Error("Method not implemented.");
   }
 
-  setPortfolioService(portfolioService: IPortfolioService) {
-    this.portfolioService = portfolioService;
-  }
+  // setPortfolioService(portfolioService: IPortfolioService) {
+  //   this.portfolioService = portfolioService;
+  // }
 }
 
 // domains/user/infrastructure/adapters/outbound/services/PortfolioServiceAdapter.ts

@@ -1,13 +1,13 @@
-import IPortfolioRepository from "@portfolio/domain/ports/IPortfolioRepository";
+import IPortfolioRepository from "@portfolio/repository/IPortfolioRepository";
 import {
   CreatePortfolioDTO,
   UpdatePortfolioDTO,
-} from "@portfolio/aplication/dtos/PortfolioDTO";
+} from "@portfolio/dtos/PortfolioDTO";
 import { PortfolioMapper } from "@portfolio/util/PortfolioMapper";
 import { BadRequest } from "@shared/error/HttpError";
 import Portfolio from "@portfolio/domain/entities/Portfolio";
-import { IUserPort } from "@portfolio/infra/outBound/ports/IUserPort";
-import { IPortfolioService } from "@portfolio/aplication/ports/IPortfolioService";
+import { IUserPort } from "@portfolio/ports/IUserPort";
+import { IPortfolioService } from "@portfolio/aplication/useCases/IPortfolioService";
 
 export class PortfolioService implements IPortfolioService {
   constructor(

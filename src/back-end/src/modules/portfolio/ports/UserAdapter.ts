@@ -1,4 +1,4 @@
-import { IUserPort } from "@portfolio/infra/outBound/ports/IUserPort";
+import { IUserPort } from "@portfolio/ports/IUserPort";
 import { InternalServerError } from "@shared/error/HttpError";
 import IUserService from "@user/service/IUserService";
 

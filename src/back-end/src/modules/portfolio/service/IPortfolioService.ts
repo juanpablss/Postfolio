@@ -3,7 +3,7 @@ import Portfolio from "@portfolio/domain/entities/Portfolio";
 import {
   CreatePortfolioDTO,
   UpdatePortfolioDTO,
-} from "@portfolio/aplication/dtos/PortfolioDTO";
+} from "@portfolio/dtos/PortfolioDTO";
 
 export interface IPortfolioService {
   register(createPortfolioDto: CreatePortfolioDTO): Promise<Portfolio>;

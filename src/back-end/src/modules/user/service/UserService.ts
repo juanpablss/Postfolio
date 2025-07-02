@@ -9,15 +9,19 @@ import {
 import { Token } from "@shared/util/Token";
 import IUserRepository from "@user/repository/IUserRepository";
 import Email from "@user/domain/valueObject/Email";
-import { CreateUserDTO, LoginUserDTO } from "@user/aplication/UserDTO";
+import { CreateUserDTO, LoginUserDTO } from "@user/dtos/UserDTO";
 import Mapper from "@shared/util/Mapper";
 import IUserService from "@user/service/IUserService";
-import { IPortfolioPort } from "@user/interface/IPortfolioPort";
-
+import { IPortfolioPort } from "@user/Ports/IPortfolioPort";
+import { inject, injectable } from "inversify";
+import { TYPES } from "@compositionRoot/Types";
+@injectable()
 export class UserService implements IUserService {
   constructor(
-    private readonly userRepository: IUserRepository,
-    private readonly portfolioService: IPortfolioPort
+    @inject(TYPES.IUserRepository)
+    private userRepository: IUserRepository,
+    @inject(TYPES.IPortfolioPort)
+    private readonly portfolioPort: IPortfolioPort
   ) {}
 
   async register(userDto: CreateUserDTO): Promise<void> {
@@ -38,7 +42,7 @@ export class UserService implements IUserService {
     if (!user)
       throw new InternalServerError("Não foi possivel salver o usuario");
     // Configurar melhor depois
-    await this.portfolioService.createDefaultPortfolioForUser(user.id);
+    await this.portfolioPort.createDefaultPortfolioForUser(user.id);
   }
 
   async findMany(): Promise<User[]> {

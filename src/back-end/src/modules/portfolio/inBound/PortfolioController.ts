@@ -1,14 +1,14 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { BadRequest } from "@shared/error/HttpError";
-import { IPortfolioService } from "@portfolio/aplication/ports/IPortfolioService";
+import { IPortfolioService } from "@portfolio/aplication/useCases/IPortfolioService";
 import {
   RegisterPortfolioRequest,
   UpdatePortfolioRequest,
-} from "@portfolio/infra/inBound/schema/PortfolioSchema";
+} from "@portfolio/inBound/PortfolioSchema";
 import {
   CreatePortfolioDTO,
   UpdatePortfolioDTO,
-} from "@portfolio/aplication/dtos/PortfolioDTO";
+} from "@portfolio/dtos/PortfolioDTO";
 
 export class PortfolioController {
   constructor(private readonly portfolioService: IPortfolioService) {}
