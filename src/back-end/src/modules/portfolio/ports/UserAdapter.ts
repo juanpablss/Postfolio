@@ -7,7 +7,7 @@ import { inject, injectable } from "inversify";
 @injectable()
 export class UserAdaper implements IUserPort {
   constructor(
-    @inject(TYPES.IPortfolioService)
+    @inject(TYPES.IUserService)
     private userService: IUserService
   ) {}
 
@@ -18,8 +18,4 @@ export class UserAdaper implements IUserPort {
 
     return true;
   }
-
-  // setUserService(userService: IUserService) {
-  //   this.userService = userService;
-  // }
 }

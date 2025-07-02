@@ -11,17 +11,16 @@ import { IUserRepository } from "@user/domain/entities/IUserRepository";
 import Email from "@user/domain/valueObject/Email";
 import { CreateUserDTO, LoginUserDTO } from "@user/dtos/UserDTO";
 import { IUserService } from "@user/service/IUserService";
-import { IPortfolioPort } from "@user/ports/IPortfolioPort";
 import { inject, injectable } from "inversify";
 import { TYPES } from "@compositionRoot/Types";
 import { UserMapper } from "@user/util/UserMapper";
+import { AppEvents } from "@shared/event/AppEvents";
+// import { eventBus, EventTypes } from "@shared/event/EventBus";
 @injectable()
 export class UserService implements IUserService {
   constructor(
     @inject(TYPES.IUserRepository)
-    private userRepository: IUserRepository,
-    @inject(TYPES.IPortfolioPort)
-    private readonly portfolioPort: IPortfolioPort
+    private userRepository: IUserRepository
   ) {}
 
   async register(userDto: CreateUserDTO): Promise<void> {
@@ -42,7 +41,19 @@ export class UserService implements IUserService {
     if (!user)
       throw new InternalServerError("Não foi possivel salver o usuario");
     // Configurar melhor depois
-    await this.portfolioPort.createDefaultPortfolioForUser(user.id);
+    // if (
+    //   eventBus.emit(EventTypes.CreateUserEvent, {
+    //     userId: user.id,
+    //     name: user.name,
+    //     email: user.email.getValue(),
+    //   })
+    // )
+    //   console.log("Portfolio criado com sucesso");
+    await AppEvents.userCreated.emit({
+      userId: user.id,
+      name: user.name,
+      email: user.email.getValue(),
+    });
   }
 
   async findMany(): Promise<User[]> {

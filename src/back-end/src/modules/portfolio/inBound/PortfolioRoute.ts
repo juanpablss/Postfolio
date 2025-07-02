@@ -7,7 +7,7 @@ import {
   UpdatePortfolioRequest,
 } from "@portfolio/inBound/PortfolioSchema";
 
-export async function PortfolioRoutes(
+function portfolioRoutesPlugin(
   app: FastifyInstance,
   portfolioController: PortfolioController
 ) {
@@ -43,4 +43,15 @@ export async function PortfolioRoutes(
   app.delete("", { preValidation: UserMiddle.authenticate }, (req, rep) =>
     portfolioController.deleteById(req, rep)
   );
+}
+
+export class PortfolioRoute {
+  public static register(
+    app: FastifyInstance,
+    userController: PortfolioController
+  ) {
+    app.register((data) => portfolioRoutesPlugin(data, userController), {
+      prefix: "api/portfolio",
+    });
+  }
 }

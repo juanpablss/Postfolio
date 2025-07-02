@@ -18,7 +18,7 @@ import { IPortfolioService } from "@portfolio/service/IPortfolioService";
 
 // Portas de Saída (entre domínios)
 import { IUserPort } from "@portfolio/ports/IUserPort";
-import { IPortfolioPort } from "@user/ports/IPortfolioPort";
+// import { IPortfolioPort } from "@user/ports/IPortfolioPort";
 
 // --- Importações de Implementações Concretas ---
 // Repositórios
@@ -26,7 +26,7 @@ import { PrismaUserRepository } from "@user/repository/PrismaUserRepository";
 import { PrismaPortfolioRepository } from "@portfolio/repository/PrismaPortfolioRepository";
 
 // Adaptadores de Saída de Serviço (Portas de Saída)
-import { PortfolioAdapter } from "@user/ports/PortfolioAdapter";
+// import { PortfolioAdapter } from "@user/ports/PortfolioAdapter";
 import { UserAdaper } from "@portfolio/ports/UserAdapter";
 // ... Outros adaptadores de serviço (ex: para Email, Chat, se User precisar deles)
 
@@ -41,8 +41,9 @@ import { PortfolioController } from "@portfolio/inBound/PortfolioController";
 // ... Outros Controladores
 
 // Rotas
-import { UserRoutes } from "@user/inBound/UserRoute";
-import { PortfolioRoutes } from "@portfolio/inBound/PortfolioRoute";
+import { UserRoute } from "@user/inBound/UserRoute";
+import { PortfolioRoute } from "@portfolio/inBound/PortfolioRoute";
+import { PortfolioUserCreatedHandler } from "@portfolio/handler/PortfolioUserCreatedHandler";
 
 // ... Outras funções de registro de rotas
 
@@ -60,10 +61,10 @@ container
   .inSingletonScope();
 
 // --- 2. BIND dos Adaptadores de Serviço (Portas de Saída entre Domínios) ---
-container
-  .bind<IPortfolioPort>(TYPES.IPortfolioPort)
-  .to(PortfolioAdapter)
-  .inSingletonScope();
+// container
+//   .bind<IPortfolioPort>(TYPES.IPortfolioPort)
+//   .to(PortfolioAdapter)
+//   .inSingletonScope();
 container.bind<IUserPort>(TYPES.IUserPort).to(UserAdaper).inSingletonScope();
 
 // --- 3. BIND dos Services (Orquestradores de IService - Implementações de Portas de Aplicação) ---
@@ -86,6 +87,12 @@ container
   .bind<PortfolioController>(TYPES.PortfolioController)
   .to(PortfolioController)
   .inRequestScope();
+
+// Handlers
+container
+  .bind<PortfolioUserCreatedHandler>(PortfolioUserCreatedHandler)
+  .toSelf()
+  .inSingletonScope();
 
 interface IApplicationControllers {
   userController: UserController;
@@ -140,8 +147,8 @@ export class AppComposer {
 
   // Método para registrar todas as rotas no Fastify
   public registerRoutes(app: FastifyInstance): void {
-    UserRoutes(app, this.controllers.userController);
-    PortfolioRoutes(app, this.controllers.portfolioController);
+    UserRoute.register(app, this.controllers.userController);
+    PortfolioRoute.register(app, this.controllers.portfolioController);
   }
 
   // Se você tiver configurações globais do Fastify, pode tê-las aqui

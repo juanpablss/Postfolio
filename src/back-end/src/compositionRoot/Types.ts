@@ -18,7 +18,7 @@ export const TYPES = {
   IWorkCompDetailsService: Symbol.for("IWorkCompDetailsService"),
 
   // Portas de Saída (Adapters entre Domínios)
-  IPortfolioPort: Symbol.for("IPortfolioPort"), // User Module precisa interagir com Portfolio
+  // IPortfolioPort: Symbol.for("IPortfolioPort"), // User Module precisa interagir com Portfolio
   IUserPort: Symbol.for("IUserPort"), // Portfolio/Rating Module precisa interagir com User
   IWorkPort: Symbol.for("IWorkPort"), // WorkCompDetails Module precisa interagir com Work
   ICompetitionPort: Symbol.for("ICompetitionPort"), // WorkCompDetails Module precisa interagir com Competition
@@ -39,6 +39,9 @@ export const TYPES = {
   CompetitionController: Symbol.for("CompetitionController"),
   WorkController: Symbol.for("WorkController"),
   WorkCompDetailsController: Symbol.for("WorkCompDetailsController"),
+
+  // Handlers
+  // PortfolioUserCreatedHandler: Symbol.for("PortfolioUserCreatedHandler"),
 
   // Utilitários (se precisar injetar, embora muitos sejam estáticos)
   // PrismaClient: Symbol.for("PrismaClient"), // Se você quiser injetar a instância do Prisma

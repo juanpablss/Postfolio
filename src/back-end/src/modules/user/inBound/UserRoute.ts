@@ -7,7 +7,7 @@ import {
   userRouteSchema,
 } from "@user/inBound/UserSchema";
 
-export async function UserRoutes(
+function userRoutesPlugin(
   app: FastifyInstance,
   userController: UserController
 ) {
@@ -31,4 +31,12 @@ export async function UserRoutes(
   app.delete("", { preValidation: UserMiddle.authenticate }, (req, reply) =>
     userController.deleteById(req, reply)
   );
+}
+
+export class UserRoute {
+  public static register(app: FastifyInstance, userController: UserController) {
+    app.register((data) => userRoutesPlugin(data, userController), {
+      prefix: "api/user",
+    });
+  }
 }
