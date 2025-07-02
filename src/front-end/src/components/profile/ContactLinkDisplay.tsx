@@ -22,12 +22,24 @@ const ContactLinkDisplay: React.FC<ContactLinkDisplayProps> = ({ type, value, la
   };
 
   const getHref = () => {
-    if (type === 'email') return `mailto:${value}`;
-    if (type === 'phone') return `tel:${value}`;
-    // Para URLs, verificar se já possuem protocolo, senão adicionar https://
-    if (value.startsWith('http://') || value.startsWith('https://')) return value;
-    if (type !== 'other' && type !== 'phone' && type !== 'email') return `https://${value}`; // Adiciona https para tipos conhecidos de URL
-    return value; // Para 'other' ou casos não previstos, usa o valor como está (ou pode decidir não linkar)
+    switch (type) {
+      case 'email':
+        return `mailto:${value}`;
+      case 'phone':
+        return `tel:${value}`;
+      case 'linkedin':
+      case 'github':
+      case 'behance':
+      case 'portfolio':
+        // Para esses tipos “URL”, garante protocolo
+        return /^(https?:\/\/)/.test(value)
+          ? value
+          : `https://${value}`;
+      default:
+        // 'other'
+        // já vem “raw” — você pode optar por não linkar, ou linkar assim mesmo
+        return value;
+    }
   };
 
   const displayText = label || value;

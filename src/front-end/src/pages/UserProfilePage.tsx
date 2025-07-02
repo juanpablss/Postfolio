@@ -1,9 +1,8 @@
 /* eslint-disable no-irregular-whitespace */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import Header from "../layouts/Header";
 import { useParams } from "react-router-dom";
-import { FiMapPin, FiEdit2, FiBriefcase, FiX, FiSave, FiUploadCloud, FiPlus, FiTrash2, FiExternalLink } from 'react-icons/fi';
+import { FiMapPin, FiEdit2, FiBriefcase, FiX, FiSave, FiPlus, FiTrash2, FiExternalLink } from 'react-icons/fi';
 import TechnologyBadge from '../components/profile/TechnologyBadge';
 import ContactLinkDisplay from '../components/profile/ContactLinkDisplay';
 
@@ -523,7 +522,7 @@ export default function UserProfilePage() {
               </button>
             </div>
             <div className="space-y-2">
-              {(tempProfileData as FreelancerProfileData).projects?.map((project, idx) => (
+              {(tempProfileData as FreelancerProfileData).projects?.map((project) => (
                 <div key={project.id} className="flex items-center bg-indigo-800 px-2 py-1 rounded text-white text-xs justify-between">
                   <span>{project.title}</span>
                   <button onClick={() => handleRemoveProject(project.id)} className="ml-2 text-red-300">
