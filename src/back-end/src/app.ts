@@ -34,6 +34,7 @@ app.register(fastifyCors, {
 const appCompose = new AppComposer();
 appCompose.registerRoutes(app);
 appCompose.configureFastify(app);
+appCompose.registerHandlers();
 
 const start = async () => {
   try {

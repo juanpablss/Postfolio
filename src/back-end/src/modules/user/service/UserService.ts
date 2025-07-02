@@ -54,6 +54,7 @@ export class UserService implements IUserService {
       name: user.name,
       email: user.email.getValue(),
     });
+    console.log("Portfolio criado com sucesso");
   }
 
   async findMany(): Promise<User[]> {

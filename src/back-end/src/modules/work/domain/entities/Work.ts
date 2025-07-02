@@ -1,4 +1,4 @@
-export default class Work {
+export class Work {
   constructor(
     public id: string,
     public name: string,

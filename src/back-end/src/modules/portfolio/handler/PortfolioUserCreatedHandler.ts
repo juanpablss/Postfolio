@@ -14,10 +14,16 @@ export class PortfolioUserCreatedHandler implements IUserCreatedEventHandler {
     private portfolioService: IPortfolioService
   ) {
     AppEvents.userCreated.add(this);
+    console.log("[PortfolioUserCreatedHandler] foi criado");
   }
 
   async emit(data: UserCreatedEventData): Promise<string> {
-    console.log("Emitir evento de criação para portfoio");
+    this.portfolioService.register({
+      name: "default",
+      description: "not found",
+      pagelink: null,
+      authorId: data.userId,
+    });
 
     return "emitido";
   }

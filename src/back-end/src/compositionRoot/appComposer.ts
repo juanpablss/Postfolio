@@ -108,35 +108,11 @@ export class AppComposer {
   }
 
   private composeControllers(): IApplicationControllers {
-    // // --- Composição das Dependências ---
-    // // Nível mais baixo: Repositórios
-    // const userRepository = new PrismaUserRepository();
-    // const portfolioRepository = new PrismaPortfolioRepository();
-
-    // const portfolioAdapter = new PortfolioAdapter();
-    // const userAdapter = new UserAdaper();
-
-    // // Service do Módulo Portfolio (implementa IPortfolioUseCases)
-    // const userServiceInstance = new UserService(
-    //   userRepository,
-    //   portfolioAdapter
-    // );
-    // const portfolioServiceInstance = new PortfolioService(
-    //   portfolioRepository,
-    //   userAdapter
-    // );
-    // portfolioAdapter.setPortfolioService(portfolioServiceInstance);
-    // userAdapter.setUserService(userServiceInstance);
-    // // Adaptador de Saída do Módulo User para Portfolio
-
     // // Controladores (dependem dos Services/Use Cases de alto nível)
     const userController = container.get<UserController>(TYPES.UserController);
     const portfolioController = container.get<PortfolioController>(
       TYPES.PortfolioController
     );
-    // const portfolioController = new PortfolioController(
-    //   portfolioServiceInstance
-    // );
 
     return {
       userController,
@@ -149,6 +125,10 @@ export class AppComposer {
   public registerRoutes(app: FastifyInstance): void {
     UserRoute.register(app, this.controllers.userController);
     PortfolioRoute.register(app, this.controllers.portfolioController);
+  }
+
+  public registerHandlers(): void {
+    const portfolioHandler = container.get(PortfolioUserCreatedHandler);
   }
 
   // Se você tiver configurações globais do Fastify, pode tê-las aqui
