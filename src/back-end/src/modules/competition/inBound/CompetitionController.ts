@@ -126,4 +126,16 @@ export class CompetitionController {
 
     reply.send(response);
   }
+
+  async createRating(req: FastifyRequest, reply: FastifyReply) {
+    throw new InternalServerError("Not implemented");
+  }
+
+  async updateRating(req: FastifyRequest, reply: FastifyReply) {
+    throw new InternalServerError("Not implemented");
+  }
+
+  async deleteRating(req: FastifyRequest, reply: FastifyReply) {
+    throw new InternalServerError("Not implemented");
+  }
 }

@@ -1,5 +1,12 @@
-import { Work } from "@work/domain/entities/Work";
-
+export class WorkData {
+  constructor(
+    public id: string,
+    public name: string,
+    public description: string,
+    public githubLink: string | null,
+    public portfolioId: string
+  ) {}
+}
 export class WorkCompDetails {
   constructor(
     public id: string,
@@ -7,6 +14,6 @@ export class WorkCompDetails {
     public totalScore: number,
     public competitionId: string,
     public workId: string,
-    public work?: Work
+    public work?: WorkData
   ) {}
 }

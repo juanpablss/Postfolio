@@ -17,14 +17,6 @@ function workRoutesPlugin(
     (req, rep) => workController.register(req as RegisterWorkRequest, rep)
   );
 
-  app.post("/all", { preValidation: UserMiddle.authenticate }, (req, rep) =>
-    workController.getAll(req, rep)
-  );
-
-  app.post("/:work", { preValidation: UserMiddle.authenticate }, (req, rep) =>
-    workController.getById(req, rep)
-  );
-
   app.put(
     "/:work",
     { schema: workRouteSchema.update, preValidation: UserMiddle.authenticate },
@@ -33,6 +25,14 @@ function workRoutesPlugin(
 
   app.delete("/:work", { preValidation: UserMiddle.authenticate }, (req, rep) =>
     workController.delete(req, rep)
+  );
+
+  app.post("/:work", { preValidation: UserMiddle.authenticate }, (req, rep) =>
+    workController.getById(req, rep)
+  );
+
+  app.post("/all", { preValidation: UserMiddle.authenticate }, (req, rep) =>
+    workController.getAll(req, rep)
   );
 }
 

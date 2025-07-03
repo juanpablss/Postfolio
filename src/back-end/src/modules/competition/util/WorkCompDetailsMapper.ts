@@ -1,16 +1,25 @@
 import { WorkCompDetails as WorkCompDetailsModel } from "@prisma/client";
-import { WorkCompDetails } from "@competition/domain/entities/WorkCompDetails";
+import {
+  WorkCompDetails,
+  WorkData,
+} from "@competition/domain/entities/WorkCompDetails";
 import { Work as WorkModel } from "@prisma/client";
-import { Work } from "@work/domain/entities/Work";
-import { WorkMapper } from "@work/util/WorkMapper";
 
 export const WorkCompDetailsMapper = {
   toDomain(
     workCompDetailsModel: WorkCompDetailsModel & { work?: WorkModel }
   ): WorkCompDetails {
-    const workDomain = workCompDetailsModel.work
-      ? WorkMapper.fromPrismatoDomain(workCompDetailsModel.work)
-      : undefined;
+    let workData = undefined;
+
+    if (workCompDetailsModel.work) {
+      workData = new WorkData(
+        workCompDetailsModel.work.id,
+        workCompDetailsModel.work.name,
+        workCompDetailsModel.work.description,
+        workCompDetailsModel.work.githubLink,
+        workCompDetailsModel.work.portfolioId
+      );
+    }
 
     const details = new WorkCompDetails(
       workCompDetailsModel.id,
@@ -18,7 +27,7 @@ export const WorkCompDetailsMapper = {
       workCompDetailsModel.totalScore,
       workCompDetailsModel.competitionId,
       workCompDetailsModel.workId,
-      workDomain
+      workData
     );
 
     return details;

@@ -68,23 +68,23 @@ function competitionRoutesPlugin(
     (req, rep) => competitionController.getWorkDetails(req, rep)
   );
 
-  // app.post(
-  //   "/:competition/work/:work/rating",
-  //   { preValidation: UserMiddle.authenticate },
-  //   (req, rep) => ratingController.register(req, rep)
-  // );
+  app.post(
+    "/:competition/work/:work/rating",
+    { preValidation: UserMiddle.authenticate },
+    (req, rep) => competitionController.createRating(req, rep)
+  );
 
-  // app.put(
-  //   "/:competition/works/:work/ratings/:rating",
-  //   { preValidation: UserMiddle.authenticate },
-  //   (req, rep) => ratingController.update(req, rep)
-  // );
+  app.put(
+    "/:competition/works/:work/ratings/:rating",
+    { preValidation: UserMiddle.authenticate },
+    (req, rep) => competitionController.updateRating(req, rep)
+  );
 
-  // app.delete(
-  //   "/:competition/work/:work/rating/:rating",
-  //   { preValidation: UserMiddle.authenticate },
-  //   (req, rep) => ratingController.delete(req, rep)
-  // );
+  app.delete(
+    "/:competition/work/:work/rating/:rating",
+    { preValidation: UserMiddle.authenticate },
+    (req, rep) => competitionController.deleteRating(req, rep)
+  );
 }
 
 export class CompetitionRoute {

@@ -1,6 +1,4 @@
-import Rating from "@domain/entities/rating/Rating";
-
-export default interface RatingRepository {
+export interface RatingRepository {
   insert(rating: Rating): Promise<Rating>;
   findMany(): Promise<Rating[]>;
   findById(id: string): Promise<Rating | null>;
