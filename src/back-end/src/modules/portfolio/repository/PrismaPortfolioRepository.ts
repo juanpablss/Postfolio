@@ -1,6 +1,6 @@
 import { prisma } from "@infrastructure/config/Prisma";
 import { InternalServerError } from "@shared/error/HttpError";
-import Portfolio from "@portfolio/domain/entities/Portfolio";
+import { Portfolio } from "@portfolio/domain/entities/Portfolio";
 import { IPortfolioRepository } from "@portfolio/domain/entities/IPortfolioRepository";
 // import { Portfolio as PortfolioModel } from "@prisma/client";
 import { PortfolioMapper } from "@portfolio/util/PortfolioMapper";
@@ -34,6 +34,21 @@ export class PrismaPortfolioRepository implements IPortfolioRepository {
         id,
       },
     });
+    return portfolioModel
+      ? PortfolioMapper.fromPrismatoDomain(portfolioModel)
+      : null;
+  }
+
+  async findByIdWhitWorks(id: string): Promise<Portfolio | null> {
+    const portfolioModel = await prisma.portfolio.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        works: true,
+      },
+    });
+
     return portfolioModel
       ? PortfolioMapper.fromPrismatoDomain(portfolioModel)
       : null;

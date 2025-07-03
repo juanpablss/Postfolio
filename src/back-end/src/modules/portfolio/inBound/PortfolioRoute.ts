@@ -27,8 +27,10 @@ function portfolioRoutesPlugin(
     portfolioController.findByUser(req, rep)
   );
 
-  app.post("/works", { preValidation: UserMiddle.authenticate }, (req, rep) =>
-    portfolioController.getWorks(req, rep)
+  app.post(
+    "/works/:id",
+    { preValidation: UserMiddle.authenticate },
+    (req, rep) => portfolioController.getWorks(req, rep)
   );
 
   app.put(

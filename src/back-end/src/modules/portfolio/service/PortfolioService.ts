@@ -5,7 +5,7 @@ import {
 } from "@portfolio/dtos/PortfolioDTO";
 import { PortfolioMapper } from "@portfolio/util/PortfolioMapper";
 import { BadRequest } from "@shared/error/HttpError";
-import Portfolio from "@portfolio/domain/entities/Portfolio";
+import { Portfolio } from "@portfolio/domain/entities/Portfolio";
 import { IUserPort } from "@user/api/IUserPort";
 import { IPortfolioService } from "@portfolio/service/IPortfolioService";
 import { inject, injectable } from "inversify";
@@ -41,6 +41,10 @@ export class PortfolioService implements IPortfolioService {
 
   async findById(id: string): Promise<Portfolio | null> {
     return await this.portfolioRepository.findById(id);
+  }
+
+  async findWorks(id: string): Promise<Portfolio | null> {
+    return await this.portfolioRepository.findByIdWhitWorks(id);
   }
 
   async findByAuthor(authorId: string): Promise<Portfolio | null> {

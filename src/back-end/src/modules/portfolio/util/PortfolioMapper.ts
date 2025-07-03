@@ -2,17 +2,36 @@ import {
   CreatePortfolioDTO,
   UpdatePortfolioDTO,
 } from "@portfolio/dtos/PortfolioDTO";
-import Portfolio from "@portfolio/domain/entities/Portfolio";
+import { Portfolio, WorkData } from "@portfolio/domain/entities/Portfolio";
 import { Portfolio as PortfolioModel } from "@prisma/client";
+import { Work as WorkModel } from "@prisma/client";
 
 export const PortfolioMapper = {
-  fromPrismatoDomain(prismaPortfolio: PortfolioModel): Portfolio {
+  fromPrismatoDomain(
+    prismaPortfolio: PortfolioModel & { works?: WorkModel[] }
+  ): Portfolio {
+    let works = undefined;
+
+    if (prismaPortfolio.works) {
+      works = prismaPortfolio.works.map(
+        (data) =>
+          new WorkData(
+            data.id,
+            data.name,
+            data.description,
+            data.githubLink,
+            data.portfolioId
+          )
+      );
+    }
+
     return new Portfolio(
       prismaPortfolio.id,
       prismaPortfolio.name,
       prismaPortfolio.description,
       prismaPortfolio.pageLink,
-      prismaPortfolio.authorId
+      prismaPortfolio.authorId,
+      works
     );
   },
   fromDomaintoPrisma(portfolio: Portfolio): PortfolioModel {

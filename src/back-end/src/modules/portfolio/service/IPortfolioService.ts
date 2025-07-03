@@ -1,4 +1,4 @@
-import Portfolio from "@portfolio/domain/entities/Portfolio";
+import { Portfolio } from "@portfolio/domain/entities/Portfolio";
 // import Work from "@";
 import {
   CreatePortfolioDTO,
@@ -12,6 +12,7 @@ export interface IPortfolioService {
 
   findMany(): Promise<Portfolio[]>;
   findById(id: string): Promise<Portfolio | null>;
+  findWorks(id: string): Promise<Portfolio | null>;
   findByAuthor(authorId: string): Promise<Portfolio | null>;
 
   // getWorks(portfolioId: string): Promise<Work[]>;
