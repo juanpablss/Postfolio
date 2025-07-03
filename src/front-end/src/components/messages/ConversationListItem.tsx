@@ -1,5 +1,5 @@
 import React from 'react';
-import { IConversation } from '../../types/messages'; // Ajustado para o arquivo de tipos centralizado
+import { IConversation } from '../../types/messagesTypes'; // Ajustado para o arquivo de tipos centralizado
 
 interface ConversationListItemProps {
   conversation: Omit<IConversation, 'messages'>;

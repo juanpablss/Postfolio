@@ -1,5 +1,5 @@
 import React from 'react';
-import { IMessage } from '../../types/messages'; // Ajustado para o arquivo de tipos centralizado
+import { IMessage } from '../../types/messagesTypes'; // Ajustado para o arquivo de tipos centralizado
 
 interface ChatMessageProps {
   message: IMessage;

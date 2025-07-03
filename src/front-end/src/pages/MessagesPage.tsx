@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import ConversationListItem from '../components/messages/ConversationListItem';
 import ChatMessage from '../components/messages/ChatMessage';
 import MessageInput from '../components/messages/MessageInput';
-import { IConversation, IMessage } from '../types/messages'; // Importando dos tipos centralizados
+import { IConversation, IMessage } from '../types/messagesTypes'; // Importando dos tipos centralizados
 
 // Mock Data (será usado inicialmente)
 const mockConversationsData: IConversation[] = [

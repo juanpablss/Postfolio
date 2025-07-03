@@ -1,4 +1,4 @@
-import Header from "../layouts/Header";
+import Header from "../layouts/HeaderLayout";
 // import ProjectCard from '../components/projects/ProjectCard';
 import ProjectCarousel from '../components/projects/ProjectCarousel';
 import ParticleComponent from "../components/ParticleComponent";
