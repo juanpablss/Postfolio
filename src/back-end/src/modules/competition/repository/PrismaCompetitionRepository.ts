@@ -6,11 +6,11 @@ import {
   CompetitionMapper,
   WorkCompDetailsMapper,
 } from "@competition/util/CompetitionMapper";
-import { CompetitionRepository } from "@competition/domain/entities/CompetitionRepository";
+import { ICompetitionRepository } from "@competition/domain/entities/ICompetitionRepository";
 import { WorkCompDetails } from "@competition/domain/entities/WorkCompDetails";
 Competition;
 
-export class PrismaCompetitionRepository implements CompetitionRepository {
+export class PrismaCompetitionRepository implements ICompetitionRepository {
   async insert(competition: Competition): Promise<Competition> {
     try {
       const competitionModel = await prisma.competition.create({
