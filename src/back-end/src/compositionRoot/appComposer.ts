@@ -17,8 +17,8 @@ import { IUserService } from "@user/service/IUserService";
 import { IPortfolioService } from "@portfolio/service/IPortfolioService";
 
 // Portas de Saída (entre domínios)
-import { IUserPort } from "@portfolio/ports/IUserPort";
-// import { IPortfolioPort } from "@user/ports/IPortfolioPort";
+import { IUserPort } from "@user/api/IUserPort";
+import { IPortfolioPort } from "@portfolio/api/IPortfolioPort";
 
 // --- Importações de Implementações Concretas ---
 // Repositórios
@@ -26,8 +26,8 @@ import { PrismaUserRepository } from "@user/repository/PrismaUserRepository";
 import { PrismaPortfolioRepository } from "@portfolio/repository/PrismaPortfolioRepository";
 
 // Adaptadores de Saída de Serviço (Portas de Saída)
-// import { PortfolioAdapter } from "@user/ports/PortfolioAdapter";
-import { UserAdaper } from "@portfolio/ports/UserAdapter";
+import { PortfolioAdapter } from "@portfolio/api/PortfolioAdapter";
+import { UserAdaper } from "@user/api/UserAdapter";
 // ... Outros adaptadores de serviço (ex: para Email, Chat, se User precisar deles)
 
 // Services
@@ -61,10 +61,10 @@ container
   .inSingletonScope();
 
 // --- 2. BIND dos Adaptadores de Serviço (Portas de Saída entre Domínios) ---
-// container
-//   .bind<IPortfolioPort>(TYPES.IPortfolioPort)
-//   .to(PortfolioAdapter)
-//   .inSingletonScope();
+container
+  .bind<IPortfolioPort>(TYPES.IPortfolioPort)
+  .to(PortfolioAdapter)
+  .inSingletonScope();
 container.bind<IUserPort>(TYPES.IUserPort).to(UserAdaper).inSingletonScope();
 
 // --- 3. BIND dos Services (Orquestradores de IService - Implementações de Portas de Aplicação) ---
