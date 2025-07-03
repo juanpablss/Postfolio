@@ -2,12 +2,10 @@ import { InternalServerError } from "@shared/error/HttpError";
 import { prisma } from "@infrastructure/config/Prisma";
 import { Prisma } from "@prisma/client";
 import { Competition } from "@competition/domain/entities/Competition";
-import {
-  CompetitionMapper,
-  WorkCompDetailsMapper,
-} from "@competition/util/CompetitionMapper";
+import { CompetitionMapper } from "@competition/util/CompetitionMapper";
 import { ICompetitionRepository } from "@competition/domain/entities/ICompetitionRepository";
 import { WorkCompDetails } from "@competition/domain/entities/WorkCompDetails";
+import { WorkCompDetailsMapper } from "@competition/util/WorkCompDetailsMapper";
 Competition;
 
 export class PrismaCompetitionRepository implements ICompetitionRepository {
@@ -194,6 +192,9 @@ export class PrismaCompetitionRepository implements ICompetitionRepository {
       const detailsModels = await prisma.workCompDetails.findMany({
         where: {
           competitionId,
+        },
+        include: {
+          work: true,
         },
       });
 
