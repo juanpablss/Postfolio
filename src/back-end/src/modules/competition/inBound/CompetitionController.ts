@@ -30,17 +30,17 @@ export class CompetitionController {
   }
 
   async subscribeWork(req: FastifyRequest, reply: FastifyReply) {
-    const { competition, work } = req.params as {
-      competition: string;
-      work: string;
+    const { competitionId, workId } = req.params as {
+      competitionId: string;
+      workId: string;
     };
 
-    if (!competition) throw new BadRequest("ID da competição é obrigatorio");
-    if (!work) throw new BadRequest("ID da competição é obrigatorio");
+    if (!competitionId) throw new BadRequest("ID da competição é obrigatorio");
+    if (!workId) throw new BadRequest("ID da competição é obrigatorio");
 
     const response = await this.competitionService.subscribeWork(
-      competition,
-      work
+      competitionId,
+      workId
     );
 
     reply.send(response);
@@ -61,12 +61,12 @@ export class CompetitionController {
   }
 
   async update(req: FastifyRequest, reply: FastifyReply) {
-    // const { competition } = req.params as { competition: string };
-    // const {
-    //   name = null,
-    //   startsAt = null,
-    //   endsAt = null,
-    // } = req.body as { name: string; startsAt: string; endsAt: string };
+    const { competitionId } = req.params as { competitionId: string | null };
+    const {
+      name = null,
+      startsAt = null,
+      endsAt = null,
+    } = req.body as Partial<{ name: string; startsAt: string; endsAt: string }>;
 
     // criar um dto para isso
     throw new InternalServerError("Not Implemented");
@@ -96,6 +96,19 @@ export class CompetitionController {
     if (!competitionId) throw new BadRequest("ID da competição é obrigatorio");
 
     const response = await this.competitionService.findById(competitionId);
+    console.log("{competition}(POST /:competitionID)[getCompetition]");
+    reply.send(response);
+  }
+
+  async getWorkDetailsForCompetition(req: FastifyRequest, reply: FastifyReply) {
+    const { competitionId } = req.params as {
+      competitionId: string;
+      workId: string;
+    };
+
+    const response = await this.competitionService.findSubscribedWorks(
+      competitionId
+    );
 
     reply.send(response);
   }
@@ -106,6 +119,11 @@ export class CompetitionController {
       workId: string;
     };
 
-    throw new InternalServerError("Método não implementado");
+    const response = await this.competitionService.findWorkCompDetails(
+      competitionId,
+      workId
+    );
+
+    reply.send(response);
   }
 }

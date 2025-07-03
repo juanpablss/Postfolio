@@ -15,4 +15,8 @@ export interface ICompetitionService {
   findMany(): Promise<Competition[]>;
   findById(id: string): Promise<Competition | null>;
   findSubscribedWorks(competitionId: string): Promise<WorkCompDetails[]>;
+  findWorkCompDetails(
+    competitionId: string,
+    workId: string
+  ): Promise<WorkCompDetails | null>;
 }

@@ -85,4 +85,16 @@ export class CompetitionService implements ICompetitionService {
 
     return details;
   }
+
+  async findWorkCompDetails(
+    competitionId: string,
+    workId: string
+  ): Promise<WorkCompDetails | null> {
+    const details = await this.competitionRepository.findWorkCompDetails(
+      competitionId,
+      workId
+    );
+
+    return details;
+  }
 }
