@@ -1,6 +1,6 @@
-import Competition from "@domain/entities/competition/Competition";
+import { Competition } from "@c";
 
-export default interface CompetitionRepository {
+export interface CompetitionRepository {
   insert(competition: Competition): Promise<Competition>;
   findById(id: string): Promise<Competition | null>;
   findMany(): Promise<Competition[]>;

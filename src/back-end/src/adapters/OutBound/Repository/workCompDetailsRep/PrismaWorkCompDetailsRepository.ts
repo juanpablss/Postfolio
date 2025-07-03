@@ -126,5 +126,5 @@ export class PrismaWorkCompDetailsRepository {
     }
   }
 }
-const prismaWorkCompDetails = new PrismaWorkCompDetailsRepository();
-export default prismaWorkCompDetails;
+// const prismaWorkCompDetails = new PrismaWorkCompDetailsRepository();
+// export default prismaWorkCompDetails;

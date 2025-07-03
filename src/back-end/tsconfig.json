@@ -36,6 +36,7 @@
       "@user/*" : ["modules/user/*"], 
       "@portfolio/*" : ["modules/portfolio/*"],
       "@work/*" : ["modules/work/*"],
+      "@competition/*" : ["modules/competition/*"],
 
       "@shared/*" : ["shared/*"],
       "@compositionRoot/*" : ["compositionRoot/*"],
