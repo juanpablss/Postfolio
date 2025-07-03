@@ -1,13 +1,16 @@
 import { FastifyInstance } from "fastify";
-import workController from "@controller/WorkController";
+import { WorkController } from "@work/inBound/WorkController";
 import { UserMiddle } from "@infrastructure/middleware/UserMiddle";
 import {
   RegisterWorkRequest,
   UpdateWorkRequest,
   workRouteSchema,
-} from "@schamas/WorkSchema";
+} from "@work/inBound/WorkSchema";
 
-export async function WorkRoutes(app: FastifyInstance) {
+function workRoutesPlugin(
+  app: FastifyInstance,
+  workController: WorkController
+) {
   app.post(
     "",
     { schema: workRouteSchema.create, preValidation: UserMiddle.authenticate },
@@ -31,4 +34,12 @@ export async function WorkRoutes(app: FastifyInstance) {
   app.delete("/:work", { preValidation: UserMiddle.authenticate }, (req, rep) =>
     workController.delete(req, rep)
   );
+}
+
+export class WorkRoute {
+  public static register(app: FastifyInstance, workController: WorkController) {
+    app.register((data) => workRoutesPlugin(data, workController), {
+      prefix: "api/work",
+    });
+  }
 }

@@ -11,10 +11,11 @@ import configureErrorHandling from "@infrastructure/fastify/ConfigureErrorHandli
 // Domínio
 import { IUserRepository } from "@user/domain/entities/IUserRepository";
 import { IPortfolioRepository } from "@portfolio/domain/entities/IPortfolioRepository";
-
+import { IWorkRepository } from "@work/domain/entities/WorkRepository";
 // services
 import { IUserService } from "@user/service/IUserService";
 import { IPortfolioService } from "@portfolio/service/IPortfolioService";
+import { IWorkService } from "@work/service/IWorkService";
 
 // Portas de Saída (entre domínios)
 import { IUserPort } from "@user/api/IUserPort";
@@ -24,6 +25,7 @@ import { IPortfolioPort } from "@portfolio/api/IPortfolioPort";
 // Repositórios
 import { PrismaUserRepository } from "@user/repository/PrismaUserRepository";
 import { PrismaPortfolioRepository } from "@portfolio/repository/PrismaPortfolioRepository";
+import { PrismaWorkRepository } from "@work/repository/PrismaWorkRepository";
 
 // Adaptadores de Saída de Serviço (Portas de Saída)
 import { PortfolioAdapter } from "@portfolio/api/PortfolioAdapter";
@@ -33,16 +35,21 @@ import { UserAdaper } from "@user/api/UserAdapter";
 // Services
 import { UserService } from "@user/service/UserService";
 import { PortfolioService } from "@portfolio/service/PortfolioService";
+import { WorkService } from "@work/service/WorkService";
 // ... Outros Services
 
 // Controladores
 import { UserController } from "@user/inBound/UserController";
 import { PortfolioController } from "@portfolio/inBound/PortfolioController";
+import { WorkController } from "@work/inBound/WorkController";
 // ... Outros Controladores
 
 // Rotas
 import { UserRoute } from "@user/inBound/UserRoute";
 import { PortfolioRoute } from "@portfolio/inBound/PortfolioRoute";
+import { WorkRoute } from "@work/inBound/WorkRoute";
+
+// Handlers
 import { PortfolioUserCreatedHandler } from "@portfolio/handler/PortfolioUserCreatedHandler";
 
 // ... Outras funções de registro de rotas
@@ -59,6 +66,10 @@ container
   .bind<IPortfolioRepository>(TYPES.IPortfolioRepository)
   .to(PrismaPortfolioRepository)
   .inSingletonScope();
+container
+  .bind<IWorkRepository>(TYPES.IWorkRepository)
+  .to(PrismaWorkRepository)
+  .inSingletonScope();
 
 // --- 2. BIND dos Adaptadores de Serviço (Portas de Saída entre Domínios) ---
 container
@@ -66,6 +77,7 @@ container
   .to(PortfolioAdapter)
   .inSingletonScope();
 container.bind<IUserPort>(TYPES.IUserPort).to(UserAdaper).inSingletonScope();
+// container.bind<IWor>(TYPES.IUserPort).to(UserAdaper).inSingletonScope();
 
 // --- 3. BIND dos Services (Orquestradores de IService - Implementações de Portas de Aplicação) ---
 container
@@ -75,6 +87,10 @@ container
 container
   .bind<IPortfolioService>(TYPES.IPortfolioService)
   .to(PortfolioService)
+  .inSingletonScope();
+container
+  .bind<IWorkService>(TYPES.IWorkService)
+  .to(WorkService)
   .inSingletonScope();
 
 // --- 4. BIND dos Controladores ---
@@ -87,6 +103,10 @@ container
   .bind<PortfolioController>(TYPES.PortfolioController)
   .to(PortfolioController)
   .inRequestScope();
+container
+  .bind<WorkController>(TYPES.WorkController)
+  .to(WorkController)
+  .inRequestScope();
 
 // Handlers
 container
@@ -97,6 +117,7 @@ container
 interface IApplicationControllers {
   userController: UserController;
   portfolioController: PortfolioController;
+  workController: WorkController;
   // ... outros controladores
 }
 
@@ -113,10 +134,12 @@ export class AppComposer {
     const portfolioController = container.get<PortfolioController>(
       TYPES.PortfolioController
     );
+    const workController = container.get<WorkController>(TYPES.WorkController);
 
     return {
       userController,
       portfolioController,
+      workController,
       // ... retorne outras instâncias de controlador
     };
   }
@@ -125,6 +148,7 @@ export class AppComposer {
   public registerRoutes(app: FastifyInstance): void {
     UserRoute.register(app, this.controllers.userController);
     PortfolioRoute.register(app, this.controllers.portfolioController);
+    WorkRoute.register(app, this.controllers.workController);
   }
 
   public registerHandlers(): void {

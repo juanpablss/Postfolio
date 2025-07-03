@@ -3,14 +3,14 @@ import { Work } from "@work/domain/entities/Work";
 import { BadRequest } from "@shared/error/HttpError";
 import { CreateWorkDTO, UpdateWorkDTO } from "@work/dtos/WorkDTO";
 import { WorkMapper } from "@work/util/WorkMapper";
-import IWorkService from "@work/service/IWorkService";
+import { IWorkService } from "@work/service/IWorkService";
 import { IWorkRepository } from "@work/domain/entities/WorkRepository";
-import { IPortfolioPort } from "@work/ports/IPortfolioPort";
+import { IPortfolioPort } from "@portfolio/api/IPortfolioPort";
 import { inject, injectable } from "inversify";
 import { TYPES } from "@compositionRoot/Types";
 
 @injectable()
-export class WorkServiceImp implements IWorkService {
+export class WorkService implements IWorkService {
   constructor(
     @inject(TYPES.IWorkRepository)
     private workRepository: IWorkRepository,

@@ -48,9 +48,9 @@ function portfolioRoutesPlugin(
 export class PortfolioRoute {
   public static register(
     app: FastifyInstance,
-    userController: PortfolioController
+    portfolioController: PortfolioController
   ) {
-    app.register((data) => portfolioRoutesPlugin(data, userController), {
+    app.register((data) => portfolioRoutesPlugin(data, portfolioController), {
       prefix: "api/portfolio",
     });
   }

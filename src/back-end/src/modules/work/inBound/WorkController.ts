@@ -1,12 +1,20 @@
-import { BadRequest } from "@domain/error/HttpError";
-import { CreateWorkDTO, UpdateWorkDTO } from "@dtos/WorkDTO";
-import { RegisterWorkRequest, UpdateWorkRequest } from "@schamas/WorkSchema";
-import workServiceImp from "@service/WorkServiceImp";
-import WorkUseCase from "@useCases/WorkUseCase";
+import { IWorkService } from "@work/service/IWorkService";
 import { FastifyReply, FastifyRequest } from "fastify";
+import {
+  RegisterWorkRequest,
+  UpdateWorkRequest,
+} from "@work/inBound/WorkSchema";
+import { CreateWorkDTO, UpdateWorkDTO } from "@work/dtos/WorkDTO";
+import { BadRequest } from "@shared/error/HttpError";
+import { inject, injectable } from "inversify";
+import { TYPES } from "@compositionRoot/Types";
 
-class WorkController {
-  constructor(private readonly workService: WorkUseCase) {}
+@injectable()
+export class WorkController {
+  constructor(
+    @inject(TYPES.IWorkService)
+    private workService: IWorkService
+  ) {}
 
   async register(req: RegisterWorkRequest, reply: FastifyReply) {
     const createWorkDto: CreateWorkDTO = {
@@ -60,5 +68,3 @@ class WorkController {
     reply.send(response);
   }
 }
-const workController = new WorkController(workServiceImp);
-export default workController;
