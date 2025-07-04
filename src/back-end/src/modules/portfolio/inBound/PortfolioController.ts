@@ -62,7 +62,7 @@ export class PortfolioController {
 
     const response = await this.portfolioService.findWorks(id);
 
-    reply.send(response);
+    reply.send(response?.works);
   }
 
   async update(req: UpdatePortfolioRequest, reply: FastifyReply) {

@@ -68,6 +68,7 @@ function competitionRoutesPlugin(
     (req, rep) => competitionController.getWorkDetails(req, rep)
   );
 
+  // About Rating
   app.post(
     "/:competition/work/:work/rating",
     { preValidation: UserMiddle.authenticate },

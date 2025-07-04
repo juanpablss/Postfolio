@@ -6,10 +6,12 @@ import { CompetitionMapper } from "@competition/util/CompetitionMapper";
 import { ICompetitionRepository } from "@competition/domain/entities/ICompetitionRepository";
 import { WorkCompDetails } from "@competition/domain/entities/WorkCompDetails";
 import { WorkCompDetailsMapper } from "@competition/util/WorkCompDetailsMapper";
+import { Rating } from "@competition/domain/entities/Rating";
+import { RatingMapper } from "@competition/util/RatingMapper";
 Competition;
 
 export class PrismaCompetitionRepository implements ICompetitionRepository {
-  async insert(competition: Competition): Promise<Competition> {
+  async create(competition: Competition): Promise<Competition> {
     try {
       const competitionModel = await prisma.competition.create({
         data: {
@@ -89,7 +91,7 @@ export class PrismaCompetitionRepository implements ICompetitionRepository {
       : null;
   }
 
-  async insertWorkCompDetails(
+  async createWorkCompDetails(
     workCompDetails: WorkCompDetails
   ): Promise<WorkCompDetails> {
     try {
@@ -114,6 +116,7 @@ export class PrismaCompetitionRepository implements ICompetitionRepository {
       );
     }
   }
+
   async updateWorkCompDetails(
     workCompDetails: WorkCompDetails
   ): Promise<WorkCompDetails> {
@@ -140,11 +143,15 @@ export class PrismaCompetitionRepository implements ICompetitionRepository {
       );
     }
   }
+
   async deleteWorkCompDetails(id: string): Promise<WorkCompDetails | null> {
     try {
       const detailsModel = await prisma.workCompDetails.delete({
         where: {
           id,
+        },
+        include: {
+          rating: true,
         },
       });
 
@@ -160,6 +167,7 @@ export class PrismaCompetitionRepository implements ICompetitionRepository {
       );
     }
   }
+
   async findWorkCompDetails(
     competitionId: string,
     workId: string
@@ -185,6 +193,7 @@ export class PrismaCompetitionRepository implements ICompetitionRepository {
       );
     }
   }
+
   async findWorkCompDetailsByCompetition(
     competitionId: string
   ): Promise<WorkCompDetails[]> {
@@ -202,12 +211,119 @@ export class PrismaCompetitionRepository implements ICompetitionRepository {
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         throw new InternalServerError(
-          `Não foi possivel deletar o workCompDetais! Código: ${error.code}`
+          `Não foi possivel efetuar a busca do workCompDetais! Código: ${error.code}`
         );
       }
       throw new InternalServerError(
-        "Não foi possivel deletar o workCompDetais!"
+        "Não foi possivel efetuar a busca do workCompDetais!"
       );
+    }
+  }
+
+  async findWorkCompDetailsByIdWihtRatings(
+    id: string
+  ): Promise<WorkCompDetails[]> {
+    try {
+      const detailsModels = await prisma.workCompDetails.findMany({
+        where: {
+          id,
+        },
+        include: {
+          rating: true,
+        },
+      });
+
+      return detailsModels.map(WorkCompDetailsMapper.toDomain);
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        throw new InternalServerError(
+          `Não foi possivel efetuar a busca do workCompDetais! Código: ${error.code}`
+        );
+      }
+      throw new InternalServerError(
+        "Não foi possivel efetuar a busca do workCompDetais!"
+      );
+    }
+  }
+
+  async createRating(rating: Rating): Promise<Rating> {
+    try {
+      const ratingModel = await prisma.rating.create({
+        data: {
+          workDetailsId: rating.workDetailsId,
+          userId: rating.userId,
+          score: rating.score,
+        },
+      });
+
+      return RatingMapper.toDomin(ratingModel);
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        throw new InternalServerError(
+          `Não foi possivel salvar a avaliação! Código: ${error.code}`
+        );
+      }
+      throw new InternalServerError("Não foi possivel salvar a avaliação!");
+    }
+  }
+
+  async updateRating(rating: Rating): Promise<Rating> {
+    try {
+      const ratingModel = await prisma.rating.update({
+        where: {
+          id: rating.id,
+        },
+        data: {
+          score: rating.score,
+        },
+      });
+
+      return RatingMapper.toDomin(ratingModel);
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        throw new InternalServerError(
+          `Não foi possivel atualizar a avaliação! Código: ${error.code}`
+        );
+      }
+      throw new InternalServerError("Não foi possivel atualizar a avaliação!");
+    }
+  }
+
+  async deleteRating(id: string): Promise<Rating> {
+    try {
+      const ratingModel = await prisma.rating.delete({
+        where: {
+          id,
+        },
+      });
+
+      return RatingMapper.toDomin(ratingModel);
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        throw new InternalServerError(
+          `Não foi possivel deletar a avaliação! Código: ${error.code}`
+        );
+      }
+      throw new InternalServerError("Não foi possivel deletar a avaliação!");
+    }
+  }
+
+  async findRating(id: string): Promise<Rating | null> {
+    try {
+      const ratingModel = await prisma.rating.findUnique({
+        where: {
+          id,
+        },
+      });
+
+      return ratingModel ? RatingMapper.toDomin(ratingModel) : null;
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        throw new InternalServerError(
+          `Não foi possivel buscar a avaliação! Código: ${error.code}`
+        );
+      }
+      throw new InternalServerError("Não foi possivel buscar a avaliação!");
     }
   }
 }

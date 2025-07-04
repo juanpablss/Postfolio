@@ -17,7 +17,7 @@ export class CompetitionService implements ICompetitionService {
   ) {}
 
   async register(competition: Competition): Promise<Competition> {
-    return await this.competitionRepository.insert(competition);
+    return await this.competitionRepository.create(competition);
   }
 
   async subscribeWork(
@@ -37,10 +37,10 @@ export class CompetitionService implements ICompetitionService {
       workId
     );
 
-    if (!existDetails)
+    if (existDetails)
       throw new Conflict("O tralho já está cadastrado na competição");
 
-    const details = await this.competitionRepository.insertWorkCompDetails(
+    const details = await this.competitionRepository.createWorkCompDetails(
       new WorkCompDetails("", 0, 0, competitionId, workId)
     );
     return details;

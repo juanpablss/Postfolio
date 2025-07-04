@@ -4,12 +4,17 @@ import {
   WorkData,
 } from "@competition/domain/entities/WorkCompDetails";
 import { Work as WorkModel } from "@prisma/client";
+import { Rating as RatingModel } from "@prisma/client";
+import { RatingMapper } from "@competition/util/RatingMapper";
 
 export const WorkCompDetailsMapper = {
   toDomain(
-    workCompDetailsModel: WorkCompDetailsModel & { work?: WorkModel }
+    workCompDetailsModel: WorkCompDetailsModel & { work?: WorkModel } & {
+      rating?: RatingModel[];
+    }
   ): WorkCompDetails {
     let workData = undefined;
+    let ratings = undefined;
 
     if (workCompDetailsModel.work) {
       workData = new WorkData(
@@ -21,13 +26,18 @@ export const WorkCompDetailsMapper = {
       );
     }
 
+    if (workCompDetailsModel.rating) {
+      ratings = workCompDetailsModel.rating.map(RatingMapper.toDomin);
+    }
+
     const details = new WorkCompDetails(
       workCompDetailsModel.id,
       workCompDetailsModel.totalReviewers,
       workCompDetailsModel.totalScore,
       workCompDetailsModel.competitionId,
       workCompDetailsModel.workId,
-      workData
+      workData,
+      ratings
     );
 
     return details;

@@ -1,3 +1,5 @@
+import { Rating } from "@competition/domain/entities/Rating";
+
 export class WorkData {
   constructor(
     public id: string,
@@ -14,6 +16,7 @@ export class WorkCompDetails {
     public totalScore: number,
     public competitionId: string,
     public workId: string,
-    public work?: WorkData
+    public work?: WorkData,
+    public ratings?: Rating[]
   ) {}
 }
