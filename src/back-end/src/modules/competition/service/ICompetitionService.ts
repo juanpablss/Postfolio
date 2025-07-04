@@ -1,9 +1,11 @@
 import { Competition } from "@competition/domain/entities/Competition";
+import { Rating } from "@competition/domain/entities/Rating";
 // import Work from "@domain/entities/work/Work";
 import { WorkCompDetails } from "@competition/domain/entities/WorkCompDetails";
+import { CreaetRatingDTO } from "@competition/dtos/RatingDTO";
 
 export interface ICompetitionService {
-  register(competition: Competition): Promise<Competition>;
+  create(competition: Competition): Promise<Competition>;
   subscribeWork(
     competitionId: string,
     workId: string
@@ -19,4 +21,9 @@ export interface ICompetitionService {
     competitionId: string,
     workId: string
   ): Promise<WorkCompDetails | null>;
+
+  createRating(ratingDto: CreaetRatingDTO): Promise<Rating>;
+  updateRating(rating: Rating): Promise<Rating>;
+  deleteRating(id: string): Promise<Rating>;
+  findRating(id: string): Promise<Rating | null>;
 }

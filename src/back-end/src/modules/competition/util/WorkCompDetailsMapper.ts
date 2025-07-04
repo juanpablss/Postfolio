@@ -27,7 +27,7 @@ export const WorkCompDetailsMapper = {
     }
 
     if (workCompDetailsModel.rating) {
-      ratings = workCompDetailsModel.rating.map(RatingMapper.toDomin);
+      ratings = workCompDetailsModel.rating.map(RatingMapper.fromPrismatoDomin);
     }
 
     const details = new WorkCompDetails(

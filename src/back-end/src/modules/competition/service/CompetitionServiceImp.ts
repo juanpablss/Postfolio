@@ -1,9 +1,13 @@
 import { Competition } from "@competition/domain/entities/Competition";
 import { ICompetitionRepository } from "@competition/domain/entities/ICompetitionRepository";
+import { Rating } from "@competition/domain/entities/Rating";
 import { WorkCompDetails } from "@competition/domain/entities/WorkCompDetails";
+import { CreaetRatingDTO } from "@competition/dtos/RatingDTO";
 import { ICompetitionService } from "@competition/service/ICompetitionService";
+import { RatingMapper } from "@competition/util/RatingMapper";
 import { TYPES } from "@compositionRoot/Types";
 import { Conflict, NotFound } from "@shared/error/HttpError";
+import { IUserPort } from "@user/api/IUserPort";
 import { IWorkPort } from "@work/api/IWorkPort";
 import { inject, injectable } from "inversify";
 
@@ -13,10 +17,12 @@ export class CompetitionService implements ICompetitionService {
     @inject(TYPES.ICompetitionRepository)
     private competitionRepository: ICompetitionRepository,
     @inject(TYPES.IWorkPort)
-    private workPort: IWorkPort
+    private workPort: IWorkPort,
+    @inject(TYPES.IUserPort)
+    private userPort: IUserPort
   ) {}
 
-  async register(competition: Competition): Promise<Competition> {
+  async create(competition: Competition): Promise<Competition> {
     return await this.competitionRepository.create(competition);
   }
 
@@ -96,5 +102,80 @@ export class CompetitionService implements ICompetitionService {
     );
 
     return details;
+  }
+
+  async createRating(ratingDto: CreaetRatingDTO): Promise<Rating> {
+    const [existUser, existWorkCompDetails] = await Promise.all([
+      this.userPort.exist(ratingDto.userId),
+      this.competitionRepository.findWorkCompDetails(
+        ratingDto.competitionId,
+        ratingDto.workId
+      ),
+    ]);
+
+    if (!existUser) throw new NotFound("Usuario não encontrado");
+    if (!existWorkCompDetails)
+      throw new NotFound(
+        "É possivel que o trabalho não esteja inscrito nesta competição"
+      );
+
+    const rating = RatingMapper.fromCreateRatingDTOtoDomain(
+      ratingDto,
+      existWorkCompDetails.id
+    );
+
+    return await this.competitionRepository.createRating(rating);
+  }
+  async updateRating(rating: Rating): Promise<Rating> {
+    const existRating = await this.competitionRepository.findRating(rating.id);
+
+    if (!existRating) throw new NotFound("Sua avaliação não existe");
+
+    const existWorkCompDetails =
+      await this.competitionRepository.findWorkCompDetailsById(
+        existRating.workDetailsId
+      );
+
+    if (!existWorkCompDetails)
+      throw new NotFound(
+        "É possivel que o trabalho não esteja inscrito nesta competição"
+      );
+    const oldScore = existRating.score;
+    existRating.setScore(rating.score);
+
+    existWorkCompDetails.updateTotalScore(oldScore, existRating.score);
+
+    const [ratingResponse] = await Promise.all([
+      this.competitionRepository.updateRating(existRating),
+      this.competitionRepository.updateWorkCompDetails(existWorkCompDetails),
+    ]);
+    return ratingResponse;
+  }
+  async deleteRating(id: string): Promise<Rating> {
+    const existRating = await this.competitionRepository.findRating(id);
+
+    if (!existRating) throw new NotFound("Sua avaliação não existe");
+
+    const existWorkCompDetails =
+      await this.competitionRepository.findWorkCompDetailsById(
+        existRating.workDetailsId
+      );
+
+    if (!existWorkCompDetails)
+      throw new NotFound(
+        "É possivel que o trabalho não esteja inscrito nesta competição"
+      );
+
+    existWorkCompDetails.removeRating(existRating);
+
+    const [ratingResponse] = await Promise.all([
+      this.competitionRepository.deleteRating(existRating.id),
+      this.competitionRepository.updateWorkCompDetails(existWorkCompDetails),
+    ]);
+
+    return await this.competitionRepository.deleteRating(id);
+  }
+  async findRating(id: string): Promise<Rating | null> {
+    return await this.competitionRepository.findRating(id);
   }
 }

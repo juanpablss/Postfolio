@@ -256,7 +256,7 @@ export class PrismaCompetitionRepository implements ICompetitionRepository {
         },
       });
 
-      return RatingMapper.toDomin(ratingModel);
+      return RatingMapper.fromPrismatoDomin(ratingModel);
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         throw new InternalServerError(
@@ -278,7 +278,7 @@ export class PrismaCompetitionRepository implements ICompetitionRepository {
         },
       });
 
-      return RatingMapper.toDomin(ratingModel);
+      return RatingMapper.fromPrismatoDomin(ratingModel);
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         throw new InternalServerError(
@@ -297,7 +297,7 @@ export class PrismaCompetitionRepository implements ICompetitionRepository {
         },
       });
 
-      return RatingMapper.toDomin(ratingModel);
+      return RatingMapper.fromPrismatoDomin(ratingModel);
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         throw new InternalServerError(
@@ -316,7 +316,7 @@ export class PrismaCompetitionRepository implements ICompetitionRepository {
         },
       });
 
-      return ratingModel ? RatingMapper.toDomin(ratingModel) : null;
+      return ratingModel ? RatingMapper.fromPrismatoDomin(ratingModel) : null;
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         throw new InternalServerError(

@@ -25,7 +25,10 @@ export interface ICompetitionRepository {
   findWorkCompDetailsByCompetition(
     competitionId: string
   ): Promise<WorkCompDetails[]>;
-  findWorkCompDetailsByIdWihtRatings(id: string): Promise<WorkCompDetails[]>;
+  findWorkCompDetailsById(id: string): Promise<WorkCompDetails | null>;
+  findWorkCompDetailsByIdWihtRatings(
+    id: string
+  ): Promise<WorkCompDetails[] | null>;
 
   createRating(rating: Rating): Promise<Rating>;
   updateRating(rating: Rating): Promise<Rating>;

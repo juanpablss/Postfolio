@@ -70,7 +70,7 @@ function competitionRoutesPlugin(
 
   // About Rating
   app.post(
-    "/:competition/work/:work/rating",
+    "/:competitionId/work/:workId/rating",
     { preValidation: UserMiddle.authenticate },
     (req, rep) => competitionController.createRating(req, rep)
   );

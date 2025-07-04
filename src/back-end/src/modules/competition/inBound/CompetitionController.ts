@@ -1,9 +1,14 @@
 import { Competition } from "@competition/domain/entities/Competition";
 import { ICompetitionService } from "@competition/service/ICompetitionService";
 import { TYPES } from "@compositionRoot/Types";
-import { BadRequest, InternalServerError } from "@shared/error/HttpError";
+import {
+  BadRequest,
+  InternalServerError,
+  Unauthorized,
+} from "@shared/error/HttpError";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { inject, injectable } from "inversify";
+import { CreaetRatingDTO } from "@competition/dtos/RatingDTO";
 
 @injectable()
 export class CompetitionController {
@@ -21,7 +26,7 @@ export class CompetitionController {
 
     const competition = new Competition("", name, new Date());
 
-    const response = await this.competitionService.register(competition);
+    const response = await this.competitionService.create(competition);
 
     reply.send({
       msg: "Competição criada com sucesso",
@@ -128,7 +133,31 @@ export class CompetitionController {
   }
 
   async createRating(req: FastifyRequest, reply: FastifyReply) {
-    throw new InternalServerError("Not implemented");
+    const user = req.user;
+
+    if (!user) throw new Unauthorized("Usuario precisa fazer login");
+
+    const { competitionId, workId } = req.params as {
+      competitionId: string;
+      workId: string;
+    };
+
+    const score = req.body as { score: number };
+
+    if (!competitionId) throw new BadRequest("A competição é necessaria");
+    if (!workId) throw new BadRequest("O trabalho é necessario");
+    if (!score) throw new BadRequest("A avaliação é necessaria");
+
+    const dto: CreaetRatingDTO = {
+      userId: user.id,
+      workId,
+      competitionId,
+      score: Number(score),
+    };
+
+    const response = this.competitionService.createRating(dto);
+
+    reply.send(response);
   }
 
   async updateRating(req: FastifyRequest, reply: FastifyReply) {

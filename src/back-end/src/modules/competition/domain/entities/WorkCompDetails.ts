@@ -19,4 +19,13 @@ export class WorkCompDetails {
     public work?: WorkData,
     public ratings?: Rating[]
   ) {}
+
+  public removeRating(rating: Rating) {
+    this.totalReviewers -= 1;
+    this.totalScore -= rating.score;
+  }
+
+  public updateTotalScore(oldScore: number, newScore: number) {
+    this.totalScore = newScore - oldScore;
+  }
 }
