@@ -3,6 +3,7 @@ import { ICompetitionService } from "@competition/service/ICompetitionService";
 import { TYPES } from "@compositionRoot/Types";
 import {
   BadRequest,
+  Conflict,
   InternalServerError,
   Unauthorized,
 } from "@shared/error/HttpError";
@@ -52,15 +53,17 @@ export class CompetitionController {
   }
 
   async unsubscribeWork(req: FastifyRequest, reply: FastifyReply) {
-    const { competition, work } = req.params as {
-      competition: string;
-      work: string;
+    const { competitionId, workId } = req.params as {
+      competitionId: string;
+      workId: string;
     };
 
-    if (!competition) throw new BadRequest("ID da competição é obrigatorio");
-    if (!work) throw new BadRequest("ID da competição é obrigatorio");
+    // console.log(`${competition} # {}`)
 
-    await this.competitionService.unsubscribeWork(competition, work);
+    if (!competitionId) throw new BadRequest("ID da competição é obrigatorio");
+    if (!workId) throw new BadRequest("ID da competição é obrigatorio");
+
+    await this.competitionService.unsubscribeWork(competitionId, workId);
 
     reply.send({ msg: "Trabalho removido da competição" });
   }
@@ -142,11 +145,12 @@ export class CompetitionController {
       workId: string;
     };
 
-    const score = req.body as { score: number };
+    const { score } = req.body as Partial<{ score: number }>;
 
     if (!competitionId) throw new BadRequest("A competição é necessaria");
     if (!workId) throw new BadRequest("O trabalho é necessario");
-    if (!score) throw new BadRequest("A avaliação é necessaria");
+    if (score === undefined || score === null || isNaN(Number(score)))
+      throw new BadRequest("A avaliação é necessaria");
 
     const dto: CreaetRatingDTO = {
       userId: user.id,
@@ -155,7 +159,7 @@ export class CompetitionController {
       score: Number(score),
     };
 
-    const response = this.competitionService.createRating(dto);
+    const response = await this.competitionService.createRating(dto);
 
     reply.send(response);
   }

@@ -30,9 +30,14 @@ export interface ICompetitionRepository {
     id: string
   ): Promise<WorkCompDetails[] | null>;
 
+  // About Rating
   createRating(rating: Rating): Promise<Rating>;
   updateRating(rating: Rating): Promise<Rating>;
   deleteRating(id: string): Promise<Rating>;
 
   findRating(id: string): Promise<Rating | null>;
+  findRatingByUserAndWorkCompDetails(
+    userId: string,
+    workCompDetailsId: string
+  ): Promise<Rating | null>;
 }

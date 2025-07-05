@@ -220,6 +220,10 @@ export class PrismaCompetitionRepository implements ICompetitionRepository {
     }
   }
 
+  async findWorkCompDetailsById(id: string): Promise<WorkCompDetails | null> {
+    throw new Error("Method not implemented.");
+  }
+
   async findWorkCompDetailsByIdWihtRatings(
     id: string
   ): Promise<WorkCompDetails[]> {
@@ -248,6 +252,8 @@ export class PrismaCompetitionRepository implements ICompetitionRepository {
 
   async createRating(rating: Rating): Promise<Rating> {
     try {
+      // console.log(`${rating.workDetailsId}\n`);
+      // console.log(`AQUI\n`);
       const ratingModel = await prisma.rating.create({
         data: {
           workDetailsId: rating.workDetailsId,
@@ -313,6 +319,30 @@ export class PrismaCompetitionRepository implements ICompetitionRepository {
       const ratingModel = await prisma.rating.findUnique({
         where: {
           id,
+        },
+      });
+
+      return ratingModel ? RatingMapper.fromPrismatoDomin(ratingModel) : null;
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        throw new InternalServerError(
+          `Não foi possivel buscar a avaliação! Código: ${error.code}`
+        );
+      }
+      throw new InternalServerError("Não foi possivel buscar a avaliação!");
+    }
+  }
+
+  async findRatingByUserAndWorkCompDetails(
+    userId: string,
+    workCompDetailsId: string
+  ): Promise<Rating | null> {
+    try {
+      // Tem que ser único
+      const ratingModel = await prisma.rating.findFirst({
+        where: {
+          userId,
+          workDetailsId: workCompDetailsId,
         },
       });
 

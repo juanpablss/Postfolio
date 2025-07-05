@@ -1,5 +1,3 @@
-import z from "zod";
-
 export class GenericHttpError extends Error {
   constructor(public statusCode: number, public name: string, message: string) {
     super(message);
@@ -20,7 +18,7 @@ export class Unauthorized extends GenericHttpError {
 
 export class TokenExpired extends Unauthorized {
   constructor() {
-    super("Token de acesso expirado");
+    super("Token de acesso expirado ou invalido");
   }
 }
 

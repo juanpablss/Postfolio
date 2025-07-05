@@ -22,20 +22,11 @@ export default function configureErrorHandling(
     timestamp: new Date().toISOString(),
   };
 
-  console.log(`\nAQUI ${typeof error}\n`);
-  console.log(`\nAQUI ${error}\n`);
-
-  // if(error instanceof FastifyError){
-
-  // }
-
-  // if (error instanceof ZodError) {
-  //   console.log(`\n${error.errors[0].message}\n`);
-  //   return reply.status(400).send(new ValidationError(error.errors));
-  // }
-
+  console.log(`\n${error}\n`);
+  console.log("[ErrorHandling]");
   // Tratamento para erros conhecidos
   if (error instanceof GenericHttpError) {
+    console.log("[GenericHttpError]");
     response.statusCode = error.statusCode;
     response.error = error.name;
     response.message = error.message;

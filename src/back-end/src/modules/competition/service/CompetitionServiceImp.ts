@@ -53,18 +53,21 @@ export class CompetitionService implements ICompetitionService {
   }
 
   async unsubscribeWork(competitionId: string, workId: string): Promise<void> {
-    // const details =
-    //   await this.workCompDetailsRepository.findByCompetitionAndWork(
-    //     competitionId,
-    //     workId
-    //   );
+    const details = await this.competitionRepository.findWorkCompDetails(
+      competitionId,
+      workId
+    );
 
-    // if (!details)
-    //   throw new NotFound(
-    //     "Inscrição não encontrada para esta competição e trabalho"
-    //   );
+    if (!details)
+      throw new NotFound(
+        "Inscrição não encontrada para esta competição e trabalho"
+      );
 
-    throw new Error("Method not implemented.");
+    const response = await this.competitionRepository.deleteWorkCompDetails(
+      details.id
+    );
+
+    // throw new Error("Method not implemented.");
   }
 
   async updateCompetition(competition: Competition): Promise<Competition> {
@@ -119,12 +122,27 @@ export class CompetitionService implements ICompetitionService {
         "É possivel que o trabalho não esteja inscrito nesta competição"
       );
 
+    const existRating =
+      await this.competitionRepository.findRatingByUserAndWorkCompDetails(
+        ratingDto.userId,
+        existWorkCompDetails.id
+      );
+
+    if (existRating) throw new Conflict("O usuario já avaliou este trabalho");
+
     const rating = RatingMapper.fromCreateRatingDTOtoDomain(
       ratingDto,
       existWorkCompDetails.id
     );
 
-    return await this.competitionRepository.createRating(rating);
+    existWorkCompDetails.addRating(rating.score);
+
+    const [response] = await Promise.all([
+      this.competitionRepository.createRating(rating),
+      this.competitionRepository.updateWorkCompDetails(existWorkCompDetails),
+    ]);
+
+    return await this.competitionRepository.createRating(response);
   }
   async updateRating(rating: Rating): Promise<Rating> {
     const existRating = await this.competitionRepository.findRating(rating.id);

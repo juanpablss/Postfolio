@@ -20,12 +20,17 @@ export class WorkCompDetails {
     public ratings?: Rating[]
   ) {}
 
+  public addRating(score: number) {
+    this.totalScore += score;
+    this.totalReviewers += 1;
+  }
+
   public removeRating(rating: Rating) {
     this.totalReviewers -= 1;
     this.totalScore -= rating.score;
   }
 
   public updateTotalScore(oldScore: number, newScore: number) {
-    this.totalScore = newScore - oldScore;
+    this.totalScore += newScore - oldScore;
   }
 }
