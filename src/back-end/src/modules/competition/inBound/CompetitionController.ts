@@ -58,8 +58,6 @@ export class CompetitionController {
       workId: string;
     };
 
-    // console.log(`${competition} # {}`)
-
     if (!competitionId) throw new BadRequest("ID da competição é obrigatorio");
     if (!workId) throw new BadRequest("ID da competição é obrigatorio");
 
