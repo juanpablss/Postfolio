@@ -60,20 +60,18 @@ import { CompetitionRoute } from "@competition/inBound/CompetitionRoute";
 // Handlers
 import { PortfolioUserCreatedHandler } from "@portfolio/handler/PortfolioUserCreatedHandler";
 import { userComposeModule } from "@user/composition/userComposer";
+import { portfolioComposeModule } from "@portfolio/composition/portfolioComposer";
 
 // ... Outras funções de registro de rotas
 
 const container = new Container();
 
 userComposeModule(container);
+portfolioComposeModule(container);
 
 // --- 1. BIND dos Repositórios (Implementações de Portas de Domínio) ---
 // Estes são os adaptadores de saída para a persistência
 
-container
-  .bind<IPortfolioRepository>(TYPES.IPortfolioRepository)
-  .to(PrismaPortfolioRepository)
-  .inSingletonScope();
 container
   .bind<IWorkRepository>(TYPES.IWorkRepository)
   .to(PrismaWorkRepository)
@@ -84,19 +82,11 @@ container
   .inSingletonScope();
 
 // --- 2. BIND dos Adaptadores de Serviço (Portas de Saída entre Domínios) ---
-container
-  .bind<IPortfolioPort>(TYPES.IPortfolioPort)
-  .to(PortfolioAdapter)
-  .inSingletonScope();
 
 container.bind<IWorkPort>(TYPES.IWorkPort).to(WorkAdapter).inSingletonScope();
 
 // --- 3. BIND dos Services (Orquestradores de IService - Implementações de Portas de Aplicação) ---
 
-container
-  .bind<IPortfolioService>(TYPES.IPortfolioService)
-  .to(PortfolioService)
-  .inSingletonScope();
 container
   .bind<IWorkService>(TYPES.IWorkService)
   .to(WorkService)
@@ -110,10 +100,6 @@ container
 // Eles dependem das Portas de Aplicação (IUserUseCases, IPortfolioUseCases, etc.)
 
 container
-  .bind<PortfolioController>(TYPES.PortfolioController)
-  .to(PortfolioController)
-  .inRequestScope();
-container
   .bind<WorkController>(TYPES.WorkController)
   .to(WorkController)
   .inRequestScope();
@@ -121,12 +107,6 @@ container
   .bind<CompetitionController>(TYPES.CompetitionController)
   .to(CompetitionController)
   .inRequestScope();
-
-// Handlers
-container
-  .bind<PortfolioUserCreatedHandler>(PortfolioUserCreatedHandler)
-  .toSelf()
-  .inSingletonScope();
 
 interface IApplicationControllers {
   userController: UserController;
