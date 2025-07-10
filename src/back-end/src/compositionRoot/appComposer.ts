@@ -1,20 +1,9 @@
-// src/compositionRoot/appComposer.ts
-
 import { FastifyInstance } from "fastify";
 import { Container } from "inversify";
 import "reflect-metadata";
 
 import { TYPES } from "@compositionRoot/Types";
 import configureErrorHandling from "@infrastructure/fastify/ConfigureErrorHandling";
-
-import { ICompetitionRepository } from "@competition/domain/entities/ICompetitionRepository";
-
-import { ICompetitionService } from "@competition/service/ICompetitionService";
-
-import { PrismaCompetitionRepository } from "@competition/repository/PrismaCompetitionRepository";
-
-import { CompetitionService } from "@competition/service/CompetitionServiceImp";
-// ... Outros Services
 
 // Controladores
 import { UserController } from "@user/inBound/UserController";
@@ -34,6 +23,7 @@ import { PortfolioUserCreatedHandler } from "@portfolio/handler/PortfolioUserCre
 import { userComposeModule } from "@user/composition/userComposer";
 import { portfolioComposeModule } from "@portfolio/composition/portfolioComposer";
 import { workComposeModule } from "@work/composition/WorkComposer";
+import { competitionComposeModule } from "@competition/composition/CompetitionComposer";
 
 // ... Outras funções de registro de rotas
 
@@ -42,31 +32,7 @@ const container = new Container();
 userComposeModule(container);
 portfolioComposeModule(container);
 workComposeModule(container);
-
-// --- 1. BIND dos Repositórios (Implementações de Portas de Domínio) ---
-// Estes são os adaptadores de saída para a persistência
-
-container
-  .bind<ICompetitionRepository>(TYPES.ICompetitionRepository)
-  .to(PrismaCompetitionRepository)
-  .inSingletonScope();
-
-// --- 2. BIND dos Adaptadores de Serviço (Portas de Saída entre Domínios) ---
-
-// --- 3. BIND dos Services (Orquestradores de IService - Implementações de Portas de Aplicação) ---
-
-container
-  .bind<ICompetitionService>(TYPES.ICompetitionService)
-  .to(CompetitionService)
-  .inSingletonScope();
-
-// --- 4. BIND dos Controladores ---
-// Eles dependem das Portas de Aplicação (IUserUseCases, IPortfolioUseCases, etc.)
-
-container
-  .bind<CompetitionController>(TYPES.CompetitionController)
-  .to(CompetitionController)
-  .inRequestScope();
+competitionComposeModule(container);
 
 interface IApplicationControllers {
   userController: UserController;
