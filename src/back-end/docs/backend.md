@@ -35,10 +35,11 @@ yarn run dev
 ```
 # Documentação da api
 
-A api foi desenvolvida para ser usada como backend do projeto Postfolio.
+A api foi desenvolvida para ser usada como backend do projeto Postfolio. Sua estrutura geral foi pensada para ser um monólito modular. Cada module compõe uma pequena parte do dominio da aplicação, tedno cada um deles o máximo de independencia possivel.
 
 ## Índice
 - [0. Sobre app.ts](#0-sobre-appts)
+- [1. Modulos](#1-modulos)
 - [1. Endpoints](#1-endpoints)
 - [2. Arquitetura](#2-arquitetura)
   - [2.1 Descrição da Arquitetura](#21-descrição-da-arquitetura)
@@ -85,6 +86,10 @@ const start = async () => {
 
 start();
 ```
+
+## 1. Modulos
+
+Como dito anterior 
 
 ## 1. Endpoints
 

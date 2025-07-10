@@ -9,36 +9,36 @@ import configureErrorHandling from "@infrastructure/fastify/ConfigureErrorHandli
 
 // --- Importações de Interfaces (Portas) ---
 // Domínio
-import { IUserRepository } from "@user/domain/entities/IUserRepository";
+
 import { IPortfolioRepository } from "@portfolio/domain/entities/IPortfolioRepository";
 import { IWorkRepository } from "@work/domain/entities/WorkRepository";
 import { ICompetitionRepository } from "@competition/domain/entities/ICompetitionRepository";
 // services
-import { IUserService } from "@user/service/IUserService";
+
 import { IPortfolioService } from "@portfolio/service/IPortfolioService";
 import { IWorkService } from "@work/service/IWorkService";
 import { ICompetitionService } from "@competition/service/ICompetitionService";
 
 // Portas de Saída (entre domínios)
-import { IUserPort } from "@user/api/IUserPort";
+
 import { IPortfolioPort } from "@portfolio/api/IPortfolioPort";
 import { IWorkPort } from "@work/api/IWorkPort";
 
 // --- Importações de Implementações Concretas ---
 // Repositórios
-import { PrismaUserRepository } from "@user/repository/PrismaUserRepository";
+
 import { PrismaPortfolioRepository } from "@portfolio/repository/PrismaPortfolioRepository";
 import { PrismaWorkRepository } from "@work/repository/PrismaWorkRepository";
 import { PrismaCompetitionRepository } from "@competition/repository/PrismaCompetitionRepository";
 
 // Adaptadores de Saída de Serviço (Portas de Saída)
 import { PortfolioAdapter } from "@portfolio/api/PortfolioAdapter";
-import { UserAdaper } from "@user/api/UserAdapter";
+
 import { WorkAdapter } from "@work/api/WorkAdapter";
 // ... Outros adaptadores de serviço (ex: para Email, Chat, se User precisar deles)
 
 // Services
-import { UserService } from "@user/service/UserService";
+
 import { PortfolioService } from "@portfolio/service/PortfolioService";
 import { WorkService } from "@work/service/WorkService";
 import { CompetitionService } from "@competition/service/CompetitionServiceImp";
@@ -59,17 +59,17 @@ import { CompetitionRoute } from "@competition/inBound/CompetitionRoute";
 
 // Handlers
 import { PortfolioUserCreatedHandler } from "@portfolio/handler/PortfolioUserCreatedHandler";
+import { userComposeModule } from "@user/composition/userComposer";
 
 // ... Outras funções de registro de rotas
 
 const container = new Container();
 
+userComposeModule(container);
+
 // --- 1. BIND dos Repositórios (Implementações de Portas de Domínio) ---
 // Estes são os adaptadores de saída para a persistência
-container
-  .bind<IUserRepository>(TYPES.IUserRepository)
-  .to(PrismaUserRepository)
-  .inSingletonScope();
+
 container
   .bind<IPortfolioRepository>(TYPES.IPortfolioRepository)
   .to(PrismaPortfolioRepository)
@@ -88,14 +88,11 @@ container
   .bind<IPortfolioPort>(TYPES.IPortfolioPort)
   .to(PortfolioAdapter)
   .inSingletonScope();
-container.bind<IUserPort>(TYPES.IUserPort).to(UserAdaper).inSingletonScope();
+
 container.bind<IWorkPort>(TYPES.IWorkPort).to(WorkAdapter).inSingletonScope();
 
 // --- 3. BIND dos Services (Orquestradores de IService - Implementações de Portas de Aplicação) ---
-container
-  .bind<IUserService>(TYPES.IUserService)
-  .to(UserService)
-  .inSingletonScope();
+
 container
   .bind<IPortfolioService>(TYPES.IPortfolioService)
   .to(PortfolioService)
@@ -111,10 +108,7 @@ container
 
 // --- 4. BIND dos Controladores ---
 // Eles dependem das Portas de Aplicação (IUserUseCases, IPortfolioUseCases, etc.)
-container
-  .bind<UserController>(TYPES.UserController)
-  .to(UserController)
-  .inRequestScope(); // Ou inSingletonScope
+
 container
   .bind<PortfolioController>(TYPES.PortfolioController)
   .to(PortfolioController)
