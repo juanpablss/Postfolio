@@ -20,8 +20,8 @@ import { CompetitionRoute } from "@competition/inBound/CompetitionRoute";
 
 // Handlers
 import { PortfolioUserCreatedHandler } from "@portfolio/handler/PortfolioUserCreatedHandler";
-import { userComposeModule } from "@user/composition/userComposer";
-import { portfolioComposeModule } from "@portfolio/composition/portfolioComposer";
+import { userComposeModule } from "@user/composition/UserComposer";
+import { portfolioComposeModule } from "@portfolio/composition/PortfolioComposer";
 import { workComposeModule } from "@work/composition/WorkComposer";
 import { competitionComposeModule } from "@competition/composition/CompetitionComposer";
 
