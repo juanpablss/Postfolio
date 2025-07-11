@@ -1208,11 +1208,12 @@ babel-preset-jest@^29.6.3:
   version "1.0.0"
   dependencies:
     "@fastify/cors" "^11.0.0"
+    "@fastify/swagger" "^9.5.1"
     "@prisma/client" "^6.4.1"
     "@types/jest" "^29.5.14"
     "@types/supertest" "^6.0.2"
     "@types/validator" "^13.12.2"
-    backend "file:../../../../../../../AppData/Local/Yarn/Cache/v6/npm-backend-1.0.0-8f833089-f67b-4f9d-84f4-d015077d59bf-1751449774994/node_modules/backend"
+    backend "file:../../../../../../../AppData/Local/Yarn/Cache/v6/npm-backend-1.0.0-abab92c1-c5a9-4344-bba7-5b9c4c5a4c20-1752235802505/node_modules/backend"
     bcrypt "^5.1.1"
     fastify-type-provider-zod "^5.0.1"
     inversify "^7.0.0-alpha.5"

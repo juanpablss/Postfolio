@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "docs": "typedoc --options typedoc.json",
     "dev": "ts-node-dev --respawn --require tsconfig-paths/register --env-file .env src/app.ts"
   },
   "keywords": [],
