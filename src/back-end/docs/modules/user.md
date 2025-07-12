@@ -91,8 +91,45 @@ response:
 
 A organização do módulo foi projetada para ser intuitiva e escalável. Abaixo, detalhamos o propósito de cada diretório e arquivo principal:
 
+Estrutura de pastas do modulo:
+```shell
+MODULES\USER
+├───api
+│       IUserPort.ts
+│       UserAdapter.ts
+│
+├───composition
+│       UserComposer.ts
+│
+├───domain
+│   ├───entities
+│   │       IUserRepository.ts
+│   │       User.ts
+│   │
+│   └───valueObject
+│           Email.ts
+│
+├───dtos
+│       UserDTO.ts
+│
+├───inBound
+│       UserController.ts
+│       UserRoute.ts
+│       UserSchema.ts
+│
+├───repository
+│       PrismaUserRepository.ts
+│
+├───service
+│       IUserService.ts
+│       UserService.ts
+│
+└───util
+        UserMapper.ts
+```
+---
 `api`
-Define as portas de saída (outbound ports) e seus adaptadores para interações com serviços externos ou sistemas de terceiros (e.g., serviços de e-mail, APIs externas).
+Define as portas de saída (outbound ports) e seus adaptadores para interações com modulos externos ou sistemas de terceiros (e.g., modulo de e-mail, APIs externas).
 
 - `IUserPort.ts`: Interface que estabelece o contrato para a comunicação com adaptadores externos.
 ```ts
@@ -100,5 +137,35 @@ export interface IUserPort {
   exist(userId: string): Promise<boolean>;
 }
 ```
-- `UserAdapter.ts`: Implementação concreta de `IUserPort`, responsável por traduzir as chamadas para o formato esperado pelo serviço externo. 
-Veja a implementação em [`UserAdapter.ts`](../../src/modules/user/api/UserAdapter.ts)
+- `UserAdapter.ts`: Implementação concreta de `IUserPort`, responsável por traduzir as chamadas para o formato esperado pelo 
+serviço externo. Veja a implementação em [`UserAdapter.ts`](../../src/modules/user/api/UserAdapter.ts)
+
+---
+`composition`
+Orquestra a injeção de dependências e a montagem de todas as partes do módulo. Para mais detalhes, leia o arquivo responsavem [`UserComposer.ts`](../../src/modules/user/composition/UserComposer.ts)
+
+---
+`domain`
+A camada mais central e agnóstica a tecnologias, contendo a lógica de negócio pura, as regras de domínio e as entidades.
+
+- `entities`
+    - `IUserRepository.ts`: Interface que define o contrato para a persistência da entidade `User`, abstraindo os detalhes do banco de dados.
+    ```ts
+    import User from "@user/domain/entities/User";
+    import Email from "@user/domain/valueObject/Email";
+
+    export interface IUserRepository {
+        create: (user: User) => Promise<User | null>;
+        deleteById: (id: string) => Promise<User | null>;
+
+        findMany: () => Promise<User[]>;
+        findById: (id: string) => Promise<User | null>;
+        findByEmail: (email: Email) => Promise<User | null>;
+    }
+    ```
+    - `User.ts`: A entidade principal do domínio, contendo os atributos e comportamentos fundamentais de um usuário. Veja mais detalhes [`User.ts`](../../src/modules/user/domain/entities/User.ts)
+
+- `valueObject`
+    - `Email.ts`: Um objeto de valor que encapsula a lógica e validações relacionadas a endereços de e-mail, garantindo sua validade e consistência.
+    
+---
