@@ -152,9 +152,67 @@ Cada pasta em modules/ representa um contexto isolado do domínio, como:
 
 Dentro de cada módulo, seguimos uma estrutura comum com pastas como controller, service, repository, dtos, domain, etc., mantendo o princípio de coesão alta e acoplamento baixo.
 
-### 1.1 Sobre infrastructure
+### 1.1 Modulos do dominio
 
-### 1.2 Sobre Shared
+A estruturação de cada modulo do dominio foi projetada para ser intuitiva e escalável. Todos foram seguiem a mesma estrutura de pastas e lógica. Abaixo, detalhamos o propósito de cada diretório e arquivo principal:
+
+```shell
+MODULES\USER
+├───api
+├───composition
+├───domain
+│   ├───entities
+│   └───valueObject # (opcional) Vai depender da modelagem do domain
+├───dtos
+├───inBound
+├───repository
+├───service
+└───util
+```
+
+---
+`api`
+Define as portas de saída (outbound ports) e seus adaptadores para interações com modulos externos ou sistemas de terceiros (e.g., modulo de work, portfolio, APIs externas).
+
+---
+`composition`
+Orquestra a injeção de dependências e a montagem de todas as partes do módulo dentro do container. Para mais detalhes, leia o dentro da pasta `composition` de cada modulo.
+
+---
+`domain`
+A camada mais central e agnóstica a tecnologias, contendo a lógica de negócio pura, as regras de domínio e as entidades.
+
+- `entities`: Local onde fica a interface do repository e a entidade(s) principal(ais) do modulo.
+- `valueObject`: Um objeto de valor que encapsula a lógica e validações relacionadas a uma coluna do banco.
+
+---
+`dtos`
+Define os Data Transfer Objects (DTOs), que são modelos de dados usados para transferir informações entre as diferentes camadas e sistemas, sem expor a estrutura interna das entidades de domínio.
+
+---
+`inBound`
+Define as portas de entrada para o módulo, relacionadas à API e à validação de requisições. Tem dentro dela três arquivos geralmente:
+
+- `controller`: responsável por receber as requisições HTTP, delegar para a camada de serviço e retornar as respostas.
+- `route`: Define as rotas da API para o módulo, mapeando os endpoints para os métodos do `controller`.
+- `schema`: Esquemas de validação de dados com o zod para as requisições de entrada, garantindo que os dados recebidos estejam no formato esperado.
+
+---
+`repository`
+Fornece a implementação concreta da interface repository definida na camada de domínio, lidando diretamente com a persistência de dados (banco de dados, cache, etc.).
+
+---
+`service`
+Contém a lógica de aplicação, orquestrando as operações de negócio e atuando como um intermediário entre a camada de entrada (`inBound`) e o domínio (`domain`).
+
+---
+`util`
+Abriga funções utilitárias ou auxiliares que não se encaixam diretamente nas outras camadas, mas são usadas em várias partes do módulo (ex: mappers).
+
+
+### 1.2 Sobre infrastructure
+
+### 1.3 Sobre Shared
 
 ### 
 

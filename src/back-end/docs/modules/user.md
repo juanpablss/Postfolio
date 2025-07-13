@@ -168,4 +168,4 @@ A camada mais central e agnóstica a tecnologias, contendo a lógica de negócio
 - `valueObject`
     - `Email.ts`: Um objeto de valor que encapsula a lógica e validações relacionadas a endereços de e-mail, garantindo sua validade e consistência.
     
----
+--- 
