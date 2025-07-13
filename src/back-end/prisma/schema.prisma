@@ -9,15 +9,32 @@ datasource db {
 }
 
 model User {
-  id         String     @id @default(uuid())
-  name       String
-  email      String     @unique
-  password   String
-  status     String
-  portfolios Portfolio?
-  ratings    Rating[]
+  id            String          @id @default(uuid())
+  name          String
+  email         String          @unique
+  password      String?
+  status        String
+  portfolios    Portfolio?
+  ratings       Rating[]
+  ProviderOAuth ProviderOAuth[]
 
   @@map("tb_user")
+}
+
+enum SocialProviderType {
+  GOOGLE
+}
+
+model ProviderOAuth {
+  id         String             @id @default(uuid())
+  userId     String
+  provider   SocialProviderType // Enum no Prisma
+  providerId String
+  email      String
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([provider, providerId]) // Garante que providerId seja único para cada provedor
 }
 
 model Portfolio {

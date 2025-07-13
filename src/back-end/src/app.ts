@@ -7,6 +7,7 @@ import {
   ZodTypeProvider,
 } from "fastify-type-provider-zod";
 import { AppComposer } from "compositionRoot/appComposer";
+import { configureProvaders } from "@infrastructure/fastify/Provaders";
 
 const app = Fastify({
   logger: {
@@ -35,6 +36,8 @@ const appCompose = new AppComposer();
 appCompose.registerRoutes(app);
 appCompose.configureFastify(app);
 appCompose.registerHandlers();
+
+configureProvaders(app);
 
 const start = async () => {
   try {

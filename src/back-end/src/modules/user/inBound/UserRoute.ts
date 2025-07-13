@@ -22,6 +22,10 @@ function userRoutesPlugin(
     userController.login(req as LoginRequest, reply)
   );
 
+  app.get("/auth/google/callback", (req, reply) =>
+    userController.socialLogin(req, reply)
+  );
+
   app.post(
     "/profile",
     { preValidation: UserMiddle.authenticate },

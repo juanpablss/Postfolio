@@ -5,6 +5,8 @@ import { LoginRequest, RegisterUserRequest } from "@user/inBound/UserSchema";
 import { IUserService } from "@user/service/IUserService";
 import { inject, injectable } from "inversify";
 import { TYPES } from "@compositionRoot/Types";
+import jwt from "jsonwebtoken";
+import { GoogleUserPayload } from "@infrastructure/types/fastify";
 
 @injectable()
 export class UserController {
@@ -40,6 +42,25 @@ export class UserController {
     const token = await this.userService.login(loginDto);
 
     reply.send({ msg: "Login bem-sucedido!", token });
+  }
+
+  async socialLogin(req: FastifyRequest, reply: FastifyReply) {
+    // console.log(req.body);
+    const app = req.server;
+    console.log(req.query + "\n");
+    const token =
+      await app.googleOAuth2.getAccessTokenFromAuthorizationCodeFlow(req);
+
+    console.log(token + "\n");
+    const id_token = token.token.id_token;
+
+    if (!id_token) throw new BadRequest("Token não definido!");
+
+    const userPayload = jwt.decode(id_token);
+
+    console.log(userPayload);
+
+    reply.send({ msg: "deu certo" });
   }
 
   async getProfile(req: FastifyRequest, reply: FastifyReply) {
