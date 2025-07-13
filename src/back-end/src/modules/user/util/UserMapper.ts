@@ -1,5 +1,5 @@
 import { User as UserModel } from "@prisma/client";
-import { CreateUserDTO } from "@user/dtos/UserDTO";
+import { CreateUserDTO, SocialLoginDTO } from "@user/dtos/UserDTO";
 import User from "@user/domain/entities/User";
 import Email from "@user/domain/valueObject/Email";
 
@@ -30,5 +30,8 @@ export const UserMapper = {
       hashedPassword,
       dto.status
     );
+  },
+  fromSocialLoginDTOtoDomain(dto: SocialLoginDTO): User {
+    return new User("", dto.name, new Email(dto.email, false), null);
   },
 };

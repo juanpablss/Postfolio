@@ -10,4 +10,9 @@ interface LoginUserDTO {
   password: string;
 }
 
-export { CreateUserDTO, LoginUserDTO };
+interface SocialLoginDTO {
+  name: string;
+  email: string;
+}
+
+export { CreateUserDTO, LoginUserDTO, SocialLoginDTO };

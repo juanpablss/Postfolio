@@ -8,7 +8,7 @@ import { IUserRepository } from "@user/domain/entities/IUserRepository";
 import Email from "@user/domain/valueObject/Email";
 
 export class PrismaUserRepository implements IUserRepository {
-  async create(user: User): Promise<User | null> {
+  async create(user: User): Promise<User> {
     try {
       const userModel = await prisma.user.create({
         data: {
@@ -18,7 +18,7 @@ export class PrismaUserRepository implements IUserRepository {
           status: user.status,
         },
       });
-      return userModel ? UserMapper.fromPrismatoDomain(userModel) : null;
+      return UserMapper.fromPrismatoDomain(userModel);
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         throw new InternalServerError(

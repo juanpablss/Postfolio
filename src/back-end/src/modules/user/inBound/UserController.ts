@@ -1,6 +1,10 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { BadRequest, InternalServerError } from "@shared/error/HttpError";
-import { CreateUserDTO, LoginUserDTO } from "@user/dtos/UserDTO";
+import {
+  CreateUserDTO,
+  LoginUserDTO,
+  SocialLoginDTO,
+} from "@user/dtos/UserDTO";
 import { LoginRequest, RegisterUserRequest } from "@user/inBound/UserSchema";
 import { IUserService } from "@user/service/IUserService";
 import { inject, injectable } from "inversify";
@@ -22,7 +26,7 @@ export class UserController {
   async register(req: RegisterUserRequest, reply: FastifyReply) {
     const userDto: CreateUserDTO = { ...req.body };
 
-    await this.userService.register(userDto);
+    await this.userService.create(userDto);
 
     return reply.send({ msg: "Usuario criado com sucesso!" });
   }
@@ -45,7 +49,6 @@ export class UserController {
   }
 
   async socialLogin(req: FastifyRequest, reply: FastifyReply) {
-    // console.log(req.body);
     req.server.googleOAuth2.generateAuthorizationUri(
       req,
       reply,
@@ -54,25 +57,30 @@ export class UserController {
         reply.redirect(authorizationEndpoint);
       }
     );
-    // reply.send({ msg: "deu certo" });
   }
 
   async socialLoginCallBack(req: FastifyRequest, reply: FastifyReply) {
     const app = req.server;
 
-    const token =
+    const tokenAuthorization =
       await app.googleOAuth2.getAccessTokenFromAuthorizationCodeFlow(req);
 
-    // console.log(token + "\n");
-    const id_token = token.token.id_token;
+    const id_token = tokenAuthorization.token.id_token;
 
     if (!id_token) throw new BadRequest("Token não definido!");
 
-    const userPayload = jwt.decode(id_token);
+    const userPayload = jwt.decode(id_token) as GoogleUserPayload;
 
     console.log(userPayload);
 
-    reply.send({ msg: "deu certo" });
+    const socialLogin: SocialLoginDTO = {
+      name: userPayload.name,
+      email: userPayload.email,
+    };
+
+    const token = await this.userService.socialLogin(socialLogin);
+
+    reply.send({ msg: "Login bem-sucedido!", token });
   }
 
   async getProfile(req: FastifyRequest, reply: FastifyReply) {

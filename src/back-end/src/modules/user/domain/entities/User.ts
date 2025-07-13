@@ -4,15 +4,15 @@ export default class User {
   id: string;
   name: string;
   email: Email;
-  password: string;
+  password: string | null;
   status: string;
 
   constructor(
     id: string,
     name: string,
     email: Email,
-    password: string,
-    status: string
+    password: string | null,
+    status: string = "None"
   ) {
     this.id = id;
     this.name = name;
