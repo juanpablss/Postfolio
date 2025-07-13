@@ -46,12 +46,24 @@ export class UserController {
 
   async socialLogin(req: FastifyRequest, reply: FastifyReply) {
     // console.log(req.body);
+    req.server.googleOAuth2.generateAuthorizationUri(
+      req,
+      reply,
+      (err, authorizationEndpoint) => {
+        if (err) console.error(err);
+        reply.redirect(authorizationEndpoint);
+      }
+    );
+    // reply.send({ msg: "deu certo" });
+  }
+
+  async socialLoginCallBack(req: FastifyRequest, reply: FastifyReply) {
     const app = req.server;
-    console.log(req.query + "\n");
+
     const token =
       await app.googleOAuth2.getAccessTokenFromAuthorizationCodeFlow(req);
 
-    console.log(token + "\n");
+    // console.log(token + "\n");
     const id_token = token.token.id_token;
 
     if (!id_token) throw new BadRequest("Token não definido!");
