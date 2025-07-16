@@ -3,21 +3,32 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-  id         String     @id @default(uuid())
-  name       String
-  email      String     @unique
-  password   String
-  status     String
-  portfolios Portfolio?
-  ratings    Rating[]
+  id            String          @id @default(uuid())
+  name          String
+  email         String          @unique
+  password      String?
+  status        String
+  ProviderOAuth ProviderOAuth[]
+  portfolios    Portfolio?
+  ratings       Rating[]
 
   @@map("tb_user")
+}
+
+model ProviderOAuth {
+  id         String             @id @default(uuid())
+  userId     String
+  provider   SocialProviderType
+  providerId String
+  email      String
+  user       User               @relation(fields: [userId], references: [id])
+
+  @@unique([provider, providerId])
 }
 
 model Portfolio {
@@ -36,8 +47,8 @@ model Rating {
   id            String          @id @default(uuid())
   score         Float
   userId        String
-  user          User            @relation(fields: [userId], references: [id])
   workDetailsId String
+  user          User            @relation(fields: [userId], references: [id])
   workDetails   WorkCompDetails @relation(fields: [workDetailsId], references: [id])
 
   @@map("tb_rating")
@@ -71,11 +82,15 @@ model WorkCompDetails {
   totalReviewers Int
   totalScore     Float
   competitionId  String
-  competition    Competition @relation(fields: [competitionId], references: [id])
   workId         String
-  work           Work        @relation(fields: [workId], references: [id])
   rating         Rating[]
+  competition    Competition @relation(fields: [competitionId], references: [id])
+  work           Work        @relation(fields: [workId], references: [id])
 
   @@unique([competitionId, workId])
   @@map("tb_work_comp_details")
+}
+
+enum SocialProviderType {
+  GOOGLE
 }

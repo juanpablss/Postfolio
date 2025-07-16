@@ -1,10 +1,13 @@
 import Fastify from "fastify";
-import { UserRoutes } from "./adapters/inBound/routes/UserRoute";
 import fastifyCors from "@fastify/cors";
-import "@infrastructure/@types/fastify";
-import { PortfolioRoute } from "./adapters/inBound/routes/PortfolioRoute";
-import { RatingRoute } from "./adapters/inBound/routes/RatingRoute";
-import { configureFastify } from "@infrastructure/fastify/ConfigureFastify";
+import "@infrastructure/types/fastify";
+import {
+  serializerCompiler,
+  validatorCompiler,
+  ZodTypeProvider,
+} from "fastify-type-provider-zod";
+import { AppComposer } from "compositionRoot/appComposer";
+import { configureProvaders } from "@infrastructure/fastify/Provaders";
 
 const app = Fastify({
   logger: {
@@ -17,8 +20,11 @@ const app = Fastify({
       },
     },
   },
-});
+}).withTypeProvider<ZodTypeProvider>();
 const PORT = 8080;
+
+app.setValidatorCompiler(validatorCompiler);
+app.setSerializerCompiler(serializerCompiler);
 
 app.register(fastifyCors, {
   origin: true,
@@ -26,11 +32,12 @@ app.register(fastifyCors, {
   allowedHeaders: ["Content-Type", "Authorization"],
 });
 
-app.register(UserRoutes, { prefix: "api/user" });
-app.register(PortfolioRoute, { prefix: "api/portfolio" });
-app.register(RatingRoute, { prefix: "api/rating" });
+const appCompose = new AppComposer();
+appCompose.registerRoutes(app);
+appCompose.configureFastify(app);
+appCompose.registerHandlers();
 
-configureFastify(app);
+configureProvaders(app);
 
 const start = async () => {
   try {

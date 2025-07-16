@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "typeRoots": ["./node_modules/@types", "src/infrastructure/@types"],
+    "typeRoots": ["./node_modules/@types", "src/infrastructure/types"],
     /* Visit https://aka.ms/tsconfig to read more about this file */
 
     /* Projects */
@@ -16,8 +16,8 @@
     // "lib": [],                                        /* Specify a set of bundled library declaration files that describe the target runtime environment. */
     // "jsx": "preserve",                                /* Specify what JSX code is generated. */
     // "libReplacement": true,                           /* Enable lib replacement. */
-    // "experimentalDecorators": true,                   /* Enable experimental support for legacy experimental decorators. */
-    // "emitDecoratorMetadata": true,                    /* Emit design-type metadata for decorated declarations in source files. */
+    "experimentalDecorators": true,                   /* Enable experimental support for legacy experimental decorators. */
+    "emitDecoratorMetadata": true,                    /* Emit design-type metadata for decorated declarations in source files. */
     // "jsxFactory": "",                                 /* Specify the JSX factory function used when targeting React JSX emit, e.g. 'React.createElement' or 'h'. */
     // "jsxFragmentFactory": "",                         /* Specify the JSX Fragment reference used for fragments when targeting React JSX emit e.g. 'React.Fragment' or 'Fragment'. */
     // "jsxImportSource": "",                            /* Specify module specifier used to import the JSX factory functions when using 'jsx: react-jsx*'. */
@@ -32,26 +32,19 @@
     // "moduleResolution": "node10",                     /* Specify how TypeScript looks up a file from a given module specifier. */
     "baseUrl": "./src",                                  /* Specify the base directory to resolve non-relative module names. */
     "paths": {
-      /* adapters */
-      // inBound
-      "@controller/*":["adapters/inBound/controller/*"],
-      "@middleware/*":["adapters/inBound/middleware/*"],
-      "@routes/*":["adapters/inBound/routes/*"],
-      //outBound
-      "@models/*":["adapters/outBound/models/*"],
-      "@repository/*":["adapters/outBound/repository/*"],
+      /* modules */
+      "@user/*" : ["modules/user/*"], 
+      "@portfolio/*" : ["modules/portfolio/*"],
+      "@work/*" : ["modules/work/*"],
+      "@competition/*" : ["modules/competition/*"],
+      "@email/*" : ["modules/email/*"],
 
-      // Talvez mudar?
-      /* application */ 
-      // service
-      "@service/*":["application/service/*"],
-      // useCases
-      "@useCases/*":["application/useCases/*"],
+      "@shared/*" : ["shared/*"],
+      "@compositionRoot/*" : ["compositionRoot/*"],
+      
 
-      "@application/*":["application/*"],
-      "@domain/*":["domain/*"],
       "@infrastructure/*":["infrastructure/*"],
-      "@util/*":["util/*"]
+      // "@util/*":["util/*"]
     },                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     // "typeRoots": [],                                  /* Specify multiple folders that act like './node_modules/@types'. */
@@ -134,5 +127,5 @@
   },
   "include": [
     "./src/**/*.ts",
-    "./src/infrastructure/@types/**/*.d.ts"]
+    "src/infrastructure/types/**/*.d.ts"]
 }
