@@ -5,7 +5,8 @@ export interface IMessageService {
   sendMessage(sendMessageDto: SendMessageDTO): Promise<void>;
   updateMessage(updateMessageDto: UpdateMessageDTO): Promise<void>;
 
-  getOfflineMessages(userId: string): Promise<Message[]>;
+  processOfflineMessages(userId: string): Promise<void>;
+
   getConversationHistory(
     user1Id: string,
     user2Id: string,
