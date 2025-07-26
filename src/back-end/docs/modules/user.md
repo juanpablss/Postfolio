@@ -1,16 +1,16 @@
 # User
 
 O módulo `USER` é o coração da gestão de usuários em nossa aplicação. Ele encapsula toda a lógica de negócio e as funcionalidades relacionadas à criação, leitura, atualização e exclusão (CRUD) de usuários, garantindo a integridade e a consistência dos dados de usuário em todo o sistema.
-
+<!-- 
 ## Índice
 
 - [1. Como consumir](#1-como-consumir)
 - [2. Componentes Chave e Fluxos de Dados](#2-componentes-chave-e-fluxos-de-dados)
-- [3. Estrutura de Pastas e Arquivos](#3-estrutura-de-pastas-e-arquivos)
+- [3. Estrutura de Pastas e Arquivos](#3-estrutura-de-pastas-e-arquivos) -->
 
 ## 1. Como consumir
 
-A seguir, estudaremos cada end-point, seus cabeçalhos, corpos e respostas.
+A seguir, estudaremos cada end-point, seus cabeçalhos, corpos e respostas. Para mais detalhes leia diretamente no arquivo fonte: [UserRoutes.ts](../../src/modules/user/inBound/UserRoute.ts).
 Segiu o local onde todos os end-poins estão sendo registrados pelo *app*
 
 ```shell
@@ -142,4 +142,4 @@ response (`200`) ou (`201`):
 ```
 
 
-## 2. Componentes Chave e Fluxos de Dados
+<!-- ## 2. Componentes Chave e Fluxos de Dados -->
