@@ -23,7 +23,7 @@ function userRoutesPlugin(
   );
 
   app.get("/auth/google", (req, reply) =>
-    userController.socialLoginCallBack(req, reply)
+    userController.socialLogin(req, reply)
   );
 
   app.get("/auth/google/callback", (req, reply) =>

@@ -16,6 +16,8 @@ export const TYPES = {
   ICompetitionService: Symbol.for("ICompetitionService"),
   IWorkService: Symbol.for("IWorkService"),
   IWorkCompDetailsService: Symbol.for("IWorkCompDetailsService"),
+  IMessageService: Symbol.for("IMessageService"),
+  IUsersConnects: Symbol.for("IUsersConnects"),
 
   // Portas de Saída (Adapters entre Domínios)
   IPortfolioPort: Symbol.for("IPortfolioPort"), // User Module precisa interagir com Portfolio

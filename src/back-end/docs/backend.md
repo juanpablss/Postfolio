@@ -209,6 +209,11 @@ Contém a lógica de aplicação, orquestrando as operações de negócio e atua
 `util`
 Abriga funções utilitárias ou auxiliares que não se encaixam diretamente nas outras camadas, mas são usadas em várias partes do módulo (ex: mappers).
 
+---
+
+Segue uma forma de consimir cada modulo, especificados em seus respectivos arquivos: [User](modules/user.md)
+
+
 
 ### 1.2 Sobre infrastructure
 
