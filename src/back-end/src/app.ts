@@ -10,7 +10,6 @@ import { AppComposer } from "compositionRoot/appComposer";
 import { configureProvaders } from "@infrastructure/fastify/Provaders";
 import websocketPlugin from "@fastify/websocket";
 import { DataCache } from "@infrastructure/config/Redis";
-// import { redis } from "@infrastructure/config/Redis";
 
 const app = Fastify({
   logger: {
@@ -44,11 +43,11 @@ appCompose.registerHandlers();
 configureProvaders(app);
 
 const start = async () => {
-  const dataCache = new DataCache();
+  const dataCache = DataCache.getInstance();
   dataCache.connect();
+
   const redis = dataCache.getClient();
 
-  await redis.set("key1", "valor1");
   try {
     await app.listen({ port: PORT, host: "0.0.0.0" });
     console.log(`Servidor rodando em http://localhost:${PORT}`);
@@ -56,11 +55,6 @@ const start = async () => {
     app.log.error(err);
     process.exit(1);
   }
-
-  // console.log()
-
-  const result = await redis.get("key1");
-  console.log(result); // >>> bar
 };
 
 start();

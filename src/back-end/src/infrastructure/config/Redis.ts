@@ -1,10 +1,12 @@
+// src/infra/cache/DataCache.ts (ou onde você o definiu)
 import { createClient, RedisClientType } from "redis";
 
 class DataCache {
   private redisClient: RedisClientType;
+  private static instance: DataCache; // A instância única
 
-  // Make the constructor private to enforce Singleton pattern
-  public constructor() {
+  // O construtor é PRIVADO para garantir o Singleton
+  private constructor() {
     this.redisClient = createClient({
       username: "default",
       password: process.env.DATACACHE_REDIS,
@@ -14,7 +16,6 @@ class DataCache {
       },
     });
 
-    // Handle connection errors
     this.redisClient.on("error", (err) =>
       console.error("Redis Client Error", err)
     );
@@ -24,9 +25,15 @@ class DataCache {
     this.redisClient.on("end", () => console.log("Redis Client Disconnected!"));
   }
 
+  public static getInstance(): DataCache {
+    if (!DataCache.instance) {
+      DataCache.instance = new DataCache();
+    }
+    return DataCache.instance;
+  }
+
   public async connect(): Promise<void> {
     if (!this.redisClient.isReady) {
-      // Check if it's not already connected/connecting
       await this.redisClient
         .connect()
         .then(() => console.log("Redis connected!"))
@@ -34,20 +41,15 @@ class DataCache {
     }
   }
 
-  /**
-   * Returns the connected Redis client.
-   * Ensure connect() has been called and awaited before calling this.
-   */
   public getClient(): RedisClientType {
     return this.redisClient;
   }
 
-  // Optional: Add a disconnect method
   public async disconnect(): Promise<void> {
     if (this.redisClient.isReady) {
-      await this.redisClient.quit(); // Use quit() for graceful shutdown
+      await this.redisClient.quit();
     }
   }
 }
 
-export { DataCache }; // Export the class
+export { DataCache };
