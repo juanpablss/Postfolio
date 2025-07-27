@@ -8,6 +8,8 @@ import {
 } from "fastify-type-provider-zod";
 import { AppComposer } from "compositionRoot/appComposer";
 import { configureProvaders } from "@infrastructure/fastify/Provaders";
+import websocketPlugin from "@fastify/websocket";
+import { DataCache } from "@infrastructure/config/Redis";
 
 const app = Fastify({
   logger: {
@@ -31,6 +33,7 @@ app.register(fastifyCors, {
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 });
+app.register(websocketPlugin);
 
 const appCompose = new AppComposer();
 appCompose.registerRoutes(app);
@@ -40,6 +43,11 @@ appCompose.registerHandlers();
 configureProvaders(app);
 
 const start = async () => {
+  const dataCache = DataCache.getInstance();
+  dataCache.connect();
+
+  const redis = dataCache.getClient();
+
   try {
     await app.listen({ port: PORT, host: "0.0.0.0" });
     console.log(`Servidor rodando em http://localhost:${PORT}`);

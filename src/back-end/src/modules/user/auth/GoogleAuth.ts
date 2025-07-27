@@ -24,7 +24,8 @@ export class GoogleOAuth {
       startRedirectPath: this.startRedirectPath,
       callbackUri: this.callbackUri,
     };
-    console.log(`${process.env.GOOGLE_CLIENT_SECRET}\n`);
+    // console.log(`${process.env.GOOGLE_CLIENT_SECRET}\n`);
+
     app.register(fastifyOAuth2, googleOAuthConfig);
   }
 }
