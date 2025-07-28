@@ -33,10 +33,10 @@ export class MessageService implements IMessageService {
     }
 
     message.setStatus(MessageStatus.RECEIVED);
-    const id = (await this.messageRepository.create(message)).getId();
+    // const id = (await this.messageRepository.create(message)).getId();
     socket.send(
       JSON.stringify({
-        msgId: id,
+        msgId: "ID_FALSO",
         from: message.senderId,
         text: message.getContent(),
         timestamp: message.createAt,

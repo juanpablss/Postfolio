@@ -14,15 +14,17 @@ export class ChatController {
     private usersConnects: IUsersConnects
   ) {}
   async connect(socket: WebSocket, req: FastifyRequest) {
+    // console.log("AQUI 1");
     if (!req.user) {
       socket.close(1008, "Autenticação falhou");
       return;
     }
+    // console.log("AQUI 2");
 
     const user = req.user;
 
     await this.usersConnects.connection(user.id, socket);
-    await this.messageService.processOfflineMessages(user.id);
+    // await this.messageService.processOfflineMessages(user.id);
 
     socket.on("message", (message: string | Buffer | ArrayBuffer) => {
       const msgContent = message.toString();
