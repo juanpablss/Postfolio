@@ -8,6 +8,7 @@ export const TYPES = {
   ICompetitionRepository: Symbol.for("ICompetitionRepository"),
   IWorkRepository: Symbol.for("IWorkRepository"),
   IWorkCompDetailsRepository: Symbol.for("IWorkCompDetailsRepository"),
+  IMessageRepository: Symbol.for("IMessageRepository"),
 
   // Portas de Aplicação (Use Cases de alto nível)
   IUserService: Symbol.for("IUserService"),
