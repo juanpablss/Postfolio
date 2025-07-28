@@ -12,3 +12,11 @@ function chatRoutePlugin(app: FastifyInstance, chatController: ChatController) {
     (req, rep) => chatController.connect(req, rep)
   );
 }
+
+export class ChatRoute {
+  public static register(app: FastifyInstance, chatController: ChatController) {
+    app.register((data) => chatRoutePlugin(data, chatController), {
+      prefix: "api/chat",
+    });
+  }
+}

@@ -30,11 +30,15 @@ export class ChatController {
       try {
         const parsedMessage = JSON.parse(msgContent) as {
           type: string;
-          to: string;
+          toUserId: string;
           text: string;
         };
 
-        if (!parsedMessage.type || !parsedMessage.to || !parsedMessage.text) {
+        if (
+          !parsedMessage.type ||
+          !parsedMessage.toUserId ||
+          !parsedMessage.text
+        ) {
           socket.send(
             "Erro: Formato de mensagem JSON inválido. Campos 'type', 'to', 'text' são obrigatórios."
           );
@@ -42,8 +46,9 @@ export class ChatController {
         }
 
         this.messageService.sendMessage({
-          from: user.id,
+          fromUserId: user.id,
           ...parsedMessage,
+          socket,
         });
       } catch (error) {}
     });

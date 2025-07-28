@@ -1,3 +1,5 @@
+import { WebSocket } from "ws";
+
 interface SendMessageDTO {
   type: string;
   toUserId: string;
