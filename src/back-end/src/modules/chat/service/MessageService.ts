@@ -11,7 +11,7 @@ import { BadRequest } from "@shared/error/HttpError";
 import { WebSocket } from "ws";
 
 @injectable()
-class MessageService implements IMessageService {
+export class MessageService implements IMessageService {
   constructor(
     @inject(TYPES.IMessageRepository)
     private messageRepository: IMessageRepository,

@@ -3,7 +3,7 @@ import { IUsersConnects } from "@chat/service/IUsersConnects";
 import { injectable } from "inversify";
 
 @injectable()
-class UsersConnects implements IUsersConnects {
+export class UsersConnects implements IUsersConnects {
   private socketsActive = new Map<string, WebSocket>();
 
   async connection(userId: string, socket: WebSocket): Promise<boolean> {

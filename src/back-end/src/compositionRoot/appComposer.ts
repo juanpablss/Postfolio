@@ -10,22 +10,24 @@ import { UserController } from "@user/inBound/UserController";
 import { PortfolioController } from "@portfolio/inBound/PortfolioController";
 import { WorkController } from "@work/inBound/WorkController";
 import { CompetitionController } from "@competition/inBound/CompetitionController";
-// ... Outros Controladores
+import { ChatController } from "@chat/inBound/ChatController";
 
 // Rotas
 import { UserRoute } from "@user/inBound/UserRoute";
 import { PortfolioRoute } from "@portfolio/inBound/PortfolioRoute";
 import { WorkRoute } from "@work/inBound/WorkRoute";
 import { CompetitionRoute } from "@competition/inBound/CompetitionRoute";
+import { ChatRoute } from "@chat/inBound/ChatRoute";
 
 // Handlers
 import { PortfolioUserCreatedHandler } from "@portfolio/handler/PortfolioUserCreatedHandler";
+
+// Composition
 import { userComposeModule } from "@user/composition/UserComposer";
 import { portfolioComposeModule } from "@portfolio/composition/PortfolioComposer";
 import { workComposeModule } from "@work/composition/WorkComposer";
 import { competitionComposeModule } from "@competition/composition/CompetitionComposer";
-
-// ... Outras funções de registro de rotas
+import { chatComposerModule } from "@chat/composition/ChatComposer";
 
 const container = new Container();
 
@@ -33,12 +35,14 @@ userComposeModule(container);
 portfolioComposeModule(container);
 workComposeModule(container);
 competitionComposeModule(container);
+chatComposerModule(container);
 
 interface IApplicationControllers {
   userController: UserController;
   portfolioController: PortfolioController;
   workController: WorkController;
   competitionController: CompetitionController;
+  chatController: ChatController;
   // ... outros controladores
 }
 
@@ -59,12 +63,14 @@ export class AppComposer {
     const competitionController = container.get<CompetitionController>(
       TYPES.CompetitionController
     );
+    const chatController = container.get<ChatController>(TYPES.ChatController);
 
     return {
       userController,
       portfolioController,
       workController,
       competitionController,
+      chatController,
       // ... retorne outras instâncias de controlador
     };
   }
@@ -75,6 +81,7 @@ export class AppComposer {
     PortfolioRoute.register(app, this.controllers.portfolioController);
     WorkRoute.register(app, this.controllers.workController);
     CompetitionRoute.register(app, this.controllers.competitionController);
+    ChatRoute.register(app, this.controllers.chatController);
   }
 
   public registerHandlers(): void {

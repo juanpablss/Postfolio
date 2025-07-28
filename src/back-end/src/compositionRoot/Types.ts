@@ -42,6 +42,7 @@ export const TYPES = {
   CompetitionController: Symbol.for("CompetitionController"),
   WorkController: Symbol.for("WorkController"),
   WorkCompDetailsController: Symbol.for("WorkCompDetailsController"),
+  ChatController: Symbol.for("ChatController"),
 
   // Handlers
   // PortfolioUserCreatedHandler: Symbol.for("PortfolioUserCreatedHandler"),
