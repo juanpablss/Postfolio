@@ -1,8 +1,9 @@
 interface SendMessageDTO {
   type: string;
-  to: string;
-  from: string;
+  toUserId: string;
+  fromUserId: string;
   text: string;
+  socket: WebSocket;
 }
 interface UpdateMessageDTO {}
 
