@@ -17,6 +17,9 @@ model User {
   portfolios    Portfolio?
   ratings       Rating[]
 
+  messageSent     Message[] @relation("MessageSent")
+  messageReceived Message[] @relation("MessageReceived")
+
   @@map("tb_user")
 }
 
@@ -29,6 +32,18 @@ model ProviderOAuth {
   user       User               @relation(fields: [userId], references: [id])
 
   @@unique([provider, providerId])
+}
+
+model Message {
+  id         String        @id @default(uuid())
+  content    String
+  status     MessageStatus
+  createAt   DateTime
+  updateAt   DateTime
+  senderId   String
+  sender     User          @relation("MessageSent", fields: [senderId], references: [id])
+  receiverId String
+  receiver   User          @relation("MessageReceived", fields: [receiverId], references: [id])
 }
 
 model Portfolio {
@@ -93,4 +108,11 @@ model WorkCompDetails {
 
 enum SocialProviderType {
   GOOGLE
+}
+
+enum MessageStatus {
+  READ
+  UNREAD
+  RECEIVED
+  UNRECEIVED
 }
