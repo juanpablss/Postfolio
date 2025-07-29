@@ -17,6 +17,6 @@ export interface IMessageRepository {
   findConversationMessages(
     user1Id: string,
     user2Id: string,
-    options?: { limit?: number; before?: string }
+    options: { limit: number; before: Date }
   ): Promise<Message[]>;
 }

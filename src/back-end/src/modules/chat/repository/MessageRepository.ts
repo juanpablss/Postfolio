@@ -1,19 +1,48 @@
 import { IMessageRepository } from "@chat/domain/entities/IMessageRepository";
 import { Message } from "@chat/domain/entities/Message";
 import { MessageStatus } from "@chat/domain/enum/MessageStatus";
+import { MessageMapper, MessageStatusMapper } from "@chat/util/MessageMapper";
+import { prisma } from "@infrastructure/config/Prisma";
 import { injectable } from "inversify";
 
 @injectable()
 export class MessageRepository implements IMessageRepository {
-  create(msg: Message): Promise<Message> {
-    throw new Error("Method not implemented.");
+  async create(msg: Message): Promise<Message> {
+    const model = await prisma.message.create({
+      data: {
+        ...MessageMapper.fromDomainToPrisma(msg),
+        id: undefined,
+      },
+    });
+
+    return MessageMapper.fromPrismaToDomain(model);
   }
   update(msg: Message): Promise<Message> {
     throw new Error("Method not implemented.");
   }
-  updateManyStatus(msg: Message[]): Promise<void> {
-    throw new Error("Method not implemented.");
+
+  async updateManyStatus(msg: Message[]): Promise<void> {
+    const updates = msg.map((msg) =>
+      prisma.message.update({
+        where: {
+          id: msg.getId(),
+        },
+        data: {
+          status: MessageStatusMapper.fromDomainToPrisma(msg.getStatus()),
+          updateAt: new Date(),
+        },
+      })
+    );
+
+    const results = await Promise.allSettled(updates);
+
+    for (const result of results) {
+      if (result.status === "rejected") {
+        console.error("Erro ao atualizar mensagem:", result.reason);
+      }
+    }
   }
+
   delete(id: string): Promise<Message | null> {
     throw new Error("Method not implemented.");
   }
@@ -23,17 +52,38 @@ export class MessageRepository implements IMessageRepository {
   findByUser(userId: string): Promise<Message[]> {
     throw new Error("Method not implemented.");
   }
-  findByUserAndStatus(
+
+  async findByUserAndStatus(
     userId: string,
     status: MessageStatus
   ): Promise<Message[]> {
-    throw new Error("Method not implemented.");
+    const models = await prisma.message.findMany({
+      where: {
+        receiverId: userId,
+        status: MessageStatusMapper.fromDomainToPrisma(status),
+      },
+    });
+
+    return models.map(MessageMapper.fromPrismaToDomain);
   }
-  findConversationMessages(
+
+  async findConversationMessages(
     user1Id: string,
     user2Id: string,
-    options?: { limit?: number; before?: string }
+    options: { limit: number; before: Date }
   ): Promise<Message[]> {
-    throw new Error("Method not implemented.");
+    const models = await prisma.message.findMany({
+      where: {
+        senderId: user1Id,
+        receiverId: user2Id,
+
+        createAt: {
+          gte: options.before,
+        },
+      },
+      take: options.limit,
+    });
+
+    return models.map(MessageMapper.fromPrismaToDomain);
   }
 }

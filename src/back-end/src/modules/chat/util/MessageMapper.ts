@@ -4,31 +4,33 @@ import { SendMessageDTO } from "@chat/dtos/MessageDTO";
 import { Message as MessageModel } from "@prisma/client";
 import { MessageStatus as MessageStatusModel } from "@prisma/client";
 
-function fromStatusDomainToPrisma(status: MessageStatus): MessageStatusModel {
-  switch (status) {
-    case MessageStatus.READ:
-      return MessageStatusModel.READ;
-    case MessageStatus.UNREAD:
-      return MessageStatusModel.UNREAD;
-    case MessageStatus.RECEIVED:
-      return MessageStatusModel.RECEIVED;
-    case MessageStatus.UNRECEIVED:
-      return MessageStatusModel.UNRECEIVED;
-  }
-}
+export const MessageStatusMapper = {
+  fromDomainToPrisma(status: MessageStatus): MessageStatusModel {
+    switch (status) {
+      case MessageStatus.READ:
+        return MessageStatusModel.READ;
+      case MessageStatus.UNREAD:
+        return MessageStatusModel.UNREAD;
+      case MessageStatus.RECEIVED:
+        return MessageStatusModel.RECEIVED;
+      case MessageStatus.UNRECEIVED:
+        return MessageStatusModel.UNRECEIVED;
+    }
+  },
 
-function fromStatusPrismaToDomain(status: MessageStatusModel): MessageStatus {
-  switch (status) {
-    case MessageStatusModel.READ:
-      return MessageStatus.READ;
-    case MessageStatusModel.UNREAD:
-      return MessageStatus.UNREAD;
-    case MessageStatusModel.RECEIVED:
-      return MessageStatus.RECEIVED;
-    case MessageStatusModel.UNRECEIVED:
-      return MessageStatus.UNRECEIVED;
-  }
-}
+  fromPrismaToDomain(status: MessageStatusModel): MessageStatus {
+    switch (status) {
+      case MessageStatusModel.READ:
+        return MessageStatus.READ;
+      case MessageStatusModel.UNREAD:
+        return MessageStatus.UNREAD;
+      case MessageStatusModel.RECEIVED:
+        return MessageStatus.RECEIVED;
+      case MessageStatusModel.UNRECEIVED:
+        return MessageStatus.UNRECEIVED;
+    }
+  },
+};
 
 export const MessageMapper = {
   fromSendMessageDTOtoDomain(dto: SendMessageDTO): Message {
@@ -39,7 +41,7 @@ export const MessageMapper = {
     return {
       id: msg.getId(),
       content: msg.getContent(),
-      status: fromStatusDomainToPrisma(msg.getStatus()),
+      status: MessageStatusMapper.fromDomainToPrisma(msg.getStatus()),
       createAt: msg.createAt,
       updateAt: msg.updateAt,
       senderId: msg.senderId,
@@ -52,7 +54,7 @@ export const MessageMapper = {
       msg.content,
       msg.senderId,
       msg.receiverId,
-      fromStatusPrismaToDomain(msg.status),
+      MessageStatusMapper.fromPrismaToDomain(msg.status),
       msg.createAt,
       msg.updateAt
     );

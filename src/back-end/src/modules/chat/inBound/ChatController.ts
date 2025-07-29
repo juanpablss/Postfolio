@@ -24,8 +24,7 @@ export class ChatController {
     const user = req.user;
 
     await this.usersConnects.connection(user.id, socket);
-    // await this.messageService.processOfflineMessages(user.id);
-
+    await this.messageService.processOfflineMessages(user.id);
     socket.on("message", (message: string | Buffer | ArrayBuffer) => {
       const msgContent = message.toString();
 
