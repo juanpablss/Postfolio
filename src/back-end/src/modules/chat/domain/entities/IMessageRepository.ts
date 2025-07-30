@@ -13,10 +13,16 @@ export interface IMessageRepository {
     userId: string,
     status: MessageStatus
   ): Promise<Message[]>;
-  // findUnreadByRecipient(recipientId: string): Promise<Message[]>;
-  findConversationMessages(
+
+  findConversationMessagesBefore(
     user1Id: string,
     user2Id: string,
-    options: { limit: number; before: Date }
+    options: { limit: number; date: Date }
+  ): Promise<Message[]>;
+
+  findConversationMessagesAfter(
+    user1Id: string,
+    user2Id: string,
+    options: { limit: number; date: Date }
   ): Promise<Message[]>;
 }

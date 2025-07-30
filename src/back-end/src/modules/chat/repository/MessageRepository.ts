@@ -67,10 +67,10 @@ export class MessageRepository implements IMessageRepository {
     return models.map(MessageMapper.fromPrismaToDomain);
   }
 
-  async findConversationMessages(
+  async findConversationMessagesBefore(
     user1Id: string,
     user2Id: string,
-    options: { limit: number; before: Date }
+    options: { limit: number; date: Date }
   ): Promise<Message[]> {
     const models = await prisma.message.findMany({
       where: {
@@ -78,10 +78,36 @@ export class MessageRepository implements IMessageRepository {
         receiverId: user2Id,
 
         createAt: {
-          gte: options.before,
+          gte: options.date,
         },
       },
       take: options.limit,
+      orderBy: {
+        createAt: "asc",
+      },
+    });
+
+    return models.map(MessageMapper.fromPrismaToDomain);
+  }
+
+  async findConversationMessagesAfter(
+    user1Id: string,
+    user2Id: string,
+    options: { limit: number; date: Date }
+  ): Promise<Message[]> {
+    const models = await prisma.message.findMany({
+      where: {
+        senderId: user1Id,
+        receiverId: user2Id,
+
+        createAt: {
+          lte: options.date,
+        },
+      },
+      take: options.limit,
+      orderBy: {
+        createAt: "desc",
+      },
     });
 
     return models.map(MessageMapper.fromPrismaToDomain);
