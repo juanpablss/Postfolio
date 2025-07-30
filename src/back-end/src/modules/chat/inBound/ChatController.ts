@@ -1,7 +1,8 @@
 import { IMessageService } from "@chat/service/IMessageService";
 import { IUsersConnects } from "@chat/service/IUsersConnects";
 import { TYPES } from "@compositionRoot/Types";
-import { FastifyRequest } from "fastify";
+import { FastifyReply, FastifyRequest } from "fastify";
+import { GetMessageRequest } from "@chat/inBound/ChatShema";
 import { inject, injectable } from "inversify";
 import { WebSocket } from "ws";
 
@@ -62,4 +63,6 @@ export class ChatController {
       console.error(`Erro no socket do usuário ${user.id}:`, error);
     });
   }
+
+  async conversation(req: GetMessageRequest, rep: FastifyReply) {}
 }
