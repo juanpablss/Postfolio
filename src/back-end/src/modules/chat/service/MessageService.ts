@@ -7,7 +7,7 @@ import { inject, injectable } from "inversify";
 import { IUsersConnects } from "@chat/service/IUsersConnects";
 import { MessageMapper } from "@chat/util/MessageMapper";
 import { MessageStatus } from "@chat/domain/enum/MessageStatus";
-import { BadRequest } from "@shared/error/HttpError";
+import { BadRequest, NotFound } from "@shared/error/HttpError";
 import { WebSocket } from "ws";
 
 @injectable()
@@ -79,12 +79,28 @@ export class MessageService implements IMessageService {
     await this.messageRepository.updateManyStatus(messages);
   }
 
-  getConversationHistory(
+  async getConversationHistory(
     user1Id: string,
     user2Id: string,
-    options?: { limit?: number; before?: string }
+    options: { limit: number; date: Date; direction: "before" | "after" }
   ): Promise<Message[]> {
-    throw new Error("Method not implemented.");
+    if (options.direction === "before") {
+      return await this.messageRepository.findConversationMessagesBefore(
+        user1Id,
+        user2Id,
+        { limit: options.limit, date: options.date }
+      );
+    }
+
+    if (options.direction === "after") {
+      return await this.messageRepository.findConversationMessagesAfter(
+        user1Id,
+        user2Id,
+        { limit: options.limit, date: options.date }
+      );
+    }
+
+    throw new NotFound("Operação não implemendata!");
   }
 
   markMessageAsRead(messageId: string, userId: string): Promise<void> {

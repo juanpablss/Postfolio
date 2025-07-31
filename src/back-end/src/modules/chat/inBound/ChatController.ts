@@ -5,6 +5,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { GetMessageRequest } from "@chat/inBound/ChatShema";
 import { inject, injectable } from "inversify";
 import { WebSocket } from "ws";
+import { BadRequest, Unauthorized } from "@shared/error/HttpError";
 
 @injectable()
 export class ChatController {
@@ -64,5 +65,20 @@ export class ChatController {
     });
   }
 
-  async conversation(req: GetMessageRequest, rep: FastifyReply) {}
+  async conversation(req: GetMessageRequest, rep: FastifyReply) {
+    const user = req.user;
+
+    if (!user) throw new Unauthorized("O usuario não está logado!");
+
+    const params = req.params;
+    const query = req.query;
+
+    const msgs = await this.messageService.getConversationHistory(
+      user.id,
+      params.otherUser,
+      { limit: query.limit, date: query.date, direction: query.direction }
+    );
+
+    rep.send(msgs);
+  }
 }

@@ -10,7 +10,7 @@ export interface IMessageService {
   getConversationHistory(
     user1Id: string,
     user2Id: string,
-    options?: { limit?: number; before?: string }
+    options: { limit: number; date: Date; direction: "before" | "after" }
   ): Promise<Message[]>;
   markMessageAsRead(messageId: string, userId: string): Promise<void>;
 }

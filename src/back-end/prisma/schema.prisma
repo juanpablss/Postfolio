@@ -32,6 +32,7 @@ model ProviderOAuth {
   user       User               @relation(fields: [userId], references: [id])
 
   @@unique([provider, providerId])
+  @@map("tb_provider_oauth")
 }
 
 model Message {
@@ -44,6 +45,8 @@ model Message {
   sender     User          @relation("MessageSent", fields: [senderId], references: [id])
   receiverId String
   receiver   User          @relation("MessageReceived", fields: [receiverId], references: [id])
+
+  @@map("tb_message")
 }
 
 model Portfolio {
