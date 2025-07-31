@@ -66,7 +66,6 @@ export class MessageRepository implements IMessageRepository {
 
     return models.map(MessageMapper.fromPrismaToDomain);
   }
-
   async findConversationMessagesBefore(
     user1Id: string,
     user2Id: string,
@@ -74,16 +73,17 @@ export class MessageRepository implements IMessageRepository {
   ): Promise<Message[]> {
     const models = await prisma.message.findMany({
       where: {
-        senderId: user1Id,
-        receiverId: user2Id,
-
+        OR: [
+          { senderId: user1Id, receiverId: user2Id },
+          { senderId: user2Id, receiverId: user1Id },
+        ],
         createAt: {
-          gte: options.date,
+          lt: options.date, // mensagens ANTES da data
         },
       },
       take: options.limit,
       orderBy: {
-        createAt: "asc",
+        createAt: "desc", // mais recentes primeiro (antes da data)
       },
     });
 
@@ -97,16 +97,17 @@ export class MessageRepository implements IMessageRepository {
   ): Promise<Message[]> {
     const models = await prisma.message.findMany({
       where: {
-        senderId: user1Id,
-        receiverId: user2Id,
-
+        OR: [
+          { senderId: user1Id, receiverId: user2Id },
+          { senderId: user2Id, receiverId: user1Id },
+        ],
         createAt: {
-          lte: options.date,
+          gt: options.date, // mensagens DEPOIS da data
         },
       },
       take: options.limit,
       orderBy: {
-        createAt: "desc",
+        createAt: "asc", // mais antigas primeiro (depois da data)
       },
     });
 

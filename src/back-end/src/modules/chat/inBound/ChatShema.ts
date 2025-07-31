@@ -6,8 +6,18 @@ const GetMessageParamsSchema = z.object({
 });
 
 const GetMessageQuerySchema = z.object({
-  limit: z.number({ message: "O limite é obrigatorio" }),
-  date: z.date({ message: "A data é obrigatoria" }),
+  limit: z
+    .string()
+    .transform((val) => parseInt(val, 10))
+    .refine((val) => !isNaN(val), { message: "O limite deve ser um número" }),
+
+  date: z
+    .string()
+    .transform((val) => new Date(val))
+    .refine((date) => date instanceof Date && !isNaN(date.getTime()), {
+      message: "Data inválida",
+    }),
+
   direction: z.enum(["before", "after"], {
     message: "A direção é obrigatoria",
   }),

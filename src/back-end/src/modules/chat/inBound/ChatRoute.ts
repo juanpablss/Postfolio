@@ -14,7 +14,7 @@ function chatRoutePlugin(app: FastifyInstance, chatController: ChatController) {
   );
 
   app.post(
-    "conversation/:otherUser",
+    "/conversation/:otherUser",
     { schema: messageRouteSchema.get, preValidation: UserMiddle.authenticate },
     (req: GetMessageRequest, rep) => chatController.conversation(req, rep)
   );
