@@ -44,8 +44,12 @@ export class MessageService implements IMessageService {
     );
   }
 
-  updateMessage(updateMessageDto: UpdateMessageDTO): Promise<void> {
-    throw new Error("Method not implemented.");
+  async updateMessage(updateMessageDto: UpdateMessageDTO): Promise<void> {
+    const msg = await this.messageRepository.findById(updateMessageDto.id);
+
+    if (!msg) throw new NotFound("A menssagem não existe!");
+
+    await this.messageRepository.update(msg);
   }
 
   async processOfflineMessages(userId: string): Promise<void> {
@@ -103,7 +107,13 @@ export class MessageService implements IMessageService {
     throw new NotFound("Operação não implemendata!");
   }
 
-  markMessageAsRead(messageId: string, userId: string): Promise<void> {
-    throw new Error("Method not implemented.");
+  async markMessageAsRead(messageId: string, userId: string): Promise<void> {
+    const msg = await this.messageRepository.findById(messageId);
+
+    if (!msg) throw new NotFound("A menssagem não existe!");
+
+    if (msg.receiverId != userId) return;
+    msg.setStatus(MessageStatus.READ);
+    await this.messageRepository.update(msg);
   }
 }

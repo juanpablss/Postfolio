@@ -7,6 +7,9 @@ interface SendMessageDTO {
   text: string;
   socket: WebSocket;
 }
-interface UpdateMessageDTO {}
+interface UpdateMessageDTO {
+  id: string;
+  content: string;
+}
 
 export { SendMessageDTO, UpdateMessageDTO };

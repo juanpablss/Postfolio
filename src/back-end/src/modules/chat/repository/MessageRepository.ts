@@ -17,8 +17,17 @@ export class MessageRepository implements IMessageRepository {
 
     return MessageMapper.fromPrismaToDomain(model);
   }
-  update(msg: Message): Promise<Message> {
-    throw new Error("Method not implemented.");
+
+  async update(msg: Message): Promise<Message> {
+    const model = await prisma.message.update({
+      where: { id: msg.getId() },
+      data: {
+        content: msg.getContent(),
+        updateAt: new Date(),
+      },
+    });
+
+    return MessageMapper.fromPrismaToDomain(model);
   }
 
   async updateManyStatus(msg: Message[]): Promise<void> {
@@ -46,8 +55,9 @@ export class MessageRepository implements IMessageRepository {
   delete(id: string): Promise<Message | null> {
     throw new Error("Method not implemented.");
   }
-  findById(id: string): Promise<Message | null> {
-    throw new Error("Method not implemented.");
+  async findById(id: string): Promise<Message | null> {
+    const model = await prisma.message.findUnique({ where: { id } });
+    return model ? MessageMapper.fromPrismaToDomain(model) : null;
   }
   findByUser(userId: string): Promise<Message[]> {
     throw new Error("Method not implemented.");
