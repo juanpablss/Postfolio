@@ -31,7 +31,7 @@ export class PortfolioService implements IPortfolioService {
     const portfoioDomain =
       PortfolioMapper.fromCreatePortfolioDTOtoDomain(createPortfolioDto);
 
-    return await this.portfolioRepository.insert(portfoioDomain);
+    return await this.portfolioRepository.create(portfoioDomain);
   }
 
   async findMany(): Promise<Portfolio[]> {

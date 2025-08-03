@@ -17,13 +17,13 @@ export class WorkService implements IWorkService {
     @inject(TYPES.IPortfolioPort)
     private portfolioPort: IPortfolioPort
   ) {}
-  async register(createWorkDto: CreateWorkDTO): Promise<Work> {
+  async create(createWorkDto: CreateWorkDTO): Promise<Work> {
     if (!this.portfolioPort.exist(createWorkDto.portfolio))
       throw new BadRequest("O portfolio não existe");
 
     const workDomain = WorkMapper.fromCreateWorkDTOtoDomain(createWorkDto);
 
-    return await this.workRepository.insert(workDomain);
+    return await this.workRepository.create(workDomain);
   }
 
   async update(updateWorkDto: UpdateWorkDTO): Promise<Work> {

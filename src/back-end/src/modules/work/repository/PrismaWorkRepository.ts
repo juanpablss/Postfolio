@@ -6,7 +6,7 @@ import { WorkMapper } from "@work/util/WorkMapper";
 import { IWorkRepository } from "@work/domain/entities/WorkRepository";
 
 export class PrismaWorkRepository implements IWorkRepository {
-  async insert(work: Work): Promise<Work> {
+  async create(work: Work): Promise<Work> {
     try {
       const workModel = await prisma.work.create({
         data: {
