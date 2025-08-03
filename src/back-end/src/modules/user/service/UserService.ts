@@ -20,7 +20,6 @@ import { inject, injectable } from "inversify";
 import { TYPES } from "@compositionRoot/Types";
 import { UserMapper } from "@user/util/UserMapper";
 import { AppEvents } from "@shared/event/AppEvents";
-// import { eventBus, EventTypes } from "@shared/event/EventBus";
 @injectable()
 export class UserService implements IUserService {
   constructor(
@@ -64,11 +63,10 @@ export class UserService implements IUserService {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) throw new NotFound("Usuário não encontrado!");
-    if (!user.password) throw new NotFound("Senha não registrada!");
 
-    const checkPassWord = await Crypt.compare(loginDto.password, user.password);
+    const checkPassWord = await user.comparePassword(loginDto.password);
 
-    if (!checkPassWord) throw new Unauthorized("Senha incorreta!");
+    if (!checkPassWord) throw new Unauthorized("Credenciais inválidas");
 
     return Token.generate(user.id, user.email.getValue());
   }
