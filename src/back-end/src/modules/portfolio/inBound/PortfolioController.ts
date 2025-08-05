@@ -26,7 +26,7 @@ export class PortfolioController {
 
     const createPortfolioDto: CreatePortfolioDTO = { ...req.body, authorId };
 
-    const portfolio = await this.portfolioService.register(createPortfolioDto);
+    const portfolio = await this.portfolioService.create(createPortfolioDto);
 
     reply.send(portfolio);
   }

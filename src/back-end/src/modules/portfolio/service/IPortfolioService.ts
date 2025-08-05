@@ -6,7 +6,7 @@ import {
 } from "@portfolio/dtos/PortfolioDTO";
 
 export interface IPortfolioService {
-  register(createPortfolioDto: CreatePortfolioDTO): Promise<Portfolio>;
+  create(createPortfolioDto: CreatePortfolioDTO): Promise<Portfolio>;
   update(updatePortfolioDto: UpdatePortfolioDTO): Promise<Portfolio>;
   deleteById(id: string): Promise<Portfolio | null>;
 

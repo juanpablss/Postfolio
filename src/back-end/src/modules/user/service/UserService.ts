@@ -19,7 +19,9 @@ import { IUserService } from "@user/service/IUserService";
 import { inject, injectable } from "inversify";
 import { TYPES } from "@compositionRoot/Types";
 import { UserMapper } from "@user/util/UserMapper";
-import { AppEvents } from "@shared/event/AppEvents";
+import { UserCreatedEvent } from "@shared/event/UserCreatedEvent";
+import { EventListener } from "@shared/event/EventListener";
+
 @injectable()
 export class UserService implements IUserService {
   constructor(
@@ -45,11 +47,8 @@ export class UserService implements IUserService {
     if (!user)
       throw new InternalServerError("Não foi possivel salver o usuario");
 
-    await AppEvents.userCreated.emit({
-      userId: user.id,
-      name: user.name,
-      email: user.email.getValue(),
-    });
+    const event = new UserCreatedEvent(user.id, user.email.getValue());
+    await EventListener.publish(event);
     console.log("Portfolio criado com sucesso");
   }
 
@@ -79,11 +78,8 @@ export class UserService implements IUserService {
       user = await this.userRepository.create(
         UserMapper.fromSocialLoginDTOtoDomain(socialLoginDto)
       );
-      await AppEvents.userCreated.emit({
-        userId: user.id,
-        name: user.name,
-        email: user.email.getValue(),
-      });
+      const event = new UserCreatedEvent(user.id, user.email.getValue());
+      await EventListener.publish(event);
     }
 
     return Token.generate(user.id, user.email.getValue());
