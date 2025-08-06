@@ -1,27 +1,32 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { injectable } from "inversify";
-import nodemailer from "nodemailer";
+import { inject, injectable } from "inversify";
 import { SendEmailRequest } from "@email/inBound/EmailShema";
-
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL,
-    pass: process.env.EMAIL_KEY,
-  },
-});
+import { TYPES } from "@compositionRoot/Types";
+import { IEmailService } from "@email/service/IEmailService";
+import { BadRequest } from "@shared/error/HttpError";
 
 @injectable()
 export class EmailController {
+  constructor(
+    @inject(TYPES.IEmailService)
+    private emailService: IEmailService
+  ) {}
+
   async sendEmail(req: SendEmailRequest, reply: FastifyReply) {
+    const user = req.user;
+
+    if (!user) throw new BadRequest("O usuario precisa estar logado");
+
     const body = req.body;
 
-    console.log(`${body.subject}\nto: ${body.to}\nhtml: ${body.html}`);
-    //   await transporter.sendMail({
-    //     from: '"Postfolio" <postfolio.oficial@gmail.com>',
-    //     to: "antoniowillissilvasantos@gmail.com",
-    //     subject: "Bem vindo a plataforma",
-    //     html: `<p>Olá</p>`,
-    //   });
+    const response = await this.emailService.sendMail({
+      from: user.email,
+      to: body.to,
+      subject: body.subject,
+      html: body.html,
+    });
+    if (!response)
+      return reply.status(500).send({ msg: "Ocorreu um erro inesperado!" });
+    reply.send({ msg: "Email enviado com sucesso!" });
   }
 }
