@@ -1,9 +1,7 @@
 export abstract class Event {
   public static ID: string;
 
-  public getID(): string {
-    return (this.constructor as typeof Event).ID;
-  }
+  public abstract getID(): string;
 }
 
 export interface EventHandler<T extends Event> {
