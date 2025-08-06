@@ -47,7 +47,11 @@ export class UserService implements IUserService {
     if (!user)
       throw new InternalServerError("Não foi possivel salver o usuario");
 
-    const event = new UserCreatedEvent(user.id, user.email.getValue());
+    const event = new UserCreatedEvent(
+      user.id,
+      user.name,
+      user.email.getValue()
+    );
     await EventListener.publish(event);
     console.log("Portfolio criado com sucesso");
   }
@@ -78,7 +82,11 @@ export class UserService implements IUserService {
       user = await this.userRepository.create(
         UserMapper.fromSocialLoginDTOtoDomain(socialLoginDto)
       );
-      const event = new UserCreatedEvent(user.id, user.email.getValue());
+      const event = new UserCreatedEvent(
+        user.id,
+        user.name,
+        user.email.getValue()
+      );
       await EventListener.publish(event);
     }
 

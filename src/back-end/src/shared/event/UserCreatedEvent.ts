@@ -7,6 +7,7 @@ export class UserCreatedEvent extends Event {
 
   constructor(
     public readonly userId: string,
+    public readonly userName: string,
     public readonly userEmail: string
   ) {
     super();

@@ -31,6 +31,7 @@ import { workComposeModule } from "@work/composition/WorkComposer";
 import { competitionComposeModule } from "@competition/composition/CompetitionComposer";
 import { chatComposerModule } from "@chat/composition/ChatComposer";
 import { emailComposerModuler } from "@email/composition/EmailComposer";
+import { EmailUserCreatedHandler } from "@email/handler/EmailUserCreatedHandler";
 
 const container = new Container();
 
@@ -96,6 +97,7 @@ export class AppComposer {
 
   public registerHandlers(): void {
     const portfolioHandler = container.get(PortfolioUserCreatedHandler);
+    const emailHandler = container.get(EmailUserCreatedHandler);
   }
 
   // Se você tiver configurações globais do Fastify, pode tê-las aqui

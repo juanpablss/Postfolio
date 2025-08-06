@@ -1,4 +1,5 @@
 import { TYPES } from "@compositionRoot/Types";
+import { EmailUserCreatedHandler } from "@email/handler/EmailUserCreatedHandler";
 import { EmailController } from "@email/inBound/EmailController";
 import { EmailService } from "@email/service/EmailService";
 import { IEmailService } from "@email/service/IEmailService";
@@ -14,4 +15,9 @@ export function emailComposerModuler(container: Container) {
     .bind<EmailController>(TYPES.EmailController)
     .to(EmailController)
     .inRequestScope();
+
+  container
+    .bind<EmailUserCreatedHandler>(EmailUserCreatedHandler)
+    .toSelf()
+    .inSingletonScope();
 }

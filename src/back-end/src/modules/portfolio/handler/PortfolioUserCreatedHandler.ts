@@ -14,7 +14,7 @@ export class PortfolioUserCreatedHandler
     private portfolioService: IPortfolioService
   ) {
     EventListener.subscribeHandler(this);
-    console.log("[PortfolioUserCreatedHandler] foi criado");
+    console.log("[PortfolioUserCreatedHandler] foi criado.\n");
   }
 
   async handle(event: UserCreatedEvent): Promise<void> {

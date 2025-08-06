@@ -1,7 +1,9 @@
 import { SendEmail } from "@email/dtos/EmailDTO";
 import { IEmailService } from "@email/service/IEmailService";
 import { mailer } from "@infrastructure/config/Mailer";
+import { injectable } from "inversify";
 
+@injectable()
 export class EmailService implements IEmailService {
   async sendMail(emailDto: SendEmail): Promise<boolean> {
     try {
