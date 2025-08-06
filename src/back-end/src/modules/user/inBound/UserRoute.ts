@@ -3,7 +3,7 @@ import { UserController } from "@user/inBound/UserController";
 import { UserMiddle } from "@infrastructure/middleware/UserMiddle";
 import {
   LoginRequest,
-  RegisterUserRequest,
+  CreateUserRequest,
   userRouteSchema,
 } from "@user/inBound/UserSchema";
 
@@ -14,7 +14,7 @@ function userRoutesPlugin(
   app.get("", (req, reply) => userController.hello(req, reply));
 
   app.post("", { schema: userRouteSchema.create }, (req, reply) =>
-    userController.register(req as RegisterUserRequest, reply)
+    userController.create(req as CreateUserRequest, reply)
   );
   app.post("/all", (req, reply) => userController.getAll(req, reply));
 

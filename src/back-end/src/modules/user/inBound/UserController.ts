@@ -5,7 +5,11 @@ import {
   LoginUserDTO,
   SocialLoginDTO,
 } from "@user/dtos/UserDTO";
-import { LoginRequest, RegisterUserRequest } from "@user/inBound/UserSchema";
+import {
+  LoginRequest,
+  CreateUserRequest,
+  userRouteSchema,
+} from "@user/inBound/UserSchema";
 import { IUserService } from "@user/service/IUserService";
 import { inject, injectable } from "inversify";
 import { TYPES } from "@compositionRoot/Types";
@@ -23,7 +27,7 @@ export class UserController {
     reply.send({ msg: "Ola mundo" });
   }
 
-  async register(req: RegisterUserRequest, reply: FastifyReply) {
+  async create(req: CreateUserRequest, reply: FastifyReply) {
     const userDto: CreateUserDTO = { ...req.body };
 
     await this.userService.create(userDto);
