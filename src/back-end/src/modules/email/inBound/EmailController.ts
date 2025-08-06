@@ -1,25 +1,27 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { injectable } from "inversify";
 import nodemailer from "nodemailer";
+import { SendEmailRequest } from "@email/inBound/EmailShema";
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: process.env.EMAIL,
-    pass: process.env.EMAIL_KEY, // Use senha de app do Gmail
+    pass: process.env.EMAIL_KEY,
   },
 });
 
 @injectable()
 export class EmailController {
-  async sendEmail(req: FastifyRequest, reply: FastifyReply) {
-    // const { email = null } = req.body as { email: string };
+  async sendEmail(req: SendEmailRequest, reply: FastifyReply) {
+    const body = req.body;
 
-    await transporter.sendMail({
-      from: '"Postfolio" <postfolio.oficial@gmail.com>',
-      to: "antoniowillissilvasantos@gmail.com",
-      subject: "Bem vindo a plataforma",
-      html: `<p>Olá</p>`,
-    });
+    console.log(`${body.subject}\nto: ${body.to}\nhtml: ${body.html}`);
+    //   await transporter.sendMail({
+    //     from: '"Postfolio" <postfolio.oficial@gmail.com>',
+    //     to: "antoniowillissilvasantos@gmail.com",
+    //     subject: "Bem vindo a plataforma",
+    //     html: `<p>Olá</p>`,
+    //   });
   }
 }

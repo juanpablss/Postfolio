@@ -1,8 +1,13 @@
 import { FastifyInstance } from "fastify";
 import { EmailController } from "@email/inBound/EmailController";
+import { emailRouteSchema, SendEmailRequest } from "@email/inBound/EmailShema";
 
 function emailRoutePlugin(app: FastifyInstance, controller: EmailController) {
-  app.post("", (req, rep) => controller.sendEmail(req, rep));
+  app.post(
+    "",
+    { schema: emailRouteSchema.send },
+    (req: SendEmailRequest, rep) => controller.sendEmail(req, rep)
+  );
 }
 
 export class EmailRoute {
