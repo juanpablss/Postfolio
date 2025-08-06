@@ -6,7 +6,7 @@ import { IPortfolioRepository } from "@portfolio/domain/entities/IPortfolioRepos
 import { PortfolioMapper } from "@portfolio/util/PortfolioMapper";
 
 export class PrismaPortfolioRepository implements IPortfolioRepository {
-  async insert(portfolio: Portfolio): Promise<Portfolio> {
+  async create(portfolio: Portfolio): Promise<Portfolio> {
     try {
       const portfolioModel = await prisma.portfolio.create({
         data: {

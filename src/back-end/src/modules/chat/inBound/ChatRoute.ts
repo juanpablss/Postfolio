@@ -1,6 +1,7 @@
 import { FastifyInstance } from "fastify";
 import { ChatController } from "@chat/inBound/ChatController";
 import { UserMiddle } from "@infrastructure/middleware/UserMiddle";
+import { GetMessageRequest, messageRouteSchema } from "@chat/inBound/ChatShema";
 
 function chatRoutePlugin(app: FastifyInstance, chatController: ChatController) {
   app.get(
@@ -11,4 +12,18 @@ function chatRoutePlugin(app: FastifyInstance, chatController: ChatController) {
     },
     (req, rep) => chatController.connect(req, rep)
   );
+
+  app.post(
+    "/conversation/:otherUser",
+    { schema: messageRouteSchema.get, preValidation: UserMiddle.authenticate },
+    (req: GetMessageRequest, rep) => chatController.conversation(req, rep)
+  );
+}
+
+export class ChatRoute {
+  public static register(app: FastifyInstance, chatController: ChatController) {
+    app.register((data) => chatRoutePlugin(data, chatController), {
+      prefix: "api/chat",
+    });
+  }
 }

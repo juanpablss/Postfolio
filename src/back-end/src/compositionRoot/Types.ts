@@ -8,6 +8,7 @@ export const TYPES = {
   ICompetitionRepository: Symbol.for("ICompetitionRepository"),
   IWorkRepository: Symbol.for("IWorkRepository"),
   IWorkCompDetailsRepository: Symbol.for("IWorkCompDetailsRepository"),
+  IMessageRepository: Symbol.for("IMessageRepository"),
 
   // Portas de Aplicação (Use Cases de alto nível)
   IUserService: Symbol.for("IUserService"),
@@ -41,6 +42,8 @@ export const TYPES = {
   CompetitionController: Symbol.for("CompetitionController"),
   WorkController: Symbol.for("WorkController"),
   WorkCompDetailsController: Symbol.for("WorkCompDetailsController"),
+  ChatController: Symbol.for("ChatController"),
+  EmailController: Symbol.for("EmailController"),
 
   // Handlers
   // PortfolioUserCreatedHandler: Symbol.for("PortfolioUserCreatedHandler"),

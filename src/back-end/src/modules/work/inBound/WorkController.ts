@@ -24,7 +24,7 @@ export class WorkController {
       portfolio: req.body.portfolio,
     };
 
-    const response = await this.workService.register(createWorkDto);
+    const response = await this.workService.create(createWorkDto);
 
     reply.send(response);
   }
