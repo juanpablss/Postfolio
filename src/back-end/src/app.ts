@@ -9,7 +9,7 @@ import {
 import { AppComposer } from "compositionRoot/appComposer";
 import { configureProvaders } from "@infrastructure/fastify/Provaders";
 import websocketPlugin from "@fastify/websocket";
-import { DataCache } from "@infrastructure/config/Redis";
+// import { DataCache } from "@infrastructure/config/Redis";
 
 const app = Fastify({
   logger: {
@@ -43,10 +43,10 @@ appCompose.registerHandlers();
 configureProvaders(app);
 
 const start = async () => {
-  const dataCache = DataCache.getInstance();
-  dataCache.connect();
+  // const dataCache = DataCache.getInstance();
+  // dataCache.connect();
 
-  const redis = dataCache.getClient();
+  // const redis = dataCache.getClient();
 
   try {
     await app.listen({ port: PORT, host: "0.0.0.0" });
