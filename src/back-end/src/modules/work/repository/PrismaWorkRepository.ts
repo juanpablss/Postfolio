@@ -3,7 +3,7 @@ import { prisma } from "@infrastructure/config/Prisma";
 import { Prisma } from "@prisma/client";
 import { Work } from "@work/domain/entities/Work";
 import { WorkMapper } from "@work/util/WorkMapper";
-import { IWorkRepository } from "@work/domain/entities/WorkRepository";
+import { IWorkRepository } from "@work/domain/entities/IWorkRepository";
 
 export class PrismaWorkRepository implements IWorkRepository {
   async create(work: Work): Promise<Work> {

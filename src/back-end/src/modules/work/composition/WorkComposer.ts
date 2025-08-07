@@ -1,7 +1,7 @@
 import { TYPES } from "@compositionRoot/Types";
 import { Container } from "inversify";
 
-import { IWorkRepository } from "@work/domain/entities/WorkRepository";
+import { IWorkRepository } from "@work/domain/entities/IWorkRepository";
 import { IWorkService } from "@work/service/IWorkService";
 import { IWorkPort } from "@work/api/IWorkPort";
 
