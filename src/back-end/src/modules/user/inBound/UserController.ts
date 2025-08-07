@@ -32,7 +32,7 @@ export class UserController {
 
     await this.userService.create(userDto);
 
-    return reply.send({ msg: "Usuario criado com sucesso!" });
+    return reply.status(201).send({ msg: "Usuario criado com sucesso!" });
   }
 
   async getAll(req: FastifyRequest, reply: FastifyReply) {
@@ -88,7 +88,14 @@ export class UserController {
   }
 
   async getProfile(req: FastifyRequest, reply: FastifyReply) {
-    reply.send({ msg: "Perfil do usuário", user: req.user });
+    if (!req.user?.id) throw new InternalServerError("Autenticação falhou");
+    const user = await this.userService.findById(req.user?.id);
+
+    if (!user) throw new BadRequest("Id do usuario não existe");
+    reply.send({
+      msg: "Perfil do usuário",
+      user: { id: user.id, name: user.name, email: user.email },
+    });
   }
 
   async deleteById(req: FastifyRequest, reply: FastifyReply) {
