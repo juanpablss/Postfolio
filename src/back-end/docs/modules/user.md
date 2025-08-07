@@ -22,7 +22,7 @@ Segiu o local onde todos os end-poins estão sendo registrados pelo *app*
 │       └── UserSchema.ts
 ....
 ```
-obs: Estudaremos mais sobre a arquitetura e estrutura de pastas do projeto no tópico [2. Arquitetura](#2-arquitetura)
+<!-- obs: Estudaremos mais sobre a arquitetura e estrutura de pastas do projeto no tópico [2. Arquitetura](#2-arquitetura) -->
 
 **- POST /api/user**
 
