@@ -10,6 +10,8 @@ import { IUserPort } from "@user/api/IUserPort";
 import { IPortfolioService } from "@portfolio/service/IPortfolioService";
 import { inject, injectable } from "inversify";
 import { TYPES } from "@compositionRoot/Types";
+import { IWorkPort } from "@work/api/IWorkPort";
+import { WorkContract } from "@shared/contracts/WorkContracts";
 
 @injectable()
 export class PortfolioService implements IPortfolioService {
@@ -17,7 +19,9 @@ export class PortfolioService implements IPortfolioService {
     @inject(TYPES.IPortfolioRepository)
     private portfolioRepository: IPortfolioRepository,
     @inject(TYPES.IUserPort)
-    private userPort: IUserPort
+    private userPort: IUserPort,
+    @inject(TYPES.IWorkPort)
+    private workPort: IWorkPort
   ) {}
 
   async create(createPortfolioDto: CreatePortfolioDTO): Promise<Portfolio> {
@@ -40,8 +44,8 @@ export class PortfolioService implements IPortfolioService {
     return await this.portfolioRepository.findById(id);
   }
 
-  async findWorks(id: string): Promise<Portfolio | null> {
-    return await this.portfolioRepository.findByIdWhitWorks(id);
+  async findWorks(id: string): Promise<WorkContract[]> {
+    return await this.workPort.findWorkByPortfolio(id);
   }
 
   async findByAuthor(authorId: string): Promise<Portfolio | null> {

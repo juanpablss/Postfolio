@@ -7,6 +7,5 @@ export interface IPortfolioRepository {
 
   findMany(): Promise<Portfolio[]>;
   findById(id: string): Promise<Portfolio | null>;
-  findByIdWhitWorks(id: string): Promise<Portfolio | null>;
   findByAuthor(authorId: string): Promise<Portfolio | null>;
 }

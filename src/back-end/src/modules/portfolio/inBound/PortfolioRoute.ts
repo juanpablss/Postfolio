@@ -13,22 +13,22 @@ function portfolioRoutesPlugin(
 ) {
   app.post("/all", (req, rep) => portfolioController.findAll(req, rep));
 
-  app.post(
-    "",
-    {
-      schema: portfolioRouteSchemas.create,
-      preValidation: UserMiddle.authenticate,
-    },
-    (req, rep) =>
-      portfolioController.register(req as CreatePortfolioRequest, rep)
-  );
+  // app.post(
+  //   "",
+  //   {
+  //     schema: portfolioRouteSchemas.create,
+  //     preValidation: UserMiddle.authenticate,
+  //   },
+  //   (req, rep) =>
+  //     portfolioController.register(req as CreatePortfolioRequest, rep)
+  // );
 
   app.post("/user/me", { preValidation: UserMiddle.authenticate }, (req, rep) =>
     portfolioController.findByUser(req, rep)
   );
 
   app.post(
-    "/works/:id",
+    "/:id/works",
     { preValidation: UserMiddle.authenticate },
     (req, rep) => portfolioController.getWorks(req, rep)
   );
