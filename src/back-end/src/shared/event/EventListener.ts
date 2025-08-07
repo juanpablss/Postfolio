@@ -1,14 +1,17 @@
+// Contrato para criação de um evento.
 export abstract class Event {
   public static ID: string;
 
   public abstract getID(): string;
 }
 
+// Contrato para criação de um handler.
 export interface EventHandler<T extends Event> {
   handle(event: T): Promise<void>;
   getEventId(): string;
 }
 
+// Renderizador global.
 export class EventListener {
   private static handlers: Map<string, EventHandler<Event>[]> = new Map();
 

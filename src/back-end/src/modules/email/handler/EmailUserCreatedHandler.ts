@@ -4,13 +4,6 @@ import { EventHandler, EventListener } from "@shared/event/EventListener";
 import { UserCreatedEvent } from "@shared/event/UserCreatedEvent";
 import { inject, injectable } from "inversify";
 
-//   await transporter.sendMail({
-//     from: '"Postfolio" <postfolio.oficial@gmail.com>',
-//     to: "antoniowillissilvasantos@gmail.com",
-//     subject: "Bem vindo a plataforma",
-//     html: `<p>Olá</p>`,
-//   });
-
 @injectable()
 export class EmailUserCreatedHandler implements EventHandler<UserCreatedEvent> {
   constructor(

@@ -221,9 +221,25 @@ Segue uma forma de consimir cada modulo, especificados em seus respectivos arqui
 
 ### 1.2 Sobre infrastructure
 
-#### event
+
 
 ### 1.3 Sobre Shared
+
+A pasta `shared` é o hub central da sua aplicação para o código que precisa ser reutilizado por múltiplos módulos, mas que não pertence a um domínio específico. O objetivo principal é evitar duplicação de código e garantir o desacoplamento.
+
+#### contracts
+
+Contém as interfaces e DTOs (Data Transfer Objects) que definem o contrato de comunicação entre os módulos. É essencial para o desacoplamento, permitindo que os módulos interajam sem dependerem diretamente das classes de domínio uns dos outros.
+
+#### error
+
+Define a estratégia de tratamento de erros global da aplicação. Inclui classes de exceção personalizadas que garantem uma resposta de erro consistente para todos os módulos.
+
+#### event
+
+Abriga a lógica central para a comunicação entre os modulos. Inclui a classe do EventListener e as definições base de eventos de domínio. Para mais detalhes, leia [event](./shared/event.ts)
+
+#### util
 
 ### 
 
