@@ -17,10 +17,9 @@ Segiu o local onde todos os end-poins estão sendo registrados pelo *app*
 📦 module/
 ├── 📁 user/
 │   └── 📁 inBound/
-│       └── 📁 inBound/ 
-│           ├── UserController.ts
-│           ├── UserRoute.ts
-│           └── UserSchema.ts
+│       ├── UserController.ts
+│       ├── UserRoute.ts
+│       └── UserSchema.ts
 ....
 ```
 obs: Estudaremos mais sobre a arquitetura e estrutura de pastas do projeto no tópico [2. Arquitetura](#2-arquitetura)
@@ -53,6 +52,40 @@ response (`201`):
 | 400           | {"message": "Email inválido!"}                     |
 | 400           | {"message": "Por favor, use outro email!"}         |
 
+**- POST /api/user/profile**
+
+Descrição: Retorna as informações do usuário logado com base no token de autenticação enviado no cabeçalho.
+Autenticação: Requerida (via Bearer Token no header Authorization)
+Content-Type: application/json
+
+Requisição: Sem corpo.
+
+response (`200`):
+```json
+{
+    "id": "123abc",
+    "name": "nome",
+    "email": "test@gmail.com",
+}
+```
+
+**- DELETE /api/user**
+
+Descrição: Remove o usuário logado do sistema permanentemente com base no token de autenticação.
+Autenticação: Requerida (via Bearer Token no header Authorization)
+Content-Type: application/json
+
+Requisição: Sem corpo.
+response (`200`):
+```json
+{
+    "name": "test",
+    "email": "test@gmail.com",
+    "password": "12345678",
+    "status": "None"
+}
+```
+
 
 **- POST /api/user/login**
 
@@ -82,42 +115,9 @@ response (`200`):
 | 404         | {"message": "Usuário não encontrado!"} |
 | 401         | {"message": "Senha incorreta!"} |
 
-**- POST /api/user/profile**
-
-Descrição: Retorna as informações do usuário logado com base no token de autenticação enviado no cabeçalho.
-Autenticação: Requerida (via Bearer Token no header Authorization)
-Content-Type: application/json
-
-Requisição: Sem corpo.
-
-response (`200`):
-```json
-{
-    "id": "123abc",
-    "email": "test@gmail.com",
-}
-```
-
-**- DELETE /api/user**
-
-Descrição: Remove o usuário logado do sistema permanentemente com base no token de autenticação.
-Autenticação: Requerida (via Bearer Token no header Authorization)
-Content-Type: application/json
-
-Requisição: Sem corpo.
-response (`200`):
-```json
-{
-    "name": "test",
-    "email": "test@gmail.com",
-    "password": "12345678",
-    "status": "None"
-}
-```
-
 **- GET /auth/google**
 
-Descrição:  Inicia o processo de autenticação via Google, redirecionando o usuário para o consentimento de login do Google.
+Descrição:  Inicia o processo de autenticação via Google, redirecionando o usuário para o consentimento de login do Google. Caso bem sucedido, a resposta vai para a rota `GET /auth/google/callback`
 Autenticação: Não requerida.
 Content-Type: application/json
 
@@ -129,7 +129,7 @@ Requisição: Sem corpo.
 
 **- GET /auth/google/callback**
 
-Descrição: Endpoint chamado automaticamente pelo Google após o login bem-sucedido. Processa o token retornado, cria/atualiza o usuário no sistema e retorna um token JWT para uso interno.
+Descrição: Endpoint chamado automaticamente pelo Google após o login bem-sucedido. Processa o token enviado pela google, cria/atualiza o usuário no sistema e retorna um token JWT gerado pela propria api para uso interno.
 Autenticação: Não requerida.
 Content-Type: application/json
 Requisição: Automática pelo Google (callback).

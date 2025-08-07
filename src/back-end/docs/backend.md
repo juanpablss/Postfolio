@@ -144,7 +144,9 @@ Cada pasta em modules/ representa um contexto isolado do domínio, como:
 
 ```shell
 📦 modules/
+├── 📁 chat/
 ├── 📁 competition/
+├── 📁 email/
 ├── 📁 portfolio/
 ├── 📁 user/
 └── 📁 work/
@@ -210,12 +212,16 @@ Contém a lógica de aplicação, orquestrando as operações de negócio e atua
 Abriga funções utilitárias ou auxiliares que não se encaixam diretamente nas outras camadas, mas são usadas em várias partes do módulo (ex: mappers).
 
 ---
+`handler`
+Abriga classes que vão reagir a eventos emitios em outro lugar. Para saber mais sobre eventos, vá para [event](#event).
 
-Segue uma forma de consimir cada modulo, especificados em seus respectivos arquivos: [User](modules/user.md)
+Segue uma forma de consimir cada modulo, especificados em seus respectivos arquivos: [User](modules/user.md).
 
 
 
 ### 1.2 Sobre infrastructure
+
+#### event
 
 ### 1.3 Sobre Shared
 
