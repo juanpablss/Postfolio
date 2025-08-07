@@ -21,7 +21,7 @@ export class WorkService implements IWorkService {
     if (!this.portfolioPort.exist(createWorkDto.portfolio))
       throw new BadRequest("O portfolio não existe");
 
-    const workDomain = WorkMapper.fromCreateWorkDTOtoDomain(createWorkDto);
+    const workDomain = WorkMapper.fromCreateWorkDtoToDomain(createWorkDto);
 
     return await this.workRepository.create(workDomain);
   }
@@ -30,7 +30,7 @@ export class WorkService implements IWorkService {
     const existeWork = await this.workRepository.findById(updateWorkDto.id);
 
     if (!existeWork) throw new BadRequest("O trabalho não existe");
-    const workDomain = WorkMapper.fromUpdateWorkDTOtoDomain(updateWorkDto);
+    const workDomain = WorkMapper.fromUpdateWorkDtoToDomain(updateWorkDto);
 
     return await this.workRepository.update(workDomain);
   }

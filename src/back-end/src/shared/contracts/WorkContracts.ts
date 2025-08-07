@@ -1,4 +1,4 @@
-export interface WorkContracts {
+export interface WorkContract {
   id: string;
   name: string;
   description: string;

@@ -1,9 +1,10 @@
 import { Work as WorkModel } from "@prisma/client";
 import { Work } from "@work/domain/entities/Work";
 import { CreateWorkDTO, UpdateWorkDTO } from "@work/dtos/WorkDTO";
+import { WorkContract } from "@shared/contracts/WorkContracts";
 
 export const WorkMapper = {
-  fromPrismatoDomain(workModel: WorkModel): Work {
+  fromPrismaToDomain(workModel: WorkModel): Work {
     return new Work(
       workModel.id,
       workModel.name,
@@ -12,7 +13,16 @@ export const WorkMapper = {
       workModel.portfolioId
     );
   },
-  fromDomaintoPrisma(work: Work): WorkModel {
+  fromPrismaToContracts(workModel: WorkModel): WorkContract {
+    return {
+      id: workModel.id,
+      name: workModel.name,
+      description: workModel.description,
+      githubLink: workModel.githubLink,
+      portfolioId: workModel.portfolioId,
+    };
+  },
+  fromDomainToPrisma(work: Work): WorkModel {
     return {
       id: work.id,
       name: work.name,
@@ -21,7 +31,7 @@ export const WorkMapper = {
       portfolioId: work.portfolioId,
     };
   },
-  fromCreateWorkDTOtoDomain(dto: CreateWorkDTO): Work {
+  fromCreateWorkDtoToDomain(dto: CreateWorkDTO): Work {
     return new Work(
       "",
       dto.name,
@@ -30,7 +40,7 @@ export const WorkMapper = {
       dto.portfolio
     );
   },
-  fromUpdateWorkDTOtoDomain(dto: UpdateWorkDTO): Work {
+  fromUpdateWorkDtoToDomain(dto: UpdateWorkDTO): Work {
     return new Work(
       dto.id,
       dto.name,
