@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import configureErrorHandling from "@infrastructure/fastify/configureErrorHandling";
+import configureErrorHandling from "@infrastructure/fastify/ConfigureErrorHandling";
 
 // src/infra/http/fastify/index.ts
 export function configureFastify(app: FastifyInstance) {

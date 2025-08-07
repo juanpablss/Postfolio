@@ -16,7 +16,7 @@ const CreateUserBodySchema = z.object({
   status: z.string(),
 });
 
-type RegisterUserRequest = FastifyRequest<{
+type CreateUserRequest = FastifyRequest<{
   Body: z.infer<typeof CreateUserBodySchema>;
 }>;
 
@@ -40,4 +40,4 @@ const userRouteSchema = {
   },
 };
 
-export { userRouteSchema, RegisterUserRequest, LoginRequest };
+export { userRouteSchema, CreateUserRequest, LoginRequest };

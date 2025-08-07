@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { BadRequest } from "@shared/error/HttpError";
 import { IPortfolioService } from "@portfolio/service/IPortfolioService";
 import {
-  RegisterPortfolioRequest,
+  CreatePortfolioRequest,
   UpdatePortfolioRequest,
 } from "@portfolio/inBound/PortfolioSchema";
 import {
@@ -19,14 +19,14 @@ export class PortfolioController {
     private portfolioService: IPortfolioService
   ) {}
 
-  async register(req: RegisterPortfolioRequest, reply: FastifyReply) {
+  async register(req: CreatePortfolioRequest, reply: FastifyReply) {
     const authorId = req.user?.id;
 
     if (!authorId) throw new BadRequest("Autor é obrigatorio");
 
     const createPortfolioDto: CreatePortfolioDTO = { ...req.body, authorId };
 
-    const portfolio = await this.portfolioService.register(createPortfolioDto);
+    const portfolio = await this.portfolioService.create(createPortfolioDto);
 
     reply.send(portfolio);
   }

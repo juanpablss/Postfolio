@@ -1,9 +1,15 @@
+import { WebSocket } from "ws";
+
 interface SendMessageDTO {
   type: string;
-  to: string;
-  from: string;
+  toUserId: string;
+  fromUserId: string;
   text: string;
+  socket: WebSocket;
 }
-interface UpdateMessageDTO {}
+interface UpdateMessageDTO {
+  id: string;
+  content: string;
+}
 
 export { SendMessageDTO, UpdateMessageDTO };

@@ -13,18 +13,33 @@ export class Message {
     id: string,
     content: string,
     senderId: string,
-    receiverId: string
+    receiverId: string,
+    status: MessageStatus = MessageStatus.UNRECEIVED,
+    createAt: Date = new Date(),
+    updateAt: Date = createAt
   ) {
     this.id = id;
     this.content = content;
     this.senderId = senderId;
     this.receiverId = receiverId;
-    this.status = MessageStatus.UNDELIVERED;
-    this.createAt = new Date();
-    this.updateAt = this.createAt;
+    this.status = status;
+    this.createAt = createAt;
+    this.updateAt = updateAt;
   }
 
   public setStatus(status: MessageStatus) {
     this.status = status;
+  }
+
+  public getStatus(): MessageStatus {
+    return this.status;
+  }
+
+  public getContent(): string {
+    return this.content;
+  }
+
+  public getId(): string {
+    return this.id;
   }
 }

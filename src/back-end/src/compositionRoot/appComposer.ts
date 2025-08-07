@@ -10,22 +10,28 @@ import { UserController } from "@user/inBound/UserController";
 import { PortfolioController } from "@portfolio/inBound/PortfolioController";
 import { WorkController } from "@work/inBound/WorkController";
 import { CompetitionController } from "@competition/inBound/CompetitionController";
-// ... Outros Controladores
+import { ChatController } from "@chat/inBound/ChatController";
+import { EmailController } from "@email/inBound/EmailController";
 
 // Rotas
 import { UserRoute } from "@user/inBound/UserRoute";
 import { PortfolioRoute } from "@portfolio/inBound/PortfolioRoute";
 import { WorkRoute } from "@work/inBound/WorkRoute";
 import { CompetitionRoute } from "@competition/inBound/CompetitionRoute";
+import { ChatRoute } from "@chat/inBound/ChatRoute";
+import { EmailRoute } from "@email/inBound/EmailRoute";
 
 // Handlers
 import { PortfolioUserCreatedHandler } from "@portfolio/handler/PortfolioUserCreatedHandler";
-import { userComposeModule } from "@user/composition/UserComposer";
+
+// Composition
+import { userComposeModule } from "@user/composition/userComposer";
 import { portfolioComposeModule } from "@portfolio/composition/PortfolioComposer";
 import { workComposeModule } from "@work/composition/WorkComposer";
 import { competitionComposeModule } from "@competition/composition/CompetitionComposer";
-
-// ... Outras funções de registro de rotas
+import { chatComposerModule } from "@chat/composition/ChatComposer";
+import { emailComposerModuler } from "@email/composition/EmailComposer";
+import { EmailUserCreatedHandler } from "@email/handler/EmailUserCreatedHandler";
 
 const container = new Container();
 
@@ -33,12 +39,16 @@ userComposeModule(container);
 portfolioComposeModule(container);
 workComposeModule(container);
 competitionComposeModule(container);
+chatComposerModule(container);
+emailComposerModuler(container);
 
 interface IApplicationControllers {
   userController: UserController;
   portfolioController: PortfolioController;
   workController: WorkController;
   competitionController: CompetitionController;
+  chatController: ChatController;
+  emailController: EmailController;
   // ... outros controladores
 }
 
@@ -59,12 +69,18 @@ export class AppComposer {
     const competitionController = container.get<CompetitionController>(
       TYPES.CompetitionController
     );
+    const chatController = container.get<ChatController>(TYPES.ChatController);
+    const emailController = container.get<EmailController>(
+      TYPES.EmailController
+    );
 
     return {
       userController,
       portfolioController,
       workController,
       competitionController,
+      chatController,
+      emailController,
       // ... retorne outras instâncias de controlador
     };
   }
@@ -75,10 +91,13 @@ export class AppComposer {
     PortfolioRoute.register(app, this.controllers.portfolioController);
     WorkRoute.register(app, this.controllers.workController);
     CompetitionRoute.register(app, this.controllers.competitionController);
+    ChatRoute.register(app, this.controllers.chatController);
+    EmailRoute.register(app, this.controllers.emailController);
   }
 
   public registerHandlers(): void {
     const portfolioHandler = container.get(PortfolioUserCreatedHandler);
+    const emailHandler = container.get(EmailUserCreatedHandler);
   }
 
   // Se você tiver configurações globais do Fastify, pode tê-las aqui

@@ -16,7 +16,7 @@ const CreatePortfolioBodySchema = z.object({
   pagelink: z.string(),
 });
 
-type RegisterPortfolioRequest = FastifyRequest<{
+type CreatePortfolioRequest = FastifyRequest<{
   Body: z.infer<typeof CreatePortfolioBodySchema>;
 }>;
 
@@ -42,6 +42,6 @@ const portfolioRouteSchemas = {
 
 export {
   portfolioRouteSchemas,
-  RegisterPortfolioRequest,
+  CreatePortfolioRequest,
   UpdatePortfolioRequest,
 };

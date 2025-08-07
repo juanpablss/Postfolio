@@ -19,8 +19,9 @@ import { IUserService } from "@user/service/IUserService";
 import { inject, injectable } from "inversify";
 import { TYPES } from "@compositionRoot/Types";
 import { UserMapper } from "@user/util/UserMapper";
-import { AppEvents } from "@shared/event/AppEvents";
-// import { eventBus, EventTypes } from "@shared/event/EventBus";
+import { UserCreatedEvent } from "@shared/event/UserCreatedEvent";
+import { EventListener } from "@shared/event/EventListener";
+
 @injectable()
 export class UserService implements IUserService {
   constructor(
@@ -46,11 +47,12 @@ export class UserService implements IUserService {
     if (!user)
       throw new InternalServerError("Não foi possivel salver o usuario");
 
-    await AppEvents.userCreated.emit({
-      userId: user.id,
-      name: user.name,
-      email: user.email.getValue(),
-    });
+    const event = new UserCreatedEvent(
+      user.id,
+      user.name,
+      user.email.getValue()
+    );
+    await EventListener.publish(event);
     console.log("Portfolio criado com sucesso");
   }
 
@@ -64,11 +66,10 @@ export class UserService implements IUserService {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) throw new NotFound("Usuário não encontrado!");
-    if (!user.password) throw new NotFound("Senha não registrada!");
 
-    const checkPassWord = await Crypt.compare(loginDto.password, user.password);
+    const checkPassWord = await user.comparePassword(loginDto.password);
 
-    if (!checkPassWord) throw new Unauthorized("Senha incorreta!");
+    if (!checkPassWord) throw new Unauthorized("Credenciais inválidas");
 
     return Token.generate(user.id, user.email.getValue());
   }
@@ -81,11 +82,12 @@ export class UserService implements IUserService {
       user = await this.userRepository.create(
         UserMapper.fromSocialLoginDTOtoDomain(socialLoginDto)
       );
-      await AppEvents.userCreated.emit({
-        userId: user.id,
-        name: user.name,
-        email: user.email.getValue(),
-      });
+      const event = new UserCreatedEvent(
+        user.id,
+        user.name,
+        user.email.getValue()
+      );
+      await EventListener.publish(event);
     }
 
     return Token.generate(user.id, user.email.getValue());

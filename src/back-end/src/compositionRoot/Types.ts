@@ -8,6 +8,7 @@ export const TYPES = {
   ICompetitionRepository: Symbol.for("ICompetitionRepository"),
   IWorkRepository: Symbol.for("IWorkRepository"),
   IWorkCompDetailsRepository: Symbol.for("IWorkCompDetailsRepository"),
+  IMessageRepository: Symbol.for("IMessageRepository"),
 
   // Portas de Aplicação (Use Cases de alto nível)
   IUserService: Symbol.for("IUserService"),
@@ -18,6 +19,7 @@ export const TYPES = {
   IWorkCompDetailsService: Symbol.for("IWorkCompDetailsService"),
   IMessageService: Symbol.for("IMessageService"),
   IUsersConnects: Symbol.for("IUsersConnects"),
+  IEmailService: Symbol.for("IEmailService"),
 
   // Portas de Saída (Adapters entre Domínios)
   IPortfolioPort: Symbol.for("IPortfolioPort"), // User Module precisa interagir com Portfolio
@@ -33,6 +35,7 @@ export const TYPES = {
   CompetitionService: Symbol.for("CompetitionService"),
   WorkService: Symbol.for("WorkService"),
   WorkCompDetailsService: Symbol.for("WorkCompDetailsService"),
+  EmailService: Symbol.for("EmailService"),
 
   // Controladores
   UserController: Symbol.for("UserController"),
@@ -41,6 +44,8 @@ export const TYPES = {
   CompetitionController: Symbol.for("CompetitionController"),
   WorkController: Symbol.for("WorkController"),
   WorkCompDetailsController: Symbol.for("WorkCompDetailsController"),
+  ChatController: Symbol.for("ChatController"),
+  EmailController: Symbol.for("EmailController"),
 
   // Handlers
   // PortfolioUserCreatedHandler: Symbol.for("PortfolioUserCreatedHandler"),

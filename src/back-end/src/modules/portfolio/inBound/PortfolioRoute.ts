@@ -3,7 +3,7 @@ import { PortfolioController } from "@portfolio/inBound/PortfolioController";
 import { UserMiddle } from "@infrastructure/middleware/UserMiddle";
 import {
   portfolioRouteSchemas,
-  RegisterPortfolioRequest,
+  CreatePortfolioRequest,
   UpdatePortfolioRequest,
 } from "@portfolio/inBound/PortfolioSchema";
 
@@ -20,7 +20,7 @@ function portfolioRoutesPlugin(
       preValidation: UserMiddle.authenticate,
     },
     (req, rep) =>
-      portfolioController.register(req as RegisterPortfolioRequest, rep)
+      portfolioController.register(req as CreatePortfolioRequest, rep)
   );
 
   app.post("/user/me", { preValidation: UserMiddle.authenticate }, (req, rep) =>
