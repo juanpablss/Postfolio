@@ -3,7 +3,7 @@ import { Portfolio } from "@portfolio/domain/entities/Portfolio";
 import {
   CreatePortfolioDTO,
   UpdatePortfolioDTO,
-} from "@portfolio/dtos/PortfolioDTO";
+} from "@portfolio/api/PortfolioDTO";
 import { WorkContract } from "@shared/contracts/WorkContracts";
 
 export interface IPortfolioService {

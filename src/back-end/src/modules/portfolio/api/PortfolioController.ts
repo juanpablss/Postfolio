@@ -4,11 +4,11 @@ import { IPortfolioService } from "@portfolio/domain/interfaces/IPortfolioServic
 import {
   CreatePortfolioRequest,
   UpdatePortfolioRequest,
-} from "@portfolio/inBound/PortfolioSchema";
+} from "@portfolio/api/PortfolioSchema";
 import {
   CreatePortfolioDTO,
   UpdatePortfolioDTO,
-} from "@portfolio/dtos/PortfolioDTO";
+} from "@portfolio/api/PortfolioDTO";
 import { inject, injectable } from "inversify";
 import { TYPES } from "@compositionRoot/Types";
 

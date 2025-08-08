@@ -5,7 +5,7 @@ import { CreateWorkDTO, UpdateWorkDTO } from "@work/api/WorkDTO";
 import { WorkMapper } from "@work/application/WorkMapper";
 import { IWorkService } from "@work/domain/interfaces/IWorkService";
 import { IWorkRepository } from "@work/domain/interfaces/IWorkRepository";
-import { IPortfolioPort } from "@portfolio/api/IPortfolioPort";
+import { IPortfolioPort } from "@portfolio/domain/interfaces/PortfolioPort";
 import { inject, injectable } from "inversify";
 import { TYPES } from "@compositionRoot/Types";
 

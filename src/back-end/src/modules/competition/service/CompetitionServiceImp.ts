@@ -8,7 +8,7 @@ import { RatingMapper } from "@competition/util/RatingMapper";
 import { TYPES } from "@compositionRoot/Types";
 import { Conflict, NotFound } from "@shared/error/HttpError";
 import { IUserPort } from "@user/domain/interfaces/UserPort";
-import { IWorkPort } from "@work/domain/interfaces/IWorkPort";
+import { WorkPort } from "@work/domain/interfaces/WorkPort";
 import { inject, injectable } from "inversify";
 
 @injectable()
@@ -17,7 +17,7 @@ export class CompetitionService implements ICompetitionService {
     @inject(TYPES.ICompetitionRepository)
     private competitionRepository: ICompetitionRepository,
     @inject(TYPES.IWorkPort)
-    private workPort: IWorkPort,
+    private workPort: WorkPort,
     @inject(TYPES.IUserPort)
     private userPort: IUserPort
   ) {}

@@ -1,7 +1,7 @@
 import {
   CreatePortfolioDTO,
   UpdatePortfolioDTO,
-} from "@portfolio/dtos/PortfolioDTO";
+} from "@portfolio/api/PortfolioDTO";
 import { Portfolio, WorkData } from "@portfolio/domain/entities/Portfolio";
 import { Portfolio as PortfolioModel } from "@prisma/client";
 import { Work as WorkModel } from "@prisma/client";

@@ -3,12 +3,12 @@ import { Container } from "inversify";
 
 import { IPortfolioRepository } from "@portfolio/domain/interfaces/IPortfolioRepository";
 import { IPortfolioService } from "@portfolio/domain/interfaces/IPortfolioService";
-import { IPortfolioPort } from "@portfolio/api/IPortfolioPort";
+import { IPortfolioPort } from "@portfolio/domain/interfaces/PortfolioPort";
 
 import { PrismaPortfolioRepository } from "@portfolio/infra/database/PortfolioRepository";
-import { PortfolioService } from "@portfolio/service/PortfolioService";
-import { PortfolioAdapter } from "@portfolio/api/PortfolioAdapter";
-import { PortfolioController } from "@portfolio/inBound/PortfolioController";
+import { PortfolioService } from "@portfolio/application/PortfolioService";
+import { PortfolioAdapter } from "@portfolio/infra/PortfolioAdapter";
+import { PortfolioController } from "@portfolio/api/PortfolioController";
 import { PortfolioUserCreatedHandler } from "@portfolio/handler/PortfolioUserCreatedHandler";
 
 export function portfolioComposeModule(container: Container): void {

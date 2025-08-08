@@ -3,7 +3,7 @@ import { InternalServerError } from "@shared/error/HttpError";
 import { Portfolio } from "@portfolio/domain/entities/Portfolio";
 import { IPortfolioRepository } from "@portfolio/domain/interfaces/IPortfolioRepository";
 // import { Portfolio as PortfolioModel } from "@prisma/client";
-import { PortfolioMapper } from "@portfolio/util/PortfolioMapper";
+import { PortfolioMapper } from "@portfolio/application/PortfolioMapper";
 
 export class PrismaPortfolioRepository implements IPortfolioRepository {
   async create(portfolio: Portfolio): Promise<Portfolio> {
