@@ -1,5 +1,5 @@
-import { SendEmail } from "@email/dtos/EmailDTO";
-import { IEmailService } from "@email/service/IEmailService";
+import { SendEmail } from "@email/api/EmailDTO";
+import { IEmailService } from "@email/domain/interfaces/IEmailService";
 import { mailer } from "@email/infra/Mailer";
 import { injectable } from "inversify";
 

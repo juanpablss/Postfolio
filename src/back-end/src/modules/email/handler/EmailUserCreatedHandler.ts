@@ -1,5 +1,5 @@
 import { TYPES } from "@compositionRoot/Types";
-import { IEmailService } from "@email/service/IEmailService";
+import { IEmailService } from "@email/domain/interfaces/IEmailService";
 import { EventHandler, EventListener } from "@shared/event/EventListener";
 import { UserCreatedEvent } from "@shared/event/UserCreatedEvent";
 import { inject, injectable } from "inversify";

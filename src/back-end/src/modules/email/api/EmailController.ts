@@ -1,8 +1,8 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { inject, injectable } from "inversify";
-import { SendEmailRequest } from "@email/inBound/EmailShema";
+import { SendEmailRequest } from "@email/api/EmailShema";
 import { TYPES } from "@compositionRoot/Types";
-import { IEmailService } from "@email/service/IEmailService";
+import { IEmailService } from "@email/domain/interfaces/IEmailService";
 import { BadRequest } from "@shared/error/HttpError";
 
 @injectable()

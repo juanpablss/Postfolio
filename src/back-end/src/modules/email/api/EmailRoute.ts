@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
-import { EmailController } from "@email/inBound/EmailController";
-import { emailRouteSchema, SendEmailRequest } from "@email/inBound/EmailShema";
+import { EmailController } from "@email/api/EmailController";
+import { emailRouteSchema, SendEmailRequest } from "@email/api/EmailShema";
 
 // Vai ficar desativado por enquanto
 function emailRoutePlugin(app: FastifyInstance, controller: EmailController) {

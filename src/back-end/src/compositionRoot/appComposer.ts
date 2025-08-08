@@ -11,7 +11,7 @@ import { PortfolioController } from "@portfolio/api/PortfolioController";
 import { WorkController } from "@work/api/WorkController";
 import { CompetitionController } from "@competition/inBound/CompetitionController";
 import { ChatController } from "@chat/inBound/ChatController";
-import { EmailController } from "@email/inBound/EmailController";
+import { EmailController } from "@email/api/EmailController";
 
 // Rotas
 import { UserRoute } from "@user/api/UserRoute";
@@ -19,7 +19,7 @@ import { PortfolioRoute } from "@portfolio/api/PortfolioRoute";
 import { WorkRoute } from "@work/api/WorkRoute";
 import { CompetitionRoute } from "@competition/inBound/CompetitionRoute";
 import { ChatRoute } from "@chat/inBound/ChatRoute";
-import { EmailRoute } from "@email/inBound/EmailRoute";
+import { EmailRoute } from "@email/api/EmailRoute";
 
 // Handlers
 import { PortfolioUserCreatedHandler } from "@portfolio/handler/PortfolioUserCreatedHandler";

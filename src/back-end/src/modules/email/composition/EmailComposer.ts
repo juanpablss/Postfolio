@@ -1,8 +1,8 @@
 import { TYPES } from "@compositionRoot/Types";
 import { EmailUserCreatedHandler } from "@email/handler/EmailUserCreatedHandler";
-import { EmailController } from "@email/inBound/EmailController";
+import { EmailController } from "@email/api/EmailController";
 import { EmailService } from "@email/service/EmailService";
-import { IEmailService } from "@email/service/IEmailService";
+import { IEmailService } from "@email/domain/interfaces/IEmailService";
 import { Container } from "inversify";
 
 export function emailComposerModuler(container: Container) {
