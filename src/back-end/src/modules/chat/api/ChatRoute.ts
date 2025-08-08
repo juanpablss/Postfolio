@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
-import { ChatController } from "@chat/inBound/ChatController";
+import { ChatController } from "@chat/api/ChatController";
 import { UserMiddle } from "@infrastructure/middleware/UserMiddle";
-import { GetMessageRequest, messageRouteSchema } from "@chat/inBound/ChatShema";
+import { GetMessageRequest, messageRouteSchema } from "@chat/api/ChatShema";
 
 function chatRoutePlugin(app: FastifyInstance, chatController: ChatController) {
   app.get(

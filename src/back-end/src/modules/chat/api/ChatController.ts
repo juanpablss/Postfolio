@@ -2,7 +2,7 @@ import { IMessageService } from "@chat/domain/interfaces/IMessageService";
 import { IUsersConnects } from "@chat/domain/interfaces/IUsersConnects";
 import { TYPES } from "@compositionRoot/Types";
 import { FastifyReply, FastifyRequest } from "fastify";
-import { GetMessageRequest } from "@chat/inBound/ChatShema";
+import { GetMessageRequest } from "@chat/api/ChatShema";
 import { inject, injectable } from "inversify";
 import { WebSocket } from "ws";
 import { BadRequest, Unauthorized } from "@shared/error/HttpError";

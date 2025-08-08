@@ -9,7 +9,7 @@ import {
 } from "@shared/error/HttpError";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { inject, injectable } from "inversify";
-import { CreaetRatingDTO } from "@competition/dtos/RatingDTO";
+import { CreaetRatingDTO } from "@competition/api/RatingDTO";
 
 @injectable()
 export class CompetitionController {

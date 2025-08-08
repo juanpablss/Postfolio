@@ -1,6 +1,6 @@
 import { Message } from "@chat/domain/entities/Message";
 import { MessageStatus } from "@chat/domain/enum/MessageStatus";
-import { SendMessageDTO } from "@chat/dtos/MessageDTO";
+import { SendMessageDTO } from "@chat/api/MessageDTO";
 import { Message as MessageModel } from "@prisma/client";
 import { MessageStatus as MessageStatusModel } from "@prisma/client";
 

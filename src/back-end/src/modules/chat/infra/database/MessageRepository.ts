@@ -1,7 +1,10 @@
 import { IMessageRepository } from "@chat/domain/interfaces/IMessageRepository";
 import { Message } from "@chat/domain/entities/Message";
 import { MessageStatus } from "@chat/domain/enum/MessageStatus";
-import { MessageMapper, MessageStatusMapper } from "@chat/util/MessageMapper";
+import {
+  MessageMapper,
+  MessageStatusMapper,
+} from "@chat/application/MessageMapper";
 import { prisma } from "@infrastructure/config/Prisma";
 import { injectable } from "inversify";
 

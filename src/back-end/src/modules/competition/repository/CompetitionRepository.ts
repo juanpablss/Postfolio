@@ -2,12 +2,12 @@ import { InternalServerError } from "@shared/error/HttpError";
 import { prisma } from "@infrastructure/config/Prisma";
 import { Prisma } from "@prisma/client";
 import { Competition } from "@competition/domain/entities/Competition";
-import { CompetitionMapper } from "@competition/util/CompetitionMapper";
+import { CompetitionMapper } from "@competition/application/mapper/CompetitionMapper";
 import { ICompetitionRepository } from "@competition/domain/interfaces/ICompetitionRepository";
 import { WorkCompDetails } from "@competition/domain/entities/WorkCompDetails";
-import { WorkCompDetailsMapper } from "@competition/util/WorkCompDetailsMapper";
+import { WorkCompDetailsMapper } from "@competition/application/mapper/WorkCompDetailsMapper";
 import { Rating } from "@competition/domain/entities/Rating";
-import { RatingMapper } from "@competition/util/RatingMapper";
+import { RatingMapper } from "@competition/application/mapper/RatingMapper";
 Competition;
 
 export class PrismaCompetitionRepository implements ICompetitionRepository {

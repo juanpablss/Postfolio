@@ -1,5 +1,5 @@
 import { Message } from "@chat/domain/entities/Message";
-import { SendMessageDTO, UpdateMessageDTO } from "@chat/dtos/MessageDTO";
+import { SendMessageDTO, UpdateMessageDTO } from "@chat/api/MessageDTO";
 
 export interface IMessageService {
   sendMessage(sendMessageDto: SendMessageDTO): Promise<void>;

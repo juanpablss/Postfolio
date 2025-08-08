@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { UserMiddle } from "@infrastructure/middleware/UserMiddle";
-import { CompetitionController } from "@competition/inBound/CompetitionController";
+import { CompetitionController } from "@competition/api/CompetitionController";
 
 function competitionRoutesPlugin(
   app: FastifyInstance,

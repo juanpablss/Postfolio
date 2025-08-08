@@ -1,11 +1,11 @@
 import { IMessageRepository } from "@chat/domain/interfaces/IMessageRepository";
 import { Message } from "@chat/domain/entities/Message";
-import { SendMessageDTO, UpdateMessageDTO } from "@chat/dtos/MessageDTO";
+import { SendMessageDTO, UpdateMessageDTO } from "@chat/api/MessageDTO";
 import { IMessageService } from "@chat/domain/interfaces/IMessageService";
 import { TYPES } from "@compositionRoot/Types";
 import { inject, injectable } from "inversify";
 import { IUsersConnects } from "@chat/domain/interfaces/IUsersConnects";
-import { MessageMapper } from "@chat/util/MessageMapper";
+import { MessageMapper } from "@chat/application/MessageMapper";
 import { MessageStatus } from "@chat/domain/enum/MessageStatus";
 import { BadRequest, NotFound } from "@shared/error/HttpError";
 import { WebSocket } from "ws";

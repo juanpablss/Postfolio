@@ -9,16 +9,16 @@ import configureErrorHandling from "@infrastructure/fastify/ConfigureErrorHandli
 import { UserController } from "@user/api/UserController";
 import { PortfolioController } from "@portfolio/api/PortfolioController";
 import { WorkController } from "@work/api/WorkController";
-import { CompetitionController } from "@competition/inBound/CompetitionController";
-import { ChatController } from "@chat/inBound/ChatController";
+import { CompetitionController } from "@competition/api/CompetitionController";
+import { ChatController } from "@chat/api/ChatController";
 import { EmailController } from "@email/api/EmailController";
 
 // Rotas
 import { UserRoute } from "@user/api/UserRoute";
 import { PortfolioRoute } from "@portfolio/api/PortfolioRoute";
 import { WorkRoute } from "@work/api/WorkRoute";
-import { CompetitionRoute } from "@competition/inBound/CompetitionRoute";
-import { ChatRoute } from "@chat/inBound/ChatRoute";
+import { CompetitionRoute } from "@competition/api/CompetitionRoute";
+import { ChatRoute } from "@chat/api/ChatRoute";
 import { EmailRoute } from "@email/api/EmailRoute";
 
 // Handlers

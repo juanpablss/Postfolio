@@ -3,10 +3,10 @@ import { Container } from "inversify";
 
 import { ICompetitionRepository } from "@competition/domain/interfaces/ICompetitionRepository";
 import { ICompetitionService } from "@competition/domain/interfaces/ICompetitionService";
-import { CompetitionController } from "@competition/inBound/CompetitionController";
+import { CompetitionController } from "@competition/api/CompetitionController";
 
 import { PrismaCompetitionRepository } from "@competition/repository/CompetitionRepository";
-import { CompetitionService } from "@competition/service/CompetitionServiceImp";
+import { CompetitionService } from "@competition/application/CompetitionService";
 
 export function competitionComposeModule(container: Container): void {
   container

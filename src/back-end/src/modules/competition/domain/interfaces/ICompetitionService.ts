@@ -2,7 +2,7 @@ import { Competition } from "@competition/domain/entities/Competition";
 import { Rating } from "@competition/domain/entities/Rating";
 // import Work from "@domain/entities/work/Work";
 import { WorkCompDetails } from "@competition/domain/entities/WorkCompDetails";
-import { CreaetRatingDTO } from "@competition/dtos/RatingDTO";
+import { CreaetRatingDTO } from "@competition/api/RatingDTO";
 
 export interface ICompetitionService {
   create(competition: Competition): Promise<Competition>;

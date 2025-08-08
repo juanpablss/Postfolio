@@ -1,6 +1,6 @@
 import { Rating as RatingModel } from "@prisma/client";
 import { Rating } from "@competition/domain/entities/Rating";
-import { CreaetRatingDTO } from "@competition/dtos/RatingDTO";
+import { CreaetRatingDTO } from "@competition/api/RatingDTO";
 
 export const RatingMapper = {
   fromCreateRatingDTOtoDomain(
