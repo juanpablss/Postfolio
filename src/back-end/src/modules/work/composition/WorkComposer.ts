@@ -5,7 +5,7 @@ import { IWorkRepository } from "@work/domain/interfaces/IWorkRepository";
 import { IWorkService } from "@work/domain/interfaces/IWorkService";
 import { IWorkPort } from "@work/api/IWorkPort";
 
-import { PrismaWorkRepository } from "@work/infra/database/PrismaWorkRepository";
+import { PrismaWorkRepository } from "@work/infra/database/WorkRepository";
 import { WorkService } from "@work/service/WorkService";
 import { WorkAdapter } from "@work/api/WorkAdapter";
 import { WorkController } from "@work/inBound/WorkController";

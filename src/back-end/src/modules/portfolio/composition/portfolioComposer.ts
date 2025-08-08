@@ -5,7 +5,7 @@ import { IPortfolioRepository } from "@portfolio/domain/interfaces/IPortfolioRep
 import { IPortfolioService } from "@portfolio/domain/interfaces/IPortfolioService";
 import { IPortfolioPort } from "@portfolio/api/IPortfolioPort";
 
-import { PrismaPortfolioRepository } from "@portfolio/infra/database/PrismaPortfolioRepository";
+import { PrismaPortfolioRepository } from "@portfolio/infra/database/PortfolioRepository";
 import { PortfolioService } from "@portfolio/service/PortfolioService";
 import { PortfolioAdapter } from "@portfolio/api/PortfolioAdapter";
 import { PortfolioController } from "@portfolio/inBound/PortfolioController";

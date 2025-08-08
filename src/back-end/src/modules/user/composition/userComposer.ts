@@ -5,7 +5,7 @@ import { IUserRepository } from "@user/domain/interfaces/IUserRepository";
 import { IUserService } from "@user/domain/interfaces/IUserService";
 import { IUserPort } from "@user/api/IUserPort";
 
-import { PrismaUserRepository } from "@user/infra/database/PrismaUserRepository";
+import { PrismaUserRepository } from "@user/infra/database/UserRepository";
 import { UserAdaper } from "@user/api/UserAdapter";
 import { UserService } from "@user/service/UserService";
 import { UserController } from "@user/inBound/UserController";
