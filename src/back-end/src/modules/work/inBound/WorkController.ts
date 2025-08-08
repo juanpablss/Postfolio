@@ -1,4 +1,4 @@
-import { IWorkService } from "@work/service/IWorkService";
+import { IWorkService } from "@work/domain/interfaces/IWorkService";
 import { FastifyReply, FastifyRequest } from "fastify";
 import {
   RegisterWorkRequest,

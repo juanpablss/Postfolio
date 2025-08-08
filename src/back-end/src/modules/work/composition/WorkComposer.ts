@@ -1,11 +1,11 @@
 import { TYPES } from "@compositionRoot/Types";
 import { Container } from "inversify";
 
-import { IWorkRepository } from "@work/domain/entities/IWorkRepository";
-import { IWorkService } from "@work/service/IWorkService";
+import { IWorkRepository } from "@work/domain/interfaces/IWorkRepository";
+import { IWorkService } from "@work/domain/interfaces/IWorkService";
 import { IWorkPort } from "@work/api/IWorkPort";
 
-import { PrismaWorkRepository } from "@work/repository/PrismaWorkRepository";
+import { PrismaWorkRepository } from "@work/infra/database/PrismaWorkRepository";
 import { WorkService } from "@work/service/WorkService";
 import { WorkAdapter } from "@work/api/WorkAdapter";
 import { WorkController } from "@work/inBound/WorkController";

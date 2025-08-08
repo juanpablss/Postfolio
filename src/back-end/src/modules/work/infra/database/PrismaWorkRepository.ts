@@ -3,7 +3,7 @@ import { prisma } from "@infrastructure/config/Prisma";
 import { Prisma } from "@prisma/client";
 import { Work } from "@work/domain/entities/Work";
 import { WorkMapper } from "@work/util/WorkMapper";
-import { IWorkRepository } from "@work/domain/entities/IWorkRepository";
+import { IWorkRepository } from "@work/domain/interfaces/IWorkRepository";
 import { WorkContract } from "@shared/contracts/WorkContracts";
 
 export class PrismaWorkRepository implements IWorkRepository {

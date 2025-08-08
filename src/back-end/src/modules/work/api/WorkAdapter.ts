@@ -1,9 +1,9 @@
 import { IWorkPort } from "@work/api/IWorkPort";
-import { IWorkService } from "@work/service/IWorkService";
+import { IWorkService } from "@work/domain/interfaces/IWorkService";
 import { injectable, inject } from "inversify";
 import { TYPES } from "@compositionRoot/Types";
 import { WorkContract } from "@shared/contracts/WorkContracts";
-import { IWorkRepository } from "@work/domain/entities/IWorkRepository";
+import { IWorkRepository } from "@work/domain/interfaces/IWorkRepository";
 
 @injectable()
 export class WorkAdapter implements IWorkPort {
