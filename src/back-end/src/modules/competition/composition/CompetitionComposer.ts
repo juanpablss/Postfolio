@@ -1,8 +1,8 @@
 import { TYPES } from "@compositionRoot/Types";
 import { Container } from "inversify";
 
-import { ICompetitionRepository } from "@competition/domain/entities/ICompetitionRepository";
-import { ICompetitionService } from "@competition/service/ICompetitionService";
+import { ICompetitionRepository } from "@competition/domain/interfaces/ICompetitionRepository";
+import { ICompetitionService } from "@competition/domain/interfaces/ICompetitionService";
 import { CompetitionController } from "@competition/inBound/CompetitionController";
 
 import { PrismaCompetitionRepository } from "@competition/repository/CompetitionRepository";

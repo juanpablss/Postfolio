@@ -1,5 +1,5 @@
 import { Competition } from "@competition/domain/entities/Competition";
-import { ICompetitionService } from "@competition/service/ICompetitionService";
+import { ICompetitionService } from "@competition/domain/interfaces/ICompetitionService";
 import { TYPES } from "@compositionRoot/Types";
 import {
   BadRequest,

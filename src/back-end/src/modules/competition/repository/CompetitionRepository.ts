@@ -3,7 +3,7 @@ import { prisma } from "@infrastructure/config/Prisma";
 import { Prisma } from "@prisma/client";
 import { Competition } from "@competition/domain/entities/Competition";
 import { CompetitionMapper } from "@competition/util/CompetitionMapper";
-import { ICompetitionRepository } from "@competition/domain/entities/ICompetitionRepository";
+import { ICompetitionRepository } from "@competition/domain/interfaces/ICompetitionRepository";
 import { WorkCompDetails } from "@competition/domain/entities/WorkCompDetails";
 import { WorkCompDetailsMapper } from "@competition/util/WorkCompDetailsMapper";
 import { Rating } from "@competition/domain/entities/Rating";

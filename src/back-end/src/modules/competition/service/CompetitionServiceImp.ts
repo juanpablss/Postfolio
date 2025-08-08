@@ -1,9 +1,9 @@
 import { Competition } from "@competition/domain/entities/Competition";
-import { ICompetitionRepository } from "@competition/domain/entities/ICompetitionRepository";
+import { ICompetitionRepository } from "@competition/domain/interfaces/ICompetitionRepository";
 import { Rating } from "@competition/domain/entities/Rating";
 import { WorkCompDetails } from "@competition/domain/entities/WorkCompDetails";
 import { CreaetRatingDTO } from "@competition/dtos/RatingDTO";
-import { ICompetitionService } from "@competition/service/ICompetitionService";
+import { ICompetitionService } from "@competition/domain/interfaces/ICompetitionService";
 import { RatingMapper } from "@competition/util/RatingMapper";
 import { TYPES } from "@compositionRoot/Types";
 import { Conflict, NotFound } from "@shared/error/HttpError";
