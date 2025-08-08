@@ -1,10 +1,7 @@
 import { IWorkService } from "@work/domain/interfaces/IWorkService";
 import { FastifyReply, FastifyRequest } from "fastify";
-import {
-  RegisterWorkRequest,
-  UpdateWorkRequest,
-} from "@work/inBound/WorkSchema";
-import { CreateWorkDTO, UpdateWorkDTO } from "@work/dtos/WorkDTO";
+import { RegisterWorkRequest, UpdateWorkRequest } from "@work/api/WorkSchema";
+import { CreateWorkDTO, UpdateWorkDTO } from "@work/api/WorkDTO";
 import { BadRequest } from "@shared/error/HttpError";
 import { inject, injectable } from "inversify";
 import { TYPES } from "@compositionRoot/Types";

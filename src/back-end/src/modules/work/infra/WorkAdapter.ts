@@ -1,4 +1,4 @@
-import { IWorkPort } from "@work/api/IWorkPort";
+import { IWorkPort } from "@work/domain/interfaces/IWorkPort";
 import { IWorkService } from "@work/domain/interfaces/IWorkService";
 import { injectable, inject } from "inversify";
 import { TYPES } from "@compositionRoot/Types";

@@ -10,7 +10,7 @@ import { IUserPort } from "@user/domain/interfaces/UserPort";
 import { IPortfolioService } from "@portfolio/domain/interfaces/IPortfolioService";
 import { inject, injectable } from "inversify";
 import { TYPES } from "@compositionRoot/Types";
-import { IWorkPort } from "@work/api/IWorkPort";
+import { IWorkPort } from "@work/domain/interfaces/IWorkPort";
 import { WorkContract } from "@shared/contracts/WorkContracts";
 
 @injectable()

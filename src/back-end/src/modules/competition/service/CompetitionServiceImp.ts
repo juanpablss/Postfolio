@@ -8,7 +8,7 @@ import { RatingMapper } from "@competition/util/RatingMapper";
 import { TYPES } from "@compositionRoot/Types";
 import { Conflict, NotFound } from "@shared/error/HttpError";
 import { IUserPort } from "@user/domain/interfaces/UserPort";
-import { IWorkPort } from "@work/api/IWorkPort";
+import { IWorkPort } from "@work/domain/interfaces/IWorkPort";
 import { inject, injectable } from "inversify";
 
 @injectable()

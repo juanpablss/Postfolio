@@ -3,12 +3,12 @@ import { Container } from "inversify";
 
 import { IWorkRepository } from "@work/domain/interfaces/IWorkRepository";
 import { IWorkService } from "@work/domain/interfaces/IWorkService";
-import { IWorkPort } from "@work/api/IWorkPort";
+import { IWorkPort } from "@work/domain/interfaces/IWorkPort";
 
 import { PrismaWorkRepository } from "@work/infra/database/WorkRepository";
-import { WorkService } from "@work/service/WorkService";
-import { WorkAdapter } from "@work/api/WorkAdapter";
-import { WorkController } from "@work/inBound/WorkController";
+import { WorkService } from "@work/application/WorkService";
+import { WorkAdapter } from "@work/infra/WorkAdapter";
+import { WorkController } from "@work/api/WorkController";
 
 export function workComposeModule(container: Container): void {
   container

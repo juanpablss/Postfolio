@@ -2,7 +2,7 @@ import { InternalServerError } from "@shared/error/HttpError";
 import { prisma } from "@infrastructure/config/Prisma";
 import { Prisma } from "@prisma/client";
 import { Work } from "@work/domain/entities/Work";
-import { WorkMapper } from "@work/util/WorkMapper";
+import { WorkMapper } from "@work/application/WorkMapper";
 import { IWorkRepository } from "@work/domain/interfaces/IWorkRepository";
 import { WorkContract } from "@shared/contracts/WorkContracts";
 

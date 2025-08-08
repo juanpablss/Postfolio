@@ -1,6 +1,6 @@
 import { Work as WorkModel } from "@prisma/client";
 import { Work } from "@work/domain/entities/Work";
-import { CreateWorkDTO, UpdateWorkDTO } from "@work/dtos/WorkDTO";
+import { CreateWorkDTO, UpdateWorkDTO } from "@work/api/WorkDTO";
 import { WorkContract } from "@shared/contracts/WorkContracts";
 
 export const WorkMapper = {

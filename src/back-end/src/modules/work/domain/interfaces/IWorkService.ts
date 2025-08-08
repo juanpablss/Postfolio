@@ -1,5 +1,5 @@
 import { Work } from "@work/domain/entities/Work";
-import { CreateWorkDTO, UpdateWorkDTO } from "@work/dtos/WorkDTO";
+import { CreateWorkDTO, UpdateWorkDTO } from "@work/api/WorkDTO";
 
 export interface IWorkService {
   create(createWorkDto: CreateWorkDTO): Promise<Work>;

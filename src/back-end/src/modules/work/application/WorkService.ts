@@ -1,8 +1,8 @@
 // import PortfolioRepository from "@domain/entities/portfolio/PortfolioRepository";
 import { Work } from "@work/domain/entities/Work";
 import { BadRequest } from "@shared/error/HttpError";
-import { CreateWorkDTO, UpdateWorkDTO } from "@work/dtos/WorkDTO";
-import { WorkMapper } from "@work/util/WorkMapper";
+import { CreateWorkDTO, UpdateWorkDTO } from "@work/api/WorkDTO";
+import { WorkMapper } from "@work/application/WorkMapper";
 import { IWorkService } from "@work/domain/interfaces/IWorkService";
 import { IWorkRepository } from "@work/domain/interfaces/IWorkRepository";
 import { IPortfolioPort } from "@portfolio/api/IPortfolioPort";
