@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { BadRequest } from "@shared/error/HttpError";
-import { IPortfolioService } from "@portfolio/service/IPortfolioService";
+import { IPortfolioService } from "@portfolio/domain/interfaces/IPortfolioService";
 import {
   CreatePortfolioRequest,
   UpdatePortfolioRequest,

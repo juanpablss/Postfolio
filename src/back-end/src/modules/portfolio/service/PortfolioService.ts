@@ -1,4 +1,4 @@
-import { IPortfolioRepository } from "@portfolio/domain/entities/IPortfolioRepository";
+import { IPortfolioRepository } from "@portfolio/domain/interfaces/IPortfolioRepository";
 import {
   CreatePortfolioDTO,
   UpdatePortfolioDTO,
@@ -7,7 +7,7 @@ import { PortfolioMapper } from "@portfolio/util/PortfolioMapper";
 import { BadRequest } from "@shared/error/HttpError";
 import { Portfolio } from "@portfolio/domain/entities/Portfolio";
 import { IUserPort } from "@user/api/IUserPort";
-import { IPortfolioService } from "@portfolio/service/IPortfolioService";
+import { IPortfolioService } from "@portfolio/domain/interfaces/IPortfolioService";
 import { inject, injectable } from "inversify";
 import { TYPES } from "@compositionRoot/Types";
 import { IWorkPort } from "@work/api/IWorkPort";

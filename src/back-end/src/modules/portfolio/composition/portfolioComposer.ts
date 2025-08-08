@@ -1,11 +1,11 @@
 import { TYPES } from "@compositionRoot/Types";
 import { Container } from "inversify";
 
-import { IPortfolioRepository } from "@portfolio/domain/entities/IPortfolioRepository";
-import { IPortfolioService } from "@portfolio/service/IPortfolioService";
+import { IPortfolioRepository } from "@portfolio/domain/interfaces/IPortfolioRepository";
+import { IPortfolioService } from "@portfolio/domain/interfaces/IPortfolioService";
 import { IPortfolioPort } from "@portfolio/api/IPortfolioPort";
 
-import { PrismaPortfolioRepository } from "@portfolio/repository/PrismaPortfolioRepository";
+import { PrismaPortfolioRepository } from "@portfolio/infra/database/PrismaPortfolioRepository";
 import { PortfolioService } from "@portfolio/service/PortfolioService";
 import { PortfolioAdapter } from "@portfolio/api/PortfolioAdapter";
 import { PortfolioController } from "@portfolio/inBound/PortfolioController";

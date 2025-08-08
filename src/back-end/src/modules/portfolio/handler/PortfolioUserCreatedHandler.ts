@@ -1,5 +1,5 @@
 import { TYPES } from "@compositionRoot/Types";
-import { IPortfolioService } from "@portfolio/service/IPortfolioService";
+import { IPortfolioService } from "@portfolio/domain/interfaces/IPortfolioService";
 
 import { EventHandler, EventListener } from "@shared/event/EventListener";
 import { UserCreatedEvent } from "@shared/event/UserCreatedEvent";
