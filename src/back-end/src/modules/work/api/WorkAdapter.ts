@@ -8,17 +8,16 @@ import { IWorkRepository } from "@work/domain/entities/IWorkRepository";
 @injectable()
 export class WorkAdapter implements IWorkPort {
   constructor(
-    @inject(TYPES.IWorkService) private workService: IWorkService,
     @inject(TYPES.IWorkRepository)
-    private workdRepository: IWorkRepository
+    private workRepository: IWorkRepository
   ) {}
 
   async workExists(workId: string): Promise<boolean> {
-    const work = await this.workService.findById(workId);
+    const work = await this.workRepository.findById(workId);
     return work ? true : false;
   }
 
   async findWorkByPortfolio(portfolioId: string): Promise<WorkContract[]> {
-    return await this.workdRepository.findByPortfolio(portfolioId);
+    return await this.workRepository.findByPortfolio(portfolioId);
   }
 }
