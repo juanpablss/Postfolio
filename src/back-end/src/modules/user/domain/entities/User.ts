@@ -4,22 +4,34 @@ import Email from "@user/domain/valueObject/Email";
 
 export default class User {
   id: string;
-  name: string;
+  username: string;
   email: Email;
   private passwordHash: string | null;
+  bio: string;
+  linkedin: string | null;
+  github: string | null;
+  website: string | null;
   status: string;
 
   constructor(
     id: string,
-    name: string,
+    username: string,
     email: Email,
     passwordHash: string | null,
+    bio: string = "default",
+    linkedin: string | null = null,
+    github: string | null = null,
+    website: string | null = null,
     status: string = "None"
   ) {
     this.id = id;
-    this.name = name;
+    this.username = username;
     this.email = email;
     this.passwordHash = passwordHash;
+    this.bio = bio;
+    this.linkedin = linkedin;
+    this.github = github;
+    this.website = website;
     this.status = status;
   }
 

@@ -1,7 +1,11 @@
 interface CreateUserDTO {
-  name: string;
+  username: string;
   email: string;
   password: string;
+  bio: string;
+  linkedin?: string;
+  github?: string;
+  website?: string;
   status: string;
 }
 

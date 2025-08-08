@@ -49,7 +49,7 @@ export class UserService implements IUserService {
 
     const event = new UserCreatedEvent(
       user.id,
-      user.name,
+      user.username,
       user.email.getValue()
     );
     await EventListener.publish(event);
@@ -84,7 +84,7 @@ export class UserService implements IUserService {
       );
       const event = new UserCreatedEvent(
         user.id,
-        user.name,
+        user.username,
         user.email.getValue()
       );
       await EventListener.publish(event);

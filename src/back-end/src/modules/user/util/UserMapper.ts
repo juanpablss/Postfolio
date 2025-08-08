@@ -10,24 +10,36 @@ export const UserMapper = {
       prismaUser.name,
       new Email(prismaUser.email, false),
       prismaUser.password,
+      prismaUser.bio,
+      prismaUser.linkedin,
+      prismaUser.github,
+      prismaUser.website,
       prismaUser.status
     );
   },
   fromDomaintoPrisma(user: User): UserModel {
     return {
       id: user.id,
-      name: user.name,
+      name: user.username,
       email: user.email.getValue(),
       password: user.getPassword(),
+      bio: user.bio,
+      linkedin: user.linkedin,
+      github: user.github,
+      website: user.website,
       status: user.status,
     };
   },
   fromCreateUserDTOtoDomain(dto: CreateUserDTO, hashedPassword: string): User {
     return new User(
       "",
-      dto.name,
+      dto.username,
       new Email(dto.email),
       hashedPassword,
+      dto.bio,
+      dto.linkedin,
+      dto.github,
+      dto.website,
       dto.status
     );
   },

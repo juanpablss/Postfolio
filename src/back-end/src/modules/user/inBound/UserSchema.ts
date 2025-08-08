@@ -2,18 +2,29 @@ import { FastifyRequest } from "fastify";
 import { z } from "zod";
 
 const CreateUserBodySchema = z.object({
-  name: z
+  username: z
     .string({ message: "O nome é obrigatorio" })
     .min(3, "O nome é muito curto")
     .max(100, "O nome é muito longo"),
-  email: z
-    .string({ message: "O email é obrigatorio" })
-    .email({ message: "Email invalido" }),
+  email: z.string({ message: "O email é obrigatorio" }),
   password: z
     .string({ message: "A senha é obrigatoria" })
     .min(8, "Senha muito curta")
     .max(100, "Senha muito longa"),
-  status: z.string(),
+  bio: z.string().max(200),
+  linkedin: z
+    .string()
+    .url({ message: "", protocol: /^https?$/ })
+    .optional(),
+  github: z
+    .string()
+    .url({ message: "", protocol: /^https?$/ })
+    .optional(),
+  website: z
+    .string()
+    .url({ message: "", protocol: /^https?$/ })
+    .optional(),
+  status: z.string().default("None"),
 });
 
 type CreateUserRequest = FastifyRequest<{

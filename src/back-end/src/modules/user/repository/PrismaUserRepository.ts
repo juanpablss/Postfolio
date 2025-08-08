@@ -12,9 +12,13 @@ export class PrismaUserRepository implements IUserRepository {
     try {
       const userModel = await prisma.user.create({
         data: {
-          name: user.name,
+          name: user.username,
           email: user.email.getValue(),
           password: user.getPassword(),
+          bio: user.bio,
+          linkedin: user.linkedin,
+          github: user.github,
+          website: user.website,
           status: user.status,
         },
       });

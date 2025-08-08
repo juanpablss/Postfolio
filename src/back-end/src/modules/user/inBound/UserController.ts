@@ -30,9 +30,11 @@ export class UserController {
   async create(req: CreateUserRequest, reply: FastifyReply) {
     const userDto: CreateUserDTO = { ...req.body };
 
-    await this.userService.create(userDto);
+    // await this.userService.create(userDto);
 
-    return reply.status(201).send({ msg: "Usuario criado com sucesso!" });
+    return reply
+      .status(201)
+      .send({ msg: "Usuario criado com sucesso!", userDto });
   }
 
   async getAll(req: FastifyRequest, reply: FastifyReply) {
@@ -94,7 +96,7 @@ export class UserController {
     if (!user) throw new BadRequest("Id do usuario não existe");
     reply.send({
       msg: "Perfil do usuário",
-      user: { id: user.id, name: user.name, email: user.email },
+      user: { id: user.id, name: user.username, email: user.email },
     });
   }
 
