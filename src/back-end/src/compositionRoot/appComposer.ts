@@ -6,7 +6,7 @@ import { TYPES } from "@compositionRoot/Types";
 import configureErrorHandling from "@infrastructure/fastify/ConfigureErrorHandling";
 
 // Controladores
-import { UserController } from "@user/inBound/UserController";
+import { UserController } from "@user/api/UserController";
 import { PortfolioController } from "@portfolio/inBound/PortfolioController";
 import { WorkController } from "@work/inBound/WorkController";
 import { CompetitionController } from "@competition/inBound/CompetitionController";
@@ -14,7 +14,7 @@ import { ChatController } from "@chat/inBound/ChatController";
 import { EmailController } from "@email/inBound/EmailController";
 
 // Rotas
-import { UserRoute } from "@user/inBound/UserRoute";
+import { UserRoute } from "@user/api/UserRoute";
 import { PortfolioRoute } from "@portfolio/inBound/PortfolioRoute";
 import { WorkRoute } from "@work/inBound/WorkRoute";
 import { CompetitionRoute } from "@competition/inBound/CompetitionRoute";

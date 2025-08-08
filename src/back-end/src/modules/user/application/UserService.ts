@@ -10,15 +10,11 @@ import {
 import { Token } from "@shared/util/Token";
 import { IUserRepository } from "@user/domain/interfaces/IUserRepository";
 import Email from "@user/domain/valueObject/Email";
-import {
-  CreateUserDTO,
-  LoginUserDTO,
-  SocialLoginDTO,
-} from "@user/dtos/UserDTO";
+import { CreateUserDTO, LoginUserDTO, SocialLoginDTO } from "@user/api/UserDTO";
 import { IUserService } from "@user/domain/interfaces/IUserService";
 import { inject, injectable } from "inversify";
 import { TYPES } from "@compositionRoot/Types";
-import { UserMapper } from "@user/util/UserMapper";
+import { UserMapper } from "@user/application/UserMapper";
 import { UserCreatedEvent } from "@shared/event/UserCreatedEvent";
 import { EventListener } from "@shared/event/EventListener";
 

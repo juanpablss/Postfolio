@@ -1,5 +1,5 @@
 import { User as UserModel } from "@prisma/client";
-import { CreateUserDTO, SocialLoginDTO } from "@user/dtos/UserDTO";
+import { CreateUserDTO, SocialLoginDTO } from "@user/api/UserDTO";
 import User from "@user/domain/entities/User";
 import Email from "@user/domain/valueObject/Email";
 

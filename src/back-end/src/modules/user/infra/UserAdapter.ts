@@ -1,5 +1,5 @@
 import { TYPES } from "@compositionRoot/Types";
-import { IUserPort } from "@user/api/IUserPort";
+import { IUserPort } from "@user/domain/interfaces/UserPort";
 import { IUserService } from "@user/domain/interfaces/IUserService";
 import { inject, injectable } from "inversify";
 

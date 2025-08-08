@@ -1,10 +1,6 @@
 import User from "@user/domain/entities/User";
 import Email from "@user/domain/valueObject/Email";
-import {
-  CreateUserDTO,
-  LoginUserDTO,
-  SocialLoginDTO,
-} from "@user/dtos/UserDTO";
+import { CreateUserDTO, LoginUserDTO, SocialLoginDTO } from "@user/api/UserDTO";
 
 export interface IUserService {
   create(userDto: Partial<CreateUserDTO>): Promise<void>;

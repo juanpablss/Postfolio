@@ -1,11 +1,11 @@
 import { FastifyInstance } from "fastify";
-import { UserController } from "@user/inBound/UserController";
+import { UserController } from "@user/api/UserController";
 import { UserMiddle } from "@infrastructure/middleware/UserMiddle";
 import {
   LoginRequest,
   CreateUserRequest,
   userRouteSchema,
-} from "@user/inBound/UserSchema";
+} from "@user/api/UserSchema";
 
 function userRoutesPlugin(
   app: FastifyInstance,

@@ -1,15 +1,11 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { BadRequest, InternalServerError } from "@shared/error/HttpError";
-import {
-  CreateUserDTO,
-  LoginUserDTO,
-  SocialLoginDTO,
-} from "@user/dtos/UserDTO";
+import { CreateUserDTO, LoginUserDTO, SocialLoginDTO } from "@user/api/UserDTO";
 import {
   LoginRequest,
   CreateUserRequest,
   userRouteSchema,
-} from "@user/inBound/UserSchema";
+} from "@user/api/UserSchema";
 import { IUserService } from "@user/domain/interfaces/IUserService";
 import { inject, injectable } from "inversify";
 import { TYPES } from "@compositionRoot/Types";

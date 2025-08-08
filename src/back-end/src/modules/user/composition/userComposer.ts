@@ -3,12 +3,12 @@ import { TYPES } from "@compositionRoot/Types";
 
 import { IUserRepository } from "@user/domain/interfaces/IUserRepository";
 import { IUserService } from "@user/domain/interfaces/IUserService";
-import { IUserPort } from "@user/api/IUserPort";
+import { IUserPort } from "@user/domain/interfaces/UserPort";
 
 import { PrismaUserRepository } from "@user/infra/database/UserRepository";
-import { UserAdaper } from "@user/api/UserAdapter";
-import { UserService } from "@user/service/UserService";
-import { UserController } from "@user/inBound/UserController";
+import { UserAdaper } from "@user/infra/UserAdapter";
+import { UserService } from "@user/application/UserService";
+import { UserController } from "@user/api/UserController";
 
 export function userComposeModule(container: Container): void {
   container
