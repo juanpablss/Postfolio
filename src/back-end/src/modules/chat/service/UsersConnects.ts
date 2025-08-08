@@ -1,5 +1,5 @@
 import { WebSocket } from "ws";
-import { IUsersConnects } from "@chat/service/IUsersConnects";
+import { IUsersConnects } from "@chat/domain/interfaces/IUsersConnects";
 import { injectable } from "inversify";
 
 @injectable()

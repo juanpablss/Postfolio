@@ -1,4 +1,4 @@
-import { IMessageRepository } from "@chat/domain/entities/IMessageRepository";
+import { IMessageRepository } from "@chat/domain/interfaces/IMessageRepository";
 import { Message } from "@chat/domain/entities/Message";
 import { MessageStatus } from "@chat/domain/enum/MessageStatus";
 import { MessageMapper, MessageStatusMapper } from "@chat/util/MessageMapper";

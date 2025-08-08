@@ -1,10 +1,10 @@
-import { IMessageRepository } from "@chat/domain/entities/IMessageRepository";
+import { IMessageRepository } from "@chat/domain/interfaces/IMessageRepository";
 import { Message } from "@chat/domain/entities/Message";
 import { SendMessageDTO, UpdateMessageDTO } from "@chat/dtos/MessageDTO";
-import { IMessageService } from "@chat/service/IMessageService";
+import { IMessageService } from "@chat/domain/interfaces/IMessageService";
 import { TYPES } from "@compositionRoot/Types";
 import { inject, injectable } from "inversify";
-import { IUsersConnects } from "@chat/service/IUsersConnects";
+import { IUsersConnects } from "@chat/domain/interfaces/IUsersConnects";
 import { MessageMapper } from "@chat/util/MessageMapper";
 import { MessageStatus } from "@chat/domain/enum/MessageStatus";
 import { BadRequest, NotFound } from "@shared/error/HttpError";

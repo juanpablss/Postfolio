@@ -1,13 +1,13 @@
 import { Container } from "inversify";
 import { TYPES } from "@compositionRoot/Types";
 
-import { IMessageService } from "@chat/service/IMessageService";
-import { IMessageRepository } from "@chat/domain/entities/IMessageRepository";
-import { IUsersConnects } from "@chat/service/IUsersConnects";
+import { IMessageService } from "@chat/domain/interfaces/IMessageService";
+import { IMessageRepository } from "@chat/domain/interfaces/IMessageRepository";
+import { IUsersConnects } from "@chat/domain/interfaces/IUsersConnects";
 
 import { MessageService } from "@chat/service/MessageService";
 import { UsersConnects } from "@chat/service/UsersConnects";
-import { MessageRepository } from "@chat/repository/MessageRepository";
+import { MessageRepository } from "@chat/infra/database/MessageRepository";
 
 import { ChatController } from "@chat/inBound/ChatController";
 

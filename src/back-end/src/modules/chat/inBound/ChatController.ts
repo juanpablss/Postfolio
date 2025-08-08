@@ -1,5 +1,5 @@
-import { IMessageService } from "@chat/service/IMessageService";
-import { IUsersConnects } from "@chat/service/IUsersConnects";
+import { IMessageService } from "@chat/domain/interfaces/IMessageService";
+import { IUsersConnects } from "@chat/domain/interfaces/IUsersConnects";
 import { TYPES } from "@compositionRoot/Types";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { GetMessageRequest } from "@chat/inBound/ChatShema";
