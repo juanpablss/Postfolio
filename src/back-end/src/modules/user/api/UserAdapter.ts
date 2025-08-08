@@ -1,6 +1,6 @@
 import { TYPES } from "@compositionRoot/Types";
 import { IUserPort } from "@user/api/IUserPort";
-import { IUserService } from "@user/service/IUserService";
+import { IUserService } from "@user/domain/interfaces/IUserService";
 import { inject, injectable } from "inversify";
 
 @injectable()

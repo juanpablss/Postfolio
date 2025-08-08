@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { GoogleOAuth } from "@user/auth/GoogleAuth";
+import { GoogleOAuth } from "@user/infra/auth/GoogleAuth";
 
 export function configureProvaders(app: FastifyInstance) {
   const googleOAuth = new GoogleOAuth(

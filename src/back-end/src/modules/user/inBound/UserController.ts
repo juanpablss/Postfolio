@@ -10,7 +10,7 @@ import {
   CreateUserRequest,
   userRouteSchema,
 } from "@user/inBound/UserSchema";
-import { IUserService } from "@user/service/IUserService";
+import { IUserService } from "@user/domain/interfaces/IUserService";
 import { inject, injectable } from "inversify";
 import { TYPES } from "@compositionRoot/Types";
 import jwt from "jsonwebtoken";

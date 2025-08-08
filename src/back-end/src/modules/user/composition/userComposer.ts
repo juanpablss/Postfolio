@@ -1,11 +1,11 @@
 import { Container } from "inversify";
 import { TYPES } from "@compositionRoot/Types";
 
-import { IUserRepository } from "@user/domain/entities/IUserRepository";
-import { IUserService } from "@user/service/IUserService";
+import { IUserRepository } from "@user/domain/interfaces/IUserRepository";
+import { IUserService } from "@user/domain/interfaces/IUserService";
 import { IUserPort } from "@user/api/IUserPort";
 
-import { PrismaUserRepository } from "@user/repository/PrismaUserRepository";
+import { PrismaUserRepository } from "@user/infra/database/PrismaUserRepository";
 import { UserAdaper } from "@user/api/UserAdapter";
 import { UserService } from "@user/service/UserService";
 import { UserController } from "@user/inBound/UserController";

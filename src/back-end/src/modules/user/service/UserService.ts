@@ -8,14 +8,14 @@ import {
   Unauthorized,
 } from "@shared/error/HttpError";
 import { Token } from "@shared/util/Token";
-import { IUserRepository } from "@user/domain/entities/IUserRepository";
+import { IUserRepository } from "@user/domain/interfaces/IUserRepository";
 import Email from "@user/domain/valueObject/Email";
 import {
   CreateUserDTO,
   LoginUserDTO,
   SocialLoginDTO,
 } from "@user/dtos/UserDTO";
-import { IUserService } from "@user/service/IUserService";
+import { IUserService } from "@user/domain/interfaces/IUserService";
 import { inject, injectable } from "inversify";
 import { TYPES } from "@compositionRoot/Types";
 import { UserMapper } from "@user/util/UserMapper";

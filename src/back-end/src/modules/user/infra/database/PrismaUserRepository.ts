@@ -4,7 +4,7 @@ import { prisma } from "@infrastructure/config/Prisma";
 import { InternalServerError } from "@shared/error/HttpError";
 import { Prisma } from "@prisma/client";
 import { UserMapper } from "@user/util/UserMapper";
-import { IUserRepository } from "@user/domain/entities/IUserRepository";
+import { IUserRepository } from "@user/domain/interfaces/IUserRepository";
 import Email from "@user/domain/valueObject/Email";
 
 export class PrismaUserRepository implements IUserRepository {
