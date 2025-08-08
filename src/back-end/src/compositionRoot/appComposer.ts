@@ -25,7 +25,7 @@ import { EmailRoute } from "@email/inBound/EmailRoute";
 import { PortfolioUserCreatedHandler } from "@portfolio/handler/PortfolioUserCreatedHandler";
 
 // Composition
-import { userComposeModule } from "@user/composition/userComposer";
+import { userComposeModule } from "@user/composition/UserComposer";
 import { portfolioComposeModule } from "@portfolio/composition/PortfolioComposer";
 import { workComposeModule } from "@work/composition/WorkComposer";
 import { competitionComposeModule } from "@competition/composition/CompetitionComposer";

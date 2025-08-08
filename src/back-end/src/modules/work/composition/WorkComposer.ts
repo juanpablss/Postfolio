@@ -14,12 +14,12 @@ export function workComposeModule(container: Container): void {
   container
     .bind<IWorkRepository>(TYPES.IWorkRepository)
     .to(PrismaWorkRepository)
-    .inSingletonScope();
+    .inRequestScope();
   container
     .bind<IWorkService>(TYPES.IWorkService)
     .to(WorkService)
-    .inSingletonScope();
-  container.bind<IWorkPort>(TYPES.IWorkPort).to(WorkAdapter).inSingletonScope();
+    .inRequestScope();
+  container.bind<IWorkPort>(TYPES.IWorkPort).to(WorkAdapter).inRequestScope();
   container
     .bind<WorkController>(TYPES.WorkController)
     .to(WorkController)

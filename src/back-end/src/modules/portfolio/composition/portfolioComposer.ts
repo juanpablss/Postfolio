@@ -15,15 +15,15 @@ export function portfolioComposeModule(container: Container): void {
   container
     .bind<IPortfolioRepository>(TYPES.IPortfolioRepository)
     .to(PrismaPortfolioRepository)
-    .inSingletonScope();
+    .inRequestScope();
   container
     .bind<IPortfolioService>(TYPES.IPortfolioService)
     .to(PortfolioService)
-    .inSingletonScope();
+    .inRequestScope();
   container
     .bind<IPortfolioPort>(TYPES.IPortfolioPort)
     .to(PortfolioAdapter)
-    .inSingletonScope();
+    .inRequestScope();
   container
     .bind<PortfolioController>(TYPES.PortfolioController)
     .to(PortfolioController)
@@ -33,5 +33,5 @@ export function portfolioComposeModule(container: Container): void {
   container
     .bind<PortfolioUserCreatedHandler>(PortfolioUserCreatedHandler)
     .toSelf()
-    .inSingletonScope();
+    .inRequestScope();
 }

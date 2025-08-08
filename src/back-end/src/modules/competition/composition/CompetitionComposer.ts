@@ -12,11 +12,11 @@ export function competitionComposeModule(container: Container): void {
   container
     .bind<ICompetitionRepository>(TYPES.ICompetitionRepository)
     .to(PrismaCompetitionRepository)
-    .inSingletonScope();
+    .inRequestScope();
   container
     .bind<ICompetitionService>(TYPES.ICompetitionService)
     .to(CompetitionService)
-    .inSingletonScope();
+    .inRequestScope();
   container
     .bind<CompetitionController>(TYPES.CompetitionController)
     .to(CompetitionController)

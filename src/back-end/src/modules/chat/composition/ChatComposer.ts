@@ -15,15 +15,15 @@ export function chatComposerModule(container: Container) {
   container
     .bind<IMessageRepository>(TYPES.IMessageRepository)
     .to(MessageRepository)
-    .inSingletonScope();
+    .inRequestScope();
   container
     .bind<IMessageService>(TYPES.IMessageService)
     .to(MessageService)
-    .inSingletonScope();
+    .inRequestScope();
   container
     .bind<IUsersConnects>(TYPES.IUsersConnects)
     .to(UsersConnects)
-    .inSingletonScope();
+    .inRequestScope();
   container
     .bind<ChatController>(TYPES.ChatController)
     .to(ChatController)

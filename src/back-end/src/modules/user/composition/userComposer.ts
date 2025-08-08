@@ -14,14 +14,14 @@ export function userComposeModule(container: Container): void {
   container
     .bind<IUserRepository>(TYPES.IUserRepository)
     .to(PrismaUserRepository)
-    .inSingletonScope();
+    .inRequestScope();
   container
     .bind<IUserService>(TYPES.IUserService)
     .to(UserService)
-    .inSingletonScope();
-  container.bind<IUserPort>(TYPES.IUserPort).to(UserAdaper).inSingletonScope();
+    .inRequestScope();
+  container.bind<IUserPort>(TYPES.IUserPort).to(UserAdaper).inRequestScope();
   container
     .bind<UserController>(TYPES.UserController)
     .to(UserController)
-    .inRequestScope(); // Ou inSingletonScope
+    .inRequestScope();
 }

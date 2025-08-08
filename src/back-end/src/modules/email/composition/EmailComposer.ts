@@ -9,7 +9,7 @@ export function emailComposerModuler(container: Container) {
   container
     .bind<IEmailService>(TYPES.IEmailService)
     .to(EmailService)
-    .inSingletonScope();
+    .inRequestScope();
 
   container
     .bind<EmailController>(TYPES.EmailController)
@@ -19,5 +19,5 @@ export function emailComposerModuler(container: Container) {
   container
     .bind<EmailUserCreatedHandler>(EmailUserCreatedHandler)
     .toSelf()
-    .inSingletonScope();
+    .inRequestScope();
 }
