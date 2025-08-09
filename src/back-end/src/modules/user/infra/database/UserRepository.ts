@@ -7,22 +7,13 @@ import { UserMapper } from "@user/application/UserMapper";
 import { IUserRepository } from "@user/domain/interfaces/IUserRepository";
 import Email from "@user/domain/valueObject/Email";
 
-export class PrismaUserRepository implements IUserRepository {
+export class UserRepository implements IUserRepository {
   async create(user: User): Promise<User> {
     try {
       const userModel = await prisma.user.create({
-        data: {
-          name: user.username,
-          email: user.email.getValue(),
-          password: user.getPassword(),
-          bio: user.bio,
-          linkedin: user.linkedin,
-          github: user.github,
-          website: user.website,
-          status: user.status,
-        },
+        data: { ...UserMapper.fromDomaintoPrisma(user), id: undefined },
       });
-      return UserMapper.fromPrismatoDomain(userModel);
+      return UserMapper.fromPrismaToDomain(userModel);
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         throw new InternalServerError(
@@ -33,31 +24,31 @@ export class PrismaUserRepository implements IUserRepository {
     }
   }
 
+  async deleteById(id: string): Promise<User | null> {
+    try {
+      const userModel = await prisma.user.delete({
+        where: { id },
+      });
+      return userModel ? UserMapper.fromPrismaToDomain(userModel) : null;
+    } catch (error) {
+      throw new InternalServerError("Não foi possivel deletar usuario!");
+    }
+  }
+
   async findMany(): Promise<User[]> {
     const userModels = await prisma.user.findMany();
-    return userModels.map(UserMapper.fromPrismatoDomain);
+    return userModels.map(UserMapper.fromPrismaToDomain);
   }
 
   async findById(id: string): Promise<User | null> {
     const userModel = await prisma.user.findUnique({ where: { id } });
-    return userModel ? UserMapper.fromPrismatoDomain(userModel) : null;
+    return userModel ? UserMapper.fromPrismaToDomain(userModel) : null;
   }
 
   async findByEmail(email: Email): Promise<User | null> {
     const userModel = await prisma.user.findUnique({
       where: { email: email.getValue() },
     });
-    return userModel ? UserMapper.fromPrismatoDomain(userModel) : null;
-  }
-
-  async deleteById(id: string): Promise<User | null> {
-    try {
-      const userModel = await prisma.user.delete({
-        where: { id },
-      });
-      return userModel ? UserMapper.fromPrismatoDomain(userModel) : null;
-    } catch (error) {
-      throw new InternalServerError("Não foi possivel deletar usuario!");
-    }
+    return userModel ? UserMapper.fromPrismaToDomain(userModel) : null;
   }
 }
