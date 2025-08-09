@@ -52,7 +52,7 @@ export class UserService implements IUserService {
       user.username,
       user.email.getValue()
     );
-    await EventListener.publish(event);
+    EventListener.publish(event);
     console.log("Portfolio criado com sucesso");
   }
 
@@ -61,7 +61,14 @@ export class UserService implements IUserService {
 
     if (!user) throw new NotFound("Usuario não encontrado");
 
-    user.updateFromDto(dto);
+    if (dto.email !== undefined) {
+      const exist = await this.userRepository.findByEmail(
+        new Email(dto.email, false)
+      );
+
+      if (exist) throw new Conflict("O novo email já está cadastrado.");
+    }
+    await user.updateFromDto(dto);
 
     return await this.userRepository.updateById(user);
   }

@@ -29,7 +29,13 @@ export class EventListener {
 
     if (handlers) {
       const promises = handlers.map((handler) => handler.handle(event));
-      await Promise.all(promises);
+      Promise.all(promises).catch((error) => {
+        // Importante: tratamos erros aqui para evitar UnhandledPromiseRejection
+        console.error(
+          `[EventListener] Erro ao processar evento ${event.getID()}:`,
+          error
+        );
+      });
     }
   }
 }

@@ -23,6 +23,8 @@ import { EmailRoute } from "@email/api/EmailRoute";
 
 // Handlers
 import { PortfolioUserCreatedHandler } from "@portfolio/handler/PortfolioUserCreatedHandler";
+import { EmailUserCreatedHandler } from "@email/handler/EmailUserCreatedHandler";
+import { EmailUserUpdateHandler } from "@email/handler/EmailUserUpdateHandler";
 
 // Composition
 import { userComposeModule } from "@user/composition/UserComposer";
@@ -31,7 +33,6 @@ import { workComposeModule } from "@work/composition/WorkComposer";
 import { competitionComposeModule } from "@competition/composition/CompetitionComposer";
 import { chatComposerModule } from "@chat/composition/ChatComposer";
 import { emailComposerModuler } from "@email/composition/EmailComposer";
-import { EmailUserCreatedHandler } from "@email/handler/EmailUserCreatedHandler";
 
 const container = new Container();
 
@@ -97,7 +98,8 @@ export class AppComposer {
 
   public registerHandlers(): void {
     const portfolioHandler = container.get(PortfolioUserCreatedHandler);
-    const emailHandler = container.get(EmailUserCreatedHandler);
+    const emailUserCreatedHandler = container.get(EmailUserCreatedHandler);
+    const emailUserUpdateHandler = container.get(EmailUserUpdateHandler);
   }
 
   // Se você tiver configurações globais do Fastify, pode tê-las aqui

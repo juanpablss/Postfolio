@@ -3,6 +3,8 @@ import { Crypt } from "@shared/util/Crypto";
 import Email from "@user/domain/valueObject/Email";
 import { UserType } from "@user/domain/enum/UserType";
 import { UpdateUserDTO } from "@user/api/UserDTO";
+import { EventListener } from "@shared/event/EventListener";
+import { UserUpdateEvent } from "@shared/event/UserUpdateEvent";
 
 export default class User {
   id: string;
@@ -43,13 +45,21 @@ export default class User {
     return await Crypt.compare(password, this.passwordHash);
   }
 
-  public updateFromDto(dto: UpdateUserDTO): void {
+  public async updateFromDto(dto: UpdateUserDTO): Promise<void> {
     if (dto.username !== undefined) {
       this.username = dto.username;
     }
 
     if (dto.email !== undefined) {
       this.email = new Email(dto.email);
+      const event = new UserUpdateEvent(
+        this.id,
+        this.username,
+        this.email.getValue(),
+        true
+      );
+      await EventListener.publish(event);
+      return;
     }
 
     if (dto.bio !== undefined) {
@@ -67,6 +77,14 @@ export default class User {
     if (dto.website !== undefined) {
       this.website = dto.website;
     }
+
+    const event = new UserUpdateEvent(
+      this.id,
+      this.username,
+      this.email.getValue(),
+      false
+    );
+    await EventListener.publish(event);
   }
 
   public getPassword(): string | null {

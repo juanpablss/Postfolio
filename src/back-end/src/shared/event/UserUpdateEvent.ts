@@ -8,7 +8,8 @@ export class UserUpdateEvent extends Event {
   constructor(
     public readonly userId: string,
     public readonly userName: string,
-    public readonly userEmail: string
+    public readonly userEmail: string,
+    public readonly changeEmail: boolean
   ) {
     super();
   }

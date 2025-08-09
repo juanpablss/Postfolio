@@ -4,6 +4,7 @@ import { EmailController } from "@email/api/EmailController";
 import { EmailService } from "@email/application/EmailService";
 import { IEmailService } from "@email/domain/interfaces/IEmailService";
 import { Container } from "inversify";
+import { EmailUserUpdateHandler } from "@email/handler/EmailUserUpdateHandler";
 
 export function emailComposerModuler(container: Container) {
   container
@@ -18,6 +19,10 @@ export function emailComposerModuler(container: Container) {
 
   container
     .bind<EmailUserCreatedHandler>(EmailUserCreatedHandler)
+    .toSelf()
+    .inRequestScope();
+  container
+    .bind<EmailUserUpdateHandler>(EmailUserUpdateHandler)
     .toSelf()
     .inRequestScope();
 }
