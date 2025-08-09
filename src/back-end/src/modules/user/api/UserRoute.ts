@@ -5,6 +5,7 @@ import {
   LoginRequest,
   CreateUserRequest,
   userRouteSchema,
+  UpdateUserRequest,
 } from "@user/api/UserSchema";
 
 function userRoutesPlugin(
@@ -17,6 +18,15 @@ function userRoutesPlugin(
 
   app.post("", { schema: userRouteSchema.create }, (req, reply) =>
     userController.create(req as CreateUserRequest, reply)
+  );
+
+  app.put(
+    "/:id",
+    {
+      schema: userRouteSchema.update,
+      preValidation: UserMiddle.authenticate,
+    },
+    (req, rep) => userController.updateById(req as UpdateUserRequest, rep)
   );
 
   app.delete("", { preValidation: UserMiddle.authenticate }, (req, reply) =>

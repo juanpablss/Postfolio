@@ -10,7 +10,12 @@ import {
 import { Token } from "@shared/util/Token";
 import { IUserRepository } from "@user/domain/interfaces/IUserRepository";
 import Email from "@user/domain/valueObject/Email";
-import { CreateUserDTO, LoginUserDTO, SocialLoginDTO } from "@user/api/UserDTO";
+import {
+  CreateUserDTO,
+  LoginUserDTO,
+  SocialLoginDTO,
+  UpdateUserDTO,
+} from "@user/api/UserDTO";
 import { IUserService } from "@user/domain/interfaces/IUserService";
 import { inject, injectable } from "inversify";
 import { TYPES } from "@compositionRoot/Types";
@@ -24,7 +29,6 @@ export class UserService implements IUserService {
     @inject(TYPES.IUserRepository)
     private userRepository: IUserRepository
   ) {}
-
   async create(userDto: CreateUserDTO): Promise<void> {
     const hashedPassword = await Crypt.hashPassWord(userDto.password);
     const userDomain = UserMapper.fromCreateUserDTOtoDomain(
@@ -50,6 +54,16 @@ export class UserService implements IUserService {
     );
     await EventListener.publish(event);
     console.log("Portfolio criado com sucesso");
+  }
+
+  async updateById(dto: UpdateUserDTO): Promise<User> {
+    const user = await this.userRepository.findById(dto.id);
+
+    if (!user) throw new NotFound("Usuario não encontrado");
+
+    user.updateFromDto(dto);
+
+    return await this.userRepository.updateById(user);
   }
 
   async deleteById(id: string): Promise<User | null> {

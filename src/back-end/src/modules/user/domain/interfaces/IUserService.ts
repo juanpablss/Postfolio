@@ -1,9 +1,15 @@
 import User from "@user/domain/entities/User";
 import Email from "@user/domain/valueObject/Email";
-import { CreateUserDTO, LoginUserDTO, SocialLoginDTO } from "@user/api/UserDTO";
+import {
+  CreateUserDTO,
+  LoginUserDTO,
+  SocialLoginDTO,
+  UpdateUserDTO,
+} from "@user/api/UserDTO";
 
 export interface IUserService {
-  create(userDto: Partial<CreateUserDTO>): Promise<void>;
+  create(userDto: CreateUserDTO): Promise<void>;
+  updateById(dto: UpdateUserDTO): Promise<User>;
   deleteById(id: string): Promise<User | null>;
 
   login(loginDto: LoginUserDTO): Promise<string>;

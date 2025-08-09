@@ -1,10 +1,15 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { BadRequest, InternalServerError } from "@shared/error/HttpError";
-import { CreateUserDTO, LoginUserDTO, SocialLoginDTO } from "@user/api/UserDTO";
+import {
+  CreateUserDTO,
+  LoginUserDTO,
+  SocialLoginDTO,
+  UpdateUserDTO,
+} from "@user/api/UserDTO";
 import {
   LoginRequest,
   CreateUserRequest,
-  userRouteSchema,
+  UpdateUserRequest,
 } from "@user/api/UserSchema";
 import { IUserService } from "@user/domain/interfaces/IUserService";
 import { inject, injectable } from "inversify";
@@ -42,7 +47,31 @@ export class UserController {
       .send({ msg: "Usuario criado com sucesso!", userDto });
   }
 
-  async updateById(req: CreateUserRequest, reply: FastifyReply) {}
+  async updateById(req: UpdateUserRequest, reply: FastifyReply) {
+    const id = req.params.id;
+    const userType = req.body.usertype
+      ? UserTypeMapper.fromSchemaToDto(req.body.usertype)
+      : undefined;
+
+    const dto: UpdateUserDTO = {
+      ...req.body,
+      userType: userType,
+      id,
+    };
+
+    const response = await this.userService.updateById(dto);
+
+    reply.send({
+      id: response.id,
+      username: response.username,
+      email: response.email.getValue(),
+      bio: response.bio,
+      linkedin: response.linkedin,
+      github: response.github,
+      website: response.website,
+      usertype: response.userType,
+    });
+  }
 
   async deleteById(req: FastifyRequest, reply: FastifyReply) {
     const id = req.user?.id;
@@ -104,6 +133,7 @@ export class UserController {
     const user = await this.userService.findById(req.user?.id);
 
     if (!user) throw new BadRequest("Id do usuario não existe");
+
     reply.send({
       msg: "Perfil do usuário",
       user: {

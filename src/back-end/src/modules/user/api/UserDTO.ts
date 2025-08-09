@@ -4,22 +4,22 @@ interface CreateUserDTO {
   username: string;
   email: string;
   password: string;
-  bio: string;
+  bio?: string;
   linkedin?: string;
   github?: string;
   website?: string;
   userType: UserType;
 }
 
-interface UpdateUserDTO {
-  username: string;
-  email: string;
-  password: string;
-  bio: string;
+export interface UpdateUserDTO {
+  id: string;
+  username?: string;
+  email?: string;
+  bio?: string;
   linkedin?: string;
   github?: string;
   website?: string;
-  status: string;
+  userType?: UserType;
 }
 
 interface LoginUserDTO {

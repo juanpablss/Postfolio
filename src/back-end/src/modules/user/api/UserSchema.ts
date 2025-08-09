@@ -11,18 +11,18 @@ const CreateUserBodySchema = z.object({
     .string({ message: "A senha é obrigatoria" })
     .min(8, "Senha muito curta")
     .max(100, "Senha muito longa"),
-  bio: z.string().max(200).default("default"),
+  bio: z.string().max(200).optional(),
   linkedin: z
     .string()
-    .url({ message: "", protocol: /^https?$/ })
+    .url({ message: "O likedin deve ser uma url válida", protocol: /^https?$/ })
     .optional(),
   github: z
     .string()
-    .url({ message: "", protocol: /^https?$/ })
+    .url({ message: "O github deve ser uma url válida", protocol: /^https?$/ })
     .optional(),
   website: z
     .string()
-    .url({ message: "", protocol: /^https?$/ })
+    .url({ message: "O website deve ser uma url válida", protocol: /^https?$/ })
     .optional(),
   usertype: z.enum(["DEVELOPER", "EMPLOYER"]),
 });
@@ -42,13 +42,30 @@ type LoginRequest = FastifyRequest<{
   Body: z.infer<typeof LoginUserBodySchema>;
 }>;
 
+const UpdateUserBodySchema = CreateUserBodySchema.omit({
+  password: true,
+}).partial();
+
+const UpdateUserParamsSchema = z.object({
+  id: z.string().uuid("ID do user inválido"),
+});
+
+type UpdateUserRequest = FastifyRequest<{
+  Params: z.infer<typeof UpdateUserParamsSchema>;
+  Body: z.infer<typeof UpdateUserBodySchema>;
+}>;
+
 const userRouteSchema = {
   create: {
     body: CreateUserBodySchema,
+  },
+  update: {
+    params: UpdateUserParamsSchema,
+    body: UpdateUserBodySchema,
   },
   login: {
     body: LoginUserBodySchema,
   },
 };
 
-export { userRouteSchema, CreateUserRequest, LoginRequest };
+export { userRouteSchema, CreateUserRequest, UpdateUserRequest, LoginRequest };
