@@ -81,6 +81,11 @@ export default function RegisterPage() {
   const [website, setWebsite] = useState('');
   const [linkedin, setLinkedin] = useState('');
   const [github, setGithub] = useState('');
+  enum UserType {
+    Developer = 'developer',
+    Employer = 'employer',
+  }
+  const [userType, setUserType] = useState<UserType.Developer | UserType.Employer>(UserType.Developer);
 
   // Estado para erros de validação
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -138,7 +143,8 @@ export default function RegisterPage() {
       website: website ? website : undefined,
       linkedin: linkedin ? linkedin : undefined,
       github: github ? github : undefined,
-      profilePic: profilePic || null
+      profilePic: profilePic || null,
+      usertype: userType
     };
 
     const apiURL = import.meta.env.VITE_BACKEND_URL;
@@ -269,17 +275,39 @@ export default function RegisterPage() {
           className="w-full py-2.5 px-4 rounded-lg border border-transparent input-glass-register text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
         />
       </div>
+      <div className="mb-6 flex items-center justify-center">
+        <label
+          className={`rounded-l-lg px-4 py-2 transition-colors cursor-pointer ${
+            userType === UserType.Developer ? 'bg-indigo-600 text-white' : 'bg-gray-700 text-gray-300'
+          }`}
+          onClick={() => setUserType(UserType.Developer)}
+        >
+          Developer
+        </label>
+        <label
+          className={`rounded-r-lg px-4 py-2 transition-colors cursor-pointer ${
+            userType === UserType.Employer ? 'bg-indigo-600 text-white' : 'bg-gray-700 text-gray-300'
+          }`}
+          onClick={() => setUserType(UserType.Employer)}
+        >
+          Employer
+        </label>
+      </div>
+
       <div className="flex gap-4">
         <button
           type="button"
-          onClick={() => { setErrors({}); setStep(1);}}
-          className="w-full py-3 rounded-lg text-blue-100 bg-gray-600/30 hover:bg-gray-500/40 text-base font-semibold cursor-pointer transition-all duration-300"
+          onClick={() => {
+            setErrors({});
+            setStep(1);
+          }}
+          className="w-full cursor-pointer rounded-lg bg-gray-600/30 py-3 text-base font-semibold text-blue-100 transition-all duration-300 hover:bg-gray-500/40"
         >
           Voltar
         </button>
         <button
           type="submit"
-          className="w-full py-3 rounded-lg text-white text-base font-semibold cursor-pointer transition-all duration-300 btn-register-gradient btn-register-glow hover:-translate-y-0.5 hover:shadow-lg hover:brightness-110 active:brightness-95"
+          className="btn-register-gradient btn-register-glow w-full cursor-pointer rounded-lg py-3 text-base font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:brightness-110 active:brightness-95"
         >
           Finalizar Registro
         </button>
