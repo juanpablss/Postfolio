@@ -1,33 +1,53 @@
-import { User as UserModel } from "@prisma/client";
+import { User as UserModel, UserType as UserTypeModel } from "@prisma/client";
 import { CreateUserDTO, SocialLoginDTO } from "@user/api/UserDTO";
 import User from "@user/domain/entities/User";
+import { UserType } from "@user/domain/enum/UserType";
 import Email from "@user/domain/valueObject/Email";
 
+export const UserTypeMapper = {
+  fromPrismaToDomain(userType: UserTypeModel): UserType {
+    switch (userType) {
+      case UserTypeModel.DEVELOPER:
+        return UserType.DEVELOPER;
+      case UserTypeModel.EMPLOYER:
+        return UserType.EMPLOYER;
+    }
+  },
+  fromDomainToPrisma(userType: UserType): UserTypeModel {
+    switch (userType) {
+      case UserType.DEVELOPER:
+        return UserTypeModel.DEVELOPER;
+      case UserType.EMPLOYER:
+        return UserTypeModel.EMPLOYER;
+    }
+  },
+};
+
 export const UserMapper = {
-  fromPrismatoDomain(prismaUser: UserModel): User {
+  fromPrismaToDomain(prismaUser: UserModel): User {
     return new User(
       prismaUser.id,
-      prismaUser.name,
+      prismaUser.username,
       new Email(prismaUser.email, false),
       prismaUser.password,
       prismaUser.bio,
       prismaUser.linkedin,
       prismaUser.github,
       prismaUser.website,
-      prismaUser.status
+      UserTypeMapper.fromPrismaToDomain(prismaUser.userType)
     );
   },
   fromDomaintoPrisma(user: User): UserModel {
     return {
       id: user.id,
-      name: user.username,
+      username: user.username,
       email: user.email.getValue(),
       password: user.getPassword(),
       bio: user.bio,
       linkedin: user.linkedin,
       github: user.github,
       website: user.website,
-      status: user.status,
+      userType: UserTypeMapper.fromDomainToPrisma(user.userType),
     };
   },
   fromCreateUserDTOtoDomain(dto: CreateUserDTO, hashedPassword: string): User {
@@ -40,7 +60,7 @@ export const UserMapper = {
       dto.linkedin,
       dto.github,
       dto.website,
-      dto.status
+      dto.userType
     );
   },
   fromSocialLoginDTOtoDomain(dto: SocialLoginDTO): User {
