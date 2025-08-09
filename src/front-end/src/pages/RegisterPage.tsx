@@ -1,6 +1,6 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { FiUser, FiMail, FiLock, FiCamera, FiLink, FiGithub, FiLinkedin } from 'react-icons/fi';
+import { FiUser, FiMail, FiLock, FiCamera, FiLink, FiGithub, FiLinkedin, FiEye, FiEyeOff } from 'react-icons/fi';
 
 // Estilos customizados do Tailwind, similar ao LoginPage, se necessário
 const TailwindRegisterStyles = () => (
@@ -72,6 +72,7 @@ export default function RegisterPage() {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState('');
 
   // Estado para a segunda etapa
@@ -175,42 +176,84 @@ export default function RegisterPage() {
 
   const renderStepOne = () => (
     <form onSubmit={handleNextStep} className="space-y-6">
-      <div>
-        <label htmlFor="email" className="text-sm font-medium text-blue-100 block mb-1">Email</label>
+      <div className="relative">
+        <FiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-300" />
         <input id="email" type="email" value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Insira seu Email"
-          className="w-full py-2.5 px-4 rounded-lg border border-transparent input-glass-register text-white placeholder-white/45 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+          className="w-full py-2.5 pl-10 pr-4 rounded-lg border border-transparent input-glass-register text-white placeholder-white/45 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
         />
-        {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
       </div>
       <div>
-        <label htmlFor="username" className="text-sm font-medium text-blue-100 block mb-1">Nome de Usuário</label>
-        <input id="username" type="text" value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Insira seu usuario"
-          className="w-full py-2.5 px-4 rounded-lg border border-transparent input-glass-register text-white placeholder-white/45 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
-        />
+        <label htmlFor="username" className="text-sm font-medium text-blue-100 block mb-1">
+          Nome de Usuário
+        </label>
+        <div className="relative">
+          <FiUser className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-300" />
+          <input
+            id="username"
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Insira seu usuário"
+            className="w-full py-2.5 pl-10 pr-4 rounded-lg border border-transparent input-glass-register text-white placeholder-white/45 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+          />
+        </div>
         {errors.username && <p className="text-red-400 text-xs mt-1">{errors.username}</p>}
       </div>
+            
       <div>
-        <label htmlFor="password" className="text-sm font-medium text-blue-100 block mb-1">Senha</label>
-        <input id="password" type="password" value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Insira sua senha"
-          className="w-full py-2.5 px-4 rounded-lg border border-transparent input-glass-register text-white placeholder-white/45 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
-        />
-        {errors.password && <p className="text-red-400 text-xs mt-1">{errors.password}</p>}
+        <label
+          htmlFor="password"
+          className="text-sm font-medium text-blue-100 block mb-1"
+        >
+          Senha
+        </label>
+
+        <div className="relative">
+          <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-300 pointer-events-none" />
+          <input
+            id="password"
+            type={showPassword ? 'text' : 'password'}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Insira sua senha"
+            className="w-full py-2.5 pl-10 pr-10 rounded-lg border border-transparent input-glass-register text-white placeholder-white/45 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+          />
+          <button
+            type="button"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-300 hover:text-indigo-400"
+            onClick={() => setShowPassword((s) => !s)}
+            tabIndex={-1}
+          >
+            {showPassword ? <FiEye /> : <FiEyeOff />}
+          </button>
+        </div>
       </div>
       <div>
-        <label htmlFor="confirm-password" className="text-sm font-medium text-blue-100 block mb-1">Confirmar Senha</label>
-        <input id="confirm-password" type="password" value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          placeholder="Insira sua senha"
-          className="w-full py-2.5 px-4 rounded-lg border border-transparent input-glass-register text-white placeholder-white/45 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
-        />
-        {errors.confirmPassword && <p className="text-red-400 text-xs mt-1">{errors.confirmPassword}</p>}
+        <label
+          htmlFor="confirm-password"
+          className="text-sm font-medium text-blue-100 block mb-1"
+        >
+          Confirmar Senha
+        </label>
+        <div className="relative">
+          <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-300 pointer-events-none" />
+          <input
+            id="confirm-password"
+            type={showPassword ? 'text' : 'password'} // usa o mesmo estado do campo de senha
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="Confirme sua senha"
+            className="w-full py-2.5 pl-10 pr-4 rounded-lg border border-transparent input-glass-register text-white placeholder-white/45 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+          />
+        </div>
+        {errors.confirmPassword && (
+          <p className="text-red-400 text-xs mt-1">{errors.confirmPassword}</p>
+        )}
       </div>
+
+
       <button
         type="submit"
         className="w-full py-3 rounded-lg text-white text-base font-semibold cursor-pointer transition-all duration-300 btn-register-gradient btn-register-glow hover:-translate-y-0.5 hover:shadow-lg hover:brightness-110 active:brightness-95"
@@ -225,13 +268,26 @@ export default function RegisterPage() {
       <div className="flex flex-col items-center space-y-3">
         <label htmlFor="profile-pic-input" className="cursor-pointer">
           {profilePicPreview ? (
-            <img src={profilePicPreview} alt="Preview" className="profile-pic-preview" />
+            <div className="relative">
+              <img src={profilePicPreview} alt="Preview" className="profile-pic-preview" />
+              <button
+                type="button"
+                onClick={() => {
+                  setProfilePic(null);
+                  setProfilePicPreview(null);
+                }}
+                className="absolute -top-2 -right-2 rounded-full bg-red-600 text-white w-6 h-6 flex items-center justify-center text-xs hover:bg-red-700"
+              >
+                ✕
+              </button>
+            </div>
           ) : (
             <div className="profile-pic-preview flex items-center justify-center text-blue-300/70">
-              {/* <FiCamera size={40} /> */}
-              <span className="text-sm">Foto de Perfil</span>
+              <FiCamera size={40} />
             </div>
           )}
+
+
         </label>
         <input
           type="file"
@@ -255,25 +311,52 @@ export default function RegisterPage() {
         {errors.bio && <p className="text-red-400 text-xs mt-1">{errors.bio}</p>}
       </div>
       <div>
-        <label htmlFor="website" className="text-sm font-medium text-blue-100 block mb-1">Website/Blog (Opcional)</label>
-        <input id="website" type="url" value={website}
-          onChange={(e) => setWebsite(e.target.value)}
-          className="w-full py-2.5 px-4 rounded-lg border border-transparent input-glass-register text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
-        />
+        <label htmlFor="website" className="text-sm font-medium text-blue-100 block mb-1">
+          Website/Blog (Opcional)
+        </label>
+        <div className="relative">
+          <FiLink className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-300" />
+          <input
+            id="website"
+            type="url"
+            value={website}
+            onChange={(e) => setWebsite(e.target.value)}
+            placeholder="Seu site ou blog"
+            className="w-full py-2.5 pl-10 pr-4 rounded-lg border border-transparent input-glass-register text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+          />
+        </div>
       </div>
       <div>
-        <label htmlFor="linkedin" className="text-sm font-medium text-blue-100 block mb-1">LinkedIn (Opcional)</label>
-        <input id="linkedin" type="url" value={linkedin}
-          onChange={(e) => setLinkedin(e.target.value)}
-          className="w-full py-2.5 px-4 rounded-lg border border-transparent input-glass-register text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
-        />
+        <label htmlFor="linkedin" className="text-sm font-medium text-blue-100 block mb-1">
+          LinkedIn (Opcional)
+        </label>
+        <div className="relative">
+          <FiLinkedin className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-300" />
+          <input
+            id="linkedin"
+            type="url"
+            value={linkedin}
+            onChange={(e) => setLinkedin(e.target.value)}
+            placeholder="Link do seu LinkedIn"
+            className="w-full py-2.5 pl-10 pr-4 rounded-lg border border-transparent input-glass-register text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+          />
+        </div>
       </div>
       <div>
-        <label htmlFor="github" className="text-sm font-medium text-blue-100 block mb-1">GitHub (Opcional)</label>
-        <input id="github" type="url" value={github}
-          onChange={(e) => setGithub(e.target.value)}
-          className="w-full py-2.5 px-4 rounded-lg border border-transparent input-glass-register text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
-        />
+        <label htmlFor="github" className="text-sm font-medium text-blue-100 block mb-1">
+          GitHub (Opcional)
+        </label>
+        <div className="relative">
+          <FiGithub className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-300" />
+          <input
+            id="github"
+            type="url"
+            value={github}
+            onChange={(e) => setGithub(e.target.value)}
+            placeholder="Link do seu GitHub"
+            className="w-full py-2.5 pl-10 pr-4 rounded-lg border border-transparent input-glass-register text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+          />
+        </div>
       </div>
       <div className="mb-6 flex items-center justify-center">
         <label
