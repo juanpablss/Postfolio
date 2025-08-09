@@ -26,7 +26,7 @@ export class UserController {
   async create(req: CreateUserRequest, reply: FastifyReply) {
     const userDto: CreateUserDTO = { ...req.body };
 
-    // await this.userService.create(userDto);
+    await this.userService.create(userDto);
 
     return reply
       .status(201)

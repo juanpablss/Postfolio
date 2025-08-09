@@ -1,6 +1,5 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-// Ícones podem ser adicionados depois, se necessário
 // import { FiUser, FiMail, FiLock, FiCamera, FiLink, FiGithub, FiLinkedin } from 'react-icons/fi';
 
 // Estilos customizados do Tailwind, similar ao LoginPage, se necessário
@@ -130,98 +129,79 @@ export default function RegisterPage() {
     }
     setErrors({});
 
-    // Lógica de envio do formulário (simulada)
-    console.log('Dados de Registro:', {
-      email, username, password, // Não envie a senha diretamente assim para um backend real sem HTTPS e hashing
-      profilePic: profilePic?.name, // Apenas nome para log, envie o arquivo 'profilePic'
-      bio, website, linkedin, github,
-    });
+    const userData = {
+      email: email,
+      username: username,
+      password: password, 
+      status: "",
+      bio: bio,
+      website: website ? website : undefined,
+      linkedin: linkedin ? linkedin : undefined,
+      github: github ? github : undefined,
+      profilePic: profilePic || null
+    };
 
-    // Exemplo de como você poderia enviar os dados com FormData se tiver um arquivo
-    const formData = new FormData();
-    formData.append('email', email);
-    formData.append('username', username);
-    formData.append('password', password); // Hashear no backend!
-    if (profilePic) {
-      formData.append('profilePic', profilePic);
+    const apiURL = import.meta.env.VITE_BACKEND_URL;
+    console.log("userData: ", JSON.stringify(userData));
+    try {
+      const response = await fetch(`${apiURL}/api/user`, {
+        method: 'POST',
+        body: JSON.stringify(userData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Registro bem-sucedido:', data);
+        alert('Registro finalizado com sucesso!');
+        navigate('/login'); // Redireciona para o login após o registro
+      } else {
+        const errorData = await response.json();
+        console.error('Falha no registro:', errorData);
+        alert(`Erro no registro: ${errorData.message || 'Tente novamente.'}`);
+      }
+    } catch (error) {
+      console.error('Erro de rede ou servidor:', error);
+      alert('Erro ao conectar com o servidor. Tente novamente mais tarde.');
     }
-    formData.append('bio', bio);
-    formData.append('website', website);
-    formData.append('linkedin', linkedin);
-    formData.append('github', github);
-
-    // const apiURL = import.meta.env.VITE_BACKEND_URL;
-    // try {
-    //   const response = await fetch(`${apiURL}/api/user/register`, {
-    //     method: 'POST',
-    //     body: formData, // FormData lida com 'multipart/form-data' automaticamente
-    //   });
-    //   if (response.ok) {
-    //     const data = await response.json();
-    //     console.log('Registro bem-sucedido:', data);
-    //     alert('Registro finalizado com sucesso!');
-    //     navigate('/login'); // Redireciona para o login após o registro
-    //   } else {
-    //     const errorData = await response.json();
-    //     console.error('Falha no registro:', errorData);
-    //     alert(`Erro no registro: ${errorData.message || 'Tente novamente.'}`);
-    //   }
-    // } catch (error) {
-    //   console.error('Erro de rede ou servidor:', error);
-    //   alert('Erro ao conectar com o servidor. Tente novamente mais tarde.');
-    // }
-
-    alert('Registro finalizado com sucesso! (Simulação)');
-    navigate('/login'); // Redireciona para o login após o registro (simulado)
   };
 
   const renderStepOne = () => (
     <form onSubmit={handleNextStep} className="space-y-6">
       <div>
         <label htmlFor="email" className="text-sm font-medium text-blue-100 block mb-1">Email</label>
-        <input
-          id="email"
-          type="email"
-          value={email}
+        <input id="email" type="email" value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="seu@email.com"
-          className="w-full py-2.5 px-4 rounded-lg border border-transparent input-glass-register text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+          placeholder="Insira seu Email"
+          className="w-full py-2.5 px-4 rounded-lg border border-transparent input-glass-register text-white placeholder-white/45 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
         />
         {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
       </div>
       <div>
         <label htmlFor="username" className="text-sm font-medium text-blue-100 block mb-1">Nome de Usuário</label>
-        <input
-          id="username"
-          type="text"
-          value={username}
+        <input id="username" type="text" value={username}
           onChange={(e) => setUsername(e.target.value)}
-          placeholder="seu_usuario"
-          className="w-full py-2.5 px-4 rounded-lg border border-transparent input-glass-register text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+          placeholder="Insira seu usuario"
+          className="w-full py-2.5 px-4 rounded-lg border border-transparent input-glass-register text-white placeholder-white/45 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
         />
         {errors.username && <p className="text-red-400 text-xs mt-1">{errors.username}</p>}
       </div>
       <div>
         <label htmlFor="password" className="text-sm font-medium text-blue-100 block mb-1">Senha</label>
-        <input
-          id="password"
-          type="password"
-          value={password}
+        <input id="password" type="password" value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="••••••••"
-          className="w-full py-2.5 px-4 rounded-lg border border-transparent input-glass-register text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+          placeholder="Insira sua senha"
+          className="w-full py-2.5 px-4 rounded-lg border border-transparent input-glass-register text-white placeholder-white/45 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
         />
         {errors.password && <p className="text-red-400 text-xs mt-1">{errors.password}</p>}
       </div>
       <div>
         <label htmlFor="confirm-password" className="text-sm font-medium text-blue-100 block mb-1">Confirmar Senha</label>
-        <input
-          id="confirm-password"
-          type="password"
-          value={confirmPassword}
+        <input id="confirm-password" type="password" value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          placeholder="••••••••"
-          className="w-full py-2.5 px-4 rounded-lg border border-transparent input-glass-register text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+          placeholder="Insira sua senha"
+          className="w-full py-2.5 px-4 rounded-lg border border-transparent input-glass-register text-white placeholder-white/45 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
         />
         {errors.confirmPassword && <p className="text-red-400 text-xs mt-1">{errors.confirmPassword}</p>}
       </div>
@@ -270,35 +250,23 @@ export default function RegisterPage() {
       </div>
       <div>
         <label htmlFor="website" className="text-sm font-medium text-blue-100 block mb-1">Website/Blog (Opcional)</label>
-        <input
-          id="website"
-          type="url"
-          value={website}
+        <input id="website" type="url" value={website}
           onChange={(e) => setWebsite(e.target.value)}
-          placeholder="https://seu-site.com"
-          className="w-full py-2.5 px-4 rounded-lg border border-transparent input-glass-register text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+          className="w-full py-2.5 px-4 rounded-lg border border-transparent input-glass-register text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
         />
       </div>
       <div>
         <label htmlFor="linkedin" className="text-sm font-medium text-blue-100 block mb-1">LinkedIn (Opcional)</label>
-        <input
-          id="linkedin"
-          type="url"
-          value={linkedin}
+        <input id="linkedin" type="url" value={linkedin}
           onChange={(e) => setLinkedin(e.target.value)}
-          placeholder="https://linkedin.com/in/seu-perfil"
-          className="w-full py-2.5 px-4 rounded-lg border border-transparent input-glass-register text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+          className="w-full py-2.5 px-4 rounded-lg border border-transparent input-glass-register text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
         />
       </div>
       <div>
         <label htmlFor="github" className="text-sm font-medium text-blue-100 block mb-1">GitHub (Opcional)</label>
-        <input
-          id="github"
-          type="url"
-          value={github}
+        <input id="github" type="url" value={github}
           onChange={(e) => setGithub(e.target.value)}
-          placeholder="https://github.com/seu-usuario"
-          className="w-full py-2.5 px-4 rounded-lg border border-transparent input-glass-register text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+          className="w-full py-2.5 px-4 rounded-lg border border-transparent input-glass-register text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
         />
       </div>
       <div className="flex gap-4">
