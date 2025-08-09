@@ -13,10 +13,15 @@ function userRoutesPlugin(
 ) {
   app.get("", (req, reply) => userController.hello(req, reply));
 
+  app.post("/all", (req, reply) => userController.getAll(req, reply));
+
   app.post("", { schema: userRouteSchema.create }, (req, reply) =>
     userController.create(req as CreateUserRequest, reply)
   );
-  app.post("/all", (req, reply) => userController.getAll(req, reply));
+
+  app.delete("", { preValidation: UserMiddle.authenticate }, (req, reply) =>
+    userController.deleteById(req, reply)
+  );
 
   app.post("/login", { schema: userRouteSchema.login }, (req, reply) =>
     userController.login(req as LoginRequest, reply)
@@ -34,10 +39,6 @@ function userRoutesPlugin(
     "/profile",
     { preValidation: UserMiddle.authenticate },
     (req, reply) => userController.getProfile(req, reply)
-  );
-
-  app.delete("", { preValidation: UserMiddle.authenticate }, (req, reply) =>
-    userController.deleteById(req, reply)
   );
 }
 

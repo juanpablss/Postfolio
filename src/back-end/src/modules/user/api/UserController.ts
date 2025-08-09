@@ -11,6 +11,7 @@ import { inject, injectable } from "inversify";
 import { TYPES } from "@compositionRoot/Types";
 import jwt from "jsonwebtoken";
 import { GoogleUserPayload } from "@infrastructure/types/fastify";
+import { UserTypeMapper } from "@user/application/UserMapper";
 
 @injectable()
 export class UserController {
@@ -23,19 +24,32 @@ export class UserController {
     reply.send({ msg: "Ola mundo" });
   }
 
-  async create(req: CreateUserRequest, reply: FastifyReply) {
-    const userDto: CreateUserDTO = { ...req.body };
+  async getAll(req: FastifyRequest, reply: FastifyReply) {
+    const allUsers = await this.userService.findMany();
+    reply.send(allUsers);
+  }
 
-    // await this.userService.create(userDto);
+  async create(req: CreateUserRequest, reply: FastifyReply) {
+    const userDto: CreateUserDTO = {
+      ...req.body,
+      userType: UserTypeMapper.fromSchemaToDto(req.body.usertype),
+    };
+
+    await this.userService.create(userDto);
 
     return reply
       .status(201)
       .send({ msg: "Usuario criado com sucesso!", userDto });
   }
 
-  async getAll(req: FastifyRequest, reply: FastifyReply) {
-    const allUsers = await this.userService.findMany();
-    reply.send(allUsers);
+  async updateById(req: CreateUserRequest, reply: FastifyReply) {}
+
+  async deleteById(req: FastifyRequest, reply: FastifyReply) {
+    const id = req.user?.id;
+    if (!id) throw new BadRequest("Id do usuario é obrigatorio!");
+
+    const user = await this.userService.deleteById(id);
+    reply.send(user);
   }
 
   async getByEmail(req: FastifyRequest, reply: FastifyReply) {
@@ -92,15 +106,16 @@ export class UserController {
     if (!user) throw new BadRequest("Id do usuario não existe");
     reply.send({
       msg: "Perfil do usuário",
-      user: { id: user.id, name: user.username, email: user.email },
+      user: {
+        id: user.id,
+        username: user.username,
+        email: user.email.getValue(),
+        bio: user.bio,
+        linkedin: user.linkedin,
+        github: user.github,
+        website: user.website,
+        usertype: user.userType,
+      },
     });
-  }
-
-  async deleteById(req: FastifyRequest, reply: FastifyReply) {
-    const id = req.user?.id;
-    if (!id) throw new BadRequest("Id do usuario é obrigatorio!");
-
-    const user = await this.userService.deleteById(id);
-    reply.send(user);
   }
 }

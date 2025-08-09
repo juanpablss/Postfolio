@@ -1,4 +1,5 @@
 import { User as UserModel, UserType as UserTypeModel } from "@prisma/client";
+import { BadRequest } from "@shared/error/HttpError";
 import { CreateUserDTO, SocialLoginDTO } from "@user/api/UserDTO";
 import User from "@user/domain/entities/User";
 import { UserType } from "@user/domain/enum/UserType";
@@ -20,6 +21,15 @@ export const UserTypeMapper = {
       case UserType.EMPLOYER:
         return UserTypeModel.EMPLOYER;
     }
+  },
+  fromSchemaToDto(userType: string): UserType {
+    switch (userType) {
+      case "DEVELOPER":
+        return UserType.DEVELOPER;
+      case "EMPLOYER":
+        return UserType.EMPLOYER;
+    }
+    throw new BadRequest("O tipo de user não existe!");
   },
 };
 

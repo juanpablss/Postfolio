@@ -11,7 +11,7 @@ const CreateUserBodySchema = z.object({
     .string({ message: "A senha é obrigatoria" })
     .min(8, "Senha muito curta")
     .max(100, "Senha muito longa"),
-  bio: z.string().max(200),
+  bio: z.string().max(200).default("default"),
   linkedin: z
     .string()
     .url({ message: "", protocol: /^https?$/ })
@@ -24,7 +24,7 @@ const CreateUserBodySchema = z.object({
     .string()
     .url({ message: "", protocol: /^https?$/ })
     .optional(),
-  status: z.string().default("None"),
+  usertype: z.enum(["DEVELOPER", "EMPLOYER"]),
 });
 
 type CreateUserRequest = FastifyRequest<{
