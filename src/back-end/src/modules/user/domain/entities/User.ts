@@ -1,6 +1,7 @@
 import { Unauthorized } from "@shared/error/HttpError";
 import { Crypt } from "@shared/util/Crypto";
 import Email from "@user/domain/valueObject/Email";
+import { UserType } from "@user/domain/enum/UserType";
 
 export default class User {
   id: string;
@@ -11,7 +12,7 @@ export default class User {
   linkedin: string | null;
   github: string | null;
   website: string | null;
-  status: string;
+  userType: UserType;
 
   constructor(
     id: string,
@@ -22,7 +23,7 @@ export default class User {
     linkedin: string | null = null,
     github: string | null = null,
     website: string | null = null,
-    status: string = "None"
+    userType: UserType = UserType.DEVELOPER
   ) {
     this.id = id;
     this.username = username;
@@ -32,7 +33,7 @@ export default class User {
     this.linkedin = linkedin;
     this.github = github;
     this.website = website;
-    this.status = status;
+    this.userType = userType;
   }
 
   public async comparePassword(password: string): Promise<boolean> {

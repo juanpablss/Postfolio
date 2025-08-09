@@ -9,14 +9,14 @@ datasource db {
 
 model User {
   id            String          @id @default(uuid())
-  name          String
+  username      String
   email         String          @unique
   password      String?
   bio           String
   linkedin      String?
   github        String?
   website       String?
-  status        String
+  userType      UserType
   ProviderOAuth ProviderOAuth[]
   portfolios    Portfolio?
   ratings       Rating[]
@@ -111,6 +111,11 @@ model WorkCompDetails {
 
   @@unique([competitionId, workId])
   @@map("tb_work_comp_details")
+}
+
+enum UserType {
+  DEVELOPER
+  EMPLOYER
 }
 
 enum SocialProviderType {
