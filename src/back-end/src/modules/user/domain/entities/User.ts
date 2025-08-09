@@ -58,7 +58,7 @@ export default class User {
         this.email.getValue(),
         true
       );
-      await EventListener.publish(event);
+      EventListener.publish(event);
       return;
     }
 
@@ -84,7 +84,7 @@ export default class User {
       this.email.getValue(),
       false
     );
-    await EventListener.publish(event);
+    EventListener.publish(event);
   }
 
   public getPassword(): string | null {
