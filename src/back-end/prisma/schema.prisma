@@ -54,68 +54,86 @@ model Message {
 }
 
 model Portfolio {
-  id          String  @id @default(uuid())
-  name        String
-  description String
-  pageLink    String?
-  authorId    String  @unique
-  author      User    @relation(fields: [authorId], references: [id])
-  works       Work[]
+  id                   String                 @id @default(uuid())
+  name                 String
+  description          String
+  pageLink             String?
+  authorId             String                 @unique
+  author               User                   @relation(fields: [authorId], references: [id])
+  works                Project[]
+  PortfolioCompDetails PortfolioCompDetails[]
+  Rating               Rating[]
 
   @@map("tb_portfolio")
 }
 
-model Rating {
-  id            String          @id @default(uuid())
-  score         Float
-  userId        String
-  workDetailsId String
-  user          User            @relation(fields: [userId], references: [id])
-  workDetails   WorkCompDetails @relation(fields: [workDetailsId], references: [id])
-
-  @@map("tb_rating")
-}
-
 model Competition {
-  id           String            @id @default(uuid())
+  id           String                 @id @default(uuid())
   name         String
-  createdAt    DateTime          @default(now())
+  createdAt    DateTime               @default(now())
   startsAt     DateTime?
   endsAt       DateTime?
-  worksDetails WorkCompDetails[]
+  worksDetails PortfolioCompDetails[]
+  Rating       Rating[]
 
   @@map("tb_competition")
 }
 
-model Work {
-  id                 String            @id @default(uuid())
-  name               String
-  description        String
-  githubLink         String?
-  portfolioId        String
-  portfolio          Portfolio         @relation(fields: [portfolioId], references: [id])
-  competitionDetails WorkCompDetails[]
+model Project {
+  id          String          @id @default(uuid())
+  name        String
+  description String
+  category    ProjectCategory
+  githubLink  String?
+  portfolioId String
+  portfolio   Portfolio       @relation(fields: [portfolioId], references: [id])
 
   @@map("tb_work")
 }
 
-model WorkCompDetails {
+model Rating {
+  id                     String               @id @default(uuid())
+  score                  Float
+  userId                 String
+  portfolioId            String
+  competitionId          String
+  portfolioCompDetailsID String
+  user                   User                 @relation(fields: [userId], references: [id])
+  portfolio              Portfolio            @relation(fields: [portfolioId], references: [id])
+  competition            Competition          @relation(fields: [competitionId], references: [id])
+  portfolioDetails       PortfolioCompDetails @relation(fields: [portfolioCompDetailsID], references: [id])
+
+  @@unique([userId, competitionId, portfolioId])
+  @@map("tb_rating")
+}
+
+model PortfolioCompDetails {
   id             String      @id @default(uuid())
   totalReviewers Int
   totalScore     Float
   competitionId  String
-  workId         String
+  portfolioId    String
   rating         Rating[]
   competition    Competition @relation(fields: [competitionId], references: [id])
-  work           Work        @relation(fields: [workId], references: [id])
+  portfolio      Portfolio   @relation(fields: [portfolioId], references: [id])
 
-  @@unique([competitionId, workId])
+  @@unique([competitionId, portfolioId])
   @@map("tb_work_comp_details")
 }
 
 enum UserType {
   DEVELOPER
   EMPLOYER
+}
+
+enum ProjectCategory {
+  FULLSTACK
+  FRONTEND
+  BACKEND
+  DESING
+  MOBILE
+  DATA_ANAYSIS
+  OUTHER
 }
 
 enum SocialProviderType {
