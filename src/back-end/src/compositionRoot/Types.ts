@@ -27,6 +27,7 @@ export const TYPES = {
   ProjectPort: Symbol.for("ProjectPort"), // WorkCompDetails Module precisa interagir com Work
   CompetitionPort: Symbol.for("CompetitionPort"), // WorkCompDetails Module precisa interagir com Competition
   ProjectCompDetailsPort: Symbol.for("IProjectCompDetailsPort"), // Rating Module precisa interagir com WorkCompDetails
+  RatingPort: Symbol.for("RatingPort"),
 
   // Services (implementações concretas dos Use Cases de alto nível)
   UserService: Symbol.for("UserService"),

@@ -6,7 +6,7 @@ import { IRatingRepository } from "@rating/domain/interfaces/IRatingRepository";
 import { IRatingService } from "@rating/domain/interfaces/IRatingService";
 import { NotFound } from "@shared/error/HttpError";
 import { UserPort } from "@user/domain/interfaces/UserPort";
-import { ProjectPort } from "@work/domain/interfaces/ProjectPort";
+import { ProjectPort } from "@project/domain/interfaces/ProjectPort";
 import { inject, injectable } from "inversify";
 import { RatingMapper } from "@rating/application/RatingMapper";
 
@@ -28,7 +28,7 @@ export class RatingService implements IRatingService {
       await Promise.all([
         this.userPort.exist(dto.userId),
         this.competitionPort.exist(dto.competitionId),
-        this.projectPort.workExists(dto.projectId),
+        this.projectPort.exist(dto.projectId),
         this.competitionPort.getProjectDetailsId(
           dto.userId,
           dto.competitionId,

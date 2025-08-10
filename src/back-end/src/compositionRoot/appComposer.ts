@@ -12,6 +12,7 @@ import { WorkController } from "@project/api/ProjectController";
 import { CompetitionController } from "@competition/api/CompetitionController";
 import { ChatController } from "@chat/api/ChatController";
 import { EmailController } from "@email/api/EmailController";
+import { RatingController } from "@rating/api/RatingController";
 
 // Rotas
 import { UserRoute } from "@user/api/UserRoute";
@@ -20,6 +21,7 @@ import { WorkRoute } from "@project/api/ProjectRoute";
 import { CompetitionRoute } from "@competition/api/CompetitionRoute";
 import { ChatRoute } from "@chat/api/ChatRoute";
 import { EmailRoute } from "@email/api/EmailRoute";
+import { RatingRoute } from "@rating/api/RatingRoute";
 
 // Handlers
 import { PortfolioUserCreatedHandler } from "@portfolio/handler/PortfolioUserCreatedHandler";
@@ -33,6 +35,7 @@ import { competitionComposeModule } from "@competition/composition/CompetitionCo
 import { chatComposerModule } from "@chat/composition/ChatComposer";
 import { emailComposerModuler } from "@email/composition/EmailComposer";
 import { projectComposeModule } from "@project/composition/ProjectComposer";
+import { ratingComposerModule } from "@rating/composition/RatingComposer";
 
 const container = new Container();
 
@@ -42,6 +45,7 @@ projectComposeModule(container);
 competitionComposeModule(container);
 chatComposerModule(container);
 emailComposerModuler(container);
+ratingComposerModule(container);
 
 interface IApplicationControllers {
   userController: UserController;
@@ -50,6 +54,7 @@ interface IApplicationControllers {
   competitionController: CompetitionController;
   chatController: ChatController;
   emailController: EmailController;
+  ratingController: RatingController;
   // ... outros controladores
 }
 
@@ -76,6 +81,9 @@ export class AppComposer {
     const emailController = container.get<EmailController>(
       TYPES.EmailController
     );
+    const ratingController = container.get<RatingController>(
+      TYPES.RatingController
+    );
 
     return {
       userController,
@@ -84,6 +92,7 @@ export class AppComposer {
       competitionController,
       chatController,
       emailController,
+      ratingController,
       // ... retorne outras instâncias de controlador
     };
   }
@@ -96,6 +105,7 @@ export class AppComposer {
     CompetitionRoute.register(app, this.controllers.competitionController);
     ChatRoute.register(app, this.controllers.chatController);
     EmailRoute.register(app, this.controllers.emailController);
+    RatingRoute.register(app, this.controllers.ratingController);
   }
 
   public registerHandlers(): void {
