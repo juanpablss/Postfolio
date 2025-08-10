@@ -5,7 +5,7 @@ import {
 } from "@competition/domain/entities/WorkCompDetails";
 import { Work as WorkModel } from "@prisma/client";
 import { Rating as RatingModel } from "@prisma/client";
-import { RatingMapper } from "@competition/application/mapper/RatingMapper";
+import { RatingMapper } from "@rating/application/RatingMapper";
 
 export const WorkCompDetailsMapper = {
   toDomain(

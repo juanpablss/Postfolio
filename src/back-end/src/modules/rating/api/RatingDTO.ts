@@ -13,4 +13,4 @@ interface UpdateRatingDTO {
   score: number;
 }
 
-export { CreateRatingDTO };
+export { CreateRatingDTO as UpsertRatingDTO };

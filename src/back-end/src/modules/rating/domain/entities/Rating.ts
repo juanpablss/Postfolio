@@ -6,15 +6,13 @@ export class Rating {
     private id: string,
     private score: number,
     public userId: string,
-    public portfolioId: string,
-    public competitionId: string
+    public projectId: string,
+    public competitionId: string,
+    public projectCompDetailsID: string
   ) {
     this.validateScore(score);
     this.id = id;
     this.score = score;
-    this.userId = userId;
-    this.portfolioId = portfolioId;
-    this.competitionId = competitionId;
   }
 
   public updateScore(score: number) {
@@ -23,7 +21,7 @@ export class Rating {
   }
 
   private validateScore(score: number) {
-    if (score > 100) throw new BadRequest("A nota não pode ser maior que 100!");
+    if (score > 5) throw new BadRequest("A nota não pode ser maior que 5!");
     if (score < 0) throw new BadRequest("A nota não pode ser negativa!");
   }
 }

@@ -5,7 +5,7 @@ import { ICompetitionRepository } from "@competition/domain/interfaces/ICompetit
 import { ICompetitionService } from "@competition/domain/interfaces/ICompetitionService";
 import { CompetitionController } from "@competition/api/CompetitionController";
 
-import { PrismaCompetitionRepository } from "@competition/repository/CompetitionRepository";
+import { PrismaCompetitionRepository } from "@competition/infra/database/CompetitionRepository";
 import { CompetitionService } from "@competition/application/CompetitionService";
 
 export function competitionComposeModule(container: Container): void {

@@ -1,6 +1,5 @@
 import { Competition } from "@competition/domain/entities/Competition";
 import { WorkCompDetails } from "@competition/domain/entities/WorkCompDetails";
-import { Rating } from "@competition/domain/entities/Rating";
 
 export interface ICompetitionRepository {
   create(competition: Competition): Promise<Competition>;
@@ -29,15 +28,4 @@ export interface ICompetitionRepository {
   findWorkCompDetailsByIdWihtRatings(
     id: string
   ): Promise<WorkCompDetails[] | null>;
-
-  // About Rating
-  createRating(rating: Rating): Promise<Rating>;
-  updateRating(rating: Rating): Promise<Rating>;
-  deleteRating(id: string): Promise<Rating>;
-
-  findRating(id: string): Promise<Rating | null>;
-  findRatingByUserAndWorkCompDetails(
-    userId: string,
-    workCompDetailsId: string
-  ): Promise<Rating | null>;
 }

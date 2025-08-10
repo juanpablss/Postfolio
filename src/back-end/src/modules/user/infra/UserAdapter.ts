@@ -1,10 +1,10 @@
 import { TYPES } from "@compositionRoot/Types";
-import { IUserPort } from "@user/domain/interfaces/UserPort";
+import { UserPort } from "@user/domain/interfaces/UserPort";
 import { IUserService } from "@user/domain/interfaces/IUserService";
 import { inject, injectable } from "inversify";
 
 @injectable()
-export class UserAdaper implements IUserPort {
+export class UserAdaper implements UserPort {
   constructor(
     @inject(TYPES.IUserService)
     private userService: IUserService

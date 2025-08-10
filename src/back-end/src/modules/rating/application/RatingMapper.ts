@@ -1,14 +1,21 @@
 import { Rating as RatingModel } from "@prisma/client";
 import { Rating } from "@rating/domain/entities/Rating";
-import { CreateRatingDTO } from "@rating/api/RatingDTO";
+import { UpsertRatingDTO } from "@rating/api/RatingDTO";
 
 export const RatingMapper = {
-  // fromCreateRatingDTOtoDomain(
-  //   dto: CreateRatingDTO,
-  //   workDetailsId: string
-  // ): Rating {
-  //   return new Rating("", dto.userId, workDetailsId, dto.score);
-  // },
+  fromUpsertRatingDTOtoDomain(
+    dto: UpsertRatingDTO,
+    projectDetailsId: string
+  ): Rating {
+    return new Rating(
+      "",
+      dto.score,
+      dto.userId,
+      dto.projectId,
+      dto.competitionId,
+      projectDetailsId
+    );
+  },
   // fromPrismatoDomin(ratingModel: RatingModel): Rating {
   //   return new Rating(
   //     ratingModel.id,

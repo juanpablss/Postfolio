@@ -6,11 +6,11 @@ import {
 import { PortfolioMapper } from "@portfolio/application/PortfolioMapper";
 import { BadRequest } from "@shared/error/HttpError";
 import { Portfolio } from "@portfolio/domain/entities/Portfolio";
-import { IUserPort } from "@user/domain/interfaces/UserPort";
+import { UserPort } from "@user/domain/interfaces/UserPort";
 import { IPortfolioService } from "@portfolio/domain/interfaces/IPortfolioService";
 import { inject, injectable } from "inversify";
 import { TYPES } from "@compositionRoot/Types";
-import { WorkPort } from "@work/domain/interfaces/WorkPort";
+import { ProjectPort } from "@work/domain/interfaces/WorkPort";
 import { WorkContract } from "@shared/contracts/WorkContracts";
 
 @injectable()
@@ -18,10 +18,10 @@ export class PortfolioService implements IPortfolioService {
   constructor(
     @inject(TYPES.IPortfolioRepository)
     private portfolioRepository: IPortfolioRepository,
-    @inject(TYPES.IUserPort)
-    private userPort: IUserPort,
-    @inject(TYPES.IWorkPort)
-    private workPort: WorkPort
+    @inject(TYPES.UserPort)
+    private userPort: UserPort,
+    @inject(TYPES.ProjectPort)
+    private workPort: ProjectPort
   ) {}
 
   async create(createPortfolioDto: CreatePortfolioDTO): Promise<Portfolio> {

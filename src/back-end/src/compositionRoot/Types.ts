@@ -23,10 +23,10 @@ export const TYPES = {
 
   // Portas de Saída (Adapters entre Domínios)
   IPortfolioPort: Symbol.for("IPortfolioPort"), // User Module precisa interagir com Portfolio
-  IUserPort: Symbol.for("IUserPort"), // Portfolio/Rating Module precisa interagir com User
-  IWorkPort: Symbol.for("IWorkPort"), // WorkCompDetails Module precisa interagir com Work
-  ICompetitionPort: Symbol.for("ICompetitionPort"), // WorkCompDetails Module precisa interagir com Competition
-  IWorkCompDetailsPort: Symbol.for("IWorkCompDetailsPort"), // Rating Module precisa interagir com WorkCompDetails
+  UserPort: Symbol.for("IUserPort"), // Portfolio/Rating Module precisa interagir com User
+  ProjectPort: Symbol.for("IWorkPort"), // WorkCompDetails Module precisa interagir com Work
+  CompetitionPort: Symbol.for("ICompetitionPort"), // WorkCompDetails Module precisa interagir com Competition
+  IProjectCompDetailsPort: Symbol.for("IWorkCompDetailsPort"), // Rating Module precisa interagir com WorkCompDetails
 
   // Services (implementações concretas dos Use Cases de alto nível)
   UserService: Symbol.for("UserService"),

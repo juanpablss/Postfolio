@@ -6,6 +6,11 @@ export interface IRatingRepository {
   delete(id: string): Promise<Rating>;
 
   findById(id: string): Promise<Rating | null>;
+  findByUserCompetitionProject(
+    userId: string,
+    competitionId: string,
+    projectId: string
+  ): Promise<Rating | null>;
 
   // findRatingByUserAndWorkCompDetails(
   //   userId: string,

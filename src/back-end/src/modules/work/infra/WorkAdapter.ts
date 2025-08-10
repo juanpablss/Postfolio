@@ -1,4 +1,4 @@
-import { WorkPort } from "@work/domain/interfaces/WorkPort";
+import { ProjectPort } from "@work/domain/interfaces/WorkPort";
 import { IWorkService } from "@work/domain/interfaces/IWorkService";
 import { injectable, inject } from "inversify";
 import { TYPES } from "@compositionRoot/Types";
@@ -6,7 +6,7 @@ import { WorkContract } from "@shared/contracts/WorkContracts";
 import { IWorkRepository } from "@work/domain/interfaces/IWorkRepository";
 
 @injectable()
-export class WorkAdapter implements WorkPort {
+export class WorkAdapter implements ProjectPort {
   constructor(
     @inject(TYPES.IWorkRepository)
     private workRepository: IWorkRepository

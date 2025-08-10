@@ -3,7 +3,7 @@ import { TYPES } from "@compositionRoot/Types";
 
 import { IUserRepository } from "@user/domain/interfaces/IUserRepository";
 import { IUserService } from "@user/domain/interfaces/IUserService";
-import { IUserPort } from "@user/domain/interfaces/UserPort";
+import { UserPort } from "@user/domain/interfaces/UserPort";
 
 import { UserRepository } from "@user/infra/database/UserRepository";
 import { UserAdaper } from "@user/infra/UserAdapter";
@@ -19,7 +19,7 @@ export function userComposeModule(container: Container): void {
     .bind<IUserService>(TYPES.IUserService)
     .to(UserService)
     .inRequestScope();
-  container.bind<IUserPort>(TYPES.IUserPort).to(UserAdaper).inRequestScope();
+  container.bind<UserPort>(TYPES.UserPort).to(UserAdaper).inRequestScope();
   container
     .bind<UserController>(TYPES.UserController)
     .to(UserController)
