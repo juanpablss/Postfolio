@@ -13,7 +13,7 @@ export interface IPortfolioService {
 
   findMany(): Promise<Portfolio[]>;
   findById(id: string): Promise<Portfolio | null>;
-  findWorks(id: string): Promise<ProjectContract[]>;
+  findProjects(id: string): Promise<ProjectContract[]>;
   findByAuthor(authorId: string): Promise<Portfolio | null>;
 
   // getWorks(portfolioId: string): Promise<Work[]>;

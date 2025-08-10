@@ -2,7 +2,6 @@ import { prisma } from "@infrastructure/config/Prisma";
 import { InternalServerError } from "@shared/error/HttpError";
 import { Portfolio } from "@portfolio/domain/entities/Portfolio";
 import { IPortfolioRepository } from "@portfolio/domain/interfaces/IPortfolioRepository";
-// import { Portfolio as PortfolioModel } from "@prisma/client";
 import { PortfolioMapper } from "@portfolio/application/PortfolioMapper";
 
 export class PrismaPortfolioRepository implements IPortfolioRepository {
@@ -12,7 +11,7 @@ export class PrismaPortfolioRepository implements IPortfolioRepository {
         data: {
           name: portfolio.name,
           description: portfolio.description,
-          pageLink: portfolio.pageLink,
+          pagelink: portfolio.pageLink,
           authorId: portfolio.authorId,
         },
       });
@@ -21,47 +20,6 @@ export class PrismaPortfolioRepository implements IPortfolioRepository {
     } catch (error) {
       throw new InternalServerError("Erro ao salvar Portfolio!");
     }
-  }
-
-  async findMany(): Promise<Portfolio[]> {
-    const portfolioModel = await prisma.portfolio.findMany();
-    return portfolioModel.map(PortfolioMapper.fromPrismatoDomain);
-  }
-
-  async findById(id: string): Promise<Portfolio | null> {
-    const portfolioModel = await prisma.portfolio.findUnique({
-      where: {
-        id,
-      },
-    });
-    return portfolioModel
-      ? PortfolioMapper.fromPrismatoDomain(portfolioModel)
-      : null;
-  }
-
-  async findByIdWhitWorks(id: string): Promise<Portfolio | null> {
-    const portfolioModel = await prisma.portfolio.findUnique({
-      where: {
-        id,
-      },
-      include: {
-        works: true,
-      },
-    });
-
-    return portfolioModel
-      ? PortfolioMapper.fromPrismatoDomain(portfolioModel)
-      : null;
-  }
-
-  async findByAuthor(authorId: string): Promise<Portfolio | null> {
-    const portfolioModel = await prisma.portfolio.findUnique({
-      where: { authorId },
-    });
-
-    return portfolioModel
-      ? PortfolioMapper.fromPrismatoDomain(portfolioModel)
-      : null;
   }
 
   async update(portfolio: Portfolio): Promise<Portfolio> {
@@ -73,7 +31,7 @@ export class PrismaPortfolioRepository implements IPortfolioRepository {
         data: {
           name: portfolio.name,
           description: portfolio.description,
-          pageLink: portfolio.pageLink,
+          pagelink: portfolio.pageLink,
         },
       });
 
@@ -97,5 +55,31 @@ export class PrismaPortfolioRepository implements IPortfolioRepository {
     } catch (error) {
       throw new InternalServerError("Não foi possivel deletar o portfolio!");
     }
+  }
+
+  async findMany(): Promise<Portfolio[]> {
+    const portfolioModel = await prisma.portfolio.findMany();
+    return portfolioModel.map(PortfolioMapper.fromPrismatoDomain);
+  }
+
+  async findById(id: string): Promise<Portfolio | null> {
+    const portfolioModel = await prisma.portfolio.findUnique({
+      where: {
+        id,
+      },
+    });
+    return portfolioModel
+      ? PortfolioMapper.fromPrismatoDomain(portfolioModel)
+      : null;
+  }
+
+  async findByAuthor(authorId: string): Promise<Portfolio | null> {
+    const portfolioModel = await prisma.portfolio.findUnique({
+      where: { authorId },
+    });
+
+    return portfolioModel
+      ? PortfolioMapper.fromPrismatoDomain(portfolioModel)
+      : null;
   }
 }

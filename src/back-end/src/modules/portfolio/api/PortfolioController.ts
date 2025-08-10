@@ -56,11 +56,11 @@ export class PortfolioController {
     reply.send(portfolio);
   }
 
-  async getWorks(req: FastifyRequest, reply: FastifyReply) {
+  async getProjects(req: FastifyRequest, reply: FastifyReply) {
     const { id = null } = req.params as Partial<{ id: string }>;
     if (!id) throw new BadRequest("Id é obrigatorio");
 
-    const response = await this.portfolioService.findWorks(id);
+    const response = await this.portfolioService.findProjects(id);
 
     reply.send(response);
   }

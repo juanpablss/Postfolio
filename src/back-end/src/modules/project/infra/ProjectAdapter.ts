@@ -16,7 +16,9 @@ export class WorkAdapter implements ProjectPort {
     return work ? true : false;
   }
 
-  async findWorkByPortfolio(portfolioId: string): Promise<ProjectContract[]> {
+  async findProjectsByPortfolioId(
+    portfolioId: string
+  ): Promise<ProjectContract[]> {
     return await this.workRepository.findByPortfolio(portfolioId);
   }
 }
