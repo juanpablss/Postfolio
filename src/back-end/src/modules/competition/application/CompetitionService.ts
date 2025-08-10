@@ -5,7 +5,7 @@ import { ICompetitionService } from "@competition/domain/interfaces/ICompetition
 import { TYPES } from "@compositionRoot/Types";
 import { Conflict, NotFound } from "@shared/error/HttpError";
 import { UserPort } from "@user/domain/interfaces/UserPort";
-import { ProjectPort } from "@work/domain/interfaces/WorkPort";
+import { ProjectPort } from "@work/domain/interfaces/ProjectPort";
 import { inject, injectable } from "inversify";
 
 @injectable()

@@ -1,11 +1,11 @@
 import { FastifyInstance } from "fastify";
-import { WorkController } from "@work/api/WorkController";
+import { WorkController } from "@project/api/ProjectController";
 import { UserMiddle } from "@infrastructure/middleware/UserMiddle";
 import {
   RegisterWorkRequest,
   UpdateWorkRequest,
   workRouteSchema,
-} from "@work/api/WorkSchema";
+} from "@project/api/ProjectSchema";
 
 function workRoutesPlugin(
   app: FastifyInstance,

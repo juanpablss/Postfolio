@@ -8,7 +8,7 @@ import configureErrorHandling from "@infrastructure/fastify/ConfigureErrorHandli
 // Controladores
 import { UserController } from "@user/api/UserController";
 import { PortfolioController } from "@portfolio/api/PortfolioController";
-import { WorkController } from "@work/api/WorkController";
+import { WorkController } from "@project/api/ProjectController";
 import { CompetitionController } from "@competition/api/CompetitionController";
 import { ChatController } from "@chat/api/ChatController";
 import { EmailController } from "@email/api/EmailController";
@@ -16,7 +16,7 @@ import { EmailController } from "@email/api/EmailController";
 // Rotas
 import { UserRoute } from "@user/api/UserRoute";
 import { PortfolioRoute } from "@portfolio/api/PortfolioRoute";
-import { WorkRoute } from "@work/api/WorkRoute";
+import { WorkRoute } from "@project/api/ProjectRoute";
 import { CompetitionRoute } from "@competition/api/CompetitionRoute";
 import { ChatRoute } from "@chat/api/ChatRoute";
 import { EmailRoute } from "@email/api/EmailRoute";
@@ -29,16 +29,16 @@ import { EmailUserUpdateHandler } from "@email/handler/EmailUserUpdateHandler";
 // Composition
 import { userComposeModule } from "@user/composition/UserComposer";
 import { portfolioComposeModule } from "@portfolio/composition/PortfolioComposer";
-import { workComposeModule } from "@work/composition/WorkComposer";
 import { competitionComposeModule } from "@competition/composition/CompetitionComposer";
 import { chatComposerModule } from "@chat/composition/ChatComposer";
 import { emailComposerModuler } from "@email/composition/EmailComposer";
+import { projectComposeModule } from "@project/composition/ProjectComposer";
 
 const container = new Container();
 
 userComposeModule(container);
 portfolioComposeModule(container);
-workComposeModule(container);
+projectComposeModule(container);
 competitionComposeModule(container);
 chatComposerModule(container);
 emailComposerModuler(container);
@@ -46,7 +46,7 @@ emailComposerModuler(container);
 interface IApplicationControllers {
   userController: UserController;
   portfolioController: PortfolioController;
-  workController: WorkController;
+  projectController: WorkController;
   competitionController: CompetitionController;
   chatController: ChatController;
   emailController: EmailController;
@@ -66,7 +66,9 @@ export class AppComposer {
     const portfolioController = container.get<PortfolioController>(
       TYPES.PortfolioController
     );
-    const workController = container.get<WorkController>(TYPES.WorkController);
+    const projectController = container.get<WorkController>(
+      TYPES.ProjectController
+    );
     const competitionController = container.get<CompetitionController>(
       TYPES.CompetitionController
     );
@@ -78,7 +80,7 @@ export class AppComposer {
     return {
       userController,
       portfolioController,
-      workController,
+      projectController,
       competitionController,
       chatController,
       emailController,
@@ -90,7 +92,7 @@ export class AppComposer {
   public registerRoutes(app: FastifyInstance): void {
     UserRoute.register(app, this.controllers.userController);
     PortfolioRoute.register(app, this.controllers.portfolioController);
-    WorkRoute.register(app, this.controllers.workController);
+    WorkRoute.register(app, this.controllers.projectController);
     CompetitionRoute.register(app, this.controllers.competitionController);
     ChatRoute.register(app, this.controllers.chatController);
     EmailRoute.register(app, this.controllers.emailController);

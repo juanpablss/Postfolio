@@ -6,8 +6,8 @@ export const TYPES = {
   IPortfolioRepository: Symbol.for("IPortfolioRepository"),
   IRatingRepository: Symbol.for("IRatingRepository"),
   ICompetitionRepository: Symbol.for("ICompetitionRepository"),
-  IWorkRepository: Symbol.for("IWorkRepository"),
-  IWorkCompDetailsRepository: Symbol.for("IWorkCompDetailsRepository"),
+  IProjectRepository: Symbol.for("IProjectRepository"),
+  IProjectCompDetailsRepository: Symbol.for("IProjectCompDetailsRepository"),
   IMessageRepository: Symbol.for("IMessageRepository"),
 
   // Portas de Aplicação (Use Cases de alto nível)
@@ -15,8 +15,8 @@ export const TYPES = {
   IPortfolioService: Symbol.for("IPortfolioService"),
   IRatingService: Symbol.for("IRatingService"),
   ICompetitionService: Symbol.for("ICompetitionService"),
-  IWorkService: Symbol.for("IWorkService"),
-  IWorkCompDetailsService: Symbol.for("IWorkCompDetailsService"),
+  IProjectService: Symbol.for("IProjectService"),
+  IProjectCompDetailsService: Symbol.for("IProjectCompDetailsService"),
   IMessageService: Symbol.for("IMessageService"),
   IUsersConnects: Symbol.for("IUsersConnects"),
   IEmailService: Symbol.for("IEmailService"),
@@ -24,7 +24,7 @@ export const TYPES = {
   // Portas de Saída (Adapters entre Domínios)
   IPortfolioPort: Symbol.for("IPortfolioPort"), // User Module precisa interagir com Portfolio
   UserPort: Symbol.for("IUserPort"), // Portfolio/Rating Module precisa interagir com User
-  ProjectPort: Symbol.for("IWorkPort"), // WorkCompDetails Module precisa interagir com Work
+  ProjectPort: Symbol.for("ProjectPort"), // WorkCompDetails Module precisa interagir com Work
   CompetitionPort: Symbol.for("ICompetitionPort"), // WorkCompDetails Module precisa interagir com Competition
   IProjectCompDetailsPort: Symbol.for("IWorkCompDetailsPort"), // Rating Module precisa interagir com WorkCompDetails
 
@@ -33,8 +33,8 @@ export const TYPES = {
   PortfolioService: Symbol.for("PortfolioService"),
   RatingService: Symbol.for("RatingService"),
   CompetitionService: Symbol.for("CompetitionService"),
-  WorkService: Symbol.for("WorkService"),
-  WorkCompDetailsService: Symbol.for("WorkCompDetailsService"),
+  ProjectService: Symbol.for("ProjectService"),
+  ProjectCompDetailsService: Symbol.for("WorkCompDetailsService"),
   EmailService: Symbol.for("EmailService"),
 
   // Controladores
@@ -42,8 +42,8 @@ export const TYPES = {
   PortfolioController: Symbol.for("PortfolioController"),
   RatingController: Symbol.for("RatingController"),
   CompetitionController: Symbol.for("CompetitionController"),
-  WorkController: Symbol.for("WorkController"),
-  WorkCompDetailsController: Symbol.for("WorkCompDetailsController"),
+  ProjectController: Symbol.for("WorkController"),
+  ProjectCompDetailsController: Symbol.for("WorkCompDetailsController"),
   ChatController: Symbol.for("ChatController"),
   EmailController: Symbol.for("EmailController"),
 

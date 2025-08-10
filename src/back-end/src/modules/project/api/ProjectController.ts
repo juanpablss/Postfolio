@@ -1,7 +1,10 @@
-import { IWorkService } from "@work/domain/interfaces/IWorkService";
+import { IProjectService } from "@project/domain/interfaces/IProjectService";
 import { FastifyReply, FastifyRequest } from "fastify";
-import { RegisterWorkRequest, UpdateWorkRequest } from "@work/api/WorkSchema";
-import { CreateWorkDTO, UpdateWorkDTO } from "@work/api/WorkDTO";
+import {
+  RegisterWorkRequest,
+  UpdateWorkRequest,
+} from "@project/api/ProjectSchema";
+import { CreateWorkDTO, UpdateWorkDTO } from "@project/api/ProjectDTO";
 import { BadRequest } from "@shared/error/HttpError";
 import { inject, injectable } from "inversify";
 import { TYPES } from "@compositionRoot/Types";
@@ -9,8 +12,8 @@ import { TYPES } from "@compositionRoot/Types";
 @injectable()
 export class WorkController {
   constructor(
-    @inject(TYPES.IWorkService)
-    private workService: IWorkService
+    @inject(TYPES.IProjectService)
+    private workService: IProjectService
   ) {}
 
   async register(req: RegisterWorkRequest, reply: FastifyReply) {
@@ -18,7 +21,7 @@ export class WorkController {
       name: req.body.name,
       description: req.body.description,
       githublink: req.body.githublink || null,
-      portfolio: req.body.portfolio,
+      portfolioId: req.body.portfolio,
     };
 
     const response = await this.workService.create(createWorkDto);

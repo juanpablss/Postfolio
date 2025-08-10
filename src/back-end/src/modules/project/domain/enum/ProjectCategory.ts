@@ -1,0 +1,9 @@
+export enum ProjectCategory {
+  FULLSTACK = "FULLSTACK",
+  FRONTEND = "FRONTEND",
+  BACKEND = "BACKEND",
+  DESIGN = "DESIGN",
+  MOBILE = "MOBILE",
+  DATA_ANALYSIS = "DATA_ANALYSIS",
+  OTHER = "OTHER",
+}

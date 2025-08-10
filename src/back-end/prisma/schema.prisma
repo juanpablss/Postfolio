@@ -126,10 +126,10 @@ enum ProjectCategory {
   FULLSTACK
   FRONTEND
   BACKEND
-  DESING
+  DESIGN
   MOBILE
-  DATA_ANAYSIS
-  OUTHER
+  DATA_ANALYSIS
+  OTHER
 }
 
 enum SocialProviderType {

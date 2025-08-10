@@ -6,7 +6,7 @@ import { IRatingRepository } from "@rating/domain/interfaces/IRatingRepository";
 import { IRatingService } from "@rating/domain/interfaces/IRatingService";
 import { NotFound } from "@shared/error/HttpError";
 import { UserPort } from "@user/domain/interfaces/UserPort";
-import { ProjectPort } from "@work/domain/interfaces/WorkPort";
+import { ProjectPort } from "@work/domain/interfaces/ProjectPort";
 import { inject, injectable } from "inversify";
 import { RatingMapper } from "@rating/application/RatingMapper";
 

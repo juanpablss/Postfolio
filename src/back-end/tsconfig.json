@@ -35,7 +35,7 @@
       /* modules */
       "@user/*" : ["modules/user/*"], 
       "@portfolio/*" : ["modules/portfolio/*"],
-      "@work/*" : ["modules/work/*"],
+      "@project/*" : ["modules/project/*"],
       "@competition/*" : ["modules/competition/*"],
       "@email/*" : ["modules/email/*"],
       "@chat/*" : ["modules/chat/*"],

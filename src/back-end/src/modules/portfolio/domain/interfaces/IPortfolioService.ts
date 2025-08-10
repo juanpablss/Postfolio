@@ -4,7 +4,7 @@ import {
   CreatePortfolioDTO,
   UpdatePortfolioDTO,
 } from "@portfolio/api/PortfolioDTO";
-import { WorkContract } from "@shared/contracts/WorkContracts";
+import { ProjectContract } from "@shared/contracts/ProjectContracts";
 
 export interface IPortfolioService {
   create(createPortfolioDto: CreatePortfolioDTO): Promise<Portfolio>;
@@ -13,7 +13,7 @@ export interface IPortfolioService {
 
   findMany(): Promise<Portfolio[]>;
   findById(id: string): Promise<Portfolio | null>;
-  findWorks(id: string): Promise<WorkContract[]>;
+  findWorks(id: string): Promise<ProjectContract[]>;
   findByAuthor(authorId: string): Promise<Portfolio | null>;
 
   // getWorks(portfolioId: string): Promise<Work[]>;
