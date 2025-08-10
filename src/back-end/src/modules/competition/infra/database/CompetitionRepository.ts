@@ -6,7 +6,6 @@ import { CompetitionMapper } from "@competition/application/mapper/CompetitionMa
 import { ICompetitionRepository } from "@competition/domain/interfaces/ICompetitionRepository";
 import { WorkCompDetails } from "@competition/domain/entities/WorkCompDetails";
 import { WorkCompDetailsMapper } from "@competition/application/mapper/WorkCompDetailsMapper";
-import { RatingMapper } from "@rating/application/RatingMapper";
 Competition;
 
 export class PrismaCompetitionRepository implements ICompetitionRepository {
@@ -90,16 +89,16 @@ export class PrismaCompetitionRepository implements ICompetitionRepository {
       : null;
   }
 
-  async createWorkCompDetails(
+  async createProjectCompDetails(
     workCompDetails: WorkCompDetails
   ): Promise<WorkCompDetails> {
     try {
-      const detailsModel = await prisma.workCompDetails.create({
+      const detailsModel = await prisma.projectCompDetails.create({
         data: {
           totalReviewers: workCompDetails.totalReviewers,
           totalScore: workCompDetails.totalScore,
           competitionId: workCompDetails.competitionId,
-          workId: workCompDetails.workId,
+          projectId: workCompDetails.workId,
         },
       });
 
@@ -248,111 +247,4 @@ export class PrismaCompetitionRepository implements ICompetitionRepository {
       );
     }
   }
-
-  // async createRating(rating: Rating): Promise<Rating> {
-  //   try {
-  //     // console.log(`${rating.workDetailsId}\n`);
-  //     // console.log(`AQUI\n`);
-  //     const ratingModel = await prisma.rating.create({
-  //       data: {
-  //         workDetailsId: rating.workDetailsId,
-  //         userId: rating.userId,
-  //         score: rating.score,
-  //       },
-  //     });
-
-  //     return RatingMapper.fromPrismatoDomin(ratingModel);
-  //   } catch (error) {
-  //     if (error instanceof Prisma.PrismaClientKnownRequestError) {
-  //       throw new InternalServerError(
-  //         `Não foi possivel salvar a avaliação! Código: ${error.code}`
-  //       );
-  //     }
-  //     throw new InternalServerError("Não foi possivel salvar a avaliação!");
-  //   }
-  // }
-
-  // async updateRating(rating: Rating): Promise<Rating> {
-  //   try {
-  //     const ratingModel = await prisma.rating.update({
-  //       where: {
-  //         id: rating.id,
-  //       },
-  //       data: {
-  //         score: rating.score,
-  //       },
-  //     });
-
-  //     return RatingMapper.fromPrismatoDomin(ratingModel);
-  //   } catch (error) {
-  //     if (error instanceof Prisma.PrismaClientKnownRequestError) {
-  //       throw new InternalServerError(
-  //         `Não foi possivel atualizar a avaliação! Código: ${error.code}`
-  //       );
-  //     }
-  //     throw new InternalServerError("Não foi possivel atualizar a avaliação!");
-  //   }
-  // }
-
-  // async deleteRating(id: string): Promise<Rating> {
-  //   try {
-  //     const ratingModel = await prisma.rating.delete({
-  //       where: {
-  //         id,
-  //       },
-  //     });
-
-  //     return RatingMapper.fromPrismatoDomin(ratingModel);
-  //   } catch (error) {
-  //     if (error instanceof Prisma.PrismaClientKnownRequestError) {
-  //       throw new InternalServerError(
-  //         `Não foi possivel deletar a avaliação! Código: ${error.code}`
-  //       );
-  //     }
-  //     throw new InternalServerError("Não foi possivel deletar a avaliação!");
-  //   }
-  // }
-
-  // async findRating(id: string): Promise<Rating | null> {
-  //   try {
-  //     const ratingModel = await prisma.rating.findUnique({
-  //       where: {
-  //         id,
-  //       },
-  //     });
-
-  //     return ratingModel ? RatingMapper.fromPrismatoDomin(ratingModel) : null;
-  //   } catch (error) {
-  //     if (error instanceof Prisma.PrismaClientKnownRequestError) {
-  //       throw new InternalServerError(
-  //         `Não foi possivel buscar a avaliação! Código: ${error.code}`
-  //       );
-  //     }
-  //     throw new InternalServerError("Não foi possivel buscar a avaliação!");
-  //   }
-  // }
-
-  // async findRatingByUserAndWorkCompDetails(
-  //   userId: string,
-  //   workCompDetailsId: string
-  // ): Promise<Rating | null> {
-  //   try {
-  //     // Tem que ser único
-  //     const ratingModel = await prisma.rating.findFirst({
-  //       where: {
-  //         userId,
-  //         workDetailsId: workCompDetailsId,
-  //       },
-  //     });
-
-  //     return ratingModel ? RatingMapper.fromPrismatoDomin(ratingModel) : null;
-  //   } catch (error) {
-  //     if (error instanceof Prisma.PrismaClientKnownRequestError) {
-  //       throw new InternalServerError(
-  //         `Não foi possivel buscar a avaliação! Código: ${error.code}`
-  //       );
-  //     }
-  //     throw new InternalServerError("Não foi possivel buscar a avaliação!");
-  //   }
-  // }
 }

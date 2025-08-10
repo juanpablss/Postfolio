@@ -9,7 +9,7 @@ export interface ICompetitionRepository {
   findById(id: string): Promise<Competition | null>;
   findMany(): Promise<Competition[]>;
 
-  createWorkCompDetails(
+  createProjectCompDetails(
     workCompDetails: WorkCompDetails
   ): Promise<WorkCompDetails>;
   updateWorkCompDetails(

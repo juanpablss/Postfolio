@@ -78,14 +78,15 @@ model Competition {
 }
 
 model Project {
-  id          String          @id @default(uuid())
-  name        String
-  description String
-  category    ProjectCategory
-  githublink  String?
-  portfolioId String
-  portfolio   Portfolio       @relation(fields: [portfolioId], references: [id])
-  Rating      Rating[]
+  id                 String               @id @default(uuid())
+  name               String
+  description        String
+  category           ProjectCategory
+  githublink         String?
+  portfolioId        String
+  portfolio          Portfolio            @relation(fields: [portfolioId], references: [id])
+  Rating             Rating[]
+  ProjectCompDetails ProjectCompDetails[]
 
   @@map("tb_project")
 }
@@ -110,8 +111,10 @@ model ProjectCompDetails {
   id             String      @id @default(uuid())
   totalReviewers Int
   totalScore     Float
+  projectId      String
   competitionId  String
   rating         Rating[]
+  project        Project     @relation(fields: [projectId], references: [id])
   competition    Competition @relation(fields: [competitionId], references: [id])
 
   @@map("tb_project_comp_details")

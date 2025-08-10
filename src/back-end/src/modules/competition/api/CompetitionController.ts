@@ -9,7 +9,6 @@ import {
 } from "@shared/error/HttpError";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { inject, injectable } from "inversify";
-import { CreaetRatingDTO } from "@rating/api/RatingDTO";
 
 @injectable()
 export class CompetitionController {
@@ -18,7 +17,7 @@ export class CompetitionController {
     private competitionService: ICompetitionService
   ) {}
 
-  async register(req: FastifyRequest, reply: FastifyReply) {
+  async create(req: FastifyRequest, reply: FastifyReply) {
     const { name = null } = req.body as Partial<{
       name: string;
     }>;
@@ -33,6 +32,30 @@ export class CompetitionController {
       msg: "Competição criada com sucesso",
       response,
     });
+  }
+
+  async update(req: FastifyRequest, reply: FastifyReply) {
+    const { competitionId } = req.params as { competitionId: string | null };
+    const {
+      name = null,
+      startsAt = null,
+      endsAt = null,
+    } = req.body as Partial<{ name: string; startsAt: string; endsAt: string }>;
+
+    // criar um dto para isso
+    throw new InternalServerError("Not Implemented");
+  }
+
+  async delete(req: FastifyRequest, reply: FastifyReply) {
+    const { competition } = req.params as { competition: string };
+
+    if (!competition) throw new BadRequest("ID da competição é obrigatorio");
+
+    const response = await this.competitionService.deleteCompetition(
+      competition
+    );
+
+    reply.send(response);
   }
 
   async subscribeWork(req: FastifyRequest, reply: FastifyReply) {
@@ -66,30 +89,6 @@ export class CompetitionController {
     reply.send({ msg: "Trabalho removido da competição" });
   }
 
-  async update(req: FastifyRequest, reply: FastifyReply) {
-    const { competitionId } = req.params as { competitionId: string | null };
-    const {
-      name = null,
-      startsAt = null,
-      endsAt = null,
-    } = req.body as Partial<{ name: string; startsAt: string; endsAt: string }>;
-
-    // criar um dto para isso
-    throw new InternalServerError("Not Implemented");
-  }
-
-  async delete(req: FastifyRequest, reply: FastifyReply) {
-    const { competition } = req.params as { competition: string };
-
-    if (!competition) throw new BadRequest("ID da competição é obrigatorio");
-
-    const response = await this.competitionService.deleteCompetition(
-      competition
-    );
-
-    reply.send(response);
-  }
-
   async getAll(req: FastifyRequest, reply: FastifyReply) {
     const responses = await this.competitionService.findMany();
 
@@ -106,7 +105,10 @@ export class CompetitionController {
     reply.send(response);
   }
 
-  async getWorkDetailsForCompetition(req: FastifyRequest, reply: FastifyReply) {
+  async getProjectDetailsForCompetition(
+    req: FastifyRequest,
+    reply: FastifyReply
+  ) {
     const { competitionId } = req.params as {
       competitionId: string;
       workId: string;
@@ -119,7 +121,7 @@ export class CompetitionController {
     reply.send(response);
   }
 
-  async getWorkDetails(req: FastifyRequest, reply: FastifyReply) {
+  async getProjectDetails(req: FastifyRequest, reply: FastifyReply) {
     const { competitionId, workId } = req.params as {
       competitionId: string;
       workId: string;
@@ -133,40 +135,40 @@ export class CompetitionController {
     reply.send(response);
   }
 
-  async createRating(req: FastifyRequest, reply: FastifyReply) {
-    const user = req.user;
+  // async createRating(req: FastifyRequest, reply: FastifyReply) {
+  //   const user = req.user;
 
-    if (!user) throw new Unauthorized("Usuario precisa fazer login");
+  //   if (!user) throw new Unauthorized("Usuario precisa fazer login");
 
-    const { competitionId, workId } = req.params as {
-      competitionId: string;
-      workId: string;
-    };
+  //   const { competitionId, workId } = req.params as {
+  //     competitionId: string;
+  //     workId: string;
+  //   };
 
-    const { score } = req.body as Partial<{ score: number }>;
+  //   const { score } = req.body as Partial<{ score: number }>;
 
-    if (!competitionId) throw new BadRequest("A competição é necessaria");
-    if (!workId) throw new BadRequest("O trabalho é necessario");
-    if (score === undefined || score === null || isNaN(Number(score)))
-      throw new BadRequest("A avaliação é necessaria");
+  //   if (!competitionId) throw new BadRequest("A competição é necessaria");
+  //   if (!workId) throw new BadRequest("O trabalho é necessario");
+  //   if (score === undefined || score === null || isNaN(Number(score)))
+  //     throw new BadRequest("A avaliação é necessaria");
 
-    const dto: CreaetRatingDTO = {
-      userId: user.id,
-      workId,
-      competitionId,
-      score: Number(score),
-    };
+  //   const dto: CreaetRatingDTO = {
+  //     userId: user.id,
+  //     workId,
+  //     competitionId,
+  //     score: Number(score),
+  //   };
 
-    const response = await this.competitionService.createRating(dto);
+  //   const response = await this.competitionService.createRating(dto);
 
-    reply.send(response);
-  }
+  //   reply.send(response);
+  // }
 
-  async updateRating(req: FastifyRequest, reply: FastifyReply) {
-    throw new InternalServerError("Not implemented");
-  }
+  // async updateRating(req: FastifyRequest, reply: FastifyReply) {
+  //   throw new InternalServerError("Not implemented");
+  // }
 
-  async deleteRating(req: FastifyRequest, reply: FastifyReply) {
-    throw new InternalServerError("Not implemented");
-  }
+  // async deleteRating(req: FastifyRequest, reply: FastifyReply) {
+  //   throw new InternalServerError("Not implemented");
+  // }
 }

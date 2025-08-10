@@ -43,7 +43,7 @@ export class CompetitionService implements ICompetitionService {
     if (existDetails)
       throw new Conflict("O tralho já está cadastrado na competição");
 
-    const details = await this.competitionRepository.createWorkCompDetails(
+    const details = await this.competitionRepository.createProjectCompDetails(
       new WorkCompDetails("", 0, 0, competitionId, workId)
     );
     return details;

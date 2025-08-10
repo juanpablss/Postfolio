@@ -6,16 +6,8 @@ function competitionRoutesPlugin(
   app: FastifyInstance,
   competitionController: CompetitionController
 ) {
-  /**
-   * [Rota para registrar uma nova competição]
-   * {
-   *  body: {
-   *    name: string,
-   *  }
-   * }
-   */
   app.post("", { preValidation: UserMiddle.authenticate }, (req, rep) =>
-    competitionController.register(req, rep)
+    competitionController.create(req, rep)
   );
 
   app.put(
@@ -25,26 +17,26 @@ function competitionRoutesPlugin(
   );
 
   app.delete(
-    "/:competition",
+    "/:competitionId",
     { preValidation: UserMiddle.authenticate },
     (req, rep) => competitionController.getCompetition(req, rep)
   );
 
-  app.post(
-    "/:competitionId/work/:workId",
-    {
-      preValidation: UserMiddle.authenticate,
-    },
-    (req, rep) => competitionController.subscribeWork(req, rep)
-  );
+  // app.post(
+  //   "/:competitionId/work/:workId",
+  //   {
+  //     preValidation: UserMiddle.authenticate,
+  //   },
+  //   (req, rep) => competitionController.subscribeWork(req, rep)
+  // );
 
-  app.delete(
-    "/:competitionId/work/:workId",
-    {
-      preValidation: UserMiddle.authenticate,
-    },
-    (req, rep) => competitionController.unsubscribeWork(req, rep)
-  );
+  // app.delete(
+  //   "/:competitionId/work/:workId",
+  //   {
+  //     preValidation: UserMiddle.authenticate,
+  //   },
+  //   (req, rep) => competitionController.unsubscribeWork(req, rep)
+  // );
 
   app.post("/all", { preValidation: UserMiddle.authenticate }, (req, rep) =>
     competitionController.getAll(req, rep)
@@ -57,35 +49,36 @@ function competitionRoutesPlugin(
   );
 
   app.post(
-    "/:competitionId/work",
+    "/:competitionId/project",
     { preValidation: UserMiddle.authenticate },
-    (req, rep) => competitionController.getWorkDetailsForCompetition(req, rep)
+    (req, rep) =>
+      competitionController.getProjectDetailsForCompetition(req, rep)
   );
 
   app.post(
-    "/:competitionId/work/:workId/details",
+    "/:competitionId/work/:projectId/details",
     { preValidation: UserMiddle.authenticate },
-    (req, rep) => competitionController.getWorkDetails(req, rep)
+    (req, rep) => competitionController.getProjectDetails(req, rep)
   );
 
   // About Rating
-  app.post(
-    "/:competitionId/work/:workId/rating",
-    { preValidation: UserMiddle.authenticate },
-    (req, rep) => competitionController.createRating(req, rep)
-  );
+  // app.post(
+  //   "/:competitionId/work/:workId/rating",
+  //   { preValidation: UserMiddle.authenticate },
+  //   (req, rep) => competitionController.createRating(req, rep)
+  // );
 
-  app.put(
-    "/:competition/works/:work/ratings/:rating",
-    { preValidation: UserMiddle.authenticate },
-    (req, rep) => competitionController.updateRating(req, rep)
-  );
+  // app.put(
+  //   "/:competition/works/:work/ratings/:rating",
+  //   { preValidation: UserMiddle.authenticate },
+  //   (req, rep) => competitionController.updateRating(req, rep)
+  // );
 
-  app.delete(
-    "/:competition/work/:work/rating/:rating",
-    { preValidation: UserMiddle.authenticate },
-    (req, rep) => competitionController.deleteRating(req, rep)
-  );
+  // app.delete(
+  //   "/:competition/work/:work/rating/:rating",
+  //   { preValidation: UserMiddle.authenticate },
+  //   (req, rep) => competitionController.deleteRating(req, rep)
+  // );
 }
 
 export class CompetitionRoute {
