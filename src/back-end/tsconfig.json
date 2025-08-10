@@ -39,6 +39,7 @@
       "@competition/*" : ["modules/competition/*"],
       "@email/*" : ["modules/email/*"],
       "@chat/*" : ["modules/chat/*"],
+      "@rating/*" : ["modules/rating/*"],
 
       "@shared/*" : ["shared/*"],
       "@compositionRoot/*" : ["compositionRoot/*"],
