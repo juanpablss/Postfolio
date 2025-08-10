@@ -11,7 +11,7 @@ export class WorkAdapter implements ProjectPort {
     private workRepository: IProjectRepository
   ) {}
 
-  async workExists(workId: string): Promise<boolean> {
+  async exist(workId: string): Promise<boolean> {
     const work = await this.workRepository.findById(workId);
     return work ? true : false;
   }

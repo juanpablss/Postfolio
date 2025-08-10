@@ -9,6 +9,7 @@ export class WorkData {
     public portfolioId: string
   ) {}
 }
+
 export class WorkCompDetails {
   constructor(
     public id: string,

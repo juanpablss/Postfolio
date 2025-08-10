@@ -1,24 +1,24 @@
 import { Competition } from "@competition/domain/entities/Competition";
 // import Work from "@domain/entities/work/Work";
-import { WorkCompDetails } from "@competition/domain/entities/WorkCompDetails";
+import { ProjectContract } from "@shared/contracts/ProjectContracts";
 
 export interface ICompetitionService {
   create(competition: Competition): Promise<Competition>;
-  subscribeWork(
-    competitionId: string,
-    workId: string
-  ): Promise<WorkCompDetails>;
-  unsubscribeWork(competitionId: string, workId: string): Promise<void>;
+
   updateCompetition(competition: Competition): Promise<Competition>;
   deleteCompetition(id: string): Promise<Competition | null>;
 
+  subscribeWork(competitionId: string, projectId: string): Promise<boolean>;
+  unsubscribeWork(competitionId: string, projectId: string): Promise<void>;
+
   findMany(): Promise<Competition[]>;
   findById(id: string): Promise<Competition | null>;
-  findSubscribedWorks(competitionId: string): Promise<WorkCompDetails[]>;
-  findWorkCompDetails(
+
+  findSubscribedProjects(competitionId: string): Promise<ProjectContract[]>;
+  findProjecWithDetails(
     competitionId: string,
-    workId: string
-  ): Promise<WorkCompDetails | null>;
+    projectId: string
+  ): Promise<ProjectContract | null>;
 
   // createRating(ratingDto: CreaetRatingDTO): Promise<Rating>;
   // updateRating(rating: Rating): Promise<Rating>;

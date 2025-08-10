@@ -14,7 +14,7 @@ export class ProjectService implements IProjectService {
   constructor(
     @inject(TYPES.IProjectRepository)
     private workRepository: IProjectRepository,
-    @inject(TYPES.IPortfolioPort)
+    @inject(TYPES.PortfolioPort)
     private portfolioPort: IPortfolioPort
   ) {}
 

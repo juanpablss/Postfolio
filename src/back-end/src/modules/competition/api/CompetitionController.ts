@@ -114,7 +114,7 @@ export class CompetitionController {
       workId: string;
     };
 
-    const response = await this.competitionService.findSubscribedWorks(
+    const response = await this.competitionService.findSubscribedProjects(
       competitionId
     );
 
@@ -127,7 +127,7 @@ export class CompetitionController {
       workId: string;
     };
 
-    const response = await this.competitionService.findWorkCompDetails(
+    const response = await this.competitionService.findProjecWithDetails(
       competitionId,
       workId
     );

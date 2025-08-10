@@ -21,7 +21,7 @@ export function portfolioComposeModule(container: Container): void {
     .to(PortfolioService)
     .inRequestScope();
   container
-    .bind<IPortfolioPort>(TYPES.IPortfolioPort)
+    .bind<IPortfolioPort>(TYPES.PortfolioPort)
     .to(PortfolioAdapter)
     .inRequestScope();
   container

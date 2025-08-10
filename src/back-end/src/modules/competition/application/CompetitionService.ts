@@ -5,8 +5,10 @@ import { ICompetitionService } from "@competition/domain/interfaces/ICompetition
 import { TYPES } from "@compositionRoot/Types";
 import { Conflict, NotFound } from "@shared/error/HttpError";
 import { UserPort } from "@user/domain/interfaces/UserPort";
-import { ProjectPort } from "@work/domain/interfaces/ProjectPort";
+import { ProjectPort } from "@project/domain/interfaces/ProjectPort";
 import { inject, injectable } from "inversify";
+import { ProjectCompDetailsPort } from "@projectCompDetails/domain/interfaces/ProjectCompDetailsPort";
+import { ProjectContract } from "@shared/contracts/ProjectContracts";
 
 @injectable()
 export class CompetitionService implements ICompetitionService {
@@ -14,9 +16,11 @@ export class CompetitionService implements ICompetitionService {
     @inject(TYPES.ICompetitionRepository)
     private competitionRepository: ICompetitionRepository,
     @inject(TYPES.ProjectPort)
-    private workPort: ProjectPort,
+    private projectPort: ProjectPort,
     @inject(TYPES.UserPort)
-    private userPort: UserPort
+    private userPort: UserPort,
+    @inject(TYPES.ProjectCompDetailsPort)
+    private projectCompDetailsPort: ProjectCompDetailsPort
   ) {}
 
   async create(competition: Competition): Promise<Competition> {
@@ -25,46 +29,45 @@ export class CompetitionService implements ICompetitionService {
 
   async subscribeWork(
     competitionId: string,
-    workId: string
-  ): Promise<WorkCompDetails> {
-    const [competition, work] = await Promise.all([
+    projectId: string
+  ): Promise<boolean> {
+    const [competition, project, details] = await Promise.all([
       this.competitionRepository.findById(competitionId),
-      this.workPort.workExists(workId),
+      this.projectPort.exist(projectId),
+      this.projectCompDetailsPort.exist(competitionId, projectId),
     ]);
 
     if (!competition) throw new NotFound("A competição não foi encontrada");
-    if (!work) throw new NotFound("O trabalho não pode ser encontrado");
+    if (!project) throw new NotFound("O trabalho não pode ser encontrado");
 
-    const existDetails = await this.competitionRepository.findWorkCompDetails(
-      competitionId,
-      workId
-    );
-
-    if (existDetails)
+    if (details)
       throw new Conflict("O tralho já está cadastrado na competição");
 
-    const details = await this.competitionRepository.createProjectCompDetails(
-      new WorkCompDetails("", 0, 0, competitionId, workId)
+    const result = await this.projectCompDetailsPort.create(
+      0,
+      0,
+      competitionId,
+      projectId
     );
-    return details;
+
+    return result;
   }
 
-  async unsubscribeWork(competitionId: string, workId: string): Promise<void> {
-    const details = await this.competitionRepository.findWorkCompDetails(
+  async unsubscribeWork(
+    competitionId: string,
+    projectId: string
+  ): Promise<void> {
+    const details = await this.projectCompDetailsPort.exist(
       competitionId,
-      workId
+      projectId
     );
 
     if (!details)
       throw new NotFound(
-        "Inscrição não encontrada para esta competição e trabalho"
+        "Inscrição não encontrada para esta competição e projeto"
       );
 
-    const response = await this.competitionRepository.deleteWorkCompDetails(
-      details.id
-    );
-
-    // throw new Error("Method not implemented.");
+    const response = await this.projectCompDetailsPort.delete(details);
   }
 
   async updateCompetition(competition: Competition): Promise<Competition> {
@@ -83,26 +86,38 @@ export class CompetitionService implements ICompetitionService {
     return await this.competitionRepository.findById(id);
   }
 
-  async findSubscribedWorks(competitionId: string): Promise<WorkCompDetails[]> {
-    const details =
-      await this.competitionRepository.findWorkCompDetailsByCompetition(
-        competitionId
-      );
-
-    return details;
+  findSubscribedProjects(competitionId: string): Promise<ProjectContract[]> {
+    throw new Error("Method not implemented.");
   }
-
-  async findWorkCompDetails(
+  findProjecWithDetails(
     competitionId: string,
-    workId: string
-  ): Promise<WorkCompDetails | null> {
-    const details = await this.competitionRepository.findWorkCompDetails(
-      competitionId,
-      workId
-    );
-
-    return details;
+    projectId: string
+  ): Promise<ProjectContract | null> {
+    throw new Error("Method not implemented.");
   }
+
+  // async findSubscribedProjects(
+  //   competitionId: string
+  // ): Promise<ProjectContract[]> {
+  //   const details =
+  //     await this.competitionRepository.findWorkCompDetailsByCompetition(
+  //       competitionId
+  //     );
+
+  //   return details;
+  // }
+
+  // async findProjecWithDetails(
+  //   competitionId: string,
+  //   workId: string
+  // ): Promise<WorkCompDetails | null> {
+  //   const details = await this.competitionRepository.findWorkCompDetails(
+  //     competitionId,
+  //     workId
+  //   );
+
+  //   return details;
+  // }
 
   // async createRating(ratingDto: CreaetRatingDTO): Promise<Rating> {
   //   const [existUser, existWorkCompDetails] = await Promise.all([

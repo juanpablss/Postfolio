@@ -40,6 +40,7 @@
       "@email/*" : ["modules/email/*"],
       "@chat/*" : ["modules/chat/*"],
       "@rating/*" : ["modules/rating/*"],
+      "@projectCompDetails/*" : ["modules/projectCompDetails/*"],
 
       "@shared/*" : ["shared/*"],
       "@compositionRoot/*" : ["compositionRoot/*"],
@@ -129,5 +130,5 @@
   },
   "include": [
     "./src/**/*.ts",
-    "src/infrastructure/types/**/*.d.ts"]
+    "src/infrastructure/types/**/*.d.ts", "src/modules/projectCompDetails/domain"]
 }
