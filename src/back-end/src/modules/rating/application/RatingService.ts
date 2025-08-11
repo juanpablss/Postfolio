@@ -9,6 +9,7 @@ import { UserPort } from "@user/domain/interfaces/UserPort";
 import { ProjectPort } from "@project/domain/interfaces/ProjectPort";
 import { inject, injectable } from "inversify";
 import { RatingMapper } from "@rating/application/RatingMapper";
+import { ProjectCompDetailsPort } from "@projectCompDetails/domain/interfaces/ProjectCompDetailsPort";
 
 @injectable()
 export class RatingService implements IRatingService {
@@ -20,7 +21,9 @@ export class RatingService implements IRatingService {
     @inject(TYPES.UserPort)
     private userPort: UserPort,
     @inject(TYPES.ProjectPort)
-    private projectPort: ProjectPort
+    private projectPort: ProjectPort,
+    @inject(TYPES.ProjectCompDetailsPort)
+    private projectCompDetailsPort: ProjectCompDetailsPort
   ) {}
 
   async upsert(dto: UpsertRatingDTO): Promise<Rating> {
@@ -29,11 +32,7 @@ export class RatingService implements IRatingService {
         this.userPort.exist(dto.userId),
         this.competitionPort.exist(dto.competitionId),
         this.projectPort.exist(dto.projectId),
-        this.competitionPort.getProjectDetailsId(
-          dto.userId,
-          dto.competitionId,
-          dto.projectId
-        ),
+        this.projectCompDetailsPort.exist(dto.competitionId, dto.projectId),
         this.ratingRepsotory.findByUserCompetitionProject(
           dto.userId,
           dto.competitionId,

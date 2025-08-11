@@ -7,6 +7,8 @@ import { CompetitionController } from "@competition/api/CompetitionController";
 
 import { PrismaCompetitionRepository } from "@competition/infra/database/CompetitionRepository";
 import { CompetitionService } from "@competition/application/CompetitionService";
+import { CompetitionPort } from "@competition/domain/interfaces/CompetitionPort";
+import { CompetitionAdapter } from "@competition/infra/CompetitionAdapter";
 
 export function competitionComposeModule(container: Container): void {
   container
@@ -16,6 +18,10 @@ export function competitionComposeModule(container: Container): void {
   container
     .bind<ICompetitionService>(TYPES.ICompetitionService)
     .to(CompetitionService)
+    .inRequestScope();
+  container
+    .bind<CompetitionPort>(TYPES.CompetitionPort)
+    .to(CompetitionAdapter)
     .inRequestScope();
   container
     .bind<CompetitionController>(TYPES.CompetitionController)
