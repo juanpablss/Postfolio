@@ -1,23 +1,20 @@
 import { InternalServerError } from "@shared/error/HttpError";
 import { prisma } from "@infrastructure/config/Prisma";
 import { Prisma } from "@prisma/client";
-import { Project } from "@work/domain/entities/Project";
-import { ProjectMapper } from "@work/application/ProjectMapper";
-import { IProjectRepository } from "@work/domain/interfaces/IProjectRepository";
+import { Project } from "@project/domain/entities/Project";
+import { ProjectMapper } from "@project/application/ProjectMapper";
+import { IProjectRepository } from "@project/domain/interfaces/IProjectRepository";
 import { ProjectContract } from "@shared/contracts/ProjectContracts";
 
 export class ProjectRepository implements IProjectRepository {
-  async create(work: Project): Promise<Project> {
+  async create(project: Project): Promise<Project> {
     try {
-      const workModel = await prisma.project.create({
+      const model = await prisma.project.create({
         data: {
-          name: work.name,
-          description: work.description,
-          githubLink: work.githubLink,
-          portfolioId: work.portfolioId,
+          ...project,
         },
       });
-      return ProjectMapper.fromPrismaToDomain(workModel);
+      return ProjectMapper.fromPrismaToDomain(model);
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         throw new InternalServerError(
@@ -28,19 +25,17 @@ export class ProjectRepository implements IProjectRepository {
     }
   }
 
-  async update(work: Project): Promise<Project> {
+  async update(project: Project): Promise<Project> {
     try {
-      const workModel = await prisma.work.update({
+      const model = await prisma.project.update({
         where: {
-          id: work.id,
+          id: project.id,
         },
         data: {
-          name: work.name,
-          description: work.description,
-          githubLink: work.githubLink,
+          ...project,
         },
       });
-      return ProjectMapper.fromPrismaToDomain(workModel);
+      return ProjectMapper.fromPrismaToDomain(model);
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         throw new InternalServerError(
@@ -53,8 +48,8 @@ export class ProjectRepository implements IProjectRepository {
 
   async delete(id: string): Promise<Project> {
     try {
-      const workModel = await prisma.work.delete({ where: { id } });
-      return ProjectMapper.fromPrismaToDomain(workModel);
+      const model = await prisma.project.delete({ where: { id } });
+      return ProjectMapper.fromPrismaToDomain(model);
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         throw new InternalServerError(
@@ -66,25 +61,25 @@ export class ProjectRepository implements IProjectRepository {
   }
 
   async findMany(): Promise<Project[]> {
-    const workModels = await prisma.work.findMany();
-    return workModels.map(ProjectMapper.fromPrismaToDomain);
+    const models = await prisma.project.findMany();
+    return models.map(ProjectMapper.fromPrismaToDomain);
   }
 
   async findById(id: string): Promise<Project | null> {
-    const workModel = await prisma.work.findUnique({
+    const model = await prisma.project.findUnique({
       where: {
         id,
       },
     });
-    return workModel ? ProjectMapper.fromPrismaToDomain(workModel) : null;
+    return model ? ProjectMapper.fromPrismaToDomain(model) : null;
   }
 
   async findByPortfolio(portfolioId: string): Promise<ProjectContract[]> {
-    const workModels = await prisma.work.findMany({
+    const models = await prisma.project.findMany({
       where: {
         portfolioId: portfolioId,
       },
     });
-    return workModels.map(ProjectMapper.fromPrismaToContracts);
+    return models.map(ProjectMapper.fromPrismaToContracts);
   }
 }
