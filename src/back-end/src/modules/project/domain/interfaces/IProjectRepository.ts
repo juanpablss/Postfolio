@@ -1,5 +1,5 @@
 import { ProjectContract } from "@shared/contracts/ProjectContracts";
-import { Project } from "@work/domain/entities/Project";
+import { Project } from "@project/domain/entities/Project";
 
 export interface IProjectRepository {
   create(work: Project): Promise<Project>;

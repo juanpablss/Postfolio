@@ -5,20 +5,20 @@ import { ProjectContract } from "@shared/contracts/ProjectContracts";
 import { IProjectRepository } from "@project/domain/interfaces/IProjectRepository";
 
 @injectable()
-export class WorkAdapter implements ProjectPort {
+export class ProjectAdapter implements ProjectPort {
   constructor(
     @inject(TYPES.IProjectRepository)
-    private workRepository: IProjectRepository
+    private projectRepository: IProjectRepository
   ) {}
 
-  async exist(workId: string): Promise<boolean> {
-    const work = await this.workRepository.findById(workId);
-    return work ? true : false;
+  async exist(projectId: string): Promise<string | null> {
+    const project = await this.projectRepository.findById(projectId);
+    return project ? project.id : null;
   }
 
   async findProjectsByPortfolioId(
     portfolioId: string
   ): Promise<ProjectContract[]> {
-    return await this.workRepository.findByPortfolio(portfolioId);
+    return await this.projectRepository.findByPortfolio(portfolioId);
   }
 }

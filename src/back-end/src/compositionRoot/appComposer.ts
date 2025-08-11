@@ -36,6 +36,7 @@ import { chatComposerModule } from "@chat/composition/ChatComposer";
 import { emailComposerModuler } from "@email/composition/EmailComposer";
 import { projectComposeModule } from "@project/composition/ProjectComposer";
 import { ratingComposerModule } from "@rating/composition/RatingComposer";
+import { projectCompDetailsComposeModule } from "@projectCompDetails/composition/projectCompDetailsComposer";
 
 const container = new Container();
 
@@ -46,6 +47,7 @@ competitionComposeModule(container);
 chatComposerModule(container);
 emailComposerModuler(container);
 ratingComposerModule(container);
+projectCompDetailsComposeModule(container);
 
 interface IApplicationControllers {
   userController: UserController;

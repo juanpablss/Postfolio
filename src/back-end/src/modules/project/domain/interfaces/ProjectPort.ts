@@ -1,6 +1,6 @@
 import { ProjectContract } from "@shared/contracts/ProjectContracts";
 
 export interface ProjectPort {
-  exist(workId: string): Promise<boolean>;
+  exist(projectId: string): Promise<string | null>;
   findProjectsByPortfolioId(portfolioId: string): Promise<ProjectContract[]>;
 }

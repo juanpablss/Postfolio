@@ -1,5 +1,4 @@
 import { Competition } from "@competition/domain/entities/Competition";
-import { WorkCompDetails } from "@competition/domain/entities/WorkCompDetails";
 
 export interface ICompetitionRepository {
   create(competition: Competition): Promise<Competition>;

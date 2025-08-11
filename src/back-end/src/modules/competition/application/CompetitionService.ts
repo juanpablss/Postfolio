@@ -1,6 +1,5 @@
 import { Competition } from "@competition/domain/entities/Competition";
 import { ICompetitionRepository } from "@competition/domain/interfaces/ICompetitionRepository";
-import { WorkCompDetails } from "@competition/domain/entities/WorkCompDetails";
 import { ICompetitionService } from "@competition/domain/interfaces/ICompetitionService";
 import { TYPES } from "@compositionRoot/Types";
 import { Conflict, NotFound } from "@shared/error/HttpError";
@@ -27,7 +26,7 @@ export class CompetitionService implements ICompetitionService {
     return await this.competitionRepository.create(competition);
   }
 
-  async subscribeWork(
+  async subscribeProject(
     competitionId: string,
     projectId: string
   ): Promise<boolean> {
@@ -43,12 +42,13 @@ export class CompetitionService implements ICompetitionService {
     if (details)
       throw new Conflict("O tralho já está cadastrado na competição");
 
-    const result = await this.projectCompDetailsPort.create(
-      0,
-      0,
-      competitionId,
-      projectId
-    );
+    const result = await this.projectCompDetailsPort.create({
+      totalReviewers: 0,
+      totalScore: 0,
+      competitionId: competition.id,
+      projectId: project,
+      checked: true,
+    });
 
     return result;
   }

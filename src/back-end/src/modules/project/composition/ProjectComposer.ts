@@ -5,7 +5,7 @@ import { IProjectRepository } from "@project/domain/interfaces/IProjectRepositor
 import { IProjectService } from "@project/domain/interfaces/IProjectService";
 import { ProjectPort } from "@project/domain/interfaces/ProjectPort";
 import { ProjectRepository } from "@project/infra/database/ProjectRepository";
-import { WorkAdapter } from "@project/infra/ProjectAdapter";
+import { ProjectAdapter } from "@project/infra/ProjectAdapter";
 import { Container } from "inversify";
 
 // import { IProjectRepository } from "@work/domain/interfaces/IProjectRepository";
@@ -28,7 +28,7 @@ export function projectComposeModule(container: Container): void {
     .inRequestScope();
   container
     .bind<ProjectPort>(TYPES.ProjectPort)
-    .to(WorkAdapter)
+    .to(ProjectAdapter)
     .inRequestScope();
   container
     .bind<WorkController>(TYPES.ProjectController)

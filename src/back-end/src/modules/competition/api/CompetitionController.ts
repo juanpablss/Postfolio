@@ -67,7 +67,7 @@ export class CompetitionController {
     if (!competitionId) throw new BadRequest("ID da competição é obrigatorio");
     if (!workId) throw new BadRequest("ID da competição é obrigatorio");
 
-    const response = await this.competitionService.subscribeWork(
+    const response = await this.competitionService.subscribeProject(
       competitionId,
       workId
     );
