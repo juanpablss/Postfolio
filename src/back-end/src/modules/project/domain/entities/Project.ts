@@ -6,7 +6,7 @@ export class Project {
     public name: string,
     public description: string,
     public category: ProjectCategory,
-    public githubLink: string | null,
-    public portfolioId: string
+    public portfolioId: string,
+    public githubLink: string | null = null
   ) {}
 }

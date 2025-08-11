@@ -1,7 +1,7 @@
 // import PortfolioRepository from "@domain/entities/por folio/PortfolioRepository";
 import { Project } from "@project/domain/entities/Project";
 import { BadRequest } from "@shared/error/HttpError";
-import { CreateWorkDTO, UpdateWorkDTO } from "@project/api/ProjectDTO";
+import { CreateProjectDTO, UpdateProjectDTO } from "@project/api/ProjectDTO";
 import { ProjectMapper } from "@project/application/ProjectMapper";
 import { IProjectService } from "@project/domain/interfaces/IProjectService";
 import { IProjectRepository } from "@project/domain/interfaces/IProjectRepository";
@@ -18,20 +18,22 @@ export class ProjectService implements IProjectService {
     private portfolioPort: IPortfolioPort
   ) {}
 
-  async create(createWorkDto: CreateWorkDTO): Promise<Project> {
+  async create(createWorkDto: CreateProjectDTO): Promise<Project> {
     if (!this.portfolioPort.exist(createWorkDto.portfolioId))
       throw new BadRequest("O portfolio não existe");
 
-    const workDomain = ProjectMapper.fromCreateWorkDtoToDomain(createWorkDto);
+    const workDomain =
+      ProjectMapper.fromCreateProjectDtoToDomain(createWorkDto);
 
     return await this.workRepository.create(workDomain);
   }
 
-  async update(updateWorkDto: UpdateWorkDTO): Promise<Project> {
+  async update(updateWorkDto: UpdateProjectDTO): Promise<Project> {
     const existeWork = await this.workRepository.findById(updateWorkDto.id);
 
     if (!existeWork) throw new BadRequest("O trabalho não existe");
-    const workDomain = ProjectMapper.fromUpdateWorkDtoToDomain(updateWorkDto);
+    const workDomain =
+      ProjectMapper.fromUpdateProjectDtoToDomain(updateWorkDto);
 
     return await this.workRepository.update(workDomain);
   }

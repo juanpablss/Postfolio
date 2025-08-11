@@ -2,44 +2,51 @@ import { FastifyInstance } from "fastify";
 import { WorkController } from "@project/api/ProjectController";
 import { UserMiddle } from "@infrastructure/middleware/UserMiddle";
 import {
-  RegisterWorkRequest,
-  UpdateWorkRequest,
-  workRouteSchema,
+  CreateProjectRequest,
+  UpdateProjectRequest,
+  projectRouteSchema,
 } from "@project/api/ProjectSchema";
 
-function workRoutesPlugin(
-  app: FastifyInstance,
-  workController: WorkController
-) {
+function projectRoutesPlugin(app: FastifyInstance, controller: WorkController) {
   app.post(
     "",
-    { schema: workRouteSchema.create, preValidation: UserMiddle.authenticate },
-    (req, rep) => workController.register(req as RegisterWorkRequest, rep)
+    {
+      schema: projectRouteSchema.create,
+      preValidation: UserMiddle.authenticate,
+    },
+    (req, rep) => controller.create(req as CreateProjectRequest, rep)
   );
 
   app.put(
-    "/:work",
-    { schema: workRouteSchema.update, preValidation: UserMiddle.authenticate },
-    (req, rep) => workController.update(req as UpdateWorkRequest, rep)
+    "/:projectId",
+    {
+      schema: projectRouteSchema.update,
+      preValidation: UserMiddle.authenticate,
+    },
+    (req, rep) => controller.update(req as UpdateProjectRequest, rep)
   );
 
-  app.delete("/:work", { preValidation: UserMiddle.authenticate }, (req, rep) =>
-    workController.delete(req, rep)
+  app.delete(
+    "/:projectId",
+    { preValidation: UserMiddle.authenticate },
+    (req, rep) => controller.delete(req, rep)
   );
 
-  app.post("/:work", { preValidation: UserMiddle.authenticate }, (req, rep) =>
-    workController.getById(req, rep)
+  app.post(
+    "/:projectId",
+    { preValidation: UserMiddle.authenticate },
+    (req, rep) => controller.getById(req, rep)
   );
 
   app.post("/all", { preValidation: UserMiddle.authenticate }, (req, rep) =>
-    workController.getAll(req, rep)
+    controller.getAll(req, rep)
   );
 }
 
-export class WorkRoute {
-  public static register(app: FastifyInstance, workController: WorkController) {
-    app.register((data) => workRoutesPlugin(data, workController), {
-      prefix: "api/work",
+export class ProjectRoute {
+  public static register(app: FastifyInstance, controller: WorkController) {
+    app.register((data) => projectRoutesPlugin(data, controller), {
+      prefix: "api/project",
     });
   }
 }

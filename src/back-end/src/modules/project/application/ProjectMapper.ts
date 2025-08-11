@@ -3,7 +3,7 @@ import {
   Project as ProjectModel,
 } from "@prisma/client";
 import { Project } from "@project/domain/entities/Project";
-import { CreateWorkDTO, UpdateWorkDTO } from "@project/api/ProjectDTO";
+import { CreateProjectDTO, UpdateProjectDTO } from "@project/api/ProjectDTO";
 import { ProjectContract } from "@shared/contracts/ProjectContracts";
 import { ProjectCategory } from "@project/domain/enum/ProjectCategory";
 
@@ -52,6 +52,21 @@ export const ProjectCategoryMapper = {
         );
     }
   },
+  fromSchemaToDomain(category: string): ProjectCategory {
+    const uppercaseCategory = category.toUpperCase();
+
+    if (
+      Object.values(ProjectCategory).includes(
+        uppercaseCategory as ProjectCategory
+      )
+    ) {
+      return uppercaseCategory as ProjectCategory;
+    }
+
+    throw new Error(
+      `A string "${category}" não é uma categoria de projeto válida.`
+    );
+  },
 };
 
 export const ProjectMapper = {
@@ -61,8 +76,8 @@ export const ProjectMapper = {
       projectModel.name,
       projectModel.description,
       ProjectCategoryMapper.fromPrismaToDomain(projectModel.category),
-      projectModel.githublink,
-      projectModel.portfolioId
+      projectModel.portfolioId,
+      projectModel.githublink
     );
   },
   fromPrismaToContracts(projectModel: ProjectModel): ProjectContract {
@@ -85,24 +100,24 @@ export const ProjectMapper = {
       portfolioId: project.portfolioId,
     };
   },
-  fromCreateWorkDtoToDomain(dto: CreateWorkDTO): Project {
+  fromCreateProjectDtoToDomain(dto: CreateProjectDTO): Project {
     return new Project(
       "",
       dto.name,
       dto.description,
       dto.category,
-      dto.githublink,
-      dto.portfolioId
+      dto.portfolioId,
+      dto.githublink
     );
   },
-  fromUpdateWorkDtoToDomain(dto: UpdateWorkDTO): Project {
+  fromUpdateProjectDtoToDomain(dto: UpdateProjectDTO): Project {
     return new Project(
       dto.id,
       dto.name,
       dto.description,
       dto.category,
-      dto.githublink,
-      dto.portfolio
+      dto.portfolio,
+      dto.githublink
     );
   },
 };

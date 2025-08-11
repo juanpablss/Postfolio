@@ -17,7 +17,7 @@ import { RatingController } from "@rating/api/RatingController";
 // Rotas
 import { UserRoute } from "@user/api/UserRoute";
 import { PortfolioRoute } from "@portfolio/api/PortfolioRoute";
-import { WorkRoute } from "@project/api/ProjectRoute";
+import { ProjectRoute } from "@project/api/ProjectRoute";
 import { CompetitionRoute } from "@competition/api/CompetitionRoute";
 import { ChatRoute } from "@chat/api/ChatRoute";
 import { EmailRoute } from "@email/api/EmailRoute";
@@ -101,7 +101,7 @@ export class AppComposer {
   public registerRoutes(app: FastifyInstance): void {
     UserRoute.register(app, this.controllers.userController);
     PortfolioRoute.register(app, this.controllers.portfolioController);
-    WorkRoute.register(app, this.controllers.projectController);
+    ProjectRoute.register(app, this.controllers.projectController);
     CompetitionRoute.register(app, this.controllers.competitionController);
     ChatRoute.register(app, this.controllers.chatController);
     EmailRoute.register(app, this.controllers.emailController);

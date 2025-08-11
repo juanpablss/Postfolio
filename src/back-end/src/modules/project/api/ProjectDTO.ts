@@ -1,20 +1,20 @@
 import { ProjectCategory } from "@project/domain/enum/ProjectCategory";
 
-interface CreateWorkDTO {
+interface CreateProjectDTO {
   name: string;
   description: string;
   category: ProjectCategory;
-  githublink: string | null;
+  githublink?: string;
   portfolioId: string;
 }
 
-interface UpdateWorkDTO {
+interface UpdateProjectDTO {
   id: string;
   name: string;
   description: string;
   category: ProjectCategory;
-  githublink: string | null;
+  githublink?: string;
   portfolio: string;
 }
 
-export { CreateWorkDTO, UpdateWorkDTO };
+export { CreateProjectDTO, UpdateProjectDTO };
