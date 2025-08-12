@@ -33,7 +33,7 @@ model ProviderOAuth {
   provider   SocialProviderType
   providerId String
   email      String
-  user       User               @relation(fields: [userId], references: [id])
+  user       User               @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerId])
   @@map("tb_provider_oauth")
@@ -45,10 +45,10 @@ model Message {
   status     MessageStatus
   createAt   DateTime
   updateAt   DateTime
-  senderId   String
-  sender     User          @relation("MessageSent", fields: [senderId], references: [id])
-  receiverId String
-  receiver   User          @relation("MessageReceived", fields: [receiverId], references: [id])
+  senderId   String        @default("anonymous_user_id")
+  sender     User          @relation("MessageSent", fields: [senderId], references: [id], onDelete: SetDefault)
+  receiverId String        @default("anonymous_user_id")
+  receiver   User          @relation("MessageReceived", fields: [receiverId], references: [id], onDelete: SetDefault)
 
   @@map("tb_message")
 }
@@ -59,7 +59,7 @@ model Portfolio {
   description String
   pagelink    String?
   authorId    String    @unique
-  author      User      @relation(fields: [authorId], references: [id])
+  author      User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
   works       Project[]
 
   @@map("tb_portfolio")
@@ -84,7 +84,7 @@ model Project {
   category           ProjectCategory
   githublink         String?
   portfolioId        String
-  portfolio          Portfolio            @relation(fields: [portfolioId], references: [id])
+  portfolio          Portfolio            @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
   Rating             Rating[]
   ProjectCompDetails ProjectCompDetails[]
 
@@ -94,14 +94,14 @@ model Project {
 model Rating {
   id                   String             @id @default(uuid())
   score                Float
-  userId               String
+  userId               String             @default("anonymous_user_id")
   projectId            String
   competitionId        String
   projectCompDetailsID String
-  user                 User               @relation(fields: [userId], references: [id])
-  project              Project            @relation(fields: [projectId], references: [id])
-  competition          Competition        @relation(fields: [competitionId], references: [id])
-  portfolioDetails     ProjectCompDetails @relation(fields: [projectCompDetailsID], references: [id])
+  user                 User               @relation(fields: [userId], references: [id], onDelete: SetDefault)
+  project              Project            @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  competition          Competition        @relation(fields: [competitionId], references: [id], onDelete: Cascade)
+  portfolioDetails     ProjectCompDetails @relation(fields: [projectCompDetailsID], references: [id], onDelete: Cascade)
 
   @@unique([userId, competitionId, projectId])
   @@map("tb_rating")
@@ -114,8 +114,8 @@ model ProjectCompDetails {
   projectId      String
   competitionId  String
   rating         Rating[]
-  project        Project     @relation(fields: [projectId], references: [id])
-  competition    Competition @relation(fields: [competitionId], references: [id])
+  project        Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  competition    Competition @relation(fields: [competitionId], references: [id], onDelete: Cascade)
 
   @@map("tb_project_comp_details")
 }
