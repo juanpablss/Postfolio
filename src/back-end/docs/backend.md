@@ -135,8 +135,8 @@ A seguir, os principais diretórios da estrutura de código:
 │   ├── 📁 compositionRoot/     # Composição de dependências e injeção
 │   ├── 📁 infrastructure/      # Infraestrutura geral (ex: conexão com DB, middleware)
 │   ├── 📁 modules/             # Módulos de domínio independentes (ex: user, work, competition)
-│   ├── 📁 shared/              # Código e utilitários reutilizáveis entre módulos
-│   └── 📁 test/                # Testes automatizados da aplicação
+│   └── 📁 shared/              # Código e utilitários reutilizáveis entre módulos
+# │   └── 📁 test/                # Testes automatizados da aplicação
 
 ....
 ```
@@ -148,33 +148,40 @@ Cada pasta em modules/ representa um contexto isolado do domínio, como:
 ├── 📁 competition/
 ├── 📁 email/
 ├── 📁 portfolio/
-├── 📁 user/
-└── 📁 work/
+├── 📁 project/
+├── 📁 projectCompDetais/
+├── 📁 rating/
+└── 📁 user/
 ```
 
 Dentro de cada módulo, seguimos uma estrutura comum com pastas como controller, service, repository, dtos, domain, etc., mantendo o princípio de coesão alta e acoplamento baixo.
 
 ### 1.1 Modulos do dominio
 
-A estruturação de cada modulo do dominio foi projetada para ser intuitiva e escalável. Todos foram seguiem a mesma estrutura de pastas e lógica. Abaixo, detalhamos o propósito de cada diretório e arquivo principal:
+A estruturação de cada modulo do dominio foi projetada para ser intuitiva e escalável. Todos foram seguiem a mesma estrutura de pastas e lógica, . Abaixo, detalhamos o propósito de cada diretório e arquivo principal:
 
 ```shell
-MODULES\USER
+MODULES\NAME_MODULE
 ├───api
+├───application
 ├───composition
 ├───domain
 │   ├───entities
-│   └───valueObject # (opcional) Vai depender da modelagem do domain
-├───dtos
-├───inBound
-├───repository
-├───service
-└───util
+│   ├───enum
+│   ├───interfaces
+│   └───valueObject # (opcional) Vai depender da modelagem do domain.
+├───handler # (opcional) Local onde o module reage a certos eventos.
+├───infra
+└───test
 ```
 
 ---
 `api`
-Define as portas de saída (outbound ports) e seus adaptadores para interações com modulos externos ou sistemas de terceiros (e.g., modulo de work, portfolio, APIs externas).
+Lida com a entrada e saída de dados da aplicação. É a interface com o mundo externo, responsável por receber requisições HTTP e enviar respostas. É nela que fica as *rotas*, *controllers*, *schemas* e *dtos*.
+
+---
+`application`
+Orquestra a lógica do domínio. Gerencia os fluxos de dados, interage com o camada de domínio para executar ações e se comunica com a camada de infraestrutura. É nela que fica o *service* e o *mapper*.
 
 ---
 `composition`
@@ -185,35 +192,21 @@ Orquestra a injeção de dependências e a montagem de todas as partes do módul
 A camada mais central e agnóstica a tecnologias, contendo a lógica de negócio pura, as regras de domínio e as entidades.
 
 - `entities`: Local onde fica a interface do repository e a entidade(s) principal(ais) do modulo.
+- `enum`: Onde ficam os enums.
+- `interfaces`: Onde fica os contratos da apliação.
 - `valueObject`: Um objeto de valor que encapsula a lógica e validações relacionadas a uma coluna do banco.
-
----
-`dtos`
-Define os Data Transfer Objects (DTOs), que são modelos de dados usados para transferir informações entre as diferentes camadas e sistemas, sem expor a estrutura interna das entidades de domínio.
-
----
-`inBound`
-Define as portas de entrada para o módulo, relacionadas à API e à validação de requisições. Tem dentro dela três arquivos geralmente:
-
-- `controller`: responsável por receber as requisições HTTP, delegar para a camada de serviço e retornar as respostas.
-- `route`: Define as rotas da API para o módulo, mapeando os endpoints para os métodos do `controller`.
-- `schema`: Esquemas de validação de dados com o zod para as requisições de entrada, garantindo que os dados recebidos estejam no formato esperado.
-
----
-`repository`
-Fornece a implementação concreta da interface repository definida na camada de domínio, lidando diretamente com a persistência de dados (banco de dados, cache, etc.).
-
----
-`service`
-Contém a lógica de aplicação, orquestrando as operações de negócio e atuando como um intermediário entre a camada de entrada (`inBound`) e o domínio (`domain`).
-
----
-`util`
-Abriga funções utilitárias ou auxiliares que não se encaixam diretamente nas outras camadas, mas são usadas em várias partes do módulo (ex: mappers).
 
 ---
 `handler`
 Abriga classes que vão reagir a eventos emitios em outro lugar. Para saber mais sobre eventos, vá para [event](#event).
+
+---
+`infra`
+Lida com todos os detalhes técnicos e externos. É a camada de persistência (banco de dados), serviços externos (APIs de terceiros) e implementações concretas de interfaces definidas no domínio.
+
+---
+`test`
+Local onde fica os testes especificos do modulo.
 
 Segue uma forma de consimir cada modulo, especificados em seus respectivos arquivos: [User](modules/user.md).
 
