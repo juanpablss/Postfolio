@@ -52,10 +52,11 @@ export class RatingService implements IRatingService {
     return this.ratingRepsotory.update(existRating);
   }
 
-  delete(id: string): Promise<Rating> {
-    throw new Error("Method not implemented.");
+  async delete(id: string): Promise<Rating> {
+    return this.ratingRepsotory.delete(id);
   }
-  findById(id: string): Promise<Rating | null> {
-    throw new Error("Method not implemented.");
+
+  async findById(id: string): Promise<Rating | null> {
+    return await this.ratingRepsotory.findById(id);
   }
 }
