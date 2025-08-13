@@ -16,20 +16,24 @@ export const RatingMapper = {
       projectDetailsId
     );
   },
-  // fromPrismatoDomin(ratingModel: RatingModel): Rating {
-  //   return new Rating(
-  //     ratingModel.id,
-  //     ratingModel.userId,
-  //     ratingModel.workDetailsId,
-  //     ratingModel.score
-  //   );
-  // },
-  // fromDomaintoPrisma(rating: Rating): RatingModel {
-  //   return {
-  //     id: rating.id,
-  //     userId: rating.userId,
-  //     workDetailsId: rating.workDetailsId,
-  //     score: rating.score,
-  //   };
-  // },
+  fromPrismaToDomin(model: RatingModel): Rating {
+    return new Rating(
+      model.id,
+      model.score,
+      model.userId,
+      model.projectId,
+      model.competitionId,
+      model.projectCompDetailsID
+    );
+  },
+  fromDomainToPrisma(rating: Rating): RatingModel {
+    return {
+      id: rating.getId(),
+      score: rating.getScore(),
+      userId: rating.getUserId(),
+      projectId: rating.getProjectId(),
+      competitionId: rating.getCompetitionId(),
+      projectCompDetailsID: rating.getProjectCompDetailsId(),
+    };
+  },
 };

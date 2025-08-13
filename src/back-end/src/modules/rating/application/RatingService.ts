@@ -52,7 +52,7 @@ export class RatingService implements IRatingService {
     return this.ratingRepsotory.update(existRating);
   }
 
-  async delete(id: string): Promise<Rating> {
+  async delete(id: string): Promise<Rating | null> {
     return this.ratingRepsotory.delete(id);
   }
 
