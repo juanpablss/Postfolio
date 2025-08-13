@@ -7,10 +7,9 @@ interface CreatePortfolioDTO {
 
 interface UpdatePortfolioDTO {
   id: string;
-  name: string;
-  description: string;
-  pagelink: string | null;
-  authorId: string;
+  name?: string;
+  description?: string;
+  pagelink?: string | null;
 }
 
 export { CreatePortfolioDTO, UpdatePortfolioDTO };

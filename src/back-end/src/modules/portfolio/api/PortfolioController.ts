@@ -73,7 +73,6 @@ export class PortfolioController {
     const updatePortfolioDto: UpdatePortfolioDTO = {
       id: req.params.id,
       ...req.body,
-      authorId,
     };
 
     const response = await this.portfolioService.update(updatePortfolioDto);

@@ -7,16 +7,14 @@ import { PortfolioMapper } from "@portfolio/application/PortfolioMapper";
 export class PrismaPortfolioRepository implements IPortfolioRepository {
   async create(portfolio: Portfolio): Promise<Portfolio> {
     try {
-      const portfolioModel = await prisma.portfolio.create({
+      const model = await prisma.portfolio.create({
         data: {
-          name: portfolio.name,
-          description: portfolio.description,
-          pagelink: portfolio.pageLink,
-          authorId: portfolio.authorId,
+          ...PortfolioMapper.fromDomaintoPrisma(portfolio),
+          id: undefined,
         },
       });
 
-      return PortfolioMapper.fromPrismatoDomain(portfolioModel);
+      return PortfolioMapper.fromPrismaToDomain(model);
     } catch (error) {
       throw new InternalServerError("Erro ao salvar Portfolio!");
     }
@@ -24,18 +22,16 @@ export class PrismaPortfolioRepository implements IPortfolioRepository {
 
   async update(portfolio: Portfolio): Promise<Portfolio> {
     try {
-      const portfolioModel = await prisma.portfolio.update({
+      const model = await prisma.portfolio.update({
         where: {
-          id: portfolio.id,
+          id: portfolio.getId(),
         },
         data: {
-          name: portfolio.name,
-          description: portfolio.description,
-          pagelink: portfolio.pageLink,
+          ...PortfolioMapper.fromDomaintoPrisma(portfolio),
         },
       });
 
-      return PortfolioMapper.fromPrismatoDomain(portfolioModel);
+      return PortfolioMapper.fromPrismaToDomain(model);
     } catch (error) {
       throw new InternalServerError("Não foi possivel atualizar o portfolio!");
     }
@@ -50,7 +46,7 @@ export class PrismaPortfolioRepository implements IPortfolioRepository {
       });
 
       return portfolioModel
-        ? PortfolioMapper.fromPrismatoDomain(portfolioModel)
+        ? PortfolioMapper.fromPrismaToDomain(portfolioModel)
         : null;
     } catch (error) {
       throw new InternalServerError("Não foi possivel deletar o portfolio!");
@@ -59,7 +55,7 @@ export class PrismaPortfolioRepository implements IPortfolioRepository {
 
   async findMany(): Promise<Portfolio[]> {
     const portfolioModel = await prisma.portfolio.findMany();
-    return portfolioModel.map(PortfolioMapper.fromPrismatoDomain);
+    return portfolioModel.map(PortfolioMapper.fromPrismaToDomain);
   }
 
   async findById(id: string): Promise<Portfolio | null> {
@@ -69,7 +65,7 @@ export class PrismaPortfolioRepository implements IPortfolioRepository {
       },
     });
     return portfolioModel
-      ? PortfolioMapper.fromPrismatoDomain(portfolioModel)
+      ? PortfolioMapper.fromPrismaToDomain(portfolioModel)
       : null;
   }
 
@@ -79,7 +75,7 @@ export class PrismaPortfolioRepository implements IPortfolioRepository {
     });
 
     return portfolioModel
-      ? PortfolioMapper.fromPrismatoDomain(portfolioModel)
+      ? PortfolioMapper.fromPrismaToDomain(portfolioModel)
       : null;
   }
 }

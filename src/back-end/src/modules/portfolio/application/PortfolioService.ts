@@ -4,7 +4,7 @@ import {
   UpdatePortfolioDTO,
 } from "@portfolio/api/PortfolioDTO";
 import { PortfolioMapper } from "@portfolio/application/PortfolioMapper";
-import { BadRequest } from "@shared/error/HttpError";
+import { BadRequest, NotFound } from "@shared/error/HttpError";
 import { Portfolio } from "@portfolio/domain/entities/Portfolio";
 import { UserPort } from "@user/domain/interfaces/UserPort";
 import { IPortfolioService } from "@portfolio/domain/interfaces/IPortfolioService";
@@ -17,7 +17,7 @@ import { ProjectContract } from "@shared/contracts/ProjectContracts";
 export class PortfolioService implements IPortfolioService {
   constructor(
     @inject(TYPES.IPortfolioRepository)
-    private portfolioRepository: IPortfolioRepository,
+    private repository: IPortfolioRepository,
     @inject(TYPES.UserPort)
     private userPort: UserPort,
     @inject(TYPES.ProjectPort)
@@ -32,31 +32,31 @@ export class PortfolioService implements IPortfolioService {
     const portfoioDomain =
       PortfolioMapper.fromCreatePortfolioDTOtoDomain(createPortfolioDto);
 
-    return await this.portfolioRepository.create(portfoioDomain);
+    return await this.repository.create(portfoioDomain);
   }
 
   async update(updatePortfolioDto: UpdatePortfolioDTO): Promise<Portfolio> {
-    const exist = await this.userPort.exist(updatePortfolioDto.authorId);
+    const portfolio = await this.repository.findById(updatePortfolioDto.id);
 
-    if (!exist) throw new BadRequest("Author não registrado!");
+    if (!portfolio) throw new NotFound("Portfolio não encontrado!");
 
-    const portfolioDomain =
-      PortfolioMapper.fromUpdatePortfolioDTOtoDomain(updatePortfolioDto);
-    return await this.portfolioRepository.update(portfolioDomain);
+    portfolio.update(updatePortfolioDto);
+
+    return await this.repository.update(portfolio);
   }
 
   async deleteById(id: string): Promise<Portfolio | null> {
-    const portfolio = await this.portfolioRepository.deleteById(id);
+    const portfolio = await this.repository.deleteById(id);
     return portfolio;
   }
 
   async findMany(): Promise<Portfolio[]> {
-    const portfolios = await this.portfolioRepository.findMany();
+    const portfolios = await this.repository.findMany();
     return portfolios;
   }
 
   async findById(id: string): Promise<Portfolio | null> {
-    return await this.portfolioRepository.findById(id);
+    return await this.repository.findById(id);
   }
 
   async findProjects(id: string): Promise<ProjectContract[]> {
@@ -64,6 +64,6 @@ export class PortfolioService implements IPortfolioService {
   }
 
   async findByAuthor(authorId: string): Promise<Portfolio | null> {
-    return await this.portfolioRepository.findByAuthor(authorId);
+    return await this.repository.findByAuthor(authorId);
   }
 }
