@@ -51,9 +51,7 @@ export class CompetitionController {
 
     if (!competition) throw new BadRequest("ID da competição é obrigatorio");
 
-    const response = await this.competitionService.deleteCompetition(
-      competition
-    );
+    const response = await this.competitionService.delete(competition);
 
     reply.send(response);
   }
@@ -84,7 +82,7 @@ export class CompetitionController {
     if (!competitionId) throw new BadRequest("ID da competição é obrigatorio");
     if (!workId) throw new BadRequest("ID da competição é obrigatorio");
 
-    await this.competitionService.unsubscribeWork(competitionId, workId);
+    await this.competitionService.unsubscribeProject(competitionId, workId);
 
     reply.send({ msg: "Trabalho removido da competição" });
   }

@@ -8,6 +8,7 @@ import { ProjectPort } from "@project/domain/interfaces/ProjectPort";
 import { inject, injectable } from "inversify";
 import { ProjectCompDetailsPort } from "@projectCompDetails/domain/interfaces/ProjectCompDetailsPort";
 import { ProjectContract } from "@shared/contracts/ProjectContracts";
+import { CreateCompetitionDTO } from "@competition/api/CompetitionDTO";
 
 @injectable()
 export class CompetitionService implements ICompetitionService {
@@ -22,8 +23,17 @@ export class CompetitionService implements ICompetitionService {
     private projectCompDetailsPort: ProjectCompDetailsPort
   ) {}
 
-  async create(competition: Competition): Promise<Competition> {
+  async create(dto: CreateCompetitionDTO): Promise<Competition> {
+    const competition = Competition.create(dto);
     return await this.competitionRepository.create(competition);
+  }
+
+  async update(competition: Competition): Promise<Competition> {
+    return await this.competitionRepository.update(competition);
+  }
+
+  async delete(id: string): Promise<Competition | null> {
+    return await this.competitionRepository.deleteById(id);
   }
 
   async subscribeProject(
@@ -53,7 +63,7 @@ export class CompetitionService implements ICompetitionService {
     return result;
   }
 
-  async unsubscribeWork(
+  async unsubscribeProject(
     competitionId: string,
     projectId: string
   ): Promise<void> {
@@ -68,14 +78,6 @@ export class CompetitionService implements ICompetitionService {
       );
 
     const response = await this.projectCompDetailsPort.delete(details);
-  }
-
-  async updateCompetition(competition: Competition): Promise<Competition> {
-    return await this.competitionRepository.update(competition);
-  }
-
-  async deleteCompetition(id: string): Promise<Competition | null> {
-    return await this.competitionRepository.deleteById(id);
   }
 
   async findMany(): Promise<Competition[]> {

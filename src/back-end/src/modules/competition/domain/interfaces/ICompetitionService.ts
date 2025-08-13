@@ -1,15 +1,15 @@
+import { CreateCompetitionDTO } from "@competition/api/CompetitionDTO";
 import { Competition } from "@competition/domain/entities/Competition";
 // import Work from "@domain/entities/work/Work";
 import { ProjectContract } from "@shared/contracts/ProjectContracts";
 
 export interface ICompetitionService {
-  create(competition: Competition): Promise<Competition>;
-
-  updateCompetition(competition: Competition): Promise<Competition>;
-  deleteCompetition(id: string): Promise<Competition | null>;
+  create(dto: CreateCompetitionDTO): Promise<Competition>;
+  update(competition: Competition): Promise<Competition>;
+  delete(id: string): Promise<Competition | null>;
 
   subscribeProject(competitionId: string, projectId: string): Promise<boolean>;
-  unsubscribeWork(competitionId: string, projectId: string): Promise<void>;
+  unsubscribeProject(competitionId: string, projectId: string): Promise<void>;
 
   findMany(): Promise<Competition[]>;
   findById(id: string): Promise<Competition | null>;
