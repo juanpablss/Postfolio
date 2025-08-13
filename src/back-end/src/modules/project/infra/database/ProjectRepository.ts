@@ -11,7 +11,8 @@ export class ProjectRepository implements IProjectRepository {
     try {
       const model = await prisma.project.create({
         data: {
-          ...project,
+          ...ProjectMapper.fromDomainToPrisma(project),
+          id: undefined,
         },
       });
       return ProjectMapper.fromPrismaToDomain(model);
@@ -29,10 +30,10 @@ export class ProjectRepository implements IProjectRepository {
     try {
       const model = await prisma.project.update({
         where: {
-          id: project.id,
+          id: project.getId(),
         },
         data: {
-          ...project,
+          ...ProjectMapper.fromDomainToPrisma(project),
         },
       });
       return ProjectMapper.fromPrismaToDomain(model);

@@ -28,26 +28,30 @@ const UpdateProjectParamsSchema = z.object({
   projectId: z.string().uuid("ID do trabalho é obrigatorio"),
 });
 
-const UpdateProjectBodySchema = z.object({
-  name: z
-    .string({ message: "O nome é obrigatorio" })
-    .min(3, "O nome é muito curto")
-    .max(100, "O nome é muito grande"),
-  description: z
-    .string({ message: "A descrição é obrigatorio" })
-    .max(500, "Descrição muito longa"),
-  category: z.enum([
-    "FULLSTACK",
-    "FRONTEND",
-    "BACKEND",
-    "DESIGN",
-    "MOBILE",
-    "DATA_ANALYSIS",
-    "OTHER",
-  ]),
-  githublink: z.string().optional(),
-  portfolio: z.string({ message: "O portfolio é obrigatorio" }).uuid(),
-});
+const UpdateProjectBodySchema = CreateProjectBodySchema.omit({
+  portfolio: true,
+}).partial();
+
+// const UpdateProjectBodySchema = z.object({
+//   name: z
+//     .string({ message: "O nome é obrigatorio" })
+//     .min(3, "O nome é muito curto")
+//     .max(100, "O nome é muito grande"),
+//   description: z
+//     .string({ message: "A descrição é obrigatorio" })
+//     .max(500, "Descrição muito longa"),
+//   category: z.enum([
+//     "FULLSTACK",
+//     "FRONTEND",
+//     "BACKEND",
+//     "DESIGN",
+//     "MOBILE",
+//     "DATA_ANALYSIS",
+//     "OTHER",
+//   ]),
+//   githublink: z.string().optional(),
+//   portfolio: z.string({ message: "O portfolio é obrigatorio" }).uuid(),
+// });
 
 type UpdateProjectRequest = FastifyRequest<{
   Body: z.infer<typeof UpdateProjectBodySchema>;

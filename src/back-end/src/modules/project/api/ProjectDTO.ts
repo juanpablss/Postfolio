@@ -10,11 +10,10 @@ interface CreateProjectDTO {
 
 interface UpdateProjectDTO {
   id: string;
-  name: string;
-  description: string;
-  category: ProjectCategory;
+  name?: string;
+  description?: string;
+  category?: ProjectCategory;
   githublink?: string;
-  portfolio: string;
 }
 
 export { CreateProjectDTO, UpdateProjectDTO };

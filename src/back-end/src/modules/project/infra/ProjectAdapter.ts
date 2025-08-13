@@ -13,7 +13,7 @@ export class ProjectAdapter implements ProjectPort {
 
   async exist(projectId: string): Promise<string | null> {
     const project = await this.projectRepository.findById(projectId);
-    return project ? project.id : null;
+    return project ? project.getId() : null;
   }
 
   async findProjectsByPortfolioId(

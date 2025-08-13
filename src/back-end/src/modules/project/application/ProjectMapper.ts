@@ -92,12 +92,12 @@ export const ProjectMapper = {
   },
   fromDomainToPrisma(project: Project): ProjectModel {
     return {
-      id: project.id,
-      name: project.name,
-      description: project.description,
-      category: ProjectCategoryMapper.fromDomainToPrisma(project.category),
-      githublink: project.githubLink,
-      portfolioId: project.portfolioId,
+      id: project.getId(),
+      name: project.getName(),
+      description: project.getDescription(),
+      category: ProjectCategoryMapper.fromDomainToPrisma(project.getCategory()),
+      githublink: project.getGithubLink(),
+      portfolioId: project.getPortfolioId(),
     };
   },
   fromCreateProjectDtoToDomain(dto: CreateProjectDTO): Project {
@@ -110,14 +110,14 @@ export const ProjectMapper = {
       dto.githublink
     );
   },
-  fromUpdateProjectDtoToDomain(dto: UpdateProjectDTO): Project {
-    return new Project(
-      dto.id,
-      dto.name,
-      dto.description,
-      dto.category,
-      dto.portfolio,
-      dto.githublink
-    );
-  },
+  // fromUpdateProjectDtoToDomain(dto: UpdateProjectDTO): Project {
+  //   return new Project(
+  //     dto.id,
+  //     dto.name,
+  //     dto.description,
+  //     dto.category,
+  //     dto.portfolio,
+  //     dto.githublink
+  //   );
+  // },
 };

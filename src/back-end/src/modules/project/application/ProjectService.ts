@@ -13,40 +13,40 @@ import { TYPES } from "@compositionRoot/Types";
 export class ProjectService implements IProjectService {
   constructor(
     @inject(TYPES.IProjectRepository)
-    private workRepository: IProjectRepository,
+    private repository: IProjectRepository,
     @inject(TYPES.PortfolioPort)
     private portfolioPort: IPortfolioPort
   ) {}
 
-  async create(createWorkDto: CreateProjectDTO): Promise<Project> {
-    if (!this.portfolioPort.exist(createWorkDto.portfolioId))
+  async create(createProjectDto: CreateProjectDTO): Promise<Project> {
+    if (!this.portfolioPort.exist(createProjectDto.portfolioId))
       throw new BadRequest("O portfolio não existe");
 
     const workDomain =
-      ProjectMapper.fromCreateProjectDtoToDomain(createWorkDto);
+      ProjectMapper.fromCreateProjectDtoToDomain(createProjectDto);
 
-    return await this.workRepository.create(workDomain);
+    return await this.repository.create(workDomain);
   }
 
-  async update(updateWorkDto: UpdateProjectDTO): Promise<Project> {
-    const existeWork = await this.workRepository.findById(updateWorkDto.id);
+  async update(updateProjectDto: UpdateProjectDTO): Promise<Project> {
+    const project = await this.repository.findById(updateProjectDto.id);
 
-    if (!existeWork) throw new BadRequest("O trabalho não existe");
-    const workDomain =
-      ProjectMapper.fromUpdateProjectDtoToDomain(updateWorkDto);
+    if (!project) throw new BadRequest("O trabalho não existe");
 
-    return await this.workRepository.update(workDomain);
+    project.update(updateProjectDto);
+
+    return await this.repository.update(project);
   }
 
   async delete(id: string): Promise<Project | null> {
-    return await this.workRepository.delete(id);
+    return await this.repository.delete(id);
   }
 
   async findMany(): Promise<Project[]> {
-    return await this.workRepository.findMany();
+    return await this.repository.findMany();
   }
 
   async findById(id: string): Promise<Project | null> {
-    return await this.workRepository.findById(id);
+    return await this.repository.findById(id);
   }
 }

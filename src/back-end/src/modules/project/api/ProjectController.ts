@@ -30,13 +30,15 @@ export class WorkController {
   }
 
   async update(req: UpdateProjectRequest, reply: FastifyReply) {
-    const updateWorkDto: UpdateProjectDTO = {
+    const dto: UpdateProjectDTO = {
       ...req.body,
       id: req.params.projectId,
-      category: ProjectCategoryMapper.fromSchemaToDomain(req.body.category),
+      category: req.body.category
+        ? ProjectCategoryMapper.fromSchemaToDomain(req.body.category)
+        : undefined,
     };
 
-    const response = await this.workService.update(updateWorkDto);
+    const response = await this.workService.update(dto);
 
     reply.send(response);
   }
