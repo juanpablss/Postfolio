@@ -1,7 +1,6 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-// Ícones podem ser adicionados depois, se necessário
-// import { FiUser, FiMail, FiLock, FiCamera, FiLink, FiGithub, FiLinkedin } from 'react-icons/fi';
+import { FiUser, FiMail, FiLock, FiCamera, FiLink, FiGithub, FiLinkedin, FiEye, FiEyeOff } from 'react-icons/fi';
 
 // Estilos customizados do Tailwind, similar ao LoginPage, se necessário
 const TailwindRegisterStyles = () => (
@@ -73,6 +72,7 @@ export default function RegisterPage() {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState('');
 
   // Estado para a segunda etapa
@@ -82,6 +82,11 @@ export default function RegisterPage() {
   const [website, setWebsite] = useState('');
   const [linkedin, setLinkedin] = useState('');
   const [github, setGithub] = useState('');
+  enum UserType {
+    Developer = 'developer',
+    Employer = 'employer',
+  }
+  const [userType, setUserType] = useState<UserType.Developer | UserType.Employer>(UserType.Developer);
 
   // Estado para erros de validação
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -130,101 +135,125 @@ export default function RegisterPage() {
     }
     setErrors({});
 
-    // Lógica de envio do formulário (simulada)
-    console.log('Dados de Registro:', {
-      email, username, password, // Não envie a senha diretamente assim para um backend real sem HTTPS e hashing
-      profilePic: profilePic?.name, // Apenas nome para log, envie o arquivo 'profilePic'
-      bio, website, linkedin, github,
-    });
+    const userData = {
+      email: email,
+      username: username,
+      password: password, 
+      status: "",
+      bio: bio,
+      website: website ? website : undefined,
+      linkedin: linkedin ? linkedin : undefined,
+      github: github ? github : undefined,
+      profilePic: profilePic || null,
+      usertype: userType
+    };
 
-    // Exemplo de como você poderia enviar os dados com FormData se tiver um arquivo
-    const formData = new FormData();
-    formData.append('email', email);
-    formData.append('username', username);
-    formData.append('password', password); // Hashear no backend!
-    if (profilePic) {
-      formData.append('profilePic', profilePic);
+    const apiURL = import.meta.env.VITE_BACKEND_URL;
+    console.log("userData: ", JSON.stringify(userData));
+    try {
+      const response = await fetch(`${apiURL}/api/user`, {
+        method: 'POST',
+        body: JSON.stringify(userData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Registro bem-sucedido:', data);
+        alert('Registro finalizado com sucesso!');
+        navigate('/login'); // Redireciona para o login após o registro
+      } else {
+        const errorData = await response.json();
+        console.error('Falha no registro:', errorData);
+        alert(`Erro no registro: ${errorData.message || 'Tente novamente.'}`);
+      }
+    } catch (error) {
+      console.error('Erro de rede ou servidor:', error);
+      alert('Erro ao conectar com o servidor. Tente novamente mais tarde.');
     }
-    formData.append('bio', bio);
-    formData.append('website', website);
-    formData.append('linkedin', linkedin);
-    formData.append('github', github);
-
-    // const apiURL = import.meta.env.VITE_BACKEND_URL;
-    // try {
-    //   const response = await fetch(`${apiURL}/api/user/register`, {
-    //     method: 'POST',
-    //     body: formData, // FormData lida com 'multipart/form-data' automaticamente
-    //   });
-    //   if (response.ok) {
-    //     const data = await response.json();
-    //     console.log('Registro bem-sucedido:', data);
-    //     alert('Registro finalizado com sucesso!');
-    //     navigate('/login'); // Redireciona para o login após o registro
-    //   } else {
-    //     const errorData = await response.json();
-    //     console.error('Falha no registro:', errorData);
-    //     alert(`Erro no registro: ${errorData.message || 'Tente novamente.'}`);
-    //   }
-    // } catch (error) {
-    //   console.error('Erro de rede ou servidor:', error);
-    //   alert('Erro ao conectar com o servidor. Tente novamente mais tarde.');
-    // }
-
-    alert('Registro finalizado com sucesso! (Simulação)');
-    navigate('/login'); // Redireciona para o login após o registro (simulado)
   };
 
   const renderStepOne = () => (
     <form onSubmit={handleNextStep} className="space-y-6">
-      <div>
-        <label htmlFor="email" className="text-sm font-medium text-blue-100 block mb-1">Email</label>
-        <input
-          id="email"
-          type="email"
-          value={email}
+      <div className="relative">
+        <FiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-300" />
+        <input id="email" type="email" value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="seu@email.com"
-          className="w-full py-2.5 px-4 rounded-lg border border-transparent input-glass-register text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+          placeholder="Insira seu Email"
+          className="w-full py-2.5 pl-10 pr-4 rounded-lg border border-transparent input-glass-register text-white placeholder-white/45 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
         />
-        {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
       </div>
       <div>
-        <label htmlFor="username" className="text-sm font-medium text-blue-100 block mb-1">Nome de Usuário</label>
-        <input
-          id="username"
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="seu_usuario"
-          className="w-full py-2.5 px-4 rounded-lg border border-transparent input-glass-register text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
-        />
+        <label htmlFor="username" className="text-sm font-medium text-blue-100 block mb-1">
+          Nome de Usuário
+        </label>
+        <div className="relative">
+          <FiUser className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-300" />
+          <input
+            id="username"
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Insira seu usuário"
+            className="w-full py-2.5 pl-10 pr-4 rounded-lg border border-transparent input-glass-register text-white placeholder-white/45 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+          />
+        </div>
         {errors.username && <p className="text-red-400 text-xs mt-1">{errors.username}</p>}
       </div>
+            
       <div>
-        <label htmlFor="password" className="text-sm font-medium text-blue-100 block mb-1">Senha</label>
-        <input
-          id="password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="••••••••"
-          className="w-full py-2.5 px-4 rounded-lg border border-transparent input-glass-register text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
-        />
-        {errors.password && <p className="text-red-400 text-xs mt-1">{errors.password}</p>}
+        <label
+          htmlFor="password"
+          className="text-sm font-medium text-blue-100 block mb-1"
+        >
+          Senha
+        </label>
+
+        <div className="relative">
+          <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-300 pointer-events-none" />
+          <input
+            id="password"
+            type={showPassword ? 'text' : 'password'}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Insira sua senha"
+            className="w-full py-2.5 pl-10 pr-10 rounded-lg border border-transparent input-glass-register text-white placeholder-white/45 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+          />
+          <button
+            type="button"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-300 hover:text-indigo-400"
+            onClick={() => setShowPassword((s) => !s)}
+            tabIndex={-1}
+          >
+            {showPassword ? <FiEye /> : <FiEyeOff />}
+          </button>
+        </div>
       </div>
       <div>
-        <label htmlFor="confirm-password" className="text-sm font-medium text-blue-100 block mb-1">Confirmar Senha</label>
-        <input
-          id="confirm-password"
-          type="password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          placeholder="••••••••"
-          className="w-full py-2.5 px-4 rounded-lg border border-transparent input-glass-register text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
-        />
-        {errors.confirmPassword && <p className="text-red-400 text-xs mt-1">{errors.confirmPassword}</p>}
+        <label
+          htmlFor="confirm-password"
+          className="text-sm font-medium text-blue-100 block mb-1"
+        >
+          Confirmar Senha
+        </label>
+        <div className="relative">
+          <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-300 pointer-events-none" />
+          <input
+            id="confirm-password"
+            type={showPassword ? 'text' : 'password'} // usa o mesmo estado do campo de senha
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="Confirme sua senha"
+            className="w-full py-2.5 pl-10 pr-4 rounded-lg border border-transparent input-glass-register text-white placeholder-white/45 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+          />
+        </div>
+        {errors.confirmPassword && (
+          <p className="text-red-400 text-xs mt-1">{errors.confirmPassword}</p>
+        )}
       </div>
+
+
       <button
         type="submit"
         className="w-full py-3 rounded-lg text-white text-base font-semibold cursor-pointer transition-all duration-300 btn-register-gradient btn-register-glow hover:-translate-y-0.5 hover:shadow-lg hover:brightness-110 active:brightness-95"
@@ -239,13 +268,26 @@ export default function RegisterPage() {
       <div className="flex flex-col items-center space-y-3">
         <label htmlFor="profile-pic-input" className="cursor-pointer">
           {profilePicPreview ? (
-            <img src={profilePicPreview} alt="Preview" className="profile-pic-preview" />
+            <div className="relative">
+              <img src={profilePicPreview} alt="Preview" className="profile-pic-preview" />
+              <button
+                type="button"
+                onClick={() => {
+                  setProfilePic(null);
+                  setProfilePicPreview(null);
+                }}
+                className="absolute -top-2 -right-2 rounded-full bg-red-600 text-white w-6 h-6 flex items-center justify-center text-xs hover:bg-red-700"
+              >
+                ✕
+              </button>
+            </div>
           ) : (
             <div className="profile-pic-preview flex items-center justify-center text-blue-300/70">
-              {/* <FiCamera size={40} /> */}
-              <span className="text-sm">Foto de Perfil</span>
+              <FiCamera size={40} />
             </div>
           )}
+
+
         </label>
         <input
           type="file"
@@ -269,49 +311,86 @@ export default function RegisterPage() {
         {errors.bio && <p className="text-red-400 text-xs mt-1">{errors.bio}</p>}
       </div>
       <div>
-        <label htmlFor="website" className="text-sm font-medium text-blue-100 block mb-1">Website/Blog (Opcional)</label>
-        <input
-          id="website"
-          type="url"
-          value={website}
-          onChange={(e) => setWebsite(e.target.value)}
-          placeholder="https://seu-site.com"
-          className="w-full py-2.5 px-4 rounded-lg border border-transparent input-glass-register text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
-        />
+        <label htmlFor="website" className="text-sm font-medium text-blue-100 block mb-1">
+          Website/Blog (Opcional)
+        </label>
+        <div className="relative">
+          <FiLink className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-300" />
+          <input
+            id="website"
+            type="url"
+            value={website}
+            onChange={(e) => setWebsite(e.target.value)}
+            placeholder="Seu site ou blog"
+            className="w-full py-2.5 pl-10 pr-4 rounded-lg border border-transparent input-glass-register text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+          />
+        </div>
       </div>
       <div>
-        <label htmlFor="linkedin" className="text-sm font-medium text-blue-100 block mb-1">LinkedIn (Opcional)</label>
-        <input
-          id="linkedin"
-          type="url"
-          value={linkedin}
-          onChange={(e) => setLinkedin(e.target.value)}
-          placeholder="https://linkedin.com/in/seu-perfil"
-          className="w-full py-2.5 px-4 rounded-lg border border-transparent input-glass-register text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
-        />
+        <label htmlFor="linkedin" className="text-sm font-medium text-blue-100 block mb-1">
+          LinkedIn (Opcional)
+        </label>
+        <div className="relative">
+          <FiLinkedin className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-300" />
+          <input
+            id="linkedin"
+            type="url"
+            value={linkedin}
+            onChange={(e) => setLinkedin(e.target.value)}
+            placeholder="Link do seu LinkedIn"
+            className="w-full py-2.5 pl-10 pr-4 rounded-lg border border-transparent input-glass-register text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+          />
+        </div>
       </div>
       <div>
-        <label htmlFor="github" className="text-sm font-medium text-blue-100 block mb-1">GitHub (Opcional)</label>
-        <input
-          id="github"
-          type="url"
-          value={github}
-          onChange={(e) => setGithub(e.target.value)}
-          placeholder="https://github.com/seu-usuario"
-          className="w-full py-2.5 px-4 rounded-lg border border-transparent input-glass-register text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
-        />
+        <label htmlFor="github" className="text-sm font-medium text-blue-100 block mb-1">
+          GitHub (Opcional)
+        </label>
+        <div className="relative">
+          <FiGithub className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-300" />
+          <input
+            id="github"
+            type="url"
+            value={github}
+            onChange={(e) => setGithub(e.target.value)}
+            placeholder="Link do seu GitHub"
+            className="w-full py-2.5 pl-10 pr-4 rounded-lg border border-transparent input-glass-register text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+          />
+        </div>
       </div>
+      <div className="mb-6 flex items-center justify-center">
+        <label
+          className={`rounded-l-lg px-4 py-2 transition-colors cursor-pointer ${
+            userType === UserType.Developer ? 'bg-indigo-600 text-white' : 'bg-gray-700 text-gray-300'
+          }`}
+          onClick={() => setUserType(UserType.Developer)}
+        >
+          Developer
+        </label>
+        <label
+          className={`rounded-r-lg px-4 py-2 transition-colors cursor-pointer ${
+            userType === UserType.Employer ? 'bg-indigo-600 text-white' : 'bg-gray-700 text-gray-300'
+          }`}
+          onClick={() => setUserType(UserType.Employer)}
+        >
+          Employer
+        </label>
+      </div>
+
       <div className="flex gap-4">
         <button
           type="button"
-          onClick={() => { setErrors({}); setStep(1);}}
-          className="w-full py-3 rounded-lg text-blue-100 bg-gray-600/30 hover:bg-gray-500/40 text-base font-semibold cursor-pointer transition-all duration-300"
+          onClick={() => {
+            setErrors({});
+            setStep(1);
+          }}
+          className="w-full cursor-pointer rounded-lg bg-gray-600/30 py-3 text-base font-semibold text-blue-100 transition-all duration-300 hover:bg-gray-500/40"
         >
           Voltar
         </button>
         <button
           type="submit"
-          className="w-full py-3 rounded-lg text-white text-base font-semibold cursor-pointer transition-all duration-300 btn-register-gradient btn-register-glow hover:-translate-y-0.5 hover:shadow-lg hover:brightness-110 active:brightness-95"
+          className="btn-register-gradient btn-register-glow w-full cursor-pointer rounded-lg py-3 text-base font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:brightness-110 active:brightness-95"
         >
           Finalizar Registro
         </button>

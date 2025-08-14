@@ -74,16 +74,16 @@ export default function Login() {
   const [remember, setRemember] = React.useState(false);
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-
+  
+  const apiURL = import.meta.env.VITE_BACKEND_URL;
   const navigate = useNavigate();
 
   const handleSubmit = async (event: { preventDefault: () => void; }) => {
     console.log('Submitting login form...');
     event.preventDefault();
-
+    
     try {
       console.log('Sending login request to server, email:', email, ' password:', password);
-      const apiURL = import.meta.env.VITE_BACKEND_URL;
       console.log('API URL:', apiURL);
       const response = await fetch(`${apiURL}/api/user/login`, {
         method: 'POST',
@@ -225,6 +225,7 @@ export default function Login() {
                   type="button"
                   className="btn-social flex items-center justify-center w-12 h-12 rounded-full bg-white shadow-md border-2 border-white hover:bg-blue-100 transition"
                   title="Entrar com Google"
+                  onClick={() => window.location.href = `http://localhost:8080/api/user/auth/google/`}
                 >
                   <FcGoogle className="text-2xl" />
                 </button>
