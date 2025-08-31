@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef} from "react";
 import { Link } from "react-router-dom";
 import Header from "../layouts/HeaderLayout";
 
@@ -115,6 +115,12 @@ export default function Home() {
   const [filter, setFilter] = useState("all");
   const [order, setOrder] = useState("recent");
   const [visible, setVisible] = useState(6);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [isOrderOpen, setIsOrderOpen] = useState(false);
+  
+  // Refs para controlar os selects
+  const filterSelectRef = useRef(null);
+  const orderSelectRef = useRef(null);
 
   let filtered = allProjects.filter((p) =>
     (filter === "all" || p.category === filter) &&
@@ -125,6 +131,28 @@ export default function Home() {
   );
   if (order === "views") filtered = [...filtered];
   if (order === "az") filtered = [...filtered].sort((a, b) => a.projectTitle.localeCompare(b.projectTitle));
+
+  // Função para tratar mudança no filtro
+  const handleFilterChange = (e) => {
+    setFilter(e.target.value);
+    // Fechar o dropdown após seleção
+    setIsFilterOpen(false);
+    // Forçar o blur para garantir que o estado seja atualizado
+    if (filterSelectRef.current) {
+      filterSelectRef.current.blur();
+    }
+  };
+
+  // Função para tratar mudança na ordenação
+  const handleOrderChange = (e) => {
+    setOrder(e.target.value);
+    // Fechar o dropdown após seleção
+    setIsOrderOpen(false);
+    // Forçar o blur para garantir que o estado seja atualizado
+    if (orderSelectRef.current) {
+      orderSelectRef.current.blur();
+    }
+  };
 
   return (
     <div className="bg-pattern bg-no-repeat bg-top bg-cover min-h-screen">
@@ -144,6 +172,7 @@ export default function Home() {
       {/* EXPLORAR PORTFÓLIOS */}
       <section className="w-full flex flex-col items-center bg-transparent px-4 pt-2 pb-20">
         <h2 className="text-2xl md:text-3xl font-semibold text-blue-100 mb-8">Explorar Portfólios</h2>
+        
         {/* Inputs de busca, filtro e ordenação */}
         <div className="flex flex-col md:flex-row gap-4 mb-10 w-full max-w-4xl">
           <input
@@ -153,24 +182,48 @@ export default function Home() {
             onChange={e => setSearch(e.target.value)}
             className="flex-1 px-4 py-2 rounded-lg bg-indigo-900/80 border border-indigo-700 text-blue-100 placeholder:text-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
           />
-          <select
-            value={filter}
-            onChange={e => setFilter(e.target.value)}
-            className="px-4 py-2 rounded-lg bg-indigo-900/80 border border-indigo-700 text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-          >
-            {filters.map(f => (
-              <option key={f.value} value={f.value}>{f.label}</option>
-            ))}
-          </select>
-          <select
-            value={order}
-            onChange={e => setOrder(e.target.value)}
-            className="px-4 py-2 rounded-lg bg-indigo-900/80 border border-indigo-700 text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-          >
-            {orders.map(o => (
-              <option key={o.value} value={o.value}>{o.label}</option>
-            ))}
-          </select>
+          
+          {/* Dropdown de Filtro com seta personalizada */}
+          <div className="relative">
+            <select
+              ref={filterSelectRef}
+              value={filter}
+              onChange={handleFilterChange}
+              onFocus={() => setIsFilterOpen(true)}
+              onBlur={() => setIsFilterOpen(false)}
+              className="min-w-[150px] w-full px-4 py-2 pr-10 rounded-lg bg-indigo-900/80 border border-indigo-700 text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400 transition appearance-none [&::-ms-expand]:hidden"
+            >
+              {filters.map(f => (
+                <option key={f.value} value={f.value}>{f.label}</option>
+              ))}
+            </select>
+            <div className={`absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none transition-transform duration-200 ${isFilterOpen ? 'rotate-180' : ''}`}>
+              <svg className="w-4 h-4 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </div>
+          </div>
+          
+          {/* Dropdown de Ordenação com seta personalizada */}
+          <div className="relative">
+            <select
+              ref={orderSelectRef}
+              value={order}
+              onChange={handleOrderChange}
+              onFocus={() => setIsOrderOpen(true)}
+              onBlur={() => setIsOrderOpen(false)}
+              className="w-full px-4 py-2 pr-10 rounded-lg bg-indigo-900/80 border border-indigo-700 text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400 transition appearance-none [&::-ms-expand]:hidden"
+            >
+              {orders.map(o => (
+                <option key={o.value} value={o.value}>{o.label}</option>
+              ))}
+            </select>
+            <div className={`absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none transition-transform duration-200 ${isOrderOpen ? 'rotate-180' : ''}`}>
+              <svg className="w-4 h-4 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </div>
+          </div>
         </div>
 
         {/* Grid de projetos */}
